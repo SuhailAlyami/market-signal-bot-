@@ -1,1 +1,1 @@
-# market-signal-bot-
+# market-signal-bot
