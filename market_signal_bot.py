@@ -1226,25 +1226,34 @@ class EvolutionaryTradingBot:
         flask_thread = threading.Thread(target=run_flask, daemon=True)
         flask_thread.start()
         
-        # تشغيل المراقبة
-        monitor_thread = threading.Thread(target=self.monitor_market, daemon=True)
-        monitor_thread.start()
-        
-        # تشغيل نظام التعلم
-        learning_thread = threading.Thread(
-            target=self.learning_system.run_evaluation_loop,
-            args=(self.analyzer,),
-            daemon=True
-        )
-        learning_thread.start()
-        
-        # تشغيل البوت
+        # The legacy scanner uses unverified Yahoo data and must not flood
+        # price requests when market data is stale or unavailable.
+        if os.getenv("ENABLE_LEGACY_MONITOR", "false").lower() == "true":
+            monitor_thread = threading.Thread(target=self.monitor_market, daemon=True)
+            monitor_thread.start()
+            learning_thread = threading.Thread(
+                target=self.learning_system.run_evaluation_loop,
+                args=(self.analyzer,),
+                daemon=True
+            )
+            learning_thread.start()
+        else:
+            logger.info("Legacy signals disabled until data validation is complete")
+
+        # Polling is optional: simultaneous instances cause Telegram 409.
+        # Outbound Telegram alerts still work when incoming polling is disabled.
+        if os.getenv("ENABLE_TELEGRAM_POLLING", "false").lower() != "true":
+            logger.info("Telegram getUpdates disabled: outbound notifications stay enabled")
+            while self.is_running:
+                time.sleep(60)
+            return
+
         logger.info("بدء بوت التليجرام...")
         while self.is_running:
             try:
                 self.bot.polling(none_stop=True, timeout=60, long_polling_timeout=60)
             except Exception as e:
-                logger.error(f"خطأ في الاستقبال: {e}")
+                logger.error("Telegram polling error: %s", type(e).__name__)
                 time.sleep(15)
 
 # ==================== خادم Flask ====================
