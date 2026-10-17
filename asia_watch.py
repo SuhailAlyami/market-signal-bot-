@@ -76,7 +76,7 @@ def detect(symbol, frame, now):
         return None
     return dict(symbol=symbol, direction=direction, price=close, rvol=rv,
                 top=high, bottom=low, bar_end=end.isoformat(),
-                session_date=str(day), source="Yahoo Finance futures proxy, may be delayed")
+                session_date=str(now.astimezone(ZoneInfo("Asia/Tokyo")).date()), source="Yahoo Finance futures proxy, may be delayed")
 
 def scan_once(now=None):
     now = now or datetime.now(UTC)
