@@ -8,6 +8,9 @@ Self-Evolving Trading System with Institutional Footprints
 import os
 import time
 import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
+logger = logging.getLogger('suhail_hunter')
 import threading
 import json
 import sqlite3
