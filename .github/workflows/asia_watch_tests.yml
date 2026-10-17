@@ -1,0 +1,21 @@
+name: Asia watcher CI
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test requirements
+        run: pip install 'pandas>=2.1,<3' 'yfinance>=0.2.55,<1' 'requests>=2.31,<3'
+      - name: Syntax and unit tests
+        run: |
+          python -m py_compile asia_watch.py market_signal_bot.py tests/test_asia_watch.py
+          python -m unittest discover -s tests -p test_asia_watch.py -v

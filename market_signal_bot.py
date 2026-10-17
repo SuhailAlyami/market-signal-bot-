@@ -1214,6 +1214,14 @@ class EvolutionaryTradingBot:
     
     def run(self):
         """تشغيل البوت"""
+        # Monitor Asia's opening-range breaks via ES/NQ futures proxies.
+        # This uses the existing Render Telegram secrets; no new account required.
+        if os.getenv("ASIA_WATCH_ENABLED", "true").lower() == "true":
+            try:
+                from asia_watch import start_worker
+                start_worker(TELEGRAM_TOKEN, CHAT_ID)
+            except Exception as exc:
+                logger.warning("Asia watcher cannot start: %s", type(exc).__name__)
         # تشغيل Flask
         flask_thread = threading.Thread(target=run_flask, daemon=True)
         flask_thread.start()
