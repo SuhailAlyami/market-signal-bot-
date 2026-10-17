@@ -1,0 +1,53 @@
+name: Monday Readiness Telegram Notice
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/monday_readiness_notice.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Send Monday preparation notice without exposing secrets
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python - <<'PY'
+          import os
+          import json
+          from urllib.request import Request, urlopen
+          token = os.getenv("TELEGRAM_BOT_TOKEN")
+          chat_id = os.getenv("TELEGRAM_CHAT_ID")
+          if not token or not chat_id:
+              raise SystemExit("Cannot send notice: Telegram secrets not configured")
+          message = (
+              "🛰️ سهيل هنتر | استعداد لجلسة الاثنين\n"
+              "نعمل على فحص نظام كشف الحركات القوية في SPY وQQQ "
+              "والتحقق من جودة الأسعار وتنبيهات الاتجاهين.\n"
+              "✅ الكود التجريبي واختباراته على GitHub\n"
+              "⚠️ لا توجد توصية دخول الآن؛ لا يزال الأداء الحي قيد التحقق.\n"
+              "📅 المتابعة مع افتتاح السوق الأمريكي يوم الاثنين بإذن الله."
+          )
+          req = Request(
+              "https://api.telegram.org/bot" + token + "/sendMessage",
+              data=json.dumps({"chat_id":chat_id,"text":message}).encode(),
+              headers={"Content-Type":"application/json"},
+              method="POST",
+          )
+          try:
+              with urlopen(req, timeout=20) as resp:
+                  outcome = json.load(resp)
+              if not outcome.get("ok"):
+                  raise RuntimeError("Telegram returned not-ok")
+              print("Telegram preparation message delivered successfully")
+          except Exception as exc:
+              # Never output URLs, tokens, response bodies, or other credentials.
+              raise SystemExit("Telegram notice failed; confirm secrets and bot access") from None
+          PY
