@@ -1,10 +1,10 @@
-"""Asia-session futures proxy watch. Research alerts only, no orders or SPX options quotes."""
+"""Early Asia Globex futures proxy watch. Research alerts only, no trade orders."""
 from __future__ import annotations
 import logging
 import os
 import threading
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, time as clock_time
 from zoneinfo import ZoneInfo
 
 import pandas as pd
@@ -16,10 +16,25 @@ UTC = timezone.utc
 FUTURES = ("ES=F", "NQ=F")
 CHECK_SECONDS = 900
 
-def asia_session(now):
-    """Tokyo cash open 09:00-15:00 JST, Monday-Friday. Futures proxies, not Tokyo stocks."""
+def futures_session_start(now):
+    """Globex ES/NQ open: 18:00 US Eastern before each Tokyo business day.
+
+    Sunday US evening corresponds to Monday morning in Tokyo. The precise
+    UTC time changes with US DST. Holiday gaps are filtered by bar validation.
+    """
     tokyo = now.astimezone(ZoneInfo("Asia/Tokyo"))
-    return tokyo.weekday() < 5 and 9 <= tokyo.hour < 15
+    if tokyo.weekday() >= 5:
+        return None
+    previous_us_date = tokyo.date() - timedelta(days=1)
+    return datetime.combine(previous_us_date, clock_time(18, 0),
+                            tzinfo=ZoneInfo("America/New_York")).astimezone(UTC)
+
+
+def asia_session(now):
+    """From Globex US evening reopen to 15:00 Tokyo, Mon-Fri local."""
+    tokyo = now.astimezone(ZoneInfo("Asia/Tokyo"))
+    start = futures_session_start(now)
+    return start is not None and start <= now.astimezone(UTC) and tokyo.hour < 15
 
 def detect(symbol, frame, now):
     """Use complete 15-minute bars only. Return a WATCH if Asia opening range breaks."""
@@ -36,13 +51,16 @@ def detect(symbol, frame, now):
     end = data.index[-1].to_pydatetime().astimezone(UTC) + timedelta(minutes=15)
     if now - end > timedelta(minutes=35) or end > now:
         return None
-    tokyo = data.index.tz_convert("Asia/Tokyo")
-    day = now.astimezone(ZoneInfo("Asia/Tokyo")).date()
-    opening = data[(tokyo.date == day) & (tokyo.hour == 9)]
+    # First four fully completed 15-minute candles after the Globex reopen.
+    start = futures_session_start(now)
+    if start is None:
+        return None
+    idx_utc = data.index.tz_convert(UTC)
+    opening = data[(idx_utc >= pd.Timestamp(start))
+                   & (idx_utc < pd.Timestamp(start + timedelta(hours=1)))]
     if len(opening) != 4:
         return None
-    last_tokyo = end.astimezone(ZoneInfo("Asia/Tokyo"))
-    if last_tokyo.hour < 10:
+    if end < start + timedelta(hours=1):
         return None
     high, low = float(opening.High.max()), float(opening.Low.min())
     close, vol = float(last.Close), float(last.Volume)
