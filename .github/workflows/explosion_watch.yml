@@ -1,16 +1,19 @@
-name: Suhail Explosion Watch (analysis only)
+name: Suhail Cloud WATCH — no Telegram
 on:
   workflow_dispatch:
   schedule:
-    # GitHub schedules run in UTC and may be delayed. NYSE calendar gate is in Python.
-    - cron: '*/5 13-21 * * 1-5'
+    # UTC; Asia Globex begins Sun-Thu 22/23 UTC (US DST), and Tokyo afternoon ends ~06 UTC.
+    - cron: '*/15 21-23 * * 0-4'
+    - cron: '*/15 0-6 * * 1-5'
+    # US cash market between 13:30-21:00 UTC depending on DST.
+    - cron: '*/15 13-21 * * 1-5'
 
 permissions:
   contents: read
   issues: write
 
 concurrency:
-  group: suhail-explosion-watch
+  group: suhail-cloud-watch-issues
   cancel-in-progress: false
 
 jobs:
@@ -24,9 +27,7 @@ jobs:
           python-version: '3.11'
       - name: Install scanner dependencies
         run: pip install 'yfinance>=0.2.55,<1' 'pandas>=2.1,<3' 'requests>=2.31,<3' 'pandas-market-calendars>=4.4,<6'
-      - name: Scan completed bars (no trading)
+      - name: Save qualifying signals as issues — no trading
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GITHUB_TOKEN: ${{ github.token }}
-        run: python explosion_detector.py
+        run: python cloud_scan.py
