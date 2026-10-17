@@ -20,6 +20,6 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           gh issue create \
-            --title "[Suhail TEST] إشعار تجريبي من GitHub Actions — لا تداول" \
-            --body "🔔 هذا اختبار وصول إشعارات الآيفون من حساب github-actions[bot]، وليس إشارة سوق أو توصية تداول. @SuhailAlyami" \
+            --title "[Suhail TEST 2] اختبار بعد تفعيل كل الإشعارات — لا تداول" \
+            --body "🔔 اختبار ثانٍ بعد تفعيل جميع إشعارات الآيفون من حساب github-actions[bot]، وليس إشارة سوق أو توصية تداول. @SuhailAlyami" \
             --assignee SuhailAlyami
