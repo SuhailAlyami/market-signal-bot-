@@ -1266,20 +1266,6 @@ def run_flask():
 def main():
     try:
         bot = EvolutionaryTradingBot()
-        # Temporary one-time startup notice for Monday readiness; remove after verification.
-        if CHAT_ID:
-            try:
-                bot.bot.send_message(
-                    CHAT_ID,
-                    "🛰️ سهيل هنتر: نستعد لجلسة الاثنين. الخدمة على Render تعمل؛ "
-                    "نتحقق من البيانات والتنبيهات قبل الاعتماد على أي إشارة. "
-                    "هذه رسالة اختبار اتصال وليست توصية تداول."
-                )
-                logger.info("Monday readiness Telegram test delivered")
-            except Exception as notice_error:
-                logger.error("Monday readiness Telegram test failed: %s", type(notice_error).__name__)
-        else:
-            logger.warning("Monday readiness test skipped: TELEGRAM_CHAT_ID not set")
         bot.run()
     except KeyboardInterrupt:
         logger.info("إيقاف النظام...")
