@@ -28,6 +28,19 @@ class CloudAlertTests(unittest.TestCase):
 
     @patch.object(cloud_scan, "TOKEN", "fake")
     @patch.object(cloud_scan, "REPO", "owner/repo")
+    def test_new_issue_assigns_owner_for_mobile_notification(self):
+        session = Mock()
+        search = Mock()
+        search.json.return_value = {"items": []}
+        create = Mock()
+        create.json.return_value = {"html_url": "https://github.com/owner/repo/issues/1"}
+        session.get.return_value = search
+        session.post.return_value = create
+        self.assertTrue(cloud_scan.publish_issue(ITEM, "ASIA", NOW, session))
+        self.assertEqual(session.post.call_args.kwargs["json"]["assignees"], ["owner"])
+
+    @patch.object(cloud_scan, "TOKEN", "fake")
+    @patch.object(cloud_scan, "REPO", "owner/repo")
     def test_missing_signal_produces_no_issue(self):
         with patch.object(cloud_scan, "asia_session", return_value=True), patch.object(
             cloud_scan, "market_session_open", return_value=False), patch.object(

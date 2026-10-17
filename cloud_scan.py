@@ -74,7 +74,14 @@ def publish_issue(item: dict, kind: str, now: datetime, session: requests.Sessio
     if any(x.get("title") == title for x in lookup.json().get("items", [])):
         print(f"Duplicate suppressed: {kind} {item['symbol']}")
         return False
-    result = session.post(base, headers=headers, json={"title": title, "body": body}, timeout=TIMEOUT)
+    # Assign the repository owner to trigger a GitHub notification on mobile.
+    # Notification delivery still depends on the user's GitHub settings.
+    owner = REPO.split("/", 1)[0]
+    result = session.post(
+        base, headers=headers,
+        json={"title": title, "body": body, "assignees": [owner]},
+        timeout=TIMEOUT,
+    )
     result.raise_for_status()
     print(f"Issue created: {result.json().get('html_url', 'issue')}") 
     return True
