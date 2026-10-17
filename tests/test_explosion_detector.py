@@ -10,7 +10,7 @@ from explosion_detector import assess_bars, format_alert
 class ExplosionDetectorTests(unittest.TestCase):
     def setUp(self):
         self.now = datetime(2026, 10, 16, 19, 5, tzinfo=timezone.utc)
-        start = self.now - timedelta(minutes=5 * 42)
+        start = self.now - timedelta(minutes=5 * 41 + 2)
         index = pd.date_range(start, periods=42, freq="5min", tz="UTC")
         self.bars = pd.DataFrame(
             {"Open": [100.] * 42, "High": [100.2] * 42,
