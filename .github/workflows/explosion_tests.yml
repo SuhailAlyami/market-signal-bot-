@@ -1,0 +1,43 @@
+name: Suhail Explosion Tests
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test dependencies
+        run: pip install 'yfinance>=0.2.55,<1' 'pandas>=2.1,<3' 'requests>=2.31,<3' 'pandas-market-calendars>=4.4,<6'
+      - name: Syntax check
+        run: python -m py_compile explosion_detector.py backtest_explosion.py tests/test_explosion_detector.py tests/test_backtest_explosion.py
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+  historical-data-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install historical study dependencies
+        run: pip install 'yfinance>=0.2.55,<1' 'pandas>=2.1,<3' 'requests>=2.31,<3' 'pandas-market-calendars>=4.4,<6'
+      - name: Fetch real SPY bars and evaluate previous signals (no alerts/orders)
+        run: python backtest_explosion.py --symbol SPY --period 5d --horizon 6 --output backtest_results.json
+      - name: Save research-only result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: suhail-spy-research-report
+          path: backtest_results.json
+          if-no-files-found: ignore

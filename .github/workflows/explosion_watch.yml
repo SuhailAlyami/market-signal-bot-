@@ -1,0 +1,32 @@
+name: Suhail Explosion Watch (analysis only)
+on:
+  workflow_dispatch:
+  schedule:
+    # GitHub schedules run in UTC and may be delayed. NYSE calendar gate is in Python.
+    - cron: '*/5 13-21 * * 1-5'
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: suhail-explosion-watch
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install scanner dependencies
+        run: pip install 'yfinance>=0.2.55,<1' 'pandas>=2.1,<3' 'requests>=2.31,<3' 'pandas-market-calendars>=4.4,<6'
+      - name: Scan completed bars (no trading)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python explosion_detector.py
