@@ -115,6 +115,46 @@ def format_alert(item: dict) -> str:
     )
 
 
+def reserve_once(item: dict) -> bool:
+    """Reserve this candle in a private GitHub issue before sending; fail closed.
+
+    Not exactly-once Telegram delivery: a failure after reservation may suppress an alert.
+    The reservation is preferred to repeated trade-like notifications.
+    """
+    token = os.getenv("GITHUB_TOKEN")
+    repository = os.getenv("GITHUB_REPOSITORY")
+    if not token or not repository:
+        print("Deduplication unavailable: no alerts will be sent")
+        return False
+    url = f"https://api.github.com/repos/{repository}/issues"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    title = f"[Suhail Hunter State] {item['symbol']}"
+    # Per-symbol key: the same completed candle cannot trigger again, even on rerun.
+    key = f"{item['symbol']}:{item['direction']}:{item['bar_time']}"
+    try:
+        resp = requests.get(url, headers=headers, params={"state": "all", "per_page": 100}, timeout=15)
+        resp.raise_for_status()
+        matching = [issue for issue in resp.json() if issue.get("title") == title and "pull_request" not in issue]
+        if matching:
+            issue = matching[0]
+            if issue.get("body", "").strip() == key:
+                return False
+            resp = requests.patch(issue["url"], headers=headers, json={"body": key}, timeout=15)
+        else:
+            resp = requests.post(url, headers=headers, json={
+                "title": title, "body": key,
+            }, timeout=15)
+        resp.raise_for_status()
+        return True
+    except (requests.RequestException, ValueError, KeyError, TypeError):
+        print("Deduplication API error: alert suppressed")
+        return False
+
+
 def run() -> int:
     now = datetime.now(timezone.utc)
     if not market_session_open(now):
@@ -131,6 +171,9 @@ def run() -> int:
             item = fetch_and_assess(symbol, now)
             if not item:
                 print(f"{symbol}: no qualifying recent confirmed breakout")
+                continue
+            if not reserve_once(item):
+                print(f"{symbol}: duplicate or deduplication unavailable; alert suppressed")
                 continue
             resp = requests.post(
                 f"https://api.telegram.org/bot{token}/sendMessage",
