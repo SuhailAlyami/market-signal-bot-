@@ -1222,6 +1222,13 @@ class EvolutionaryTradingBot:
                 start_worker(TELEGRAM_TOKEN, CHAT_ID)
             except Exception as exc:
                 logger.warning("Asia watcher cannot start: %s", type(exc).__name__)
+        # NYSE watcher shares outbound Telegram credentials with Asia watcher.
+        if os.getenv("US_WATCH_ENABLED", "true").lower() == "true":
+            try:
+                from us_watch import start_worker as start_us_worker
+                start_us_worker(TELEGRAM_TOKEN, CHAT_ID)
+            except Exception as exc:
+                logger.warning("US watcher unavailable: %s", type(exc).__name__)
         # تشغيل Flask
         flask_thread = threading.Thread(target=run_flask, daemon=True)
         flask_thread.start()
