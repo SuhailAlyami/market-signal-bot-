@@ -12,7 +12,7 @@ This adds an **opt-in** 5-minute SPY/QQQ breakout watcher without changing the c
 Uses **completed** 5-minute OHLCV candles: 30-bar prior range breakout, relative volume >=2, momentum over five bars >=0.35%, and distance >=0.1 ATR. The strength score is a deterministic heuristic and **not** a calibrated probability or trading recommendation. Each message includes source and bar-close timestamp. A delayed bar (>12 minutes) is rejected.
 
 ## Constraints and follow-up
-- Alerts may repeat if GitHub Actions reruns the same completed bar. Durable deduplication requires persistent state and is not implemented.
+- Alert deduplication is fail-closed: private GitHub Issues store the last signal key for each symbol. The workflow requires `issues: write` and the workflow-provided `GITHUB_TOKEN`. Concurrency control serializes regular scanner runs. This suppresses duplicate alert messages for the same candle in normal operation, but issue API failures disable alerts, and a failure after reserving can lose an alert. It is not exactly-once delivery.
 - This requires market-data-source validation and historical out-of-sample testing before any trading use.
 - Existing `auto_auditor.py` can overwrite source code using unchecked LLM outputs. Do not run it against production; its duplicate workflow files are incorrectly nested and do not constitute dependable automated testing.
 - No secrets are read or exposed by this change; existing workflows are untouched.
