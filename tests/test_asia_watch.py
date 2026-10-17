@@ -1,13 +1,20 @@
 import unittest
 from datetime import datetime, timezone
 import pandas as pd
-from asia_watch import detect, asia_session
+from asia_watch import detect, asia_session, futures_session_start
 
 class AsiaWatchTests(unittest.TestCase):
     def test_asia_gate(self):
         self.assertTrue(asia_session(datetime(2026,10,19,2,0,tzinfo=timezone.utc)))
         self.assertFalse(asia_session(datetime(2026,10,18,2,0,tzinfo=timezone.utc)))
         self.assertFalse(asia_session(datetime(2026,10,19,14,0,tzinfo=timezone.utc)))
+        # Sunday evening US is already Monday morning Tokyo: watch from Globex open.
+        self.assertTrue(asia_session(datetime(2026,10,18,22,0,tzinfo=timezone.utc)))
+        self.assertFalse(asia_session(datetime(2026,10,18,21,59,tzinfo=timezone.utc)))
+        self.assertEqual(futures_session_start(datetime(2026,10,18,22,5,tzinfo=timezone.utc)).hour,22)
+        # US winter DST transition moves Globex reopen to 23:00 UTC.
+        self.assertTrue(asia_session(datetime(2026,11,1,23,5,tzinfo=timezone.utc)))
+        self.assertFalse(asia_session(datetime(2026,11,1,22,59,tzinfo=timezone.utc)))
     def test_fresh_confirmed_opening_range_breakout(self):
         now=datetime(2026,10,19,2,30,tzinfo=timezone.utc)
         idx=pd.date_range("2026-10-18T21:00:00Z",periods=22,freq="15min")
