@@ -42,7 +42,7 @@ class CloudAlertTests(unittest.TestCase):
     @patch.object(cloud_scan, "TOKEN", "fake")
     @patch.object(cloud_scan, "REPO", "owner/repo")
     def test_missing_signal_produces_no_issue(self):
-        with patch.object(cloud_scan, "asia_session", return_value=True), patch.object(
+        with patch.object(cloud_scan, "globex_active", return_value=False), patch.object(cloud_scan, "asia_session", return_value=True), patch.object(
             cloud_scan, "market_session_open", return_value=False), patch.object(
             cloud_scan, "scan_once", return_value=[]):
             self.assertEqual(cloud_scan.run(NOW), 0)
