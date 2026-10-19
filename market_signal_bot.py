@@ -1229,6 +1229,13 @@ class EvolutionaryTradingBot:
                 start_us_worker(TELEGRAM_TOKEN, CHAT_ID)
             except Exception as exc:
                 logger.warning("US watcher unavailable: %s", type(exc).__name__)
+        # Render-backed Globex alerts: limited to two per UTC day by default.
+        if os.getenv("GLOBEX_RENDER_ENABLED", "true").lower() == "true":
+            try:
+                from globex_render_worker import start_worker as start_globex_worker
+                start_globex_worker(TELEGRAM_TOKEN, CHAT_ID)
+            except Exception as exc:
+                logger.warning("Globex Render watcher unavailable: %s", type(exc).__name__)
         # تشغيل Flask
         flask_thread = threading.Thread(target=run_flask, daemon=True)
         flask_thread.start()
