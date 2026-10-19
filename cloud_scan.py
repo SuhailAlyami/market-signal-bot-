@@ -47,9 +47,14 @@ def issue_payload(item: dict, kind: str, now: datetime):
     else:
         fields.update(rvol=item["rvol"], momentum_pct=item["momentum_pct"],
                       technical_score=item["score"], breakout=item["breakout"])
+    icon = "🚀" if direction in ("WATCH_UP", "BULLISH") else "🔻"
+    label = "صعود" if direction in ("WATCH_UP", "BULLISH") else "هبوط"
     body = (
-        "## Suhail Hunter — research WATCH, not a trade recommendation\n\n"
-        "Not verified live exchange data. This is not an options quote or a predicted success rate.\n\n"
+        f"## {icon} انفجار محتمل {label} | {symbol} | {item['price']:.2f}\n\n"
+        f"دخول مراقبة: {item.get('top', item.get('breakout')) if label == 'صعود' else item.get('bottom', item.get('breakout'))}\n"
+        f"إلغاء: {item.get('bottom', item.get('breakout')) if label == 'صعود' else item.get('top', item.get('breakout'))}\n"
+        "خروج: غير محدد — ليست أسعار عقد SPX\n"
+        "بيانات Yahoo قد تتأخر. مراقبة فقط.\n\n"
         "```json\n" + json.dumps(fields, ensure_ascii=False, indent=2) + "\n```\n"
     )
     return title, body
