@@ -32,19 +32,19 @@ def detect_early(symbol, frame, now):
         return None
     data = frame.sort_index()
     data = data[data.index <= pd.Timestamp(now - BAR)]
-    if len(data) < 14:
+    if len(data) < 5:
         return None
     end = data.index[-1].to_pydatetime().astimezone(UTC) + BAR
     if end > now or now - end > MAX_AGE:
         return None
-    recent = data.iloc[-13:-1]
+    recent = data.iloc[-13:-1] if len(data) >= 14 else data.iloc[:-1]
     bar = data.iloc[-1]
     if recent[list(needed)].isna().any().any() or bar[list(needed)].isna().any():
         return None
     if (recent.Volume <= 0).any() or bar.Volume <= 0:
         return None
     # Reject gaps and synthetic zero-volume sessions.
-    if any((data.index[-j] - data.index[-j-1]) != pd.Timedelta(minutes=5) for j in range(1, 13)):
+    if any((data.index[-j] - data.index[-j-1]) != pd.Timedelta(minutes=5) for j in range(1, len(recent) + 1)):
         return None
     top, bottom = float(recent.High.max()), float(recent.Low.min())
     close = float(bar.Close)
