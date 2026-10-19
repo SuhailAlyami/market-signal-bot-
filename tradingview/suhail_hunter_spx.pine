@@ -1,0 +1,91 @@
+//@version=6
+indicator("Suhail Hunter | SPX Early Breakout", overlay=true, max_labels_count=500)
+
+// Research port of Hunter pre_level: 1-minute, closed-bar, no repaint.
+// This detects directional setups on the chart symbol, NOT SPX option premiums.
+lookback = input.int(20, "Level / ATR window", minval=10)
+proximity = input.float(0.20, "Distance to level / ATR", minval=0.01, step=0.05)
+minRvol = input.float(1.20, "Minimum relative volume", minval=0.1, step=0.1)
+confirmBars = input.int(2, "Confirmation closes", minval=1, maxval=5)
+bufferATR = input.float(0.10, "Breakout buffer / ATR", minval=0, step=0.05)
+expiryBars = input.int(10, "Setup lifetime (bars)", minval=2)
+cooldownBars = input.int(5, "Cooldown (bars)", minval=0)
+onlyOneMinute = input.bool(true, "Require 1-minute chart")
+
+tr = ta.tr(true)
+atr = ta.sma(tr[1], lookback)
+levelHigh = ta.highest(high[1], lookback)
+levelLow = ta.lowest(low[1], lookback)
+volMedian = ta.median(volume[1], lookback)
+rvol = volMedian > 0 ? volume / volMedian : na
+trend5 = (close - close[5]) / atr
+trend15 = (close - close[15]) / atr
+nearHigh = (levelHigh - close) / atr
+nearLow = (close - levelLow) / atr
+valid = not na(atr) and atr > 0 and not na(rvol) and volume > 0
+timeOK = not onlyOneMinute or (timeframe.isminutes and timeframe.multiplier == 1)
+ready = barstate.isconfirmed and valid and timeOK
+
+upCandidate = ready and nearHigh >= 0 and nearHigh <= proximity and close > open and trend5 > 0 and trend15 >= 0 and rvol >= minRvol
+downCandidate = ready and nearLow >= 0 and nearLow <= proximity and close < open and trend5 < 0 and trend15 <= 0 and rvol >= minRvol
+
+var int phase = 0
+var int side = 0
+var int started = na
+var int cooldownUntil = na
+var int confirmed = 0
+var float activeLevel = na
+var float activeAtr = na
+var float invalidation = na
+setupCall = false
+setupPut = false
+triggerCall = false
+triggerPut = false
+exitEvent = false
+
+if ready
+    if phase != 0
+        invalid = side * (close - invalidation) <= 0
+        expired = bar_index - started >= expiryBars
+        if invalid or expired
+            exitEvent := true
+            phase := 0
+            side := 0
+            confirmed := 0
+            cooldownUntil := bar_index + cooldownBars
+        else if phase == 1
+            beyond = side * (close - activeLevel) >= bufferATR * activeAtr
+            confirmed := beyond ? confirmed + 1 : 0
+            if confirmed >= confirmBars
+                phase := 2
+                triggerCall := side == 1
+                triggerPut := side == -1
+    else if na(cooldownUntil) or bar_index >= cooldownUntil
+        if upCandidate or downCandidate
+            side := upCandidate ? 1 : -1
+            phase := 1
+            started := bar_index
+            confirmed := 0
+            activeLevel := side == 1 ? levelHigh : levelLow
+            activeAtr := atr
+            invalidation := close - side * atr
+            setupCall := side == 1
+            setupPut := side == -1
+
+plot(phase != 0 ? activeLevel : na, "Active breakout level", color=color.orange, style=plot.style_linebr)
+plot(phase != 0 ? invalidation : na, "Invalidation", color=color.red, style=plot.style_linebr)
+plotshape(setupCall, title="CALL setup", style=shape.circle, location=location.belowbar, color=color.lime, size=size.tiny, text="SET")
+plotshape(setupPut, title="PUT setup", style=shape.circle, location=location.abovebar, color=color.red, size=size.tiny, text="SET")
+plotshape(triggerCall, title="CALL trigger", style=shape.labelup, location=location.belowbar, color=color.green, text="CALL", textcolor=color.white)
+plotshape(triggerPut, title="PUT trigger", style=shape.labeldown, location=location.abovebar, color=color.maroon, text="PUT", textcolor=color.white)
+plotshape(exitEvent, title="Invalidation/expiry", style=shape.xcross, location=location.top, color=color.gray, size=size.tiny)
+
+alertcondition(setupCall, "Suhail CALL setup", "Suhail experimental CALL setup on {{ticker}} at {{close}}")
+alertcondition(setupPut, "Suhail PUT setup", "Suhail experimental PUT setup on {{ticker}} at {{close}}")
+alertcondition(triggerCall, "Suhail CALL trigger", "Suhail experimental CALL trigger on {{ticker}} at {{close}}")
+alertcondition(triggerPut, "Suhail PUT trigger", "Suhail experimental PUT trigger on {{ticker}} at {{close}}")
+
+if triggerCall or triggerPut
+    direction = triggerCall ? "CALL" : "PUT"
+    msg = '{"system":"Suhail Hunter","type":"experimental_trigger","underlying":"' + syminfo.ticker + '","direction":"' + direction + '","price":' + str.tostring(close) + ',"level":' + str.tostring(activeLevel) + ',"invalidation":' + str.tostring(invalidation) + ',"time":' + str.tostring(time) + '}'
+    alert(msg, alert.freq_once_per_bar_close)
