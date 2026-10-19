@@ -68,7 +68,7 @@ def send_shadow_telegram(events, heartbeat, token=None, chat_id=None):
         return 0
     delivered = 0
     for event in events:
-        if event.get("state") not in ("SETUP", "TRIGGER"):
+        if not event.get("notify_eligible", False):\n            continue\n        if event.get("state") not in ("SETUP", "TRIGGER"):
             continue
         if event.get("source") != SOURCE:
             continue
