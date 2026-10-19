@@ -54,7 +54,7 @@ def issue_payload(item: dict, kind: str, now: datetime):
         f"دخول مراقبة: {item.get('top', item.get('breakout')) if label == 'صعود' else item.get('bottom', item.get('breakout'))}\n"
         f"إلغاء: {item.get('bottom', item.get('breakout')) if label == 'صعود' else item.get('top', item.get('breakout'))}\n"
         "خروج: غير محدد — ليست أسعار عقد SPX\n"
-        "بيانات Yahoo قد تتأخر. مراقبة فقط.\n\n"
+        "بيانات Yahoo قد تتأخر. مراقبة فقط — not a trade recommendation.\n\n"
         "```json\n" + json.dumps(fields, ensure_ascii=False, indent=2) + "\n```\n"
     )
     return title, body
