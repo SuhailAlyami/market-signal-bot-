@@ -20,3 +20,18 @@ def test_incomplete_bar_never_used():
     data = pd.DataFrame({"High": [100]*13+[105], "Low": [99]*14,
                          "Close": [99.5]*13+[104], "Volume": [100]*13+[250]}, index=idx)
     assert detect_early("ES=F", data, datetime(2026, 10, 18, 23, 5, tzinfo=UTC)) is None
+
+def test_breakout_detected_in_first_half_hour():
+    idx = pd.date_range("2026-10-18T22:00:00Z", periods=5, freq="5min")
+    data = pd.DataFrame({"High": [100,100,100,100,103],
+                         "Low": [99]*5, "Close": [99.5]*4+[102],
+                         "Volume": [100]*4+[220]}, index=idx)
+    item = detect_early("ES=F", data, datetime(2026, 10, 18, 22, 25, tzinfo=UTC))
+    assert item is not None and item["direction"] == "WATCH_UP"
+
+def test_opening_breakout_rejects_low_volume():
+    idx = pd.date_range("2026-10-18T22:00:00Z", periods=5, freq="5min")
+    data = pd.DataFrame({"High": [100]*4+[103],
+                         "Low": [99]*5, "Close": [99.5]*4+[102],
+                         "Volume": [100]*4+[105]}, index=idx)
+    assert detect_early("ES=F", data, datetime(2026, 10, 18, 22, 25, tzinfo=UTC)) is None
