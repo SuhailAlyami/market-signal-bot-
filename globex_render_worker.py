@@ -10,7 +10,7 @@ import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
-from hunter_runtime import HunterRuntime
+from hunter_runtime import HunterRuntime, SOURCE
 
 LOG = logging.getLogger("suhail.globex")
 _STATUS = {"status": "not_started", "alerts_enabled": False, "readiness": "NOT_READY", "symbols": {}}
@@ -70,19 +70,19 @@ def send_shadow_telegram(events, heartbeat, token=None, chat_id=None):
     for event in events:
         if event.get("state") not in ("SETUP", "TRIGGER"):
             continue
-        if event.get("source") != "yahoo_1m" and not event.get("source", "").startswith("yahoo"):
+        if event.get("source") != SOURCE:
             continue
         delay = event.get("detection_delay_seconds")
         if delay is None or not (0 <= delay <= 90):
             continue
         direction = "صعود" if event["direction"] == "UP" else "هبوط"
-        message = ("🔬 سهيل هنتر | رصد تجريبي وليس توصية شراء\\n"
-                   f"الحالة: {event['state']} | الأصل: {event['symbol']}\\n"
-                   f"الاتجاه المحتمل: {direction}\\n"
-                   f"السعر المرجعي: {event['price']}\\n"
-                   f"مستوى الإلغاء: {event['invalidation']}\\n"
-                   f"وقت الشمعة UTC: {event['bar_end']}\\n"
-                   f"تأخر الرصد: {delay:.0f} ثانية\\n"
+        message = ("🔬 سهيل هنتر | رصد تجريبي وليس توصية شراء\n"
+                   f"الحالة: {event['state']} | الأصل: {event['symbol']}\n"
+                   f"الاتجاه المحتمل: {direction}\n"
+                   f"السعر المرجعي: {event['price']}\n"
+                   f"مستوى الإلغاء: {event['invalidation']}\n"
+                   f"وقت الشمعة UTC: {event['bar_end']}\n"
+                   f"تأخر الرصد: {delay:.0f} ثانية\n"
                    "لا توجد بيانات أسعار عقود SPX أو سترايك أو دخول موثوق.")
         payload = urllib.parse.urlencode({"chat_id": chat_id, "text": message}).encode()
         try:
@@ -107,7 +107,7 @@ def start_worker(token=None, chat_id=None):
         interval = 60
     runtime = create_runtime()
     stop = threading.Event()
-    LOG.warning("Hunter NOT READY: experimental alerts OFF; underlying shadow observations only")
+    LOG.warning("Hunter NOT READY: Telegram research observations gated by freshness; no SPX option recommendations")
 
     def loop():
         global _STATUS
