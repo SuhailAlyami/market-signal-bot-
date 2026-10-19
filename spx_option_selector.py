@@ -64,15 +64,15 @@ def select_spx_0dte(
         raise ValueError("direction must be CALL or PUT")
     if now.tzinfo is None or underlying_time.tzinfo is None:
         raise ValueError("timezone-aware clocks required")
+    if (not isfinite(max_age_seconds) or max_age_seconds <= 0
+        or not isfinite(max_spread_pct) or not isfinite(max_moneyness_pct)
+        or not 0 < max_spread_pct < 1 or not 0 < max_moneyness_pct < 1):
+        raise ValueError("invalid selection thresholds")
     if not underlying_live_verified or not isfinite(underlying) or underlying <= 0:
         return None
     age = (now - underlying_time).total_seconds()
     if not 0 <= age <= max_age_seconds:
         return None
-    if (not isfinite(max_age_seconds) or max_age_seconds <= 0
-        or not isfinite(max_spread_pct) or not isfinite(max_moneyness_pct)
-        or not 0 < max_spread_pct < 1 or not 0 < max_moneyness_pct < 1):
-        raise ValueError("invalid selection thresholds")
     date = now.astimezone(NY).date().isoformat()
     right = "C" if direction == "CALL" else "P"
     accepted = []
