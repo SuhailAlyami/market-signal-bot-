@@ -4,6 +4,8 @@ from __future__ import annotations
 import json
 import logging
 import os
+import urllib.parse
+import urllib.request
 import threading
 from datetime import datetime, timezone
 from pathlib import Path
@@ -53,6 +55,47 @@ def run_once(runtime=None, now=None, fetcher=None):
     return result
 
 
+
+def send_shadow_telegram(events, heartbeat, token=None, chat_id=None):
+    """Send clearly labelled research observations, never option trade recommendations.
+
+    Fail closed if the underlying feed is not fresh; dedupe is provided by
+    HunterRuntime's persisted event transitions, not by the messaging API.
+    """
+    token = token or os.getenv("TELEGRAM_BOT_TOKEN", "")
+    chat_id = chat_id or os.getenv("TELEGRAM_CHAT_ID", "")
+    if not token or not chat_id or heartbeat.get("status") != "ok":
+        return 0
+    delivered = 0
+    for event in events:
+        if event.get("state") not in ("SETUP", "TRIGGER"):
+            continue
+        if event.get("source") != "yahoo_1m" and not event.get("source", "").startswith("yahoo"):
+            continue
+        delay = event.get("detection_delay_seconds")
+        if delay is None or not (0 <= delay <= 90):
+            continue
+        direction = "صعود" if event["direction"] == "UP" else "هبوط"
+        message = ("🔬 سهيل هنتر | رصد تجريبي وليس توصية شراء\\n"
+                   f"الحالة: {event['state']} | الأصل: {event['symbol']}\\n"
+                   f"الاتجاه المحتمل: {direction}\\n"
+                   f"السعر المرجعي: {event['price']}\\n"
+                   f"مستوى الإلغاء: {event['invalidation']}\\n"
+                   f"وقت الشمعة UTC: {event['bar_end']}\\n"
+                   f"تأخر الرصد: {delay:.0f} ثانية\\n"
+                   "لا توجد بيانات أسعار عقود SPX أو سترايك أو دخول موثوق.")
+        payload = urllib.parse.urlencode({"chat_id": chat_id, "text": message}).encode()
+        try:
+            with urllib.request.urlopen(
+                urllib.request.Request(f"https://api.telegram.org/bot{token}/sendMessage", data=payload),
+                timeout=8,
+            ) as response:
+                if response.status == 200:
+                    delivered += 1
+        except Exception as exc:
+            LOG.warning("Hunter Telegram delivery failed: %s", type(exc).__name__)
+    return delivered
+
 def start_worker(token=None, chat_id=None):
     """Keep bootstrap compatibility; Telegram credentials never gate detection."""
     global _THREAD
@@ -70,7 +113,8 @@ def start_worker(token=None, chat_id=None):
         global _STATUS
         while not stop.is_set():
             try:
-                run_once(runtime)
+                result = run_once(runtime)
+                send_shadow_telegram(result['events'], result['heartbeat'], token, chat_id)
             except Exception as exc:
                 _STATUS = {"status": "worker_error", "error_type": type(exc).__name__,
                            "timestamp": datetime.now(timezone.utc).isoformat(),
