@@ -12,6 +12,7 @@ from urllib.parse import quote
 import requests
 
 from asia_watch import asia_session, scan_once
+from early_globex_watch import globex_active, scan_once as scan_early
 from explosion_detector import market_session_open, fetch_and_assess
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "")
@@ -41,7 +42,7 @@ def issue_payload(item: dict, kind: str, now: datetime):
         "analysis_only": True,
         "live_feed_verified": False,
     }
-    if kind == "ASIA":
+    if kind in ("ASIA", "EARLY"):
         fields.update(opening_high=item["top"], opening_low=item["bottom"], rvol=item["rvol"])
     else:
         fields.update(rvol=item["rvol"], momentum_pct=item["momentum_pct"],
@@ -94,10 +95,14 @@ def run(now: datetime | None = None) -> int:
         return 1
     active_asia = asia_session(now)
     active_us = market_session_open(now)
-    if not active_asia and not active_us:
+    active_globex = globex_active(now)
+    if not active_asia and not active_us and not active_globex:
         print("Outside monitored market sessions")
         return 0
     signals = []
+    if active_globex:
+        for item in scan_early(now):
+            signals.append(("EARLY", item))
     if active_asia:
         for item in scan_once(now):
             signals.append(("ASIA", item))
