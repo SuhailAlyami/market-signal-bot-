@@ -1018,10 +1018,8 @@ class EvolutionaryTradingBot:
     """البوت الرئيسي المتطور"""
     
     def __init__(self):
-        if not TELEGRAM_TOKEN:
-            raise ValueError("TELEGRAM_BOT_TOKEN مطلوب")
-        
-        self.bot = telebot.TeleBot(TELEGRAM_TOKEN)
+        # Data health and shadow tracking must run without messaging credentials.
+        self.bot = telebot.TeleBot(TELEGRAM_TOKEN) if TELEGRAM_TOKEN else None
         self.params = AdaptiveParameters()
         self.db = AdvancedSignalDatabase()
         self.analyzer = IntegratedMarketAnalyzer(self.params)
@@ -1042,7 +1040,8 @@ class EvolutionaryTradingBot:
             self.params.ob_lookback = saved_weights['ob_lookback']
             logger.info("تم تحميل الأوزان المتطورة")
         
-        self.register_handlers()
+        if self.bot is not None:
+            self.register_handlers()
         logger.info("تم تهيئة البوت التطوري بنجاح")
     
     def register_handlers(self):
@@ -1144,7 +1143,7 @@ class EvolutionaryTradingBot:
     
     def send_signal_alert(self, signal: Dict[str, Any]):
         """إرسال تنبيه الإشارة المتطور"""
-        if not CHAT_ID:
+        if not CHAT_ID or self.bot is None:
             return
         
         emoji = "🟢" if signal['direction'] == 'long' else "🔴"
@@ -1214,22 +1213,10 @@ class EvolutionaryTradingBot:
     
     def run(self):
         """تشغيل البوت"""
-        # Monitor Asia's opening-range breaks via ES/NQ futures proxies.
-        # This uses the existing Render Telegram secrets; no new account required.
-        if os.getenv("ASIA_WATCH_ENABLED", "true").lower() == "true":
-            try:
-                from asia_watch import start_worker
-                start_worker(TELEGRAM_TOKEN, CHAT_ID)
-            except Exception as exc:
-                logger.warning("Asia watcher cannot start: %s", type(exc).__name__)
-        # NYSE watcher shares outbound Telegram credentials with Asia watcher.
-        if os.getenv("US_WATCH_ENABLED", "true").lower() == "true":
-            try:
-                from us_watch import start_worker as start_us_worker
-                start_us_worker(TELEGRAM_TOKEN, CHAT_ID)
-            except Exception as exc:
-                logger.warning("US watcher unavailable: %s", type(exc).__name__)
-        # Render-backed Globex alerts: limited to two per UTC day by default.
+        # Archived Asia/US/legacy rules have no verified holdout edge. Keep their
+        # functions for comparative research, but never start duplicate senders.
+        logger.info("Archived scanner alerts OFF; canonical Hunter shadow only")
+        # One canonical 1m research runtime; unverified detectors stay in shadow.
         if os.getenv("GLOBEX_RENDER_ENABLED", "true").lower() == "true":
             try:
                 from globex_render_worker import start_worker as start_globex_worker
@@ -1240,24 +1227,10 @@ class EvolutionaryTradingBot:
         flask_thread = threading.Thread(target=run_flask, daemon=True)
         flask_thread.start()
         
-        # The legacy scanner uses unverified Yahoo data and must not flood
-        # price requests when market data is stale or unavailable.
-        if os.getenv("ENABLE_LEGACY_MONITOR", "false").lower() == "true":
-            monitor_thread = threading.Thread(target=self.monitor_market, daemon=True)
-            monitor_thread.start()
-            learning_thread = threading.Thread(
-                target=self.learning_system.run_evaluation_loop,
-                args=(self.analyzer,),
-                daemon=True
-            )
-            learning_thread.start()
-        else:
-            logger.info("Legacy signals disabled until data validation is complete")
-
         # Polling is optional: simultaneous instances cause Telegram 409.
-        # Outbound Telegram alerts still work when incoming polling is disabled.
-        if os.getenv("ENABLE_TELEGRAM_POLLING", "false").lower() != "true":
-            logger.info("Telegram getUpdates disabled: outbound notifications stay enabled")
+        # Experimental market alerts remain OFF regardless of polling settings.
+        if self.bot is None or os.getenv("ENABLE_TELEGRAM_POLLING", "false").lower() != "true":
+            logger.info("Telegram polling disabled; Hunter shadow monitoring continues")
             while self.is_running:
                 time.sleep(60)
             return
@@ -1278,16 +1251,21 @@ START_TIME = time.time()
 def home():
     return jsonify({
         'status': 'active',
-        'system': 'Evolutionary Trading Bot with Institutional Footprints',
+        'system': 'Suhail Hunter — research shadow monitor',
+        'prediction_readiness': 'NOT READY',
         'uptime': time.time() - START_TIME,
         'timestamp': datetime.now().isoformat()
     })
 
 @app.route('/health')
 def health():
+    from globex_render_worker import get_status
+    snapshot = get_status()
     return jsonify({
-        'status': 'healthy',
-        'uptime': time.time() - START_TIME
+        'process': 'alive',
+        'prediction_readiness': 'NOT READY',
+        'uptime': time.time() - START_TIME,
+        'hunter': snapshot,
     })
 
 def run_flask():

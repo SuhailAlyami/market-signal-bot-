@@ -1,0 +1,5 @@
+{
+  "source": "Actual stdout recovered from gh run view --log; artifact blob download returned Forbidden",
+  "run_url": "https://github.com/SuhailAlyami/market-signal-bot-/actions/runs/39222971595",
+  "status": "Exploratory negative pilot, no out-of-sample edge claim"
+}

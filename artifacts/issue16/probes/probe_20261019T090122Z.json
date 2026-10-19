@@ -1,0 +1,46 @@
+{
+  "observed_at_utc": "2026-10-19T09:01:22.622123+00:00",
+  "source": "Yahoo Finance via yfinance; potentially delayed, unofficial research interface",
+  "live_feed_verified": false,
+  "publication_latency_measured": false,
+  "versions": {
+    "pandas": "2.3.3",
+    "numpy": "2.5.4",
+    "yfinance": "0.2.66"
+  },
+  "requests": [
+    {
+      "symbol": "ES=F",
+      "interval": "1m",
+      "auto_adjust": false,
+      "request_started_utc": "2026-10-19T09:01:22.627635+00:00",
+      "parameters": {
+        "period": "1d"
+      },
+      "rows": 292,
+      "first_bar_start_utc": "2026-10-19T04:00:00+00:00",
+      "last_bar_start_utc": "2026-10-19T08:51:00+00:00",
+      "last_completed_bar_end_utc": "2026-10-19T08:52:00+00:00",
+      "completed_bar_age_seconds": 563.896327,
+      "request_finished_utc": "2026-10-19T09:01:23.896336+00:00",
+      "request_duration_seconds": 1.269
+    },
+    {
+      "symbol": "NQ=F",
+      "interval": "1m",
+      "auto_adjust": false,
+      "request_started_utc": "2026-10-19T09:01:23.896480+00:00",
+      "parameters": {
+        "period": "1d"
+      },
+      "rows": 292,
+      "first_bar_start_utc": "2026-10-19T04:00:00+00:00",
+      "last_bar_start_utc": "2026-10-19T08:51:00+00:00",
+      "last_completed_bar_end_utc": "2026-10-19T08:52:00+00:00",
+      "completed_bar_age_seconds": 564.387209,
+      "request_finished_utc": "2026-10-19T09:01:24.387216+00:00",
+      "request_duration_seconds": 0.491
+    }
+  ],
+  "files": []
+}

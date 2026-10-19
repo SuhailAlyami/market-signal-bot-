@@ -1,66 +1,99 @@
-"""Low-noise ES/NQ Globex research alerts using existing Render Telegram credentials."""
+"""Render wrapper for the single 1m Hunter shadow runtime; experimental alerts OFF."""
+from __future__ import annotations
+
+import json
 import logging
 import os
 import threading
-import time
 from datetime import datetime, timezone
+from pathlib import Path
 
-import requests
-from early_globex_watch import globex_active, scan_once
+from hunter_runtime import HunterRuntime
 
 LOG = logging.getLogger("suhail.globex")
+_STATUS = {"status": "not_started", "alerts_enabled": False, "readiness": "NOT_READY", "symbols": {}}
+_THREAD = None
 
 
-def start_worker(token, chat_id):
-    if not token or not chat_id:
-        LOG.warning("Globex watcher disabled: Telegram credentials unavailable")
-        return
-    interval = max(300, int(os.getenv("GLOBEX_CHECK_SECONDS", "300")))
-    cooldown = max(1800, int(os.getenv("GLOBEX_ALERT_COOLDOWN_SECONDS", "7200")))
-    max_daily = max(1, int(os.getenv("GLOBEX_MAX_DAILY_ALERTS", "2")))
+def get_status(now=None):
+    """JSON-safe snapshot for /health, including unavailable/stale market data."""
+    snapshot = json.loads(json.dumps(_STATUS))
+    if snapshot.get("timestamp"):
+        now = now or datetime.now(timezone.utc)
+        age = max(0., (now - datetime.fromisoformat(snapshot["timestamp"])).total_seconds())
+        snapshot["heartbeat_age_seconds"] = age
+        try:
+            interval = max(60, int(os.getenv("HUNTER_CHECK_SECONDS", "60")))
+        except ValueError:
+            interval = 60
+        if age > max(180, interval * 3):
+            snapshot["last_status"] = snapshot["status"]
+            snapshot["status"] = "worker_stalled"
+    return snapshot
+
+
+def yahoo_bars(symbol):
+    import yfinance as yf
+
+    return yf.Ticker(symbol).history(period="5d", interval="1m", auto_adjust=False, raise_errors=True)
+
+
+def create_runtime(state_dir=None):
+    directory = Path(state_dir or os.getenv("HUNTER_STATE_DIR", ".hunter-state"))
+    return HunterRuntime(directory / "state.json", directory / "shadow.jsonl")
+
+
+def run_once(runtime=None, now=None, fetcher=None):
+    global _STATUS
+    runtime = runtime or create_runtime()
+    live_clock = (lambda: datetime.now(timezone.utc)) if now is None else None
+    result = runtime.poll(now or datetime.now(timezone.utc), fetcher or yahoo_bars, clock=live_clock)
+    _STATUS = result["heartbeat"]
+    LOG.info("Hunter heartbeat %s", json.dumps(_STATUS, ensure_ascii=False))
+    return result
+
+
+def start_worker(token=None, chat_id=None):
+    """Keep bootstrap compatibility; Telegram credentials never gate detection."""
+    global _THREAD
+    if _THREAD and _THREAD.is_alive():
+        return _THREAD
+    try:
+        interval = max(60, int(os.getenv("HUNTER_CHECK_SECONDS", "60")))
+    except ValueError:
+        interval = 60
+    runtime = create_runtime()
+    stop = threading.Event()
+    LOG.warning("Hunter NOT READY: experimental alerts OFF; underlying shadow observations only")
 
     def loop():
-        sent = set()
-        last_alert = {}
-        day = None
-        count = 0
-        while True:
+        global _STATUS
+        while not stop.is_set():
             try:
-                now = datetime.now(timezone.utc)
-                today = now.date()
-                if today != day:
-                    day, count = today, 0
-                    sent.clear()
-                if globex_active(now) and count < max_daily:
-                    for item in scan_once(now):
-                        key = (item["symbol"], item["direction"], item["bar_end"])
-                        group = (item["symbol"], item["direction"])
-                        if key in sent or now.timestamp() - last_alert.get(group, 0) < cooldown:
-                            continue
-                        if count >= max_daily:
-                            break
-                        direction = "صعود" if item["direction"] == "WATCH_UP" else "هبوط"
-                        level = item["top"] if direction == "صعود" else item["bottom"]
-                        invalidation = item["bottom"] if direction == "صعود" else item["top"]
-                        message = (
-                            f"🚨 سهيل هنتر | انفجار محتمل {direction} | {item['symbol']}\\n"
-                            f"السعر: {item['price']:.2f} | الحجم النسبي: {item['rvol']:.2f}x\\n"
-                            f"مستوى الكسر: {level:.2f} | الإلغاء: {invalidation:.2f}\\n"
-                            f"شمعة مكتملة: {item['bar_end']}\\n"
-                            "مراقبة بحثية فقط، بيانات Yahoo قد تتأخر. ليست توصية عقد SPX."
-                        )
-                        response = requests.post(
-                            f"https://api.telegram.org/bot{token}/sendMessage",
-                            json={"chat_id": chat_id, "text": message},
-                            timeout=15,
-                        )
-                        response.raise_for_status()
-                        sent.add(key)
-                        last_alert[group] = now.timestamp()
-                        count += 1
-                        LOG.info("Globex alert delivered: %s %s", item["symbol"], item["direction"])
+                run_once(runtime)
             except Exception as exc:
-                LOG.warning("Globex watcher error: %s", type(exc).__name__)
-            time.sleep(interval)
+                _STATUS = {"status": "worker_error", "error_type": type(exc).__name__,
+                           "timestamp": datetime.now(timezone.utc).isoformat(),
+                           "alerts_enabled": False, "readiness": "NOT_READY"}
+                LOG.warning("Hunter worker error: %s", type(exc).__name__)
+            stop.wait(interval)
 
-    threading.Thread(target=loop, daemon=True, name="globex-monitor").start()
+    _THREAD = threading.Thread(target=loop, daemon=True, name="hunter-shadow")
+    _THREAD.start()
+    return _THREAD
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Single underlying shadow observation, no notifications")
+    parser.add_argument("--once", action="store_true", help="run a single observation (default)")
+    parser.add_argument("--state-dir", default=None)
+    args = parser.parse_args()
+    result = run_once(create_runtime(args.state_dir))
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0 if result["heartbeat"]["status"] == "ok" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
