@@ -50,7 +50,7 @@ future outcome later proves missing. Such signals remain in CSV artifacts as
 censored and do not enter precision denominators. Invalid OHLCV/zero-volume
 rows, incomplete candles and gaps cannot become setups or historical levels.
 The retained sources contain 25 invalid ES rows, 24 invalid NQ rows, and 54 gaps
-over one minute each. Unknown-outage movements remain unobservable, not assumed
+longer than one minute in each source. Unknown-outage movements remain unobservable, not assumed
 correct or incorrect.
 
 ## Untouched holdout: selected candidate
@@ -135,6 +135,9 @@ One canonical completed-1m runtime now replaces the independently launched
 Render/Actions scanners. Detection runs without Telegram credentials, independently
 of outbound alert quotas. Experimental outbound events cannot be enabled by an
 environment flag. The archived detectors remain available for research only.
+The shadow runtime retains the experimental `pre_level` rule using the shared
+causal features. The selected `failed_breakout` research result was not promoted
+to a verified production detector because it did not establish an advantage.
 
 The shared causal feature code supports SETUP / TRIGGER / INVALIDATION / EXIT,
 two buffered confirmation closes, cooldown, dedupe, atomic state, and shadow
@@ -176,8 +179,9 @@ Coverage includes holdout mutation, future-feature leakage, causal censoring,
 DST, holidays, openings, stale feeds, transition hysteresis, restart gaps,
 duplicate reservations, provider/calendar/persistence failures and receipt-time
 outcome handling. Five legacy tests silently skipped by unittest are now
-actually discovered. Independent research/runtime code review found no remaining
-substantive implementation defect. GitHub's PR checks separately reproduce the
+actually discovered. Research/runtime code review corrected the defects listed
+below; passing these checks does not guarantee defect-free operation. GitHub's
+PR checks separately reproduce the
 full retained reports and run application regressions. Their status is code and
 reproducibility evidence, not prediction accuracy.
 

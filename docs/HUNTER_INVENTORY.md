@@ -9,7 +9,7 @@ Telegram acceptance, and predictive quality are separate observations.
 
 | Component | Data and decision | Scheduler / persistence | Output and limits |
 | --- | --- | --- | --- |
-| `hunter_runtime.py` | Shared experimental ES/NQ completed 1m underlying detector; validates feed before decisions | One runtime used by cloud/Render adapters; local state and append-only shadow journal | SETUP / TRIGGER / INVALIDATION / EXIT, heartbeat and later underlying outcomes; alerts OFF, no verified edge |
+| `hunter_runtime.py` | Experimental ES/NQ completed 1m `pre_level` underlying detector using the shared causal features; validates feed before decisions | One runtime used by cloud/Render adapters; local state and append-only shadow journal | SETUP / TRIGGER / INVALIDATION / EXIT, heartbeat and later underlying outcomes; alerts OFF, no verified edge |
 | `globex_render_worker.py` | Adapter for the shared runtime; Yahoo futures proxy | Render process poll; scans continue regardless of notification cap or Telegram credentials | Research shadow events and heartbeat; `get_status()` for HTTP diagnostics |
 | `early_globex_watch.py` | Legacy 5m ES/NQ recent-range close breakout with RVOL >= 1.5 | Hand-coded US Eastern Globex weekly gate, not a complete CME holiday calendar | WATCH_UP / WATCH_DOWN; already completed breakout, not demonstrated pre-breakout detection |
 | `asia_watch.py` | Archived 15m ES/NQ opening-hour range breakout, RVOL >= 1.5 | Manual legacy entry point only; Tokyo weekday / New York DST conversion; in-memory notification dedupe | Arabic research WATCH implementation retained for comparison; not launched by main |
@@ -60,6 +60,13 @@ stale/incomplete/invalid bars must be visible in heartbeat rather than silently
 becoming “no signal”. A freshness check measures observed completed-bar age, not
 proof of exchange-to-provider latency or real-time entitlement.
 
+HTTP diagnostics additionally expose heartbeat age and stalled-worker status.
+Forward shadow outcomes start from the first complete minute after actual
+detection, so they never credit a return before the decision arrived. The
+reference Open is diagnostic and is not labeled an executable fill. Actual
+retained live receipts were rejected as stale and produced no valid live setup
+or resolved trade outcome; see [the measured report](ISSUE16_REPORT.md).
+
 ## Initial defects found
 
 | Finding at baseline `357cdd5` | Consequence / handling |
@@ -84,6 +91,9 @@ proof of exchange-to-provider latency or real-time entitlement.
 - `asia_watch_tests.yml`: full regression using the same application dependencies.
 - `early_research.yml`: manual/selected-main-change exploratory ES/NQ study,
   archived JSON; research output, not a correctness or profitability gate.
+- `hunter_research.yml`: offline reproduction of all four retained studies with
+  exact research dependencies; compares complete JSON reports against the
+  archived measurements. Reproducibility does not establish a predictive edge.
 - `explosion_watch.yml`: every-five-minute Actions schedule; best effort and
   serialized. This cannot guarantee the low latency required for SPX 0DTE.
 - `monday_readiness_notice.yml`: manual or workflow-change-triggered Telegram
