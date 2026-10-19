@@ -42,6 +42,13 @@ class SelectorTests(unittest.TestCase):
             with self.subTest(changes=changes):
                 self.assertIsNone(pick([quote(**changes)]))
 
+    def test_invalid_thresholds_fail_closed(self):
+        for changes in [dict(max_age_seconds=-1), dict(max_age_seconds=float("nan")),
+                        dict(max_spread_pct=float("nan")),
+                        dict(max_moneyness_pct=float("nan"))]:
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                pick([quote()], **changes)
+
     def test_put_side(self):
         self.assertEqual(pick([quote(right="P")], direction="PUT").right, "P")
 
