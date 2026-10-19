@@ -69,7 +69,9 @@ def select_spx_0dte(
     age = (now - underlying_time).total_seconds()
     if not 0 <= age <= max_age_seconds:
         return None
-    if not 0 < max_spread_pct < 1 or not 0 < max_moneyness_pct < 1:
+    if (not isfinite(max_age_seconds) or max_age_seconds <= 0
+        or not isfinite(max_spread_pct) or not isfinite(max_moneyness_pct)
+        or not 0 < max_spread_pct < 1 or not 0 < max_moneyness_pct < 1):
         raise ValueError("invalid selection thresholds")
     date = now.astimezone(NY).date().isoformat()
     right = "C" if direction == "CALL" else "P"
@@ -77,7 +79,8 @@ def select_spx_0dte(
     for q in quotes:
         if q.symbol != "SPX" or q.expiry != date or q.right != right:
             continue
-        if not q.live_verified or not q.source.strip() or q.quote_time.tzinfo is None:
+        if (not q.live_verified or not isinstance(q.source, str)
+            or not q.source.strip() or q.quote_time.tzinfo is None):
             continue
         age = (now - q.quote_time).total_seconds()
         if not 0 <= age <= max_age_seconds:
