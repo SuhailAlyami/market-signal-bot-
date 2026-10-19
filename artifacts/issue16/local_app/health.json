@@ -1,0 +1,37 @@
+{
+  "observed_http_status": 200,
+  "scope": "LOCAL PROCESS ONLY; not a deployed Render observation",
+  "body": {
+    "hunter": {
+      "alerts_enabled": false,
+      "heartbeat_age_seconds": 36.264606,
+      "persistence_guaranteed": false,
+      "persistence_note": "survives same-filesystem restart; ephemeral Render replacement may erase state",
+      "poll_started_at": "2026-10-19T09:12:06.515140+00:00",
+      "readiness": "NOT_READY",
+      "record_type": "heartbeat",
+      "state_backend": "local_atomic_json",
+      "status": "degraded",
+      "symbols": {
+        "ES=F": {
+          "detection_delay_seconds": 547.139912,
+          "last_completed_bar": "2026-10-19T09:03:00+00:00",
+          "live_feed_verified": false,
+          "source": "Yahoo Finance 1m futures proxy; potentially delayed",
+          "status": "stale_feed"
+        },
+        "NQ=F": {
+          "detection_delay_seconds": 547.466536,
+          "last_completed_bar": "2026-10-19T09:03:00+00:00",
+          "live_feed_verified": false,
+          "source": "Yahoo Finance 1m futures proxy; potentially delayed",
+          "status": "stale_feed"
+        }
+      },
+      "timestamp": "2026-10-19T09:12:07.468260+00:00"
+    },
+    "prediction_readiness": "NOT READY",
+    "process": "alive",
+    "uptime": 222.97095108032227
+  }
+}

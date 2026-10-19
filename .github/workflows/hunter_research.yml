@@ -1,0 +1,58 @@
+name: Reproduce retained Hunter holdout — not a trading gate
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'hunter_research.py'
+      - 'artifacts/issue16/**'
+      - '.github/workflows/hunter_research.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        include:
+          - symbol: 'ES=F'
+            file: es
+          - symbol: 'NQ=F'
+            file: nq
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r artifacts/issue16/requirements-research.txt
+      - name: Reproduce frozen study from retained raw snapshot, no market requests
+        run: >-
+          python hunter_research.py
+          --input artifacts/issue16/data/${{ matrix.file }}_1m.csv.gz
+          --symbol '${{ matrix.symbol }}'
+          --session both --output-dir reproduced/${{ matrix.file }}
+          --as-of 2026-10-19T09:00:51.641639Z
+      - name: Compare full deterministic reports with published measurements
+        env:
+          STUDY_FILE: ${{ matrix.file }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          symbol = os.environ['STUDY_FILE']
+          for session in ('all', 'rth'):
+              name = session + '_report.json'
+              expected = json.loads((Path('artifacts/issue16/research') / symbol / name).read_text())
+              actual = json.loads((Path('reproduced') / symbol / name).read_text())
+              if actual != expected:
+                  raise SystemExit(f'{symbol}/{session}: published research did not reproduce')
+          print('Published reports reproduced; this does not certify predictive edge')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hunter-holdout-${{ matrix.file }}
+          path: reproduced/
+          if-no-files-found: error

@@ -1,0 +1,2 @@
+# Preserve raw reproducible evidence while keeping source review readable.
+artifacts/issue16/** linguist-generated=true

@@ -1,4 +1,4 @@
-name: Suhail Explosion Tests
+name: Suhail regression and historical smoke
 on:
   pull_request:
   push:
@@ -12,17 +12,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      TZ: UTC
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install test dependencies
-        run: pip install 'yfinance>=0.2.55,<1' 'pandas>=2.1,<3' 'requests>=2.31,<3' 'pandas-market-calendars>=4.4,<6'
-      - name: Syntax check
-        run: python -m py_compile explosion_detector.py backtest_explosion.py tests/test_explosion_detector.py tests/test_backtest_explosion.py
-      - name: Unit tests
-        run: python -m unittest discover -s tests -v
+      - name: Install application and regression dependencies
+        run: pip install -r requirements.txt
+      - name: Compile all application modules and regression fixtures
+        run: python -m compileall -q *.py tests
+      - name: Full deterministic regression suite (not predictive validation)
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
 
   historical-data-smoke:
     runs-on: ubuntu-latest
@@ -34,7 +36,7 @@ jobs:
           python-version: '3.11'
       - name: Install historical study dependencies
         run: pip install 'yfinance>=0.2.55,<1' 'pandas>=2.1,<3' 'requests>=2.31,<3' 'pandas-market-calendars>=4.4,<6'
-      - name: Fetch real SPY bars and evaluate previous signals (no alerts/orders)
+      - name: Historical availability smoke only (not predictive validation)
         run: python backtest_explosion.py --symbol SPY --period 5d --horizon 6 --output backtest_results.json
       - name: Save research-only result
         if: always()

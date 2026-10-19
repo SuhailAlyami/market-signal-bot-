@@ -1,0 +1,28 @@
+{
+  "symbol": "ES=F",
+  "horizon_minutes": 5,
+  "large_move_windows_0_1pct": 332,
+  "methods": {
+    "pre_level": {
+      "signals": 254,
+      "directional_hit_rate": 0.5197,
+      "mean_forward_move_pct": -0.00018
+    },
+    "impulse": {
+      "signals": 138,
+      "directional_hit_rate": 0.5072,
+      "mean_forward_move_pct": 5e-05
+    },
+    "breakout": {
+      "signals": 314,
+      "directional_hit_rate": 0.4873,
+      "mean_forward_move_pct": -0.00062
+    }
+  },
+  "limitations": [
+    "Yahoo minute history may be delayed and is short.",
+    "Signals use completed 1-minute candles, not tick-level prediction.",
+    "Overlapping samples are correlated; no option bid/ask or transaction costs.",
+    "This is exploratory, not an out-of-sample or profitable strategy claim."
+  ]
+}

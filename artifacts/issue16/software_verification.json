@@ -1,0 +1,15 @@
+{
+  "recorded_at_utc": "2026-10-19T09:10:22.763031+00:00",
+  "python": "3.11.17",
+  "command": "python -m compileall -q *.py tests && python -m unittest discover -s tests -v",
+  "tests": 60,
+  "result": "PASS",
+  "predictive_evidence": false,
+  "test_log": "verification.log",
+  "script_sha256": {
+    "hunter_research.py": "9cd8263a0d707b6eeb96fcae628551f9acf0f11d0eb50428b6b0355bf0257727",
+    "hunter_runtime.py": "fd036b797a850888383120d4d2eb76ea4747f5fff15baf45b229326f58564ed2",
+    "globex_render_worker.py": "c41b9ab2b1f64fbe299023d28e57cd298897b0825f3d329d652d283b4269460b",
+    "tests/test_hunter_research.py": "68805f91069118af0d5b328d6c1eb64cb6be77e36247d1ac36bbbf6ccb591222"
+  }
+}

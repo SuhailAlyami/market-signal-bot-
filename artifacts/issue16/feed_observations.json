@@ -1,0 +1,77 @@
+{
+  "recorded_at_utc": "2026-10-19T09:10:22.762749+00:00",
+  "live_feed_verified": false,
+  "scope": "Active-session Yahoo ES/NQ repeated observations, not independent feed comparison; bar age is not publication latency.",
+  "bar_age_min_seconds": 561.203216,
+  "bar_age_max_seconds": 564.387209,
+  "observations": [
+    {
+      "artifact": "probe_20261019T090122Z.json",
+      "symbol": "ES=F",
+      "interval": "1m",
+      "auto_adjust": false,
+      "request_started_utc": "2026-10-19T09:01:22.627635+00:00",
+      "parameters": {
+        "period": "1d"
+      },
+      "rows": 292,
+      "first_bar_start_utc": "2026-10-19T04:00:00+00:00",
+      "last_bar_start_utc": "2026-10-19T08:51:00+00:00",
+      "last_completed_bar_end_utc": "2026-10-19T08:52:00+00:00",
+      "completed_bar_age_seconds": 563.896327,
+      "request_finished_utc": "2026-10-19T09:01:23.896336+00:00",
+      "request_duration_seconds": 1.269
+    },
+    {
+      "artifact": "probe_20261019T090122Z.json",
+      "symbol": "NQ=F",
+      "interval": "1m",
+      "auto_adjust": false,
+      "request_started_utc": "2026-10-19T09:01:23.896480+00:00",
+      "parameters": {
+        "period": "1d"
+      },
+      "rows": 292,
+      "first_bar_start_utc": "2026-10-19T04:00:00+00:00",
+      "last_bar_start_utc": "2026-10-19T08:51:00+00:00",
+      "last_completed_bar_end_utc": "2026-10-19T08:52:00+00:00",
+      "completed_bar_age_seconds": 564.387209,
+      "request_finished_utc": "2026-10-19T09:01:24.387216+00:00",
+      "request_duration_seconds": 0.491
+    },
+    {
+      "artifact": "probe_20261019T090419Z.json",
+      "symbol": "ES=F",
+      "interval": "1m",
+      "auto_adjust": false,
+      "request_started_utc": "2026-10-19T09:04:19.869139+00:00",
+      "parameters": {
+        "period": "1d"
+      },
+      "rows": 295,
+      "first_bar_start_utc": "2026-10-19T04:00:00+00:00",
+      "last_bar_start_utc": "2026-10-19T08:54:00+00:00",
+      "last_completed_bar_end_utc": "2026-10-19T08:55:00+00:00",
+      "completed_bar_age_seconds": 561.203216,
+      "request_finished_utc": "2026-10-19T09:04:21.203224+00:00",
+      "request_duration_seconds": 1.334
+    },
+    {
+      "artifact": "probe_20261019T090419Z.json",
+      "symbol": "NQ=F",
+      "interval": "1m",
+      "auto_adjust": false,
+      "request_started_utc": "2026-10-19T09:04:21.203429+00:00",
+      "parameters": {
+        "period": "1d"
+      },
+      "rows": 295,
+      "first_bar_start_utc": "2026-10-19T04:00:00+00:00",
+      "last_bar_start_utc": "2026-10-19T08:54:00+00:00",
+      "last_completed_bar_end_utc": "2026-10-19T08:55:00+00:00",
+      "completed_bar_age_seconds": 561.465449,
+      "request_finished_utc": "2026-10-19T09:04:21.465458+00:00",
+      "request_duration_seconds": 0.262
+    }
+  ]
+}
