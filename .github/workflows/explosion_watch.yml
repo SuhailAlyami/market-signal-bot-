@@ -1,8 +1,8 @@
-name: Suhail Hunter shadow — best effort, no alerts
+name: IBKR manual diagnostic — no alerts
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '2-59/5 * * * *'
+  # Hosted ephemeral machines do not inherit the connected chat OAuth.
+  # Continuous scheduled collection belongs to ibkr_session on an authorized host.
 
 permissions:
   contents: read
@@ -31,7 +31,7 @@ jobs:
           restore-keys: hunter-shadow-
       - name: Check IBKR runtime authorization, no implicit login
         id: ibkr
-        run: python ibkr_feed_preflight.py
+        run: python ibkr_feed_preflight.py --require-auth
       - name: Record all candidates or explicit feed rejection, no outbound alerts
         if: steps.ibkr.outputs.ready == 'true' 
         run: python cloud_scan.py
