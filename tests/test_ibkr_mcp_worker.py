@@ -25,7 +25,9 @@ class WorkerTests(unittest.TestCase):
             with patch.dict(os.environ, {"IBKR_MCP_ENABLED": "true", "IBKR_MCP_REPORT": str(path)}):
                 with patch("ibkr_mcp_client.run_collection", new=AsyncMock(return_value=report)) as collect:
                     self.assertEqual(worker.poll_once(), report)
-                    collect.assert_awaited_once_with(authorize=False)
+                    collect.assert_awaited_once()
+                    self.assertFalse(collect.await_args.kwargs['authorize'])
+                    self.assertTrue(callable(collect.await_args.kwargs['history_sink']))
                 self.assertEqual(worker.get_status()["status"], "authorization_required")
                 self.assertEqual(json.loads(path.read_text()), report)
 

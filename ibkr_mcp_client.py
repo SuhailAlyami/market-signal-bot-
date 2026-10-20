@@ -169,7 +169,7 @@ def oauth_provider(storage, redirect, receive):
         storage=storage, redirect_handler=redirect, callback_handler=receive)
 
 
-async def run_collection(*, authorize=False, storage=None):
+async def run_collection(*, authorize=False, storage=None, history_sink=None):
     """No implicit sign-in in a scheduled job; auth failures are observable."""
     base = {"schema_version": 1, "source": SOURCE, "orders_enabled": False,
             "readiness": "NOT_READY", "contracts": [], "candidates": {},
@@ -208,7 +208,7 @@ async def run_collection(*, authorize=False, storage=None):
                     await session.initialize()
                     listing = await session.list_tools()
                     tools = ReadOnlyTools(session, listing.tools)
-                    return await collect_spx(tools)
+                    return await collect_spx(tools, history_sink=history_sink)
     except ImportError:
         return {**base, "status": "setup_required", "reason": "install_requirements_ibkr"}
     except AuthorizationRequired:
