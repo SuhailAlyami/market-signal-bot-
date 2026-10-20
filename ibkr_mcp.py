@@ -22,7 +22,7 @@ from spx_option_selector import OptionQuote, select_spx_0dte
 SOURCE = "IBKR MCP"
 ENDPOINT = "https://api.ibkr.com/v1/api/mcp-public"
 READ_TOOLS = frozenset({"search_contracts", "get_price_snapshot", "get_option_parameters",
-                        "get_option_data", "get_price_history"})
+                        "get_option_data", "get_price_history", "search_futures"})
 NY = ZoneInfo("America/New_York")
 
 

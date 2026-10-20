@@ -9,7 +9,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import requests
-import yfinance as yf
+import ibkr_market_data as market_data
 
 LOG = logging.getLogger("suhail.asia")
 UTC = timezone.utc
@@ -43,7 +43,7 @@ def detect(symbol, frame, now):
     if any(col not in frame for col in ("High", "Low", "Close", "Volume")):
         return None
     data = frame.sort_index()
-    # Yahoo Finance bars are labeled with START timestamp.
+    # IBKR bars are labeled with START timestamp.
     data = data[data.index <= pd.Timestamp(now - timedelta(minutes=15))]
     if len(data) < 14:
         return None
@@ -76,7 +76,7 @@ def detect(symbol, frame, now):
         return None
     return dict(symbol=symbol, direction=direction, price=close, rvol=rv,
                 top=high, bottom=low, bar_end=end.isoformat(),
-                session_date=str(now.astimezone(ZoneInfo("Asia/Tokyo")).date()), source="Yahoo Finance futures proxy, may be delayed")
+                session_date=str(now.astimezone(ZoneInfo("Asia/Tokyo")).date()), source="IBKR MCP native futures")
 
 def scan_once(now=None):
     now = now or datetime.now(UTC)
@@ -85,7 +85,7 @@ def scan_once(now=None):
     found=[]
     for symbol in FUTURES:
         try:
-            frame=yf.Ticker(symbol).history(period="5d",interval="15m",auto_adjust=True)
+            frame=market_data.Ticker(symbol).history(period="5d",interval="15m",auto_adjust=True)
             if not frame.empty:
                 alert=detect(symbol,frame,now)
                 if alert:
@@ -117,7 +117,7 @@ def start_worker(token, chat_id):
                             f"نطاق الساعة الأولى: {item['bottom']:.2f}–{item['top']:.2f}\\n"
                             f"الحجم النسبي: {item['rvol']:.2f}x\\n"
                             f"آخر شمعة مكتملة: {item['bar_end']}\\n"
-                            "المصدر Yahoo Finance وقد يتأخر. ليست توصية SPX 0DTE؛ "
+                            "المصدر IBKR وفق حالة الاشتراك والتحقق من حداثة البيانات. ليست توصية SPX 0DTE؛ "
                             "حركة آسيا لا تضمن اتجاه نيويورك."
                         )
                         response=requests.post(
@@ -130,3 +130,4 @@ def start_worker(token, chat_id):
                 LOG.error("Asia watch error: %s",type(exc).__name__)
             time.sleep(CHECK_SECONDS)
     threading.Thread(target=loop,daemon=True,name="asia-monitor").start()
+

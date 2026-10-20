@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   shadow:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.IBKR_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 7
     steps:
       - uses: actions/checkout@v4
@@ -27,10 +27,14 @@ jobs:
           path: .hunter-state
           key: hunter-shadow-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: hunter-shadow-
+      - name: Check IBKR runtime authorization, no implicit login
+        id: ibkr
+        run: python ibkr_feed_preflight.py
       - name: Record all candidates or explicit feed rejection, no outbound alerts
-        run: python cloud_scan.py --allow-stale-feed
+        if: steps.ibkr.outputs.ready == 'true' 
+        run: python cloud_scan.py
       - name: Observe frozen NY candidates during the session, actual receipt times
-        if: always()
+        if: always() && steps.ibkr.outputs.ready == 'true'
         run: python ny_intraday_shadow.py
       - uses: actions/cache/save@v4
         if: always()

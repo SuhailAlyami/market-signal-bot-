@@ -1,4 +1,4 @@
-"""Official MCP SDK transport for IBKR; only five market-data tools allowed.
+"""Official MCP SDK transport for IBKR; only allowlisted market-data tools allowed.
 
 The ChatGPT connection cannot be exported to this process. Authorize this
 client separately with --authorize; subsequent runs reuse/refresh its private
@@ -169,7 +169,7 @@ def oauth_provider(storage, redirect, receive):
         storage=storage, redirect_handler=redirect, callback_handler=receive)
 
 
-async def run_collection(*, authorize=False, storage=None, history_sink=None):
+async def run_collection(*, authorize=False, storage=None, history_sink=None, collector=None):
     """No implicit sign-in in a scheduled job; auth failures are observable."""
     base = {"schema_version": 1, "source": SOURCE, "orders_enabled": False,
             "readiness": "NOT_READY", "contracts": [], "candidates": {},
@@ -208,12 +208,16 @@ async def run_collection(*, authorize=False, storage=None, history_sink=None):
                     await session.initialize()
                     listing = await session.list_tools()
                     tools = ReadOnlyTools(session, listing.tools)
-                    return await collect_spx(tools, history_sink=history_sink)
+                    return await collector(tools) if collector else await collect_spx(tools, history_sink=history_sink)
     except ImportError:
         return {**base, "status": "setup_required", "reason": "install_requirements_ibkr"}
     except AuthorizationRequired:
         return {**base, "status": "authorization_required", "reason": "renew_runtime_authorization"}
     except Exception as exc:
+        from ibkr_market_data import IBKRDataUnavailable
+        if isinstance(exc, IBKRDataUnavailable):
+            return {**base, "status": "data_unavailable", "reason": exc.reason,
+                    "error_type": type(exc).__name__}
         return {**base, "status": "error", "reason": "mcp_connection_failed",
                 "error_type": type(exc).__name__}
     finally:

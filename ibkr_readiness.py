@@ -31,7 +31,7 @@ def inspect_socket() -> FeedStatus:
     try:
         config = gateway_config()
         if config is None:
-            return FeedStatus(False, False, "IBKR disabled; Yahoo research feed remains in use")
+            return FeedStatus(False, False, "IBKR disabled; market data unavailable, no fallback")
         with socket.create_connection(config, timeout=2):
             return FeedStatus(True, True, "Gateway socket open; authentication and market data NOT verified")
     except (OSError, ValueError) as exc:
@@ -46,3 +46,4 @@ def contract_plan() -> dict:
         "SPX_OPTIONS": {"secType": "OPT", "exchange": "SMART", "currency": "USD",
                         "expiry": "REQUIRED", "strike": "REQUIRED", "right": "C_OR_P"},
     }
+
