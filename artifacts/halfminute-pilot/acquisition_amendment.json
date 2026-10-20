@@ -1,0 +1,17 @@
+{
+  "reason": "ONE_DAY returned current CME trading day beginning 22:00 UTC, with no completed New York session. No RTH candidate performance was observed.",
+  "observed_raw_rows": {
+    "ES": 1310,
+    "NQ": 1310
+  },
+  "original_freeze_commit": "c4c0ea1ebf851c0fc02176f7672aa62da662c53d",
+  "unchanged_rule_sha256": "84c938ace6a0a133d761b8c7afeb6d9e6efa88aa7f416c6345b39092faa64b38",
+  "cutoff": "2026-10-20T08:54:00+00:00",
+  "next_request": {
+    "period": "TWO_DAYS",
+    "outside_rth": false,
+    "step": "THIRTY_SECS"
+  },
+  "purpose": "Obtain prior completed New York session without changing rules or evaluating current overnight as RTH.",
+  "independent_session_validation_claim": false
+}
