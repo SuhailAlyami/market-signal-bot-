@@ -1,0 +1,2 @@
+# Optional nonlinear offline research only; not needed by the data reader.
+scikit-learn==1.8.0
