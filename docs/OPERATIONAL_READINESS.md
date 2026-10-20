@@ -15,7 +15,10 @@ Configuration presence only yields HOST_CHECK_REQUIRED, never a live-data claim.
 Publication triggers the configuration job without launching a duplicate collector.
 The scheduled NY job still starts at 13:25 UTC, before both summer/winter opens.
 
-Both the continuous and hosted fallback workflows now require same-host runtime
+The hosted diagnostic is now manual-only: rechecking an unauthenticated ephemeral
+machine every five minutes cannot acquire data and wastes free Actions time.
+The continuous workflow retains its daily session schedule.
+Both continuous and manual diagnostic workflows now require same-host runtime
 IBKR authorization and fail clearly when it is absent. Authorization is not a
 market-data test; subsequent consumers retain independent realtime/freshness
 checks. Missing authorization never triggers an implicit login, account query,
