@@ -1,0 +1,228 @@
+{
+  "decision": "NOT_READY",
+  "source": "IBKR option last-trade OHLCV",
+  "descriptive_all_data": [
+    {
+      "bars": 1507,
+      "independent_events": 1,
+      "methods": {
+        "radar_watch": {
+          "signals": 0,
+          "censored_signals": 0,
+          "detected_events": 0,
+          "early_events": 0,
+          "event_precision": null,
+          "event_recall": 0.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 1,
+          "median_lead_seconds": null
+        },
+        "radar_acceleration": {
+          "signals": 1,
+          "censored_signals": 0,
+          "detected_events": 1,
+          "early_events": 0,
+          "event_precision": 1.0,
+          "event_recall": 1.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 0,
+          "median_lead_seconds": -180.0
+        },
+        "baseline_breakout": {
+          "signals": 1,
+          "censored_signals": 2,
+          "detected_events": 1,
+          "early_events": 0,
+          "event_precision": 1.0,
+          "event_recall": 1.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 0,
+          "median_lead_seconds": -180.0
+        },
+        "baseline_momentum": {
+          "signals": 3,
+          "censored_signals": 6,
+          "detected_events": 1,
+          "early_events": 0,
+          "event_precision": 0.3333333333333333,
+          "event_recall": 1.0,
+          "early_recall": 0.0,
+          "false_alarms": 2,
+          "missed_events": 0,
+          "median_lead_seconds": -60.0
+        },
+        "no_signal": {
+          "signals": 0,
+          "censored_signals": 0,
+          "detected_events": 0,
+          "early_events": 0,
+          "event_precision": null,
+          "event_recall": 0.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 1,
+          "median_lead_seconds": null
+        }
+      },
+      "horizon_minutes": 5,
+      "premium_target_pct": 25.0,
+      "availability_delay_seconds": 0
+    },
+    {
+      "bars": 1507,
+      "independent_events": 1,
+      "methods": {
+        "radar_watch": {
+          "signals": 0,
+          "censored_signals": 0,
+          "detected_events": 0,
+          "early_events": 0,
+          "event_precision": null,
+          "event_recall": 0.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 1,
+          "median_lead_seconds": null
+        },
+        "radar_acceleration": {
+          "signals": 1,
+          "censored_signals": 0,
+          "detected_events": 1,
+          "early_events": 0,
+          "event_precision": 1.0,
+          "event_recall": 1.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 0,
+          "median_lead_seconds": -240.0
+        },
+        "baseline_breakout": {
+          "signals": 1,
+          "censored_signals": 2,
+          "detected_events": 1,
+          "early_events": 0,
+          "event_precision": 1.0,
+          "event_recall": 1.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 0,
+          "median_lead_seconds": -240.0
+        },
+        "baseline_momentum": {
+          "signals": 3,
+          "censored_signals": 6,
+          "detected_events": 1,
+          "early_events": 0,
+          "event_precision": 0.3333333333333333,
+          "event_recall": 1.0,
+          "early_recall": 0.0,
+          "false_alarms": 2,
+          "missed_events": 0,
+          "median_lead_seconds": -120.0
+        },
+        "no_signal": {
+          "signals": 0,
+          "censored_signals": 0,
+          "detected_events": 0,
+          "early_events": 0,
+          "event_precision": null,
+          "event_recall": 0.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 1,
+          "median_lead_seconds": null
+        }
+      },
+      "horizon_minutes": 5,
+      "premium_target_pct": 25.0,
+      "availability_delay_seconds": 60
+    },
+    {
+      "bars": 1507,
+      "independent_events": 1,
+      "methods": {
+        "radar_watch": {
+          "signals": 0,
+          "censored_signals": 0,
+          "detected_events": 0,
+          "early_events": 0,
+          "event_precision": null,
+          "event_recall": 0.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 1,
+          "median_lead_seconds": null
+        },
+        "radar_acceleration": {
+          "signals": 1,
+          "censored_signals": 0,
+          "detected_events": 0,
+          "early_events": 0,
+          "event_precision": 0.0,
+          "event_recall": 0.0,
+          "early_recall": 0.0,
+          "false_alarms": 1,
+          "missed_events": 1,
+          "median_lead_seconds": null
+        },
+        "baseline_breakout": {
+          "signals": 1,
+          "censored_signals": 2,
+          "detected_events": 0,
+          "early_events": 0,
+          "event_precision": 0.0,
+          "event_recall": 0.0,
+          "early_recall": 0.0,
+          "false_alarms": 1,
+          "missed_events": 1,
+          "median_lead_seconds": null
+        },
+        "baseline_momentum": {
+          "signals": 3,
+          "censored_signals": 6,
+          "detected_events": 1,
+          "early_events": 0,
+          "event_precision": 0.3333333333333333,
+          "event_recall": 1.0,
+          "early_recall": 0.0,
+          "false_alarms": 2,
+          "missed_events": 0,
+          "median_lead_seconds": -180.0
+        },
+        "no_signal": {
+          "signals": 0,
+          "censored_signals": 0,
+          "detected_events": 0,
+          "early_events": 0,
+          "event_precision": null,
+          "event_recall": 0.0,
+          "early_recall": 0.0,
+          "false_alarms": 0,
+          "missed_events": 1,
+          "median_lead_seconds": null
+        }
+      },
+      "horizon_minutes": 5,
+      "premium_target_pct": 25.0,
+      "availability_delay_seconds": 120
+    }
+  ],
+  "holdout": null,
+  "limitations": [
+    "Trade highs are not executable option bid/ask or fills.",
+    "Fixed exploratory rules; no calibrated prediction probability or profitability claim.",
+    "One selected near-ATM contract has survivorship/selection and changing-DTE bias.",
+    "Provider publication/arrival times are not supplied by historical bars.",
+    "No commissions, spread, slippage, fills or option P&L are simulated."
+  ],
+  "reason": "insufficient_sessions_for_train_validation_holdout",
+  "observed_ny_calendar_dates": [
+    "2026-10-18",
+    "2026-10-19",
+    "2026-10-20"
+  ],
+  "source_sha256": "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb"
+}

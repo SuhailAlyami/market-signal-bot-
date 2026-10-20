@@ -28,6 +28,9 @@ def poll_once():
 
     try:
         report = asyncio.run(collect())
+        from premium_radar import journal_observations
+        events = journal_observations(report, report_path().parent)
+        report["premium_events_recorded"] = len(events)
     except Exception as exc:
         report = {"status": "error", "readiness": "NOT_READY", "source": SOURCE,
                   "orders_enabled": False, "reason": "worker_collection_failed",
