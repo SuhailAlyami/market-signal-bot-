@@ -179,3 +179,35 @@ successfully evaluated all three candidates and both baselines for ES and NQ;
 it is labeled `REUSED_DAY_INTEGRATION_SMOKE_NOT_FORWARD` and is not forward
 performance evidence. These checks do not establish that a future scheduled
 GitHub run has already executed.
+
+
+## New York intraday receipt journal (2026-10-20 amendment)
+
+`ny_intraday_shadow.py` now runs in the existing five-minute GitHub shadow
+workflow, independently of the after-close evaluator. NYSE calendar gates
+regular hours, holidays, daylight saving and early closes. On October 20 the
+regular session is 16:30–23:00 Asia/Riyadh. Before opening it writes WAITING;
+it does not fetch market data. No Render or outbound notifications are used.
+
+Frozen crossmarket rules and frozen linear weights run on ES/NQ completed
+minute bars during the session. Boosted reconstruction remains offline-only;
+this change does not declare any model validated or promote it to trading.
+Five-day Yahoo context includes prior-day levels. Raw first-received values
+are retained; later provider revisions do not rewrite the intraday features.
+Missing counterpart minutes wait for actual arrival. Model hashes are pinned
+within each session. Cooldown is applied before any future outcome is known.
+
+Each new candidate records candle close, actual receipt/detection time and
+arrival delay. A candidate received more than 60 seconds after its candle
+close is LATE; even a shorter delay does not verify Yahoo as a realtime feed.
+Initial backfill is recorded with its actual late receipt, never an invented
+early detection time. No outcomes or option profits are inferred. The stored
+NY journal must be evaluated using receipt timestamps, separately from the
+after-close theoretical candle-close replay.
+
+Artifacts retain ny-heartbeat.json, dated state and candidate JSONL under
+.hunter-state/ny. Cache restoration is best effort: NEW_OR_CACHE_MISSING is
+explicit and cross-run deduplication cannot be guaranteed after cache loss.
+GitHub's nominal five-minute polling plus provider delay cannot establish
+first-minute detection. A timely authenticated data feed and continuously
+running collector remain unresolved prerequisites for that product goal.
