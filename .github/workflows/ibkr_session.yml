@@ -1,12 +1,11 @@
-name: NY IBKR continuous research — no alerts
+name: Legacy IBKR host readiness (manual only)
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/ibkr_session.yml']
-  schedule:
-    # Before NY open in summer and winter; calendar inside the program handles DST.
-    - cron: '25 13 * * 1-5'
+    inputs:
+      start_session:
+        description: Start legacy research only on an already configured IBKR host
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -18,7 +17,7 @@ jobs:
     outputs:
       configured: ${{ steps.config.outputs.configured }}
     steps:
-      - name: Report missing runtime as blocked, not successful detection
+      - name: Report readiness only; this check does not start market detection
         id: config
         env:
           IBKR_RUNNER_LABEL: ${{ vars.IBKR_RUNNER }}
@@ -29,7 +28,9 @@ jobs:
           configured=bool(os.environ.get('IBKR_RUNNER_LABEL','').strip())
           result={'status':'HOST_CHECK_REQUIRED' if configured else 'COLLECTOR_NOT_CONFIGURED',
                   'collector_running_verified':False,'live_feed_verified':False,
-                  'detector_quality':'NOT_READY','orders_enabled':False}
+                  'detector_quality':'NOT_READY','orders_enabled':False,
+                  'automatic_collection_enabled':False,
+                  'active_alert_repository':'SuhailAlyami/spx-agent'}
           Path('readiness').mkdir(exist_ok=True)
           Path('readiness/configuration.json').write_text(json.dumps(result,indent=2)+'\n')
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
@@ -37,8 +38,7 @@ jobs:
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
               f.write('## Hunter operational readiness\n\n```json\n'+json.dumps(result,indent=2)+'\n```\n')
           if not configured:
-              print('::error title=Hunter not running::No IBKR_RUNNER is configured. No market detection was started.')
-              raise SystemExit(1)
+              print('::notice title=Legacy collector not configured::No IBKR_RUNNER is configured. This is a readiness check only; no detection or alerts started.')
           PY
       - uses: actions/upload-artifact@v4
         if: always()
@@ -48,7 +48,7 @@ jobs:
   session:
     # No private brokerage session is installed or assumed on hosted CI machines.
     needs: configuration
-    if: github.event_name != 'push' && github.ref == 'refs/heads/main' && needs.configuration.outputs.configured == 'true'
+    if: github.event_name == 'workflow_dispatch' && inputs.start_session && github.ref == 'refs/heads/main' && needs.configuration.outputs.configured == 'true'
     runs-on: ${{ vars.IBKR_RUNNER }}
     timeout-minutes: 490
     steps:

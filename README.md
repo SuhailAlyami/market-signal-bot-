@@ -1,5 +1,12 @@
 # Suhail Hunter — NOT READY
 
+> **Active Telegram path:** [SuhailAlyami/spx-agent](https://github.com/SuhailAlyami/spx-agent).
+> The legacy `ibkr_session.yml` here is manual readiness/research only. It has
+> no automatic schedule or push trigger. Missing `IBKR_RUNNER` is reported as
+> `COLLECTOR_NOT_CONFIGURED`, not successful market detection. A session requires
+> a configured host and explicit `start_session` input; alerts remain off here.
+> This change does not activate minute-level data collection.
+
 Research-only early directional WATCH for ES/NQ underlying bars. No verified
 predictive edge, live SPX option chain, option quotes, fills, or real-money orders.
 Experimental alerts are OFF. Passing CI and HTTP uptime do not establish
