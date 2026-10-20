@@ -1,4 +1,8 @@
-"""Opt-in background IBKR collector; no Telegram or order capabilities."""
+"""Background IBKR market-data reader; explicit opt-out, no orders or alerts.
+
+Missing independent OAuth state returns authorization_required without network
+requests or implicit sign-in. Existing ChatGPT credentials are never exported.
+"""
 import asyncio
 from datetime import datetime, timezone
 import os
@@ -16,7 +20,7 @@ def report_path():
 
 
 def get_status():
-    if os.getenv("IBKR_MCP_ENABLED", "false").lower() != "true":
+    if os.getenv("IBKR_MCP_ENABLED", "true").lower() != "true":
         return {"status": "disabled", "source": SOURCE, "readiness": "NOT_READY", "orders_enabled": False}
     return report_health(report_path())
 
@@ -52,7 +56,7 @@ def poll_once():
 
 def start_worker():
     global _THREAD
-    if os.getenv("IBKR_MCP_ENABLED", "false").lower() != "true":
+    if os.getenv("IBKR_MCP_ENABLED", "true").lower() != "true":
         return None
     if _THREAD and _THREAD.is_alive():
         return _THREAD

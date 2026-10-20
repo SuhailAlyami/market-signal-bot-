@@ -17,7 +17,7 @@ rather than assuming an ES/NQ candle implies a particular SPX option return.
 - Runtime assessment additionally requires REALTIME status and a last
   completed bar no older than 120 seconds. An observation is research-only;
   it never bypasses the independent executable bid/ask freshness gate.
-- The opt-in IBKR collector requests 90 one-minute bars for CALL and PUT at
+- The IBKR collector requests 90 one-minute bars for CALL and PUT at
   its nearest resolved strike. The worker journals deduplicated observations
   and invalidations across restarts, including cancellation on provider outage,
   crossed reference level or ten-minute expiry. No Telegram sender is enabled.
@@ -151,7 +151,7 @@ The project remains NOT READY for reliable early explosion alerts.
 
 ## Prospective shadow outcomes
 
-The opt-in IBKR worker now reconciles `premium_shadow.jsonl` against the archived
+The IBKR worker now reconciles `premium_shadow.jsonl` against the archived
 first-received bar versions and appends terminal results to
 `premium_outcomes.jsonl`. Each WATCH/ACCELERATION observation uses its actual
 `detected_at`; earlier or partially elapsed detection-minute bars cannot count
@@ -181,3 +181,14 @@ Worker polling now uses a start-to-start interval instead of adding a full
 leaves 35 seconds until the next cycle. An overrun leaves a minimum one-second
 pause; cycles do not overlap or issue catch-up bursts. This removes avoidable
 local polling delay but cannot guarantee source latency or free-host uptime.
+
+### Reader startup
+
+A public `/health` check on 20 October 2026 returned HTTP 200 with IBKR `disabled`.
+The reader now starts by default, and the base dependency installation includes
+`requirements-ibkr.txt`. Set `IBKR_MCP_ENABLED=false` to opt out explicitly.
+Startup does not authorize anything: missing independent OAuth files produce
+`authorization_required` without network or browser sign-in. The user must still
+complete the server's independent authorization flow. This enables evidence
+collection when authorized, not experimental notifications or orders. A server
+with an explicit disabled environment setting still requires configuration.
