@@ -3,3 +3,7 @@ __pycache__/
 .venv/
 *.db
 .hunter-state/
+
+.ibkr-auth/
+**/oauth-tokens.json
+**/oauth-client.json

@@ -27,6 +27,15 @@ class HunterAppTests(unittest.TestCase):
         self.assertEqual(response.json["hunter"], snapshot)
         self.assertNotIn("healthy", response.json.values())
 
+    def test_ibkr_auth_health_is_separate_and_contains_no_quotes(self):
+        ibkr = {"status": "authorization_required", "orders_enabled": False, "readiness": "NOT_READY"}
+        with patch("ibkr_mcp_worker.get_status", return_value=ibkr):
+            response = app_module.app.test_client().get("/health")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json["ibkr"], ibkr)
+        self.assertEqual(response.json["prediction_readiness"], "NOT READY")
+
 
 if __name__ == "__main__":
     unittest.main()
+

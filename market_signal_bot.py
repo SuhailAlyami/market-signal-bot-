@@ -1213,6 +1213,8 @@ class EvolutionaryTradingBot:
     
     def run(self):
         """تشغيل البوت"""
+        from ibkr_mcp_worker import start_worker as start_ibkr_reader
+        start_ibkr_reader()
         # Archived Asia/US/legacy rules have no verified holdout edge. Keep their
         # functions for comparative research, but never start duplicate senders.
         logger.info("Archived scanner alerts OFF; canonical Hunter shadow only")
@@ -1260,12 +1262,14 @@ def home():
 @app.route('/health')
 def health():
     from globex_render_worker import get_status
+    from ibkr_mcp_worker import get_status as ibkr_status
     snapshot = get_status()
     return jsonify({
         'process': 'alive',
         'prediction_readiness': 'NOT READY',
         'uptime': time.time() - START_TIME,
         'hunter': snapshot,
+        'ibkr': ibkr_status(),
     })
 
 def run_flask():
@@ -1284,3 +1288,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
