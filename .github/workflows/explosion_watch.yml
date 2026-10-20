@@ -13,6 +13,8 @@ concurrency:
 
 jobs:
   shadow:
+    # Authorized hosts use the single continuous NY job instead of duplicate polls.
+    if: vars.IBKR_RUNNER == ''
     runs-on: ${{ vars.IBKR_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 7
     steps:
