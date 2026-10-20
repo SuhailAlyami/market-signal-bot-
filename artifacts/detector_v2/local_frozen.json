@@ -1,0 +1,1221 @@
+{
+  "status": "NOT_READY",
+  "grid_size": 8,
+  "trials": [
+    {
+      "config": {
+        "lookback": 3,
+        "rvol": 1.5,
+        "min_return": 0.015
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 9,
+            "censored_signals": 13,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 7,
+            "missed_events": 2,
+            "timely_precision": 0.1111111111111111,
+            "timely_recall": 0.25,
+            "timely_f1": 0.15384615384615383
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      }
+    },
+    {
+      "config": {
+        "lookback": 3,
+        "rvol": 1.5,
+        "min_return": 0.03
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 8,
+            "censored_signals": 13,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 6,
+            "missed_events": 2,
+            "timely_precision": 0.125,
+            "timely_recall": 0.25,
+            "timely_f1": 0.16666666666666666
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      }
+    },
+    {
+      "config": {
+        "lookback": 3,
+        "rvol": 2.5,
+        "min_return": 0.015
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 6,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 2,
+            "timely_precision": 0.16666666666666666,
+            "timely_recall": 0.25,
+            "timely_f1": 0.2
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      }
+    },
+    {
+      "config": {
+        "lookback": 3,
+        "rvol": 2.5,
+        "min_return": 0.03
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 6,
+            "censored_signals": 8,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 2,
+            "timely_precision": 0.16666666666666666,
+            "timely_recall": 0.25,
+            "timely_f1": 0.2
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      }
+    },
+    {
+      "config": {
+        "lookback": 5,
+        "rvol": 1.5,
+        "min_return": 0.015
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 9,
+            "censored_signals": 12,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 2,
+            "late_detections": 0,
+            "false_alarms": 7,
+            "missed_events": 2,
+            "timely_precision": 0.2222222222222222,
+            "timely_recall": 0.5,
+            "timely_f1": 0.30769230769230765
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      }
+    },
+    {
+      "config": {
+        "lookback": 5,
+        "rvol": 1.5,
+        "min_return": 0.03
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 8,
+            "censored_signals": 12,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 2,
+            "late_detections": 0,
+            "false_alarms": 6,
+            "missed_events": 2,
+            "timely_precision": 0.25,
+            "timely_recall": 0.5,
+            "timely_f1": 0.3333333333333333
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      }
+    },
+    {
+      "config": {
+        "lookback": 5,
+        "rvol": 2.5,
+        "min_return": 0.015
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 5,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 2,
+            "late_detections": 0,
+            "false_alarms": 3,
+            "missed_events": 2,
+            "timely_precision": 0.4,
+            "timely_recall": 0.5,
+            "timely_f1": 0.4444444444444445
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      }
+    },
+    {
+      "config": {
+        "lookback": 5,
+        "rvol": 2.5,
+        "min_return": 0.03
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 5,
+            "censored_signals": 8,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 2,
+            "late_detections": 0,
+            "false_alarms": 3,
+            "missed_events": 2,
+            "timely_precision": 0.4,
+            "timely_recall": 0.5,
+            "timely_f1": 0.4444444444444445
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      }
+    }
+  ],
+  "finalists": [
+    {
+      "config": {
+        "lookback": 5,
+        "rvol": 2.5,
+        "min_return": 0.015
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 5,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 2,
+            "late_detections": 0,
+            "false_alarms": 3,
+            "missed_events": 2,
+            "timely_precision": 0.4,
+            "timely_recall": 0.5,
+            "timely_f1": 0.4444444444444445
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      },
+      "validation": {
+        "methods": {
+          "local": {
+            "signals": 4,
+            "censored_signals": 6,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 4,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 2,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 4,
+            "censored_signals": 3,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 4,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 7,
+            "censored_signals": 9,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 7,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_momentum": {
+            "signals": 18,
+            "censored_signals": 36,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 18,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "560f2ec62a23f0a14a358af9bec7c924a857558182b93fd3c2d3d4689a6f067a",
+          "9ed1603f983a68666c0fbb6c95cb6a8f0603c909e5618236479b6e3a42051922"
+        ]
+      }
+    },
+    {
+      "config": {
+        "lookback": 5,
+        "rvol": 2.5,
+        "min_return": 0.03
+      },
+      "train": {
+        "methods": {
+          "local": {
+            "signals": 5,
+            "censored_signals": 8,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 2,
+            "late_detections": 0,
+            "false_alarms": 3,
+            "missed_events": 2,
+            "timely_precision": 0.4,
+            "timely_recall": 0.5,
+            "timely_f1": 0.4444444444444445
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 1,
+            "events": 4,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 4,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 5,
+            "censored_signals": 3,
+            "events": 4,
+            "detected": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 1,
+            "false_alarms": 4,
+            "missed_events": 3,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 10,
+            "censored_signals": 10,
+            "events": 4,
+            "detected": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 1,
+            "false_alarms": 8,
+            "missed_events": 2,
+            "timely_precision": 0.1,
+            "timely_recall": 0.25,
+            "timely_f1": 0.14285714285714288
+          },
+          "baseline_momentum": {
+            "signals": 19,
+            "censored_signals": 45,
+            "events": 4,
+            "detected": 3,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "late_detections": 2,
+            "false_alarms": 16,
+            "missed_events": 1,
+            "timely_precision": 0.05263157894736842,
+            "timely_recall": 0.25,
+            "timely_f1": 0.08695652173913043
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+          "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+        ]
+      },
+      "validation": {
+        "methods": {
+          "local": {
+            "signals": 4,
+            "censored_signals": 5,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 4,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_watch": {
+            "signals": 1,
+            "censored_signals": 2,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 1,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "current_acceleration": {
+            "signals": 4,
+            "censored_signals": 3,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 4,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_breakout": {
+            "signals": 7,
+            "censored_signals": 9,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 7,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          },
+          "baseline_momentum": {
+            "signals": 18,
+            "censored_signals": 36,
+            "events": 2,
+            "detected": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "late_detections": 0,
+            "false_alarms": 18,
+            "missed_events": 2,
+            "timely_precision": 0.0,
+            "timely_recall": 0.0,
+            "timely_f1": 0.0
+          }
+        },
+        "delay_seconds": 60,
+        "source_sha256": [
+          "560f2ec62a23f0a14a358af9bec7c924a857558182b93fd3c2d3d4689a6f067a",
+          "9ed1603f983a68666c0fbb6c95cb6a8f0603c909e5618236479b6e3a42051922"
+        ]
+      }
+    }
+  ],
+  "selected": {
+    "config": {
+      "lookback": 5,
+      "rvol": 2.5,
+      "min_return": 0.015
+    },
+    "train": {
+      "methods": {
+        "local": {
+          "signals": 5,
+          "censored_signals": 10,
+          "events": 4,
+          "detected": 2,
+          "before_onset": 0,
+          "within_first_minute_or_before": 2,
+          "late_detections": 0,
+          "false_alarms": 3,
+          "missed_events": 2,
+          "timely_precision": 0.4,
+          "timely_recall": 0.5,
+          "timely_f1": 0.4444444444444445
+        },
+        "current_watch": {
+          "signals": 1,
+          "censored_signals": 1,
+          "events": 4,
+          "detected": 0,
+          "before_onset": 0,
+          "within_first_minute_or_before": 0,
+          "late_detections": 0,
+          "false_alarms": 1,
+          "missed_events": 4,
+          "timely_precision": 0.0,
+          "timely_recall": 0.0,
+          "timely_f1": 0.0
+        },
+        "current_acceleration": {
+          "signals": 5,
+          "censored_signals": 3,
+          "events": 4,
+          "detected": 1,
+          "before_onset": 0,
+          "within_first_minute_or_before": 0,
+          "late_detections": 1,
+          "false_alarms": 4,
+          "missed_events": 3,
+          "timely_precision": 0.0,
+          "timely_recall": 0.0,
+          "timely_f1": 0.0
+        },
+        "baseline_breakout": {
+          "signals": 10,
+          "censored_signals": 10,
+          "events": 4,
+          "detected": 2,
+          "before_onset": 1,
+          "within_first_minute_or_before": 1,
+          "late_detections": 1,
+          "false_alarms": 8,
+          "missed_events": 2,
+          "timely_precision": 0.1,
+          "timely_recall": 0.25,
+          "timely_f1": 0.14285714285714288
+        },
+        "baseline_momentum": {
+          "signals": 19,
+          "censored_signals": 45,
+          "events": 4,
+          "detected": 3,
+          "before_onset": 1,
+          "within_first_minute_or_before": 1,
+          "late_detections": 2,
+          "false_alarms": 16,
+          "missed_events": 1,
+          "timely_precision": 0.05263157894736842,
+          "timely_recall": 0.25,
+          "timely_f1": 0.08695652173913043
+        }
+      },
+      "delay_seconds": 60,
+      "source_sha256": [
+        "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+        "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+      ]
+    },
+    "validation": {
+      "methods": {
+        "local": {
+          "signals": 4,
+          "censored_signals": 6,
+          "events": 2,
+          "detected": 0,
+          "before_onset": 0,
+          "within_first_minute_or_before": 0,
+          "late_detections": 0,
+          "false_alarms": 4,
+          "missed_events": 2,
+          "timely_precision": 0.0,
+          "timely_recall": 0.0,
+          "timely_f1": 0.0
+        },
+        "current_watch": {
+          "signals": 1,
+          "censored_signals": 2,
+          "events": 2,
+          "detected": 0,
+          "before_onset": 0,
+          "within_first_minute_or_before": 0,
+          "late_detections": 0,
+          "false_alarms": 1,
+          "missed_events": 2,
+          "timely_precision": 0.0,
+          "timely_recall": 0.0,
+          "timely_f1": 0.0
+        },
+        "current_acceleration": {
+          "signals": 4,
+          "censored_signals": 3,
+          "events": 2,
+          "detected": 0,
+          "before_onset": 0,
+          "within_first_minute_or_before": 0,
+          "late_detections": 0,
+          "false_alarms": 4,
+          "missed_events": 2,
+          "timely_precision": 0.0,
+          "timely_recall": 0.0,
+          "timely_f1": 0.0
+        },
+        "baseline_breakout": {
+          "signals": 7,
+          "censored_signals": 9,
+          "events": 2,
+          "detected": 0,
+          "before_onset": 0,
+          "within_first_minute_or_before": 0,
+          "late_detections": 0,
+          "false_alarms": 7,
+          "missed_events": 2,
+          "timely_precision": 0.0,
+          "timely_recall": 0.0,
+          "timely_f1": 0.0
+        },
+        "baseline_momentum": {
+          "signals": 18,
+          "censored_signals": 36,
+          "events": 2,
+          "detected": 0,
+          "before_onset": 0,
+          "within_first_minute_or_before": 0,
+          "late_detections": 0,
+          "false_alarms": 18,
+          "missed_events": 2,
+          "timely_precision": 0.0,
+          "timely_recall": 0.0,
+          "timely_f1": 0.0
+        }
+      },
+      "delay_seconds": 60,
+      "source_sha256": [
+        "560f2ec62a23f0a14a358af9bec7c924a857558182b93fd3c2d3d4689a6f067a",
+        "9ed1603f983a68666c0fbb6c95cb6a8f0603c909e5618236479b6e3a42051922"
+      ]
+    }
+  },
+  "train_sha256": [
+    "37715bdeb7b52cd4aa4558e0daf0dd40b1e8ad60d68db85bf3eebd463b0ecdcb",
+    "84fcffde0ffb2b67aa3b2f903f9a7b5ac0e63a362e171226a6dc2500b8a0bcf8"
+  ],
+  "validation_sha256": [
+    "560f2ec62a23f0a14a358af9bec7c924a857558182b93fd3c2d3d4689a6f067a",
+    "9ed1603f983a68666c0fbb6c95cb6a8f0603c909e5618236479b6e3a42051922"
+  ],
+  "timing_protocol": "Decision = completed minute end plus 60 seconds assumed availability. Onset/target = first threshold-touch minute START. Timely = decision no later than onset+60 seconds.",
+  "data_scope": "Previously inspected related 7690 development / 7695 validation contracts on shared market dates; not independent sessions or historical 0DTE.",
+  "notifications_enabled": false,
+  "frozen_at": "2026-10-20T06:51:39.303482+00:00",
+  "source_code_sha256": "a0a91c0421697a2764c56cb9e2c4406dce3e5a9f8fb70fa3fbd4f2370724ef72",
+  "replication_strikes": [
+    7685,
+    7700
+  ],
+  "replication_sides": [
+    "CALL",
+    "PUT"
+  ],
+  "replication_expiry": "2026-10-20",
+  "replication_delays_seconds": [
+    0,
+    30,
+    60,
+    120
+  ],
+  "primary_delay_seconds": 60,
+  "replication_cutoff_utc": "2026-10-20T04:41:00+00:00"
+}
