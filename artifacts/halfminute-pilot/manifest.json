@@ -1,0 +1,17 @@
+{
+  "source_sha256": "ae132d9e45a2dc1b57478f75a28d48b17441c9874ce3bc224dd09c4a5d5aace3",
+  "sha256": {
+    "acquisition.json": "be11d7beb8392d5038b6951d4cfae214f54fb68b04aa2af938d5af8466682027",
+    "acquisition_amendment.json": "b7961e40163deeb48abd480edc7a5e857d30a805a2851b1dde89ab657b4f1fd5",
+    "es_raw.json": "665546acd20e5f3488cbd32aa7a5a64d26a7f5c1eee9685e1b9f067e11fd1bdb",
+    "es_rth_raw.json": "8550f4725bca3c3aa45db29470da36d332929d615f9142325626cba40082bb0c",
+    "frozen.json": "4056cd59760c7c9831b63d8dd4123ad1cdf6efdc06d7be077011846a0e508dcd",
+    "initial_no_rth_report.json": "3f95cf5c9a898df2012baa56f7ae713cc0b65acdc6be78c96c76b62ff57d51b8",
+    "minute_resolution_report.json": "a0ca86f690b09dd449b3bada72b846068c7923f822468c00f57d1c6037a90c30",
+    "nq_raw.json": "3df3f26852f3468259bf1c970ad37a3904887a38474639861a0cb900cfbc153b",
+    "nq_rth_raw.json": "5a26b588a6cbdf895e8b5980b19bb946727b2e3b51d1d80eaf2b478d2c1ae8c4",
+    "report.json": "e8694a023a409035c601256a75b5b0a4e7df4d71b314869a6d44d204e0c2652a",
+    "summary.json": "4f65ab74af3d3880a829b64f1a9560266f9bc4fdd57ed553e05121f092990b58",
+    "timing_amendment.json": "424f7e4eaf64b7ad61d5fbce8ee274b9e945ec8b683f37e6144e5b36eac45594"
+  }
+}

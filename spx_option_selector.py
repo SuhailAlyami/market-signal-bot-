@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from math import isfinite
 from zoneinfo import ZoneInfo
+from option_risk_context import VolatilityObservation, compare_volatility, long_option_context
 
 NY = ZoneInfo("America/New_York")
 
@@ -25,6 +26,8 @@ class OptionQuote:
     source: str
     live_verified: bool
     multiplier: int = 100
+    implied_volatility: VolatilityObservation | None = None
+    realized_volatility: VolatilityObservation | None = None
 
 
 @dataclass(frozen=True)
@@ -41,6 +44,7 @@ class Candidate:
     observed_at: str
     source: str
     research_only: bool = True
+    risk_context: dict | None = None
 
 
 def select_spx_0dte(
@@ -99,9 +103,15 @@ def select_spx_0dte(
     if not accepted:
         return None
     q = min(accepted, key=lambda item: item[:3])[3]
+    context = long_option_context(right=q.right, strike=q.strike, underlying=underlying, ask=q.ask)
+    if all(v is None or v.underlying == q.symbol for v in (q.implied_volatility, q.realized_volatility)):
+        context["volatility_comparison"] = compare_volatility(
+            q.implied_volatility, q.realized_volatility, now=now, max_age_seconds=max_age_seconds)
     return Candidate(
         symbol=q.symbol, expiry=q.expiry, right=q.right, strike=q.strike,
         bid=q.bid, ask=q.ask, mid=round((q.bid + q.ask) / 2, 4),
         spread_pct=round((q.ask - q.bid) / ((q.bid + q.ask) / 2), 4),
         underlying=underlying, observed_at=q.quote_time.isoformat(), source=q.source,
+        risk_context=context,
     )
+

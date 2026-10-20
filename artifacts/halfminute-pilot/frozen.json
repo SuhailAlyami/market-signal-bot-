@@ -1,0 +1,39 @@
+{
+  "config": {
+    "rvol_half": 1.5,
+    "near_atr": 0.3,
+    "contraction": 0.55,
+    "setup_move_atr": 0.1,
+    "release_move_atr": 0.15,
+    "cooldown_seconds": 600,
+    "horizon_minutes": 10,
+    "delays_seconds": [
+      0,
+      15,
+      30,
+      60
+    ]
+  },
+  "methods": [
+    "half_setup",
+    "half_release",
+    "frozen_minute",
+    "baseline_breakout",
+    "no_signal"
+  ],
+  "source_sha256": "84c938ace6a0a133d761b8c7afeb6d9e6efa88aa7f416c6345b39092faa64b38",
+  "cutoff": "2026-10-20T08:54:00+00:00",
+  "data_request": {
+    "period": "ONE_DAY",
+    "step": "THIRTY_SECS",
+    "outside_rth": true
+  },
+  "fallback_if_provider_rejects_size": {
+    "step_count": 1000,
+    "step": "THIRTY_SECS",
+    "outside_rth": false
+  },
+  "selection": "No fitting, no tuning, publish all candidates and delays; no automatic runtime promotion.",
+  "event_definition": "Existing minute canonical labels remain unchanged for all methods.",
+  "source_scope": "New IBKR halfminute acquisition. Dates may overlap previous experiments; no independent-session validation claim."
+}

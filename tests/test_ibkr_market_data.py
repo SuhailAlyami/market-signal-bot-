@@ -55,6 +55,18 @@ class IBKRDataTests(unittest.TestCase):
         self.assertNotIn('period',call.calls[-1][1])
         self.assertEqual(result.attrs['latest_bar_age_seconds'],0)
 
+    def test_halfminute_requests_use_real_provider_step_and_drop_partial_bar(self):
+        call=Fake();original=call.__call__
+        async def wrapped(name,args):
+            r=await original(name,args)
+            if name=='get_price_history':
+                r['time']=[t.isoformat() for t in pd.date_range('2026-10-20T13:40:30Z',periods=41,freq='30s')]
+            return r
+        result=asyncio.run(collect_history(wrapped,'ES',now=NOW+pd.Timedelta(seconds=15),interval='30s',step_count=1000))
+        self.assertEqual(call.calls[-1][1]['step'],'THIRTY_SECS')
+        self.assertEqual(result.index[-1],pd.Timestamp('2026-10-20T13:59:30Z'))
+        self.assertEqual(result.attrs['latest_bar_age_seconds'],15)
+
     def test_frozen_or_delayed_feed_cannot_reach_detector(self):
         for status in ('FROZEN','DELAYED','UNAVAILABLE'):
             call=Fake(status)

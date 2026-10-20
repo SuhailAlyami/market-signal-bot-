@@ -1,0 +1,477 @@
+{
+  "status": "NOT_READY",
+  "symbols": {
+    "ES": {
+      "events": 29,
+      "rth_dates": [
+        "2026-10-19"
+      ],
+      "metrics": {
+        "0": {
+          "half_setup": {
+            "signals": 3,
+            "matched": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 2,
+            "missed_events": 28,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -90.0
+          },
+          "half_release": {
+            "signals": 12,
+            "matched": 3,
+            "before_onset": 2,
+            "within_first_minute_or_before": 2,
+            "false_alarms": 9,
+            "missed_events": 26,
+            "early_precision": 0.16666666666666666,
+            "early_recall": 0.06896551724137931,
+            "median_lead_seconds": 60.0
+          },
+          "frozen_minute": {
+            "signals": 4,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 4,
+            "missed_events": 29,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          },
+          "baseline_breakout": {
+            "signals": 11,
+            "matched": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 9,
+            "missed_events": 27,
+            "early_precision": 0.09090909090909091,
+            "early_recall": 0.034482758620689655,
+            "median_lead_seconds": -30.0
+          },
+          "no_signal": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          }
+        },
+        "15": {
+          "half_setup": {
+            "signals": 3,
+            "matched": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 2,
+            "missed_events": 28,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -105.0
+          },
+          "half_release": {
+            "signals": 12,
+            "matched": 3,
+            "before_onset": 2,
+            "within_first_minute_or_before": 2,
+            "false_alarms": 9,
+            "missed_events": 26,
+            "early_precision": 0.16666666666666666,
+            "early_recall": 0.06896551724137931,
+            "median_lead_seconds": 45.0
+          },
+          "frozen_minute": {
+            "signals": 4,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 4,
+            "missed_events": 29,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          },
+          "baseline_breakout": {
+            "signals": 11,
+            "matched": 2,
+            "before_onset": 1,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 9,
+            "missed_events": 27,
+            "early_precision": 0.09090909090909091,
+            "early_recall": 0.034482758620689655,
+            "median_lead_seconds": -45.0
+          },
+          "no_signal": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          }
+        },
+        "30": {
+          "half_setup": {
+            "signals": 3,
+            "matched": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 2,
+            "missed_events": 28,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -120.0
+          },
+          "half_release": {
+            "signals": 12,
+            "matched": 3,
+            "before_onset": 2,
+            "within_first_minute_or_before": 2,
+            "false_alarms": 9,
+            "missed_events": 26,
+            "early_precision": 0.16666666666666666,
+            "early_recall": 0.06896551724137931,
+            "median_lead_seconds": 30.0
+          },
+          "frozen_minute": {
+            "signals": 4,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 4,
+            "missed_events": 29,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          },
+          "baseline_breakout": {
+            "signals": 11,
+            "matched": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 9,
+            "missed_events": 27,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -60.0
+          },
+          "no_signal": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          }
+        },
+        "60": {
+          "half_setup": {
+            "signals": 3,
+            "matched": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 2,
+            "missed_events": 28,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -150.0
+          },
+          "half_release": {
+            "signals": 12,
+            "matched": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 10,
+            "missed_events": 27,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -75.0
+          },
+          "frozen_minute": {
+            "signals": 4,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 4,
+            "missed_events": 29,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          },
+          "baseline_breakout": {
+            "signals": 11,
+            "matched": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 9,
+            "missed_events": 27,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -90.0
+          },
+          "no_signal": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          }
+        }
+      }
+    },
+    "NQ": {
+      "events": 29,
+      "rth_dates": [
+        "2026-10-19"
+      ],
+      "metrics": {
+        "0": {
+          "half_setup": {
+            "signals": 3,
+            "matched": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 1,
+            "missed_events": 27,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -90.0
+          },
+          "half_release": {
+            "signals": 13,
+            "matched": 3,
+            "before_onset": 0,
+            "within_first_minute_or_before": 3,
+            "false_alarms": 10,
+            "missed_events": 26,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -30.0
+          },
+          "frozen_minute": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          },
+          "baseline_breakout": {
+            "signals": 12,
+            "matched": 4,
+            "before_onset": 3,
+            "within_first_minute_or_before": 4,
+            "false_alarms": 8,
+            "missed_events": 25,
+            "early_precision": 0.25,
+            "early_recall": 0.10344827586206896,
+            "median_lead_seconds": 30.0
+          },
+          "no_signal": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          }
+        },
+        "15": {
+          "half_setup": {
+            "signals": 3,
+            "matched": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 1,
+            "missed_events": 27,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -105.0
+          },
+          "half_release": {
+            "signals": 13,
+            "matched": 3,
+            "before_onset": 0,
+            "within_first_minute_or_before": 2,
+            "false_alarms": 10,
+            "missed_events": 26,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -45.0
+          },
+          "frozen_minute": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          },
+          "baseline_breakout": {
+            "signals": 12,
+            "matched": 4,
+            "before_onset": 3,
+            "within_first_minute_or_before": 3,
+            "false_alarms": 8,
+            "missed_events": 25,
+            "early_precision": 0.25,
+            "early_recall": 0.10344827586206896,
+            "median_lead_seconds": 15.0
+          },
+          "no_signal": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          }
+        },
+        "30": {
+          "half_setup": {
+            "signals": 3,
+            "matched": 2,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 1,
+            "missed_events": 27,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -120.0
+          },
+          "half_release": {
+            "signals": 13,
+            "matched": 3,
+            "before_onset": 0,
+            "within_first_minute_or_before": 2,
+            "false_alarms": 10,
+            "missed_events": 26,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -60.0
+          },
+          "frozen_minute": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          },
+          "baseline_breakout": {
+            "signals": 12,
+            "matched": 4,
+            "before_onset": 1,
+            "within_first_minute_or_before": 3,
+            "false_alarms": 8,
+            "missed_events": 25,
+            "early_precision": 0.08333333333333333,
+            "early_recall": 0.034482758620689655,
+            "median_lead_seconds": 0.0
+          },
+          "no_signal": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          }
+        },
+        "60": {
+          "half_setup": {
+            "signals": 3,
+            "matched": 1,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 2,
+            "missed_events": 28,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -60.0
+          },
+          "half_release": {
+            "signals": 13,
+            "matched": 3,
+            "before_onset": 0,
+            "within_first_minute_or_before": 1,
+            "false_alarms": 10,
+            "missed_events": 26,
+            "early_precision": 0.0,
+            "early_recall": 0.0,
+            "median_lead_seconds": -90.0
+          },
+          "frozen_minute": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          },
+          "baseline_breakout": {
+            "signals": 12,
+            "matched": 4,
+            "before_onset": 1,
+            "within_first_minute_or_before": 3,
+            "false_alarms": 8,
+            "missed_events": 25,
+            "early_precision": 0.08333333333333333,
+            "early_recall": 0.034482758620689655,
+            "median_lead_seconds": -30.0
+          },
+          "no_signal": {
+            "signals": 0,
+            "matched": 0,
+            "before_onset": 0,
+            "within_first_minute_or_before": 0,
+            "false_alarms": 0,
+            "missed_events": 29,
+            "early_precision": null,
+            "early_recall": 0.0,
+            "median_lead_seconds": null
+          }
+        }
+      }
+    }
+  }
+}
