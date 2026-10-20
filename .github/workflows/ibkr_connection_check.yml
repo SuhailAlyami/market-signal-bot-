@@ -1,0 +1,62 @@
+name: IBKR authorization and realtime connection check
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ibkr_connection_check.yml'
+permissions:
+  contents: read
+jobs:
+  configuration:
+    runs-on: ubuntu-latest
+    outputs:
+      configured: ${{ steps.inspect.outputs.configured }}
+    steps:
+      - name: Inspect explicit runner configuration, no credentials
+        id: inspect
+        env:
+          IBKR_RUNNER_LABEL: ${{ vars.IBKR_RUNNER }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          configured=bool(os.environ.get('IBKR_RUNNER_LABEL','').strip())
+          result={'runner_configured':configured,
+                  'status':'HOST_CHECK_REQUIRED' if configured else 'SELF_HOSTED_RUNNER_NOT_CONFIGURED',
+                  'broker_auth_checked':False,'feed_realtime_verified':False,
+                  'orders_enabled':False}
+          Path('connection-check').mkdir(exist_ok=True)
+          Path('connection-check/configuration.json').write_text(json.dumps(result,indent=2)+'\n')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('configured='+str(configured).lower()+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('## Actual IBKR runner configuration\n\n```json\n'+json.dumps(result,indent=2)+'\n```\n')
+          print(json.dumps(result))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ibkr-configuration-${{ github.run_id }}
+          path: connection-check/
+  host-check:
+    needs: configuration
+    if: needs.configuration.outputs.configured == 'true'
+    runs-on: ${{ vars.IBKR_RUNNER }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements.txt
+      - name: Inspect same-host authorization
+        id: auth
+        run: python ibkr_feed_preflight.py --output connection-check/authorization.json
+      - name: Verify current ES and NQ realtime inputs, no orders
+        if: steps.auth.outputs.ready == 'true'
+        run: python acquire_hunter_data.py --probe --output connection-check/data
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ibkr-host-check-${{ github.run_id }}
+          path: connection-check/

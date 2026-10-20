@@ -1,0 +1,10 @@
+{
+  "code_revision_used": "51fd114590060c0537e5012ec8cdefc407cc5e92",
+  "capture_origin": "Connected assistant IBKR market-data tools; no credentials exported",
+  "meaning": "One actual processing cycle, not autonomous GitHub authorization or predictive validation",
+  "sha256": {
+    "capture.json": "4364a47ae07ff571e4058588277809f269521c445f41a11a4de0c64ea0343145",
+    "report.json": "a0a916d58bbfda6d701784dc35af9534275ff11c1e41e684269496fa52232c7b",
+    "shadow-ibkr.jsonl": "977a3626b46d2071e42e2275f6b4d7198a84918c3a4f21a7cb2342c75fd0be58"
+  }
+}
