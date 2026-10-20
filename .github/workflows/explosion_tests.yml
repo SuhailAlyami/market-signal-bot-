@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install application and regression dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt -r requirements-ibkr.txt
       - name: Compile all application modules and regression fixtures
         run: python -m compileall -q *.py tests
       - name: Full deterministic regression suite (not predictive validation)
@@ -45,3 +45,4 @@ jobs:
           name: suhail-spy-research-report
           path: backtest_results.json
           if-no-files-found: ignore
+
