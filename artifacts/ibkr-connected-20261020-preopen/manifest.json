@@ -1,0 +1,10 @@
+{
+  "sha256": {
+    "preopen_reference.json": "6c50b752c86890c5375698706cc83dba554e86eb9d1330a16a2196e162e008dc",
+    "capture.json": "aad13da6c84f3671e857f14961adeab85ff1a33a3741a77845280ed89f6a3375",
+    "report.json": "1e3bf731832486926e69bd55cda502da6f8780e07a703b0babfff7f5637a3288",
+    "spx_daily.json": "7b3c85003b328956adc4836f830daefb405c5debadb38f8c4351c042523960cc",
+    "runtime/state-ibkr.json": "4ab38b4f6552eaed01463f40cd8551f273aa9b588c31a207bd6760542306ebbc",
+    "runtime/shadow-ibkr.jsonl": "6d2d1b90251f2c1263c7e66a0102e5bd8ae06706b4d9773f50433e1a6dda97f0"
+  }
+}

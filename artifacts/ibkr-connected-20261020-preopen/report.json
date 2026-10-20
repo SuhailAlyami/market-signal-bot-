@@ -1,0 +1,80 @@
+{
+  "processed_at": "2026-10-20T12:38:19.564503+00:00",
+  "source": "IBKR connected market-data tools",
+  "readiness": "NOT_READY",
+  "notifications_enabled": false,
+  "orders_enabled": false,
+  "capture_is_autonomous_runtime_authorization": false,
+  "symbols": {
+    "ES": {
+      "feed_status": "REALTIME",
+      "last_trade_at": "2026-10-20T12:37:27+00:00",
+      "last_trade_age_seconds": 52.564503,
+      "received_at": "2026-10-20T12:37:28.707000+00:00",
+      "latest_bar_age_seconds": 19.564503,
+      "rows": 1001,
+      "live_input_verified": true,
+      "contract_month": "202612",
+      "history_source": "Last",
+      "bar_publication_latency_verified": false
+    },
+    "NQ": {
+      "feed_status": "REALTIME",
+      "last_trade_at": "2026-10-20T12:37:29+00:00",
+      "last_trade_age_seconds": 50.564503,
+      "received_at": "2026-10-20T12:37:29.901000+00:00",
+      "latest_bar_age_seconds": 19.564503,
+      "rows": 1001,
+      "live_input_verified": true,
+      "contract_month": "202612",
+      "history_source": "Last",
+      "bar_publication_latency_verified": false
+    }
+  },
+  "ny_session_status": "WAITING_FOR_NY_OPEN",
+  "heartbeat": {
+    "record_type": "heartbeat",
+    "timestamp": "2026-10-20T12:38:19.564503+00:00",
+    "status": "ok",
+    "poll_started_at": "2026-10-20T12:38:19.564503+00:00",
+    "alerts_enabled": false,
+    "readiness": "NOT_READY",
+    "symbols": {
+      "ES=F": {
+        "status": "ok",
+        "last_completed_bar": "2026-10-20T12:38:00+00:00",
+        "detection_delay_seconds": 19.564503,
+        "source": "IBKR MCP native futures; realtime status validated by data adapter",
+        "live_feed_verified": false,
+        "feed_metadata": {
+          "source": "IBKR MCP",
+          "history_source": "Last",
+          "delayed": null,
+          "live_feed_verified": true,
+          "observed_at": "2026-10-20T12:37:28.707000+00:00",
+          "feed_status": "REALTIME"
+        }
+      },
+      "NQ=F": {
+        "status": "ok",
+        "last_completed_bar": "2026-10-20T12:38:00+00:00",
+        "detection_delay_seconds": 19.564503,
+        "source": "IBKR MCP native futures; realtime status validated by data adapter",
+        "live_feed_verified": false,
+        "feed_metadata": {
+          "source": "IBKR MCP",
+          "history_source": "Last",
+          "delayed": null,
+          "live_feed_verified": true,
+          "observed_at": "2026-10-20T12:37:29.901000+00:00",
+          "feed_status": "REALTIME"
+        }
+      }
+    },
+    "state_backend": "local_atomic_json",
+    "persistence_guaranteed": false,
+    "persistence_note": "survives same-filesystem restart; ephemeral Render replacement may erase state"
+  },
+  "events": [],
+  "status": "VERIFIED_CAPTURE_ANALYZED"
+}
