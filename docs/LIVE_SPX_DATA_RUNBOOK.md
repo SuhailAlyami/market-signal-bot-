@@ -51,10 +51,12 @@ deployed. Do not publish the loopback callback or OAuth files to work around
 that. Hosted authorization and persistent secret storage remain a separate
 deployment step; do not describe this route as running autonomously on Render.
 
-### Application integration (opt-in, OFF by default)
+### Application integration (reader starts by default; authorization required)
 
-- Install `requirements-ibkr.txt` on the authorized runtime.
-- Set `IBKR_MCP_ENABLED=true` only after independent authorization.
+- Base `requirements.txt` includes the pinned `requirements-ibkr.txt` dependencies.
+- The reader starts by default. Set `IBKR_MCP_ENABLED=false` to disable it explicitly.
+- Missing independent OAuth state returns `authorization_required` without network
+  requests, implicit sign-in, orders or notifications.
 - Optional `IBKR_MCP_POLL_SECONDS` defaults to 60 and has a 60-second minimum.
 - The existing app starts one bounded collector thread (90-second deadline).
 - `/health` exposes an independent `ibkr` object: disabled, authorization_required,

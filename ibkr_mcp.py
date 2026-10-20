@@ -261,6 +261,8 @@ def report_health(path, now=None, max_report_age=180):
                 "underlying_feed_status": report.get("underlying", {}).get("feed_status"),
                 "premium_signal_count": sum(bool(item.get("signal")) for item in report.get("premium_radar", [])),
                 "premium_bar_versions_recorded": report.get("premium_bar_versions_recorded", 0),
+                "premium_outcomes": {key: report.get("premium_outcomes", {}).get(key, 0)
+                                     for key in ("scored", "censored", "pending", "target_hits")},
                 "experimental_notifications_enabled": False,
                 "reason": report.get("reason")}
     except (OSError, ValueError, KeyError, TypeError):
