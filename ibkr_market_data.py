@@ -15,7 +15,7 @@ from ibkr_mcp import unwrap, inspect_snapshot
 
 SOURCE = 'IBKR MCP'
 REQUEST_TIMEOUT_SECONDS = 90
-STEPS = {'1m':('ONE_MIN',60), '2m':('TWO_MINS',120), '5m':('FIVE_MINS',300),
+STEPS = {'30s':('THIRTY_SECS',30), '1m':('ONE_MIN',60), '2m':('TWO_MINS',120), '5m':('FIVE_MINS',300),
          '15m':('FIFTEEN_MINS',900), '30m':('THIRTY_MINS',1800), '1h':('ONE_HOUR',3600),
          '60m':('ONE_HOUR',3600), '1d':('ONE_DAY',86400)}
 PERIODS = {'1d':'ONE_DAY','2d':'TWO_DAYS','3d':'THREE_DAYS','5d':'ONE_WEEK','7d':'ONE_WEEK',

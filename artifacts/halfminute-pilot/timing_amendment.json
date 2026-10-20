@@ -1,0 +1,9 @@
+{
+  "original_freeze_commit": "c4c0ea1ebf851c0fc02176f7672aa62da662c53d",
+  "original_source_sha256": "84c938ace6a0a133d761b8c7afeb6d9e6efa88aa7f416c6345b39092faa64b38",
+  "corrected_source_sha256": "ae132d9e45a2dc1b57478f75a28d48b17441c9874ce3bc224dd09c4a5d5aace3",
+  "reason": "After reading pilot outputs, identified that minute-close onset can inflate halfminute early lead. Preserve minute-resolution report and refine timing equally for all methods. No thresholds changed.",
+  "parameters_unchanged": true,
+  "untouched_test_claim": false,
+  "diagnostic_only_addition": "Per-event causal opportunities and rejection gate counts; no change to signal thresholds."
+}

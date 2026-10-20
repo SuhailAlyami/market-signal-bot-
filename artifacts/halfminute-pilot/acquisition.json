@@ -1,0 +1,68 @@
+{
+  "rule_freeze_commit": "c4c0ea1ebf851c0fc02176f7672aa62da662c53d",
+  "coverage_amendment_commit": "b0e98958a62e34c8eee91cae409968932dc08494",
+  "initial": {
+    "ES": {
+      "request": {
+        "contract_id": 515416632,
+        "exchange": "CME",
+        "security_type": "FUT",
+        "outside_rth": true,
+        "step": "THIRTY_SECS",
+        "period": "ONE_DAY"
+      },
+      "received_at": "2026-10-20T08:54:49.047Z",
+      "fallback": false,
+      "freeze_commit": "c4c0ea1ebf851c0fc02176f7672aa62da662c53d"
+    },
+    "NQ": {
+      "request": {
+        "contract_id": 563947726,
+        "exchange": "CME",
+        "security_type": "FUT",
+        "outside_rth": true,
+        "step": "THIRTY_SECS",
+        "period": "ONE_DAY"
+      },
+      "received_at": "2026-10-20T08:54:47.393Z",
+      "fallback": false,
+      "freeze_commit": "c4c0ea1ebf851c0fc02176f7672aa62da662c53d"
+    }
+  },
+  "two_day_request": {
+    "status": "provider_returned_error_field_for_both_symbols",
+    "request": {
+      "period": "TWO_DAYS",
+      "outside_rth": false,
+      "step": "THIRTY_SECS"
+    }
+  },
+  "bounded_fallback": {
+    "ES": {
+      "request": {
+        "contract_id": 515416632,
+        "exchange": "CME",
+        "security_type": "FUT",
+        "outside_rth": false,
+        "step": "THIRTY_SECS",
+        "step_count": 1000
+      },
+      "received_at": "2026-10-20T08:56:41.368Z",
+      "original_freeze": "c4c0ea1ebf851c0fc02176f7672aa62da662c53d"
+    },
+    "NQ": {
+      "request": {
+        "contract_id": 563947726,
+        "exchange": "CME",
+        "security_type": "FUT",
+        "outside_rth": false,
+        "step": "THIRTY_SECS",
+        "step_count": 1000
+      },
+      "received_at": "2026-10-20T08:56:39.006Z",
+      "original_freeze": "c4c0ea1ebf851c0fc02176f7672aa62da662c53d"
+    }
+  },
+  "no_pagination": true,
+  "no_parameter_tuning": true
+}

@@ -1,7 +1,12 @@
 import unittest
+import tempfile
+import json
+import hashlib
+from pathlib import Path
+import halfminute_research as module
 import numpy as np
 import pandas as pd
-from halfminute_research import complete_minutes,prepared,direction,schedule,score
+from halfminute_research import complete_minutes,prepared,direction,schedule,score,refine_events,verify_protocol,missed_event_audit
 
 
 def data(n=160):
@@ -48,6 +53,37 @@ class HalfMinuteTests(unittest.TestCase):
         for delay in (0,60,120):
             r=score([event],[signal],bars,minute,list(range(len(minute))),delay)
             self.assertEqual(r['matched'],0)
+
+    def test_refined_onset_removes_artificial_halfminute_early_credit(self):
+        index=pd.date_range('2026-10-19T13:30:00Z',periods=8,freq='30s')
+        bars=pd.DataFrame({'Open':[100]*8,'High':[100.1,100.1,100.4,100.4,101.2,101.2,101.2,101.2],
+                           'Low':[99.9]*8,'Close':[100,100,100.3,100.3,101,101,101,101],
+                           'Volume':[100]*8},index=index,dtype=float)
+        minute=complete_minutes(bars)
+        event={'event_id':0,'anchor_index':0,'target_index':2,'target_points':1.,'direction':1,
+               'onset_time':(minute.index[1]+pd.Timedelta(minutes=1)).isoformat()}
+        refined=refine_events([event],minute,bars)[0]
+        self.assertEqual(pd.Timestamp(refined['onset_time_30s']),pd.Timestamp('2026-10-19T13:31:30Z'))
+        self.assertEqual(pd.Timestamp(refined['target_start_30s']),pd.Timestamp('2026-10-19T13:32:00Z'))
+        self.assertLess(pd.Timestamp(refined['onset_time_30s']),pd.Timestamp(refined['onset_time']))
+
+    def test_frozen_parameter_change_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'artifacts/halfminute-pilot'
+            target.mkdir(parents=True)
+            config=dict(module.CONFIG);config['rvol_half']=1.4
+            frozen={'config':config,'methods':list(module.METHODS),
+                    'source_sha256':hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest()}
+            (target/'frozen.json').write_text(json.dumps(frozen))
+            with self.assertRaises(ValueError):verify_protocol(directory)
+
+    def test_miss_audit_identifies_no_completed_observation_before_onset(self):
+        anchor=pd.Timestamp('2026-10-19T14:00:00Z')
+        event={'event_id':0,'direction':1,'anchor_completed_at':anchor.isoformat(),
+               'onset_time_30s':(anchor+pd.Timedelta(seconds=30)).isoformat()}
+        rows=[{'generated_at':anchor+pd.Timedelta(seconds=30),'valid':False}]
+        result=missed_event_audit([event],rows,{'matches':[]})
+        self.assertTrue(result[0]['no_completed_half_before_onset'])
 
     def test_incomplete_future_is_censored_after_signal_schedule(self):
         bars=data(90);minute=complete_minutes(bars)

@@ -117,6 +117,36 @@ def schedule(raw,minute,f,rows,frozen):
     return output
 
 
+def refine_events(events,minute,raw):
+    """Keep canonical events/targets; refine first touch and close-onset timing.
+
+    Comparing a half-minute signal against minute-close onset can manufacture
+    an apparent early lead. Every method receives the same finer deadlines.
+    """
+    refined=[]
+    for event in events:
+        entry=float(minute.Close.iloc[event['anchor_index']])
+        anchor=minute.index[event['anchor_index']]+pd.Timedelta(minutes=1)
+        end=minute.index[event['target_index']]+pd.Timedelta(minutes=1)
+        future=raw.loc[(raw.index>=anchor)&(raw.index<end)]
+        direction=event['direction'];target=event['target_points']
+        touched=(future.High>=entry+target) if direction>0 else (future.Low<=entry-target)
+        hits=np.flatnonzero(touched.to_numpy())
+        if not len(hits):raise ValueError('minute_target_missing_from_half_bars')
+        hit=int(hits[0])
+        onset=np.flatnonzero((direction*(future.Close.iloc[:hit+1]-entry)>=.25*target).to_numpy())
+        # Original minute onset can occur at the target minute's second half,
+        # after its first-half target touch. Keep it if needed, but that event
+        # cannot be called actionable after the finer first target deadline.
+        if not len(onset):
+            onset=np.flatnonzero((direction*(future.Close-entry)>=.25*target).to_numpy())
+        if not len(onset):raise ValueError('minute_onset_missing_from_half_bars')
+        refined.append({**event,'onset_time_30s':(future.index[int(onset[0])]+pd.Timedelta(seconds=30)).isoformat(),
+                        'target_start_30s':future.index[hit].isoformat(),
+                        'anchor_completed_at':anchor.isoformat()})
+    return refined
+
+
 def score(events,signals,raw,minute,eligible,delay):
     eligible_times={minute.index[i] for i in eligible}
     scored=[];censored=[]
@@ -136,11 +166,11 @@ def score(events,signals,raw,minute,eligible,delay):
         for event in events:
             # Late delivery cannot move a previously ineligible signal into an event.
             anchor=minute.index[event['anchor_index']]+pd.Timedelta(minutes=1)
-            target=minute.index[event['target_index']]
+            target=pd.Timestamp(event.get('target_start_30s',minute.index[event['target_index']]))
             if (event['event_id'] not in used and event['direction']==signal['direction']
                     and anchor<=generated<target and delivered<=target):
                 used.add(event['event_id'])
-                lead=(pd.Timestamp(event['onset_time'])-delivered).total_seconds()
+                lead=(pd.Timestamp(event.get('onset_time_30s',event['onset_time']))-delivered).total_seconds()
                 matches.append({'generated_at':generated.isoformat(),'delivered_at':delivered.isoformat(),
                                 'event_id':event['event_id'],'lead_seconds':lead})
                 break
@@ -156,16 +186,66 @@ def score(events,signals,raw,minute,eligible,delay):
             'matches':matches}
 
 
+def missed_event_audit(events,rows,metrics):
+    """Explain misses after scoring; labels never change signal generation."""
+    matched={m['event_id'] for m in metrics['matches'] if m['lead_seconds']>0}
+    result=[]
+    for event in events:
+        if event['event_id'] in matched:continue
+        anchor=pd.Timestamp(event['anchor_completed_at'])
+        onset=pd.Timestamp(event['onset_time_30s'])
+        available=[r for r in rows if anchor<=r['generated_at']<onset]
+        counts={}
+        for row in available:
+            if not row['valid']:
+                reasons=['missing_or_invalid_past_context']
+            else:
+                side=event['direction']
+                level=row['high_level'] if side>0 else row['low_level']
+                distance=side*(level-row['close'])/row['atr']
+                checks={'weak_relative_volume':row['rvol']<CONFIG['rvol_half'],
+                        'prior_trend_opposes_event':side*row['trend']<=0,
+                        'counterpart_does_not_confirm':side*row['other_move']<=0,
+                        'weak_current_impulse':side*row['move']<CONFIG['release_move_atr'],
+                        'prior_level_not_yet_released':distance>=0}
+                reasons=[name for name,failed in checks.items() if failed]
+                if not reasons:reasons=['candidate_cooldown_or_conservative_target_deadline']
+            for reason in reasons:counts[reason]=counts.get(reason,0)+1
+        result.append({'event_id':event['event_id'],'direction':event['direction'],
+                       'anchor_completed_at':anchor.isoformat(),'onset_30s':onset.isoformat(),
+                       'causal_halfminute_opportunities':len(available),
+                       'no_completed_half_before_onset':not bool(available),
+                       'gate_failures_counted_over_opportunities':counts})
+    return result
+
+
+def verify_protocol(root):
+    root=Path(root)
+    frozen=json.loads((root/'artifacts/halfminute-pilot/frozen.json').read_text())
+    if frozen['config']!=CONFIG or frozen['methods']!=list(METHODS):
+        raise ValueError('frozen_candidate_parameters_changed')
+    source_hash=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    permitted={frozen['source_sha256']}
+    amendment=root/'artifacts/halfminute-pilot/timing_amendment.json'
+    if amendment.exists():permitted.add(json.loads(amendment.read_text())['corrected_source_sha256'])
+    if source_hash not in permitted:raise ValueError('unfrozen_evaluator_source')
+    return {'source_sha256':source_hash,'original_source_sha256':frozen['source_sha256'],
+            'evaluation_amended':source_hash!=frozen['source_sha256']}
+
+
 def run(inputs,root,output,cutoff):
     root=Path(root);output=Path(output);output.mkdir(parents=True,exist_ok=True)
+    protocol=verify_protocol(root)
     raw={s:normalize(blob) for s,blob in inputs.items()}
     for s in raw:
         raw[s]=raw[s].loc[raw[s].index+pd.Timedelta(seconds=30)<=pd.Timestamp(cutoff)]
         if inputs[s].get('chart_step')!=30:raise ValueError('provider_did_not_return_halfminute_bars')
     config=ResearchConfig()
-    report={'status':'NOT_READY','config':CONFIG,'cutoff':cutoff,'notifications_enabled':False,
+    report={'status':'NOT_READY','protocol':protocol,
+            'input_sha256':{s:hashlib.sha256(json.dumps(b,sort_keys=True,separators=(',',':')).encode()).hexdigest() for s,b in inputs.items()},
+            'config':CONFIG,'cutoff':cutoff,'notifications_enabled':False,
             'training_or_tuning':False,'independent_sessions_established':False,
-            'event_protocol':'Unchanged canonical +/- max(6bp,2 prior ATR) in 10m, 25% close onset. Minute-defined onset resolution.',
+            'event_protocol':'Canonical minute events/targets unchanged. Onset refined to first 30s close reaching 25%; deadline refined to first target-touch 30s bar START.',
             'limitations':['Historical receipt latency and option bid/ask execution are absent.',
                            'Related symbols and previously inspected dates are correlated; not independent market validation.',
                            'RTH-only downloads may prevent opening warmup; missing windows are not filled.',
@@ -176,6 +256,7 @@ def run(inputs,root,output,cutoff):
         local=minute.index.tz_convert('America/New_York')
         idx=np.flatnonzero((local.hour*60+local.minute>=570)&(local.hour*60+local.minute<960)&(local.dayofweek<5)).tolist()
         context=_evaluation_context(minute,f,idx,'rth',config)
+        context['events']=refine_events(context['events'],minute,raw[sym])
         frozen=json.loads(gzip.decompress((root/'artifacts/detector_v2'/f'crossmarket_v2_{sym.lower()}_report.json.gz').read_bytes()))['selected']
         signals=schedule(raw[sym],minute,f,rows,frozen)
         report['symbols'][sym]={'raw_rows':len(raw[sym]),'complete_minutes':len(minute),
@@ -184,6 +265,8 @@ def run(inputs,root,output,cutoff):
             'eligible_minutes':len(context['eligible']),'events':context['events'],'signals':signals,
             'metrics':{str(delay):{method:score(context['events'],signals[method],raw[sym],minute,context['eligible'],delay)
                       for method in METHODS} for delay in CONFIG['delays_seconds']}}
+        report['symbols'][sym]['release_miss_audit_zero_delay']=missed_event_audit(
+            context['events'],rows,report['symbols'][sym]['metrics']['0']['half_release'])
     (output/'report.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
     return report
 
