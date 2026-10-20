@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import requests
-import yfinance as yf
+import ibkr_market_data as market_data
 
 NY = ZoneInfo("America/New_York")
 SYMBOLS = ("SPY", "QQQ")
@@ -41,7 +41,7 @@ def assess_bars(symbol: str, bars: pd.DataFrame, now: datetime | None = None) ->
     for col in ("Open", "High", "Low", "Close", "Volume"):
         if col not in data or data[col].isna().iloc[-32:].any():
             return None
-    # Yahoo 5-minute timestamps denote bar START. Exclude current/incomplete bar.
+    # Five-minute bar timestamps denote bar START. Exclude current/incomplete bar.
     cutoff = now - timedelta(minutes=5)
     data = data[data.index <= cutoff]
     if len(data) < 32:
@@ -88,13 +88,13 @@ def assess_bars(symbol: str, bars: pd.DataFrame, now: datetime | None = None) ->
         "symbol": symbol, "direction": direction, "price": close, "rvol": rvol,
         "momentum_pct": momentum_pct, "score": score, "atr": atr,
         "breakout": breakout, "invalidated_below_above": breakout,
-        "bar_time": bar_close_time.isoformat(), "provider": "Yahoo Finance (may be delayed)",
+        "bar_time": bar_close_time.isoformat(), "provider": "IBKR MCP",
     }
 
 
 def fetch_and_assess(symbol: str, now: datetime | None = None) -> dict | None:
     now = now or datetime.now(timezone.utc)
-    bars = yf.Ticker(symbol).history(period="5d", interval="5m", auto_adjust=True)
+    bars = market_data.Ticker(symbol).history(period="5d", interval="5m", auto_adjust=True)
     if bars.empty:
         return None
     return assess_bars(symbol, bars, now)
@@ -190,3 +190,4 @@ def run() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(run())
+

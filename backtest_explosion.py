@@ -11,7 +11,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import pandas as pd
-import yfinance as yf
+import ibkr_market_data as market_data
 
 from explosion_detector import assess_bars, market_session_open
 
@@ -71,7 +71,7 @@ def study(symbol: str, bars: pd.DataFrame, horizon: int = 6) -> dict:
         ) if signals else None,
         "notes": [
             "Research metric on underlying, NOT an option contract return or tradable fill.",
-            "5-minute Yahoo history is limited, often delayed and may be revised.",
+            "IBKR historical bars are bounded and may be revised; no realtime execution is inferred.",
             "Exploratory in-sample metric; no out-of-sample claim.",
             "Overlapping horizons/correlated signals inflate apparent sample size.",
             "Does not include spreads, option premium decay, commissions or slippage.",
@@ -87,8 +87,8 @@ def main() -> None:
     parser.add_argument("--horizon", type=int, default=6)
     parser.add_argument("--output", default="backtest_results.json")
     args = parser.parse_args()
-    bars = yf.Ticker(args.symbol).history(
-        period=args.period, interval="5m", auto_adjust=True
+    bars = market_data.Ticker(args.symbol).history(
+        period=args.period, interval="5m", auto_adjust=False, require_realtime=False
     )
     if bars.empty:
         raise SystemExit("No market data: no result produced")
@@ -99,3 +99,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

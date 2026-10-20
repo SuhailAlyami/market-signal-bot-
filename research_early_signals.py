@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 import pandas as pd
-import yfinance as yf
+import ibkr_market_data as market_data
 
 
 def candidates(data: pd.DataFrame, i: int):
@@ -72,7 +72,7 @@ def evaluate(data: pd.DataFrame, horizon=5):
             "methods":{name:{"signals":len(v),"directional_hit_rate":round(sum(x>0 for x in v)/len(v),4) if v else None,
                               "mean_forward_move_pct":round(sum(v)/len(v),5) if v else None}
                        for name,v in results.items()},
-            "limitations":["Yahoo minute history may be delayed and is short.",
+            "limitations":["IBKR minute history is bounded; historical availability does not certify live delivery.",
                            "Signals use completed 1-minute candles, not tick-level prediction.",
                            "Overlapping samples are correlated; no option bid/ask or transaction costs.",
                            "This is exploratory, not an out-of-sample or profitable strategy claim."]}
@@ -84,7 +84,7 @@ def main():
     p.add_argument("--period",choices=["1d","5d","7d"],default="5d")
     p.add_argument("--output",default="early_research_results.json")
     a=p.parse_args()
-    bars=yf.Ticker(a.symbol).history(period=a.period,interval="1m",auto_adjust=True)
+    bars=market_data.Ticker(a.symbol).history(period=a.period,interval="1m",auto_adjust=False,require_realtime=False)
     if bars.empty:
         raise SystemExit("No one-minute data; no result fabricated")
     result={"symbol":a.symbol,**evaluate(bars)}
@@ -94,3 +94,4 @@ def main():
 
 if __name__=="__main__":
     main()
+

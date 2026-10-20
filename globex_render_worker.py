@@ -34,22 +34,21 @@ def get_status(now=None):
     return snapshot
 
 
-def yahoo_bars(symbol):
-    import yfinance as yf
-
-    return yf.Ticker(symbol).history(period="5d", interval="1m", auto_adjust=False, raise_errors=True)
+def ibkr_bars(symbol):
+    from ibkr_market_data import fetch_bars
+    return fetch_bars(symbol)
 
 
 def create_runtime(state_dir=None):
     directory = Path(state_dir or os.getenv("HUNTER_STATE_DIR", ".hunter-state"))
-    return HunterRuntime(directory / "state.json", directory / "shadow.jsonl")
+    return HunterRuntime(directory / "state-ibkr.json", directory / "shadow-ibkr.jsonl")
 
 
 def run_once(runtime=None, now=None, fetcher=None):
     global _STATUS
     runtime = runtime or create_runtime()
     live_clock = (lambda: datetime.now(timezone.utc)) if now is None else None
-    result = runtime.poll(now or datetime.now(timezone.utc), fetcher or yahoo_bars, clock=live_clock)
+    result = runtime.poll(now or datetime.now(timezone.utc), fetcher or ibkr_bars, clock=live_clock)
     _STATUS = result["heartbeat"]
     LOG.info("Hunter heartbeat %s", json.dumps(_STATUS, ensure_ascii=False))
     return result
@@ -143,3 +142,4 @@ def main():
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

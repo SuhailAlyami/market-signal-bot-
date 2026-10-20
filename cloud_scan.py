@@ -28,14 +28,14 @@ def run(now=None, state_dir=None, fetcher=None, allow_stale_feed=False):
                          + "\n```\n")
     if heartbeat["status"] == "ok":
         return 0
-    # Only known Yahoo latency is nonfatal for scheduled research. Provider,
+    # Only stale-feed rejection is nonfatal for scheduled research. Provider,
     # detector, calendar and persistence failures must still fail the job.
     states = [item["status"] for item in heartbeat.get("symbols", {}).values()]
     stale_only = (heartbeat["status"] == "degraded" and "stale_feed" in states
                   and all(state in {"ok", "closed", "stale_feed"} for state in states)
                   and not any(item.get("recovery_status") for item in heartbeat["symbols"].values()))
     if allow_stale_feed and stale_only:
-        print("::warning title=Delayed market data::Yahoo bars were rejected as stale; "
+        print("::warning title=Delayed market data::Market bars were rejected as stale; "
               "Hunter remains NOT_READY. See heartbeat artifact and job summary.")
         return 0
     return 1

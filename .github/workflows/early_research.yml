@@ -10,17 +10,22 @@ permissions:
   contents: read
 jobs:
   compare:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.IBKR_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install 'yfinance>=0.2.55,<1' 'pandas>=2.1,<3'
+      - run: pip install -r requirements.txt
+      - name: Check IBKR runtime authorization
+        id: ibkr
+        run: python ibkr_feed_preflight.py --output ibkr_research.json
       - name: Compare ES methods
+        if: steps.ibkr.outputs.ready == 'true'
         run: python research_early_signals.py --symbol ES=F --output es_research.json
       - name: Compare NQ methods
+        if: steps.ibkr.outputs.ready == 'true'
         run: python research_early_signals.py --symbol NQ=F --output nq_research.json
       - uses: actions/upload-artifact@v4
         if: always()
@@ -28,3 +33,4 @@ jobs:
           name: early-signal-research
           path: '*_research.json'
           if-no-files-found: warn
+

@@ -1,6 +1,6 @@
 """Prospective NY-session receipt journal for frozen rule/linear candidates.
 
-No notifications or orders. Yahoo is unverified/delayed. First receipt, not a
+No notifications or orders. IBKR runtime authorization and realtime validation are required. First receipt, not a
 historical candle close, is detection time. Boosted model stays offline-only.
 """
 import argparse
@@ -103,7 +103,8 @@ def observe(frames, configs, state, received_at, session):
                                 'bar_start': stamp.isoformat(), 'bar_close': end.isoformat(),
                                 'detected_at': received_at.isoformat(), 'arrival_delay_seconds': age,
                                 'timing_status': 'LATE' if age > 60 else 'WITHIN_ONE_MINUTE_UNVERIFIED_SOURCE',
-                                'feed_realtime_verified': False, 'research_only': True,
+                                'feed_realtime_verified': all(frames[s].attrs.get('live_feed_verified', False) for s in (sym, other)),
+                                'research_only': True,
                                 'notifications_enabled': False, 'outcome': 'NOT_EVALUATED'})
     return records
 
@@ -116,7 +117,7 @@ def run(output, now=None, fetch=None, clock=None, root=None):
     now = pd.Timestamp(now if now is not None else clock())
     session, status = session_at(now)
     report = {'status': status, 'checked_at': now.isoformat(), 'notifications_enabled': False,
-              'readiness': 'NOT_READY', 'source': 'Yahoo ES=F / NQ=F, unverified latency',
+              'readiness': 'NOT_READY', 'source': 'IBKR MCP native futures',
               'code_revision': os.getenv('GITHUB_SHA'), 'new_candidates': [],
               'intraday_models': ['frozen_crossmarket', 'frozen_linear'],
               'offline_only_models': ['boosted'], 'polling': 'GitHub best effort, nominal 5 minutes'}
@@ -125,7 +126,7 @@ def run(output, now=None, fetch=None, clock=None, root=None):
     if status == 'NY_OPEN':
         configs, fingerprints = frozen_candidates(root)
         day = str(session.market_open.date())
-        state_path = output/f'ny-{day}.json'
+        state_path = output/f'ny-ibkr-{day}.json'
         state = json.loads(state_path.read_text()) if state_path.exists() else {}
         if state and state['candidate_sha256'] != fingerprints:
             raise ValueError('frozen_candidates_changed_during_session')
@@ -133,8 +134,8 @@ def run(output, now=None, fetch=None, clock=None, root=None):
         state['candidate_sha256'] = fingerprints
         report['candidate_sha256'] = fingerprints
         if fetch is None:
-            import yfinance as yf
-            fetch = lambda sym: yf.Ticker(sym+'=F').history(period='5d', interval='1m', auto_adjust=False, raise_errors=True)
+            from ibkr_market_data import fetch_bars
+            fetch = lambda sym: fetch_bars(sym)
         frames = {}
         try:
             for sym in ('ES', 'NQ'):
@@ -142,11 +143,13 @@ def run(output, now=None, fetch=None, clock=None, root=None):
                 if frames[sym].empty or not np.isfinite(frames[sym]).all().all():
                     raise ValueError('empty_or_nonfinite_provider_data')
         except Exception as exc:
-            report.update(status='DATA_UNAVAILABLE', error_type=type(exc).__name__)
+            report.update(status='DATA_UNAVAILABLE', error_type=type(exc).__name__,
+                          data_status=getattr(exc, 'reason', 'provider_error'))
         else:
             received = pd.Timestamp(clock())
             records = observe(frames, configs, state, received, session)
             report.update(observed_at=received.isoformat(), new_candidates=records,
+                          feed_metadata={s:dict(f.attrs) for s,f in frames.items()},
                           latest_bar_close={s:(f.index[f.index+pd.Timedelta(minutes=1)<=received].max()+pd.Timedelta(minutes=1)).isoformat() for s,f in frames.items()})
             state.setdefault('candidates', []).extend(records)
             temporary = state_path.with_suffix('.tmp')

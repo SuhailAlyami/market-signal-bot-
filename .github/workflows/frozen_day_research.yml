@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   research:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.IBKR_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 12
     env:
       OMP_NUM_THREADS: '1'
@@ -21,8 +21,12 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install offline research dependencies
-        run: pip install 'pandas>=2.1,<3' 'numpy>=1.24,<3' 'yfinance>=0.2.55,<1' 'pandas-market-calendars>=4.4,<6' -r requirements-research.txt
+        run: pip install -r requirements.txt -r requirements-research.txt
+      - name: Check IBKR runtime authorization
+        id: ibkr
+        run: python ibkr_feed_preflight.py --output forward-day/ibkr-runtime.json
       - name: Evaluate fixed candidates on the newly closed session without retuning
+        if: steps.ibkr.outputs.ready == 'true' 
         run: python frozen_day_research.py --output forward-day
       - name: Retain raw downloads and all positive or negative results
         if: always()

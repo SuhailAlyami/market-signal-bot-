@@ -1,6 +1,6 @@
 """NYSE-session research alerts through the existing Render Telegram configuration.
 
-No option contract suggestions. Yahoo Finance bars can be delayed or missing.
+No option contract suggestions. IBKR data require runtime authorization and market-data entitlement.
 """
 from __future__ import annotations
 import logging
@@ -52,3 +52,4 @@ def start_worker(token: str, chat_id: str, poll_seconds: int = 300) -> None:
             time.sleep(poll_seconds)
 
     threading.Thread(target=run, daemon=True, name="nyse-watch").start()
+

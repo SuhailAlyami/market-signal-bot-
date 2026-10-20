@@ -99,6 +99,8 @@ def run(output,root=None,now=None,fetch=None):
     session,status=closed_session(now)
     report={'status':status,'observed_at':now.isoformat(),'notifications_enabled':False,
             'code_revision':os.getenv('GITHUB_SHA'),
+            'source':'IBKR MCP native futures; historical bars are not realtime certification',
+            'cross_provider_development_context':'Retained original Yahoo data remain historical development evidence only.',
             'readiness':'NOT_READY','forward_window_starts':FROZEN_FIRST_DAY,
             'protocol':'Fixed candidates; newly completed session; after-close historical replay, not real-time paper execution.'}
     if session is not None:
@@ -111,8 +113,8 @@ def run(output,root=None,now=None,fetch=None):
             originals[sym]=pd.read_csv(path,index_col=0,parse_dates=True)
             originals[sym].index=pd.to_datetime(originals[sym].index,utc=True)
         if fetch is None:
-            import yfinance as yf
-            fetch=lambda sym:yf.Ticker(sym+'=F').history(period='5d',interval='1m',auto_adjust=False,raise_errors=True)
+            from ibkr_market_data import fetch_bars
+            fetch=lambda sym:fetch_bars(sym, require_realtime=False)
         for sym in ('ES','NQ'):
             try:
                 data=fetch(sym)[['Open','High','Low','Close','Volume']]

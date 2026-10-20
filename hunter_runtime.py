@@ -21,7 +21,7 @@ UTC = timezone.utc
 NY = ZoneInfo("America/New_York")
 BAR = timedelta(minutes=1)
 MAX_AGE = timedelta(minutes=2)
-SOURCE = "Yahoo Finance 1m futures proxy; potentially delayed"
+SOURCE = "IBKR MCP native futures; realtime status validated by data adapter"
 ARABIC_STATES = {"SETUP": "استعداد", "TRIGGER": "دخول مشروط", "INVALIDATION": "إلغاء", "EXIT": "خروج"}
 
 
@@ -56,7 +56,7 @@ def futures_active(now: datetime) -> bool:
 
 
 def validate_completed_bars(frame: pd.DataFrame, now: datetime, min_bars: int = 31):
-    """Return a contiguous valid tail and explicit status; Yahoo index is START.
+    """Return a contiguous valid tail and explicit status; bar index is START.
 
     Measured delay is time since the last completed candle, not verified
     exchange-to-provider latency. An unfinished current bar is never inspected
@@ -344,6 +344,7 @@ class HunterRuntime:
                         frame = fetcher(symbol)
                         now = receipt_time()
                         data, status = validate_completed_bars(frame, now)
+                        status["feed_metadata"] = dict(frame.attrs)
                         try:
                             market_open_at_receipt = futures_active(now)
                         except Exception as exc:
@@ -357,7 +358,8 @@ class HunterRuntime:
                         now = receipt_time()
                         data = None
                         status = {"status": "provider_error", "error_type": type(exc).__name__,
-                                  "last_completed_bar": previous.get("last_bar_end")}
+                                  "last_completed_bar": previous.get("last_bar_end"),
+                                  "data_status": getattr(exc, "reason", "provider_error")}
                     if data is None:
                         status["last_completed_bar"] = status.get("last_completed_bar") or previous.get("last_bar_end")
                         events.extend(self._cancel(symbol, now, status, status["status"]))
@@ -449,3 +451,4 @@ def format_research_event(event):
             f"شمعة مكتملة: {event['bar_end']} | الرصد: {event['detected_at']}\n"
             f"المصدر: {event['source']} | الثقة: غير معايرة\n"
             "NOT READY — مراقبة الأصل فقط؛ لا أسعار عقود SPX ولا أوامر تداول.")
+

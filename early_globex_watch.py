@@ -54,20 +54,20 @@ def detect_early(symbol, frame, now):
         return None
     return dict(symbol=symbol, direction=direction, price=close, rvol=rvol,
                 top=top, bottom=bottom, bar_end=end.isoformat(),
-                source="Yahoo Finance futures proxy; potentially delayed",
+                source="IBKR MCP native futures",
                 analysis_only=True, live_feed_verified=False,
                 watch_type="EARLY_GLOBEX_5M")
 
 
 def scan_once(now=None):
-    import yfinance as yf
+    import ibkr_market_data as market_data
     now = now or datetime.now(UTC)
     if not globex_active(now):
         return []
     results = []
     for symbol in ("ES=F", "NQ=F"):
         try:
-            frame = yf.Ticker(symbol).history(period="5d", interval="5m", auto_adjust=True)
+            frame = market_data.Ticker(symbol).history(period="5d", interval="5m", auto_adjust=True)
             item = detect_early(symbol, frame, now) if not frame.empty else None
             if item:
                 results.append(item)
@@ -76,3 +76,4 @@ def scan_once(now=None):
         except Exception as exc:
             print(f"{symbol}: fetch failed ({type(exc).__name__})")
     return results
+

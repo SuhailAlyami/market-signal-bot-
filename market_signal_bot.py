@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List, Tuple
 import numpy as np
 import pandas as pd
-import yfinance as yf
+import ibkr_market_data as market_data
 import requests
 from flask import Flask, jsonify, request
 import telebot
@@ -587,7 +587,7 @@ class IntegratedMarketAnalyzer:
                 return self.price_cache.get(cache_key)
         
         try:
-            ticker = yf.Ticker(symbol)
+            ticker = market_data.Ticker(symbol)
             data = ticker.history(period=period, interval=interval)
             
             if not data.empty:
@@ -598,32 +598,6 @@ class IntegratedMarketAnalyzer:
         except Exception as e:
             logger.warning(f"خطأ في جلب بيانات {symbol}: {e}")
             
-            try:
-                if '-USD' in symbol:
-                    crypto_symbol = symbol.replace('-USD', '')
-                    url = f"https://api.coingecko.com/api/v3/coins/{crypto_symbol}/market_chart"
-                    params = {'vs_currency': 'usd', 'days': '5', 'interval': 'minutely'}
-                    response = requests.get(url, params=params, timeout=10)
-                    
-                    if response.status_code == 200:
-                        data = response.json()
-                        prices = data.get('prices', [])
-                        volumes = data.get('total_volumes', [])
-                        
-                        df = pd.DataFrame({
-                            'Open': [p[1] for p in prices],
-                            'High': [p[1] * 1.001 for p in prices],
-                            'Low': [p[1] * 0.999 for p in prices],
-                            'Close': [p[1] for p in prices],
-                            'Volume': [v[1] for v in volumes]
-                        }, index=[datetime.fromtimestamp(p[0]/1000) for p in prices])
-                        
-                        self.price_cache[cache_key] = df
-                        self.last_update[cache_key] = current_time
-                        return df
-            except Exception as e2:
-                logger.warning(f"خطأ في المصدر البديل {symbol}: {e2}")
-        
         return pd.DataFrame()
     
     def calculate_rvol(self, data: pd.DataFrame, lookback: int = 20) -> float:
