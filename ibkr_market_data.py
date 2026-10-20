@@ -14,6 +14,7 @@ import pandas as pd
 from ibkr_mcp import unwrap, inspect_snapshot
 
 SOURCE = 'IBKR MCP'
+REQUEST_TIMEOUT_SECONDS = 90
 STEPS = {'1m':('ONE_MIN',60), '2m':('TWO_MINS',120), '5m':('FIVE_MINS',300),
          '15m':('FIFTEEN_MINS',900), '30m':('THIRTY_MINS',1800), '1h':('ONE_HOUR',3600),
          '60m':('ONE_HOUR',3600), '1d':('ONE_DAY',86400)}
@@ -125,7 +126,9 @@ async def collect_history(call, symbol, *, interval='1m', period=None, step_coun
 
 async def request_async(symbol, **kwargs):
     from ibkr_mcp_client import run_collection
-    result = await run_collection(collector=partial(collect_history, symbol=symbol, **kwargs))
+    result = await asyncio.wait_for(
+        run_collection(collector=partial(collect_history, symbol=symbol, **kwargs)),
+        timeout=REQUEST_TIMEOUT_SECONDS)
     if not isinstance(result,pd.DataFrame):
         raise IBKRDataUnavailable(result.get('reason') or result.get('status','ibkr_unavailable'))
     return result
