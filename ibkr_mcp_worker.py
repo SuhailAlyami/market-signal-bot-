@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import os
 from pathlib import Path
 import threading
+import time
 
 from ibkr_mcp import SOURCE, report_health, save_report
 
@@ -39,6 +40,8 @@ def poll_once():
         events = journal_observations(report, report_path().parent)
         report["premium_events_recorded"] = len(events)
         report["premium_bar_versions_recorded"] = archived
+        from premium_shadow_outcomes import reconcile
+        report["premium_outcomes"] = reconcile(report_path().parent)
     except Exception as exc:
         report = {"status": "error", "readiness": "NOT_READY", "source": SOURCE,
                   "orders_enabled": False, "reason": "worker_collection_failed",
@@ -59,15 +62,24 @@ def start_worker():
         interval = 60
 
     def loop():
+        waiter = threading.Event()
         while True:
+            started = time.monotonic()
             try:
                 poll_once()
             except Exception:
                 # Failed report writes leave a stale/unavailable health state.
                 # Never claim the previous observation is current.
                 pass
-            threading.Event().wait(interval)
+            # Keep a start-to-start cadence. Waiting a full interval AFTER
+            # collection silently added network duration to every cycle.
+            # Overruns never overlap or trigger a burst of catch-up requests.
+            waiter.wait(poll_delay(interval, time.monotonic()-started))
 
     _THREAD = threading.Thread(target=loop, name="ibkr-mcp-reader", daemon=True)
     _THREAD.start()
     return _THREAD
+
+
+def poll_delay(interval, elapsed):
+    return max(1., interval - max(0., elapsed))

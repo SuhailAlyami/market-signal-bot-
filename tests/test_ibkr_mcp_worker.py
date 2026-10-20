@@ -10,6 +10,10 @@ import ibkr_mcp_worker as worker
 
 
 class WorkerTests(unittest.TestCase):
+    def test_network_duration_does_not_add_an_extra_poll_interval(self):
+        self.assertEqual(worker.poll_delay(60, 25), 35)
+        self.assertEqual(worker.poll_delay(60, 90), 1)
+
     def test_disabled_worker_never_starts(self):
         with patch.dict(os.environ, {"IBKR_MCP_ENABLED": "false"}):
             with patch("threading.Thread") as thread:

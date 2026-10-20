@@ -148,3 +148,36 @@ Use the first version available at each prospective decision time when building
 future chronological validation; never substitute later revised bars. Preserve
 negative results. The new archive is evidence collection, not a prediction edge.
 The project remains NOT READY for reliable early explosion alerts.
+
+## Prospective shadow outcomes
+
+The opt-in IBKR worker now reconciles `premium_shadow.jsonl` against the archived
+first-received bar versions and appends terminal results to
+`premium_outcomes.jsonl`. Each WATCH/ACCELERATION observation uses its actual
+`detected_at`; earlier or partially elapsed detection-minute bars cannot count
+as later outcomes. The horizon is the next five **full** minutes, so a detection
+at 14:00:30 UTC is graded on 14:01–14:06 UTC, not on the already partly observed
+14:00 candle. This differs from the historical event audit's anchor protocol and
+must not be pooled with that audit or described as a lead-time test.
+
+For complete, valid, positive-volume REALTIME source bars received within 120
+seconds of bar completion, the outcome records the maximum trade-price rise,
+maximum fall, final trade-price change and whether a +25% trade high was reached.
+It does not assert an executable entry or exit, profit, probability, or that the
+original movement had not already started. Missing data remain pending until
+window end plus 120 seconds, then are censored with a reason. Frozen/delayed,
+invalid, prematurely received or late historical bars are censored. Later bar
+revisions never upgrade a result. A historical bulk download cannot pretend to
+have arrived in time for an earlier signal.
+
+Outcomes survive worker restarts without duplicate IDs, and corruption raises
+an observable worker error. The health endpoint exposes only cumulative scored,
+censored, pending and target-hit counts; pending/censored observations do not
+become automatic losses or successes. This is evidence infrastructure; no new
+positive live performance result or successful server deployment is claimed.
+
+Worker polling now uses a start-to-start interval instead of adding a full
+60-second wait after each network collection. A 25-second collection therefore
+leaves 35 seconds until the next cycle. An overrun leaves a minimum one-second
+pause; cycles do not overlap or issue catch-up bursts. This removes avoidable
+local polling delay but cannot guarantee source latency or free-host uptime.
