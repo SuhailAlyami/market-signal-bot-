@@ -121,7 +121,21 @@ def run_loop(directory, *, interval=60, max_hours=16, once=False, clock=None,
     count=0;report={}
     while monotonic()<deadline:
         started=monotonic()
-        report=tick();count+=1
+        try:
+            report=tick()
+        except Exception as exc:
+            # Retain a visible failure and retry the next cycle. Never export
+            # provider exception messages, which can contain credentials/URLs.
+            report={'checked_at':pd.Timestamp(clock()).isoformat(),
+                    'status':'RUNTIME_ERROR','readiness':'NOT_READY',
+                    'error_type':type(exc).__name__,
+                    'notifications_enabled':False,'orders_enabled':False,
+                    'code_revision':os.getenv('GITHUB_SHA')}
+            path=Path(directory);path.mkdir(parents=True,exist_ok=True)
+            temp=path/'session-heartbeat.tmp'
+            temp.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+            temp.replace(path/'session-heartbeat.json')
+        count+=1
         print(json.dumps({'status':report['status'],'checked_at':report.get('checked_at'),
                           'cycles':count,'notifications_enabled':False}),flush=True)
         if once or report['status'] in {'NY_CLOSED','NONTRADING_DAY','AUTHORIZATION_REQUIRED'}:
@@ -185,7 +199,7 @@ def main():
             result=run_loop(args.state_dir,interval=args.interval,max_hours=args.max_hours,once=args.once)
     except KeyboardInterrupt:
         return 0
-    return 1 if result.get('status') in {'AUTHORIZATION_REQUIRED','DATA_UNAVAILABLE'} else 0
+    return 1 if result.get('status') in {'AUTHORIZATION_REQUIRED','DATA_UNAVAILABLE','RUNTIME_ERROR'} else 0
 
 
 if __name__=='__main__':

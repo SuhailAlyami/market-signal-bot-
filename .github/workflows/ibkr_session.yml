@@ -1,6 +1,9 @@
 name: NY IBKR continuous research — no alerts
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/ibkr_session.yml']
   schedule:
     # Before NY open in summer and winter; calendar inside the program handles DST.
     - cron: '25 13 * * 1-5'
@@ -10,9 +13,42 @@ concurrency:
   group: ibkr-continuous-ny
   cancel-in-progress: false
 jobs:
+  configuration:
+    runs-on: ubuntu-latest
+    outputs:
+      configured: ${{ steps.config.outputs.configured }}
+    steps:
+      - name: Report missing runtime as blocked, not successful detection
+        id: config
+        env:
+          IBKR_RUNNER_LABEL: ${{ vars.IBKR_RUNNER }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          configured=bool(os.environ.get('IBKR_RUNNER_LABEL','').strip())
+          result={'status':'HOST_CHECK_REQUIRED' if configured else 'COLLECTOR_NOT_CONFIGURED',
+                  'collector_running_verified':False,'live_feed_verified':False,
+                  'detector_quality':'NOT_READY','orders_enabled':False}
+          Path('readiness').mkdir(exist_ok=True)
+          Path('readiness/configuration.json').write_text(json.dumps(result,indent=2)+'\n')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('configured='+str(configured).lower()+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('## Hunter operational readiness\n\n```json\n'+json.dumps(result,indent=2)+'\n```\n')
+          if not configured:
+              print('::error title=Hunter not running::No IBKR_RUNNER is configured. No market detection was started.')
+              raise SystemExit(1)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ibkr-readiness-${{ github.run_id }}
+          path: readiness/
   session:
     # No private brokerage session is installed or assumed on hosted CI machines.
-    if: github.ref == 'refs/heads/main' && vars.IBKR_RUNNER != ''
+    needs: configuration
+    if: github.event_name != 'push' && github.ref == 'refs/heads/main' && needs.configuration.outputs.configured == 'true'
     runs-on: ${{ vars.IBKR_RUNNER }}
     timeout-minutes: 490
     steps:
@@ -23,7 +59,7 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - name: Check same-host IBKR authorization
         id: ibkr
-        run: python ibkr_feed_preflight.py
+        run: python ibkr_feed_preflight.py --require-auth
       - name: Observe every minute until NY close, no orders or alerts
         if: steps.ibkr.outputs.ready == 'true'
         run: python hunter_session.py --interval 60 --max-hours 8

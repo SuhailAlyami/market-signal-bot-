@@ -35,7 +35,17 @@ def run(output):
     return report
 
 
-if __name__=='__main__':
+def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',default='.hunter-state/ibkr-runtime.json')
-    run(parser.parse_args().output)
+    parser.add_argument('--require-auth',action='store_true',help='fail the job when runtime authorization is missing')
+    args=parser.parse_args(argv)
+    report=run(args.output)
+    if args.require_auth and not report['runtime_auth_present']:
+        print('::error title=IBKR collector not running::Runtime authorization is missing; detection was not started.')
+        return 1
+    return 0
+
+
+if __name__=='__main__':
+    raise SystemExit(main())

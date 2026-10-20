@@ -31,7 +31,7 @@ jobs:
           restore-keys: hunter-shadow-
       - name: Check IBKR runtime authorization, no implicit login
         id: ibkr
-        run: python ibkr_feed_preflight.py
+        run: python ibkr_feed_preflight.py --require-auth
       - name: Record all candidates or explicit feed rejection, no outbound alerts
         if: steps.ibkr.outputs.ready == 'true' 
         run: python cloud_scan.py
