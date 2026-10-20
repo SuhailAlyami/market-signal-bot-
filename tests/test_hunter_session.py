@@ -3,7 +3,8 @@ import unittest
 from unittest.mock import Mock
 import pandas as pd
 
-from hunter_session import collector_lock,cycle,run_loop
+from pathlib import Path
+from hunter_session import collector_lock,cycle,default_state_dir,export_telemetry,run_loop
 
 
 class SessionTests(unittest.TestCase):
@@ -86,6 +87,23 @@ class SessionTests(unittest.TestCase):
                     canonical=lambda f:{'heartbeat':{'status':'degraded','symbols':{'ES':{'data_status':'renew_runtime_authorization'}}}},
                     ny=lambda f:{'status':'DATA_UNAVAILABLE'})
         self.assertEqual(r['status'],'AUTHORIZATION_REQUIRED')
+
+    def test_default_state_survives_repository_checkout_cleanup(self):
+        self.assertFalse(default_state_dir().is_relative_to(Path(__file__).resolve().parents[1]))
+
+    def test_export_includes_only_research_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source=Path(directory)/'state';source.mkdir()
+            target=Path(directory)/'export'
+            (source/'session-heartbeat.json').write_text('{}')
+            (source/'tokens.json').write_text('private')
+            (source/'client.json').write_text('private')
+            (source/'ny').mkdir()
+            (source/'ny'/'ny-ibkr-2026-10-20.json').write_text('{}')
+            exported=export_telemetry(source,target)
+            self.assertEqual(set(exported),{'session-heartbeat.json',str(Path('ny')/'ny-ibkr-2026-10-20.json')})
+            self.assertFalse((target/'tokens.json').exists())
+            self.assertFalse((target/'client.json').exists())
 
     def test_rejects_unbounded_runtime_or_subminute_polling(self):
         for kwargs in ({'interval':30},{'max_hours':0},{'max_hours':25}):

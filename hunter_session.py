@@ -9,6 +9,7 @@ import asyncio
 from datetime import datetime, timezone
 import json
 import os
+import shutil
 from pathlib import Path
 import time
 
@@ -17,6 +18,33 @@ import pandas as pd
 from ibkr_feed_preflight import inspect as inspect_auth
 from ny_intraday_shadow import session_at, run as ny_run
 from globex_render_worker import create_runtime, run_once
+
+
+def default_state_dir():
+    # Survives Actions checkout cleanup and is shared by same-user launches.
+    return Path.home()/'.local/state/suhail-hunter/ibkr-session'
+
+
+def export_telemetry(source, destination):
+    source=Path(source).resolve();destination=Path(destination)
+    allowed={'session-heartbeat.json','state-ibkr.json','shadow-ibkr.jsonl','ny-heartbeat.json'}
+    exported=[]
+    if not source.exists():return exported
+    for path in source.rglob('*'):
+        relative=path.relative_to(source)
+        if (path.is_symlink() or not path.is_file() or
+            any(parent.is_symlink() for parent in path.parents if source in parent.parents) or
+            len(relative.parts)>2):
+            continue
+        accepted=path.name in allowed or (relative.parts[0]=='ny' and
+                 ((path.name.startswith('ny-ibkr-') and path.suffix=='.json') or
+                  (path.name.startswith('ny-candidates-') and path.suffix=='.jsonl')))
+        if not accepted:continue
+        target=destination/relative
+        target.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(path,target)
+        exported.append(str(relative))
+    return exported
 
 
 async def authorize():
@@ -135,12 +163,16 @@ def collector_lock(directory):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--state-dir',default='.hunter-state/ibkr-session')
+    parser.add_argument('--state-dir',default=str(default_state_dir()))
+    parser.add_argument('--export-only',metavar='DIRECTORY',help='export allowlisted telemetry, no authentication or scans')
     parser.add_argument('--interval',type=int,default=60)
     parser.add_argument('--max-hours',type=float,default=16)
     parser.add_argument('--once',action='store_true')
     parser.add_argument('--authorize',action='store_true',help='one-time same-host IBKR OAuth; never in GitHub logs')
     args=parser.parse_args()
+    if args.export_only:
+        print(json.dumps({'exported':export_telemetry(args.state_dir,args.export_only)}))
+        return 0
     try:
         with collector_lock(args.state_dir):
             if args.authorize:
