@@ -486,7 +486,7 @@ def benchmark(bars: pd.DataFrame, symbol: str, session: str = "all",
 
     training_days = sorted(set(labels[splits["train"]]))
     grid = candidate_grid if candidate_grid is not None else parameter_grid()
-    methods = sorted({candidate['method'] for candidate in grid})
+    methods = METHODS if candidate_grid is None else sorted({candidate['method'] for candidate in grid})
     search_results = []
     # Expanding walk-forward folds are wholly INSIDE train. No validation/test
     # values fit a threshold or contribute to this first-stage candidate search.
