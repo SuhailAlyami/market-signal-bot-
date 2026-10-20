@@ -28,7 +28,7 @@ jobs:
           key: hunter-shadow-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: hunter-shadow-
       - name: Record all candidates or explicit feed rejection, no outbound alerts
-        run: python cloud_scan.py
+        run: python cloud_scan.py --allow-stale-feed
       - uses: actions/cache/save@v4
         if: always()
         with:
@@ -41,3 +41,4 @@ jobs:
           path: .hunter-state/
           include-hidden-files: true
           if-no-files-found: warn
+
