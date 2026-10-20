@@ -177,6 +177,26 @@ async def collect_spx(call, *, now=None, clock=None, max_age_seconds=10, strikes
                         symbol="SPX", expiry=expiry_iso, right=right, strike=entry["strike"],
                         bid=quote["bid"], ask=quote["ask"], source=SOURCE, live_verified=True,
                         quote_time=datetime.fromisoformat(quote["quote_at"])))
+        # Observe actual option-premium acceleration independently of the
+        # executable-quote gate. Only the nearest strike is queried for history
+        # to bound API usage. These hypotheses cannot send notifications.
+        from premium_radar import assess_history
+        report["premium_radar"] = []
+        nearest = rows[0]
+        for side, prefix in (("CALL", "call"), ("PUT", "put")):
+            try:
+                raw_history = await read("get_price_history", {
+                    "contract_id": nearest[prefix + "_contract_id"], "exchange": exchange,
+                    "security_type": "OPT", "outside_rth": True, "step": "ONE_MIN", "step_count": 90})
+                book = next(entry for entry in report["contracts"]
+                            if entry["side"] == side and entry["strike"] == float(nearest["strike"]))
+                observation = assess_history(raw_history, now=receipt(), feed_status=book["feed_status"])
+            except Exception as exc:
+                observation = {"status": "unavailable", "reason": "premium_history_failed",
+                               "error_type": type(exc).__name__, "signal": None,
+                               "research_only": True, "notifications_enabled": False}
+            report["premium_radar"].append({"side": side, "strike": float(nearest["strike"]),
+                                            "expiry": expiry_iso, **observation})
         finished = receipt()
         # Revalidate index age after all calls; don't grant freshness based on
         # a timestamp captured before a slow option-chain collection.
@@ -235,6 +255,8 @@ def report_health(path, now=None, max_report_age=180):
                 "source": SOURCE, "observed_at": report["observed_at"],
                 "report_age_seconds": elapsed, "orders_enabled": False,
                 "underlying_feed_status": report.get("underlying", {}).get("feed_status"),
+                "premium_signal_count": sum(bool(item.get("signal")) for item in report.get("premium_radar", [])),
+                "experimental_notifications_enabled": False,
                 "reason": report.get("reason")}
     except (OSError, ValueError, KeyError, TypeError):
         return {"status": "unavailable", "readiness": "NOT_READY", "source": SOURCE,
