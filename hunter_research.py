@@ -294,13 +294,14 @@ def movement_events(bars: pd.DataFrame, features: pd.DataFrame, indices: list[in
 
 
 def signals_for(features: pd.DataFrame, indices: list[int], method: str, params: dict,
-                config: ResearchConfig) -> list[dict]:
+                config: ResearchConfig, signal_rule=None) -> list[dict]:
+    signal_rule = signal_rule or candidate_signal
     signals = []
     next_signal = -1
     for i in indices:
         if i < next_signal:
             continue
-        direction = candidate_signal(features.iloc[i], method, params)
+        direction = signal_rule(features.iloc[i], method, params)
         if direction:
             signals.append({"index": i, "direction": direction,
                             "bar_time": features.index[i].isoformat(),
@@ -440,10 +441,10 @@ def _evaluation_context(bars, features, indices, session, config):
 
 
 def _evaluate(bars, features, indices, method, params, session, config, bootstrap=False,
-              _context=None):
+              _context=None, signal_rule=None):
     context = _context or _evaluation_context(bars, features, indices, session, config)
     eligible, events, causal = context["eligible"], context["events"], context["causal"]
-    signals = signals_for(features, causal, method, params, config)
+    signals = signals_for(features, causal, method, params, config, signal_rule)
     observable = set(eligible)
     for signal in signals:
         signal["outcome_observable"] = signal["index"] in observable
@@ -457,7 +458,9 @@ def _evaluate(bars, features, indices, method, params, session, config, bootstra
 
 
 def benchmark(bars: pd.DataFrame, symbol: str, session: str = "all",
-              as_of: pd.Timestamp | None = None, config: ResearchConfig | None = None) -> tuple[dict, dict[str, pd.DataFrame]]:
+              as_of: pd.Timestamp | None = None, config: ResearchConfig | None = None,
+              *, feature_builder=None, signal_rule=None, candidate_grid=None,
+              availability_delays=(0, 5, 10, 15)) -> tuple[dict, dict[str, pd.DataFrame]]:
     config = config or ResearchConfig()
     if config.horizon < 1 or config.cooldown < 1 or not 0 < config.onset_fraction <= 1:
         raise ValueError("positive horizon/cooldown and onset_fraction in (0,1] required")
@@ -468,7 +471,7 @@ def benchmark(bars: pd.DataFrame, symbol: str, session: str = "all",
     # Future/incomplete bars do not enter features, partitions or outcomes.
     incomplete = int(((data.index+pd.Timedelta(minutes=1)) > as_of).sum())
     data = data.loc[(data.index+pd.Timedelta(minutes=1)) <= as_of]
-    features = feature_frame(data)
+    features = (feature_builder or feature_frame)(data)
     splits, inventory = chronological_splits(data, session, as_of, config.horizon)
     labels = _session_labels(data.index, session)
     contexts = {}
@@ -479,10 +482,11 @@ def benchmark(bars: pd.DataFrame, symbol: str, session: str = "all",
         if key not in contexts:
             contexts[key] = _evaluation_context(data, features, indices, session, config)
         return _evaluate(data, features, indices, method, params, session, config,
-                         bootstrap, _context=contexts[key])
+                         bootstrap, _context=contexts[key], signal_rule=signal_rule)
 
     training_days = sorted(set(labels[splits["train"]]))
-    grid = parameter_grid()
+    grid = candidate_grid if candidate_grid is not None else parameter_grid()
+    methods = sorted({candidate['method'] for candidate in grid})
     search_results = []
     # Expanding walk-forward folds are wholly INSIDE train. No validation/test
     # values fit a threshold or contribute to this first-stage candidate search.
@@ -507,7 +511,7 @@ def benchmark(bars: pd.DataFrame, symbol: str, session: str = "all",
                                "train_walk_forward_f1": float(np.mean(fold_scores)) if fold_scores else 0.,
                                "train_metrics": train_metrics, "train_walk_forward_folds": fold_rows})
     shortlist = []
-    for method in METHODS:
+    for method in methods:
         ranked = sorted([x for x in search_results if x["method"] == method],
                         key=lambda x: (-x["train_walk_forward_f1"], -selection_score(x["train_metrics"]), x["id"]))
         shortlist.extend(ranked[:2])
@@ -533,7 +537,7 @@ def benchmark(bars: pd.DataFrame, symbol: str, session: str = "all",
         artifacts[f"{phase}_signals"] = pd.DataFrame(signals)
         if phase == "test":
             eligible = eligible_indices(data, features, indices, config)
-            for delay in (0, 5, 10, 15):
+            for delay in availability_delays:
                 delayed = score_signals(events, [dict(x) for x in signals if x["outcome_observable"]],
                                         data, eligible, session, config, True, delay, _labels=labels)
                 delayed_baselines = {}
@@ -627,3 +631,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

@@ -71,7 +71,9 @@ def evaluate(data, horizon=5, target=0.25, delay_seconds=0, prepared=None, candi
         used, lead = set(), []
         for row in scored:
             for k, event in enumerate(events):
-                if k not in used and event["anchor"] <= row["decision"] <= event["target"]:
+                generated = data.index[row['index']] + pd.Timedelta(minutes=1)
+                if (k not in used and event["anchor"] <= generated
+                        and row["decision"] <= event["target"]):
                     used.add(k)
                     lead.append((event["onset"] - row["decision"]).total_seconds())
                     break

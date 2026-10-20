@@ -80,7 +80,9 @@ def evaluate(data, prepared, config, delay=60):
         used, matches = set(), []
         for s in scored:
             for k, event in enumerate(events):
-                if k not in used and event['anchor'] <= s['decision'] <= event['target']:
+                generated = data.index[s['index']]+pd.Timedelta(minutes=1)
+                if (k not in used and event['anchor'] <= generated
+                        and s['decision'] <= event['target']):
                     used.add(k)
                     lead = (event['onset']-s['decision']).total_seconds()
                     matches.append({'decision':s['decision'].isoformat(), 'onset':event['onset'].isoformat(),

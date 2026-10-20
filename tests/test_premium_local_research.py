@@ -59,3 +59,18 @@ class LocalPremiumTests(unittest.TestCase):
 
     def test_predeclared_grid_is_bounded(self):
         self.assertEqual(len(GRID),8)
+
+    def test_latency_cannot_move_an_earlier_signal_inside_a_later_event(self):
+        from unittest.mock import patch
+        from research_premium_radar import evaluate as original_evaluate
+        data = bars(36)
+        data.iloc[20] = [10.,10.7,9.95,10.6,200.]
+        data.iloc[21] = [10.6,10.8,10.5,10.7,100.]
+        data.iloc[22] = [10.7,11.6,10.7,11.5,200.]
+        data.iloc[26] = [10.,14.2,10.,14.,200.]
+        only_first=lambda f: f['price']==10.6
+        prepared=prepare(data)
+        with patch('premium_local_research.local_rule', side_effect=lambda f,c:only_first(f)):
+            for delay in (0,60,120):
+                self.assertEqual(evaluate(data,prepared,CONFIG,delay)['local']['detected'],0)
+                self.assertEqual(original_evaluate(data,delay_seconds=delay,candidate=only_first)['methods']['candidate']['detected_events'],0)
