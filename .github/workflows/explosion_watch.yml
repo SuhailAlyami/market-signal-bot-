@@ -29,6 +29,9 @@ jobs:
           restore-keys: hunter-shadow-
       - name: Record all candidates or explicit feed rejection, no outbound alerts
         run: python cloud_scan.py --allow-stale-feed
+      - name: Observe frozen NY candidates during the session, actual receipt times
+        if: always()
+        run: python ny_intraday_shadow.py
       - uses: actions/cache/save@v4
         if: always()
         with:
