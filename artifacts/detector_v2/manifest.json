@@ -76,5 +76,11 @@
     "source_sha256": "d8b6bcebb57990ff928349031b22a0e4d675f3110e000694a562957250aeeed9",
     "gzip_sha256": "423063dbb94d748304913775a3b5d53194ff0feb51d6c52c06e64c9ca834dcf2",
     "uncompressed_bytes": 69609
+  },
+  {
+    "path": "artifacts/detector_v2/forward_integration_smoke.json.gz",
+    "source_sha256": "ab8868bd787d545d6a5cbc6ec0caf2c518c41f533dea8c343f15c3681e14ae4d",
+    "gzip_sha256": "39178006a9bbb087df3171944d3aa8631595abed6be5c467ced1e377a986c0f9",
+    "uncompressed_bytes": 20141
   }
 ]

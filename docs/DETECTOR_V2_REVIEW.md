@@ -149,3 +149,33 @@ observed option books/trades and receipt times, then a frozen evaluation that
 beats baselines without unacceptable false alarms. Repeatedly selecting on these
 same dates cannot supply that evidence. This work establishes useful comparisons
 and fixes a scoring defect; it does not establish the product acceptance criteria.
+
+## Fixed-candidate forward-day evaluation on GitHub
+
+`frozen_day_research.py` and `.github/workflows/frozen_day_research.yml` evaluate
+newly completed sessions starting 20 October 2026. The schedule is 21:35 UTC on
+US weekdays (00:35 Riyadh the following calendar day); it is best effort, not an
+intraday monitor. Each run downloads ES/NQ minute history twice in total, checks
+the exchange's actual close including DST/early closes, requires full valid
+regular-session coverage, and compares the frozen rule/linear/boosted candidates
+with simple baselines. It does not select new settings, send notifications,
+require Render/IBKR credentials, or automatically promote a model.
+
+Original development snapshots cannot be overwritten by new downloads. Training
+source hashes and the frozen model-library version are verified. The nonlinear
+estimator is reproduced only from its ORIGINAL training prefix and frozen
+hyperparameters; no newly evaluated day enters its fitting. Run reports include
+the code revision and candidate-report fingerprints. Raw downloads, events,
+signals, positive/negative results and explicit data-unavailable reports remain
+GitHub artifacts for 30 days. Provider data outages do not invent outcomes;
+unexpected implementation or frozen-source errors fail visibly.
+
+This is after-close historical replay on new chronological dates, not a live
+first-publication archive or executable option paper trade. Historical revision
+and source latency remain limitations. Running before today's close correctly
+returned `WAITING_FOR_CLOSED_SESSION` without fetching prices or producing
+outcomes. A full integration smoke on the already known 16 October session
+successfully evaluated all three candidates and both baselines for ES and NQ;
+it is labeled `REUSED_DAY_INTEGRATION_SMOKE_NOT_FORWARD` and is not forward
+performance evidence. These checks do not establish that a future scheduled
+GitHub run has already executed.
