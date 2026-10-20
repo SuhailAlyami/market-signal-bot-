@@ -186,7 +186,8 @@ def journal_observations(report, directory):
         if phase is None:
             continue
         bar_end = item.get("last_completed_bar")
-        event_id = hashlib.sha256(f"{key}:{phase}:{bar_end}".encode()).hexdigest()[:24]
+        event_anchor = bar_end or (active or {}).get("started_at") or report["observed_at"]
+        event_id = hashlib.sha256(f"{key}:{phase}:{event_anchor}".encode()).hexdigest()[:24]
         if event_id in state["seen"]:
             continue
         state["seen"].append(event_id)
