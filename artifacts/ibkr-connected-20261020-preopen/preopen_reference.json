@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-20T12:39:48.452683+00:00",
+  "purpose": "PREOPEN_REFERENCE_NOT_ENTRY_SIGNAL",
+  "session_date": "2026-10-20",
+  "market_open_utc": "2026-10-20T13:30:00+00:00",
+  "source": "IBKR connected market-data tools",
+  "spx_reference_session": "2026-10-19",
+  "prior_session_high": 7731.18,
+  "prior_session_low": 7684.79,
+  "prior_session_close": 7690.73,
+  "spx_live_verified": false,
+  "canonical_capture_status": "VERIFIED_CAPTURE_ANALYZED",
+  "detected_events": [],
+  "research_only": true,
+  "orders_enabled": false,
+  "notifications_enabled": false,
+  "continuous_capture_verified": false,
+  "executable_option_candidate": null,
+  "notes": [
+    "References were recorded before the regular NY open; no option strike, price, probability or future outcome is inferred.",
+    "Futures and cash index levels are distinct. Never copy ES prices into SPX entry levels.",
+    "A no-event result is one actual observation; it does not demonstrate a reliable detector or continuous monitoring."
+  ]
+}
