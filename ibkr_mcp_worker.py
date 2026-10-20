@@ -22,15 +22,23 @@ def get_status():
 
 def poll_once():
     from ibkr_mcp_client import run_collection
+    from premium_archive import archive_history
+
+    archived = 0
+
+    def retain(identity, raw, received_at):
+        nonlocal archived
+        archived += archive_history(report_path().parent, identity, raw, received_at)
 
     async def collect():
-        return await asyncio.wait_for(run_collection(authorize=False), timeout=90)
+        return await asyncio.wait_for(run_collection(authorize=False, history_sink=retain), timeout=90)
 
     try:
         report = asyncio.run(collect())
         from premium_radar import journal_observations
         events = journal_observations(report, report_path().parent)
         report["premium_events_recorded"] = len(events)
+        report["premium_bar_versions_recorded"] = archived
     except Exception as exc:
         report = {"status": "error", "readiness": "NOT_READY", "source": SOURCE,
                   "orders_enabled": False, "reason": "worker_collection_failed",

@@ -102,7 +102,7 @@ def inspect_snapshot(raw, now, max_age_seconds=10):
                              "stale_or_future_bid_ask_timestamp")}
 
 
-async def collect_spx(call, *, now=None, clock=None, max_age_seconds=10, strikes_per_side=2):
+async def collect_spx(call, *, now=None, clock=None, max_age_seconds=10, strikes_per_side=2, history_sink=None):
     """Collect today's SPXW near-ATM contracts; bounded read-only calls.
 
     call(name, arguments) must enforce READ_TOOLS at the transport boundary.
@@ -190,6 +190,10 @@ async def collect_spx(call, *, now=None, clock=None, max_age_seconds=10, strikes
                     "security_type": "OPT", "outside_rth": True, "step": "ONE_MIN", "step_count": 90})
                 book = next(entry for entry in report["contracts"]
                             if entry["side"] == side and entry["strike"] == float(nearest["strike"]))
+                if history_sink is not None:
+                    history_sink({"contract_id": nearest[prefix + "_contract_id"], "exchange": exchange,
+                                  "expiry": expiry_iso, "strike": float(nearest["strike"]),
+                                  "side": side, "feed_status": book["feed_status"]}, raw_history, receipt())
                 observation = assess_history(raw_history, now=receipt(), feed_status=book["feed_status"])
             except Exception as exc:
                 observation = {"status": "unavailable", "reason": "premium_history_failed",
@@ -256,6 +260,7 @@ def report_health(path, now=None, max_report_age=180):
                 "report_age_seconds": elapsed, "orders_enabled": False,
                 "underlying_feed_status": report.get("underlying", {}).get("feed_status"),
                 "premium_signal_count": sum(bool(item.get("signal")) for item in report.get("premium_radar", [])),
+                "premium_bar_versions_recorded": report.get("premium_bar_versions_recorded", 0),
                 "experimental_notifications_enabled": False,
                 "reason": report.get("reason")}
     except (OSError, ValueError, KeyError, TypeError):

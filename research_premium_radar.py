@@ -10,7 +10,7 @@ import pandas as pd
 from premium_radar import features, classify_features, history_frame
 
 
-def evaluate(data, horizon=5, target=0.25, delay_seconds=0, prepared=None):
+def evaluate(data, horizon=5, target=0.25, delay_seconds=0, prepared=None, candidate=None):
     """Nonoverlapping +25% trade-price events; strict causal signal scheduling.
 
     Onset is the START of the first future minute whose high reaches +5%.
@@ -20,6 +20,8 @@ def evaluate(data, horizon=5, target=0.25, delay_seconds=0, prepared=None):
     if horizon < 1 or target <= 0.05 or delay_seconds < 0:
         raise ValueError("invalid_evaluation_parameters")
     names = ("radar_watch", "radar_acceleration", "baseline_breakout", "baseline_momentum", "no_signal")
+    if candidate is not None:
+        names += ("candidate",)
     signals, events = {name: [] for name in names}, []
     cooldown = {}
     prepared = prepared if prepared is not None else [features(data, i) for i in range(len(data))]
@@ -33,6 +35,8 @@ def evaluate(data, horizon=5, target=0.25, delay_seconds=0, prepared=None):
                  "radar_acceleration": signal is not None and signal["state"] == "ACCELERATION",
                  "baseline_breakout": f["price"] > f["prior_high"],
                  "baseline_momentum": f["return_1m"] >= 0.03, "no_signal": False}
+        if candidate is not None:
+            rules["candidate"] = bool(candidate(f))
         decision = data.index[i] + pd.Timedelta(minutes=1, seconds=delay_seconds)
         for name, active in rules.items():
             if active and (name not in cooldown or decision >= cooldown[name]):

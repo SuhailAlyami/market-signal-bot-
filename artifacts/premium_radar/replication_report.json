@@ -1,0 +1,45 @@
+{
+  "decision": "NOT_READY",
+  "phase": "CORRELATED_CONTRACT_REPLICATION",
+  "frozen_at": "2026-10-20T05:00:33.513298+00:00",
+  "config": {
+    "rvol": 2.0,
+    "return_1m": 0.03,
+    "distance": 1.5
+  },
+  "replication_sha256": [
+    "560f2ec62a23f0a14a358af9bec7c924a857558182b93fd3c2d3d4689a6f067a",
+    "9ed1603f983a68666c0fbb6c95cb6a8f0603c909e5618236479b6e3a42051922"
+  ],
+  "result": {
+    "contract_events": 2,
+    "methods": {
+      "candidate": {
+        "signals": 5,
+        "detected_events": 0,
+        "early_events": 0,
+        "false_alarms": 5
+      },
+      "baseline_breakout": {
+        "signals": 7,
+        "detected_events": 0,
+        "early_events": 0,
+        "false_alarms": 7
+      },
+      "baseline_momentum": {
+        "signals": 18,
+        "detected_events": 0,
+        "early_events": 0,
+        "false_alarms": 18
+      }
+    }
+  },
+  "notifications_enabled": false,
+  "reason": "same_market_dates_are_not_independent_sessions",
+  "limitations": [
+    "60-second arrival delay is assumed, not measured.",
+    "Trade highs do not establish executable option returns.",
+    "No automatic promotion: require chronological independent-session validation.",
+    "A matching event is not proof of a forecast before onset."
+  ]
+}
