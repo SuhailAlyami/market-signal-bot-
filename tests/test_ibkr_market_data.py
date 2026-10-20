@@ -104,6 +104,18 @@ class IBKRDataTests(unittest.TestCase):
         self.assertFalse(health['feed_realtime_verified'])
         self.assertNotIn('tokens',health)
 
+    def test_unresponsive_broker_request_is_cancelled_at_the_deadline(self):
+        from ibkr_market_data import request_async
+        cancelled=[]
+        async def hanging(**kwargs):
+            try:await asyncio.Future()
+            finally:cancelled.append(True)
+        with patch('ibkr_mcp_client.run_collection',side_effect=hanging):
+            with patch('ibkr_market_data.REQUEST_TIMEOUT_SECONDS',.01):
+                with self.assertRaises(TimeoutError):
+                    asyncio.run(request_async('ES',step_count=1000))
+        self.assertEqual(cancelled,[True])
+
     def test_no_active_yahoo_imports_or_synthetic_coin_fallback(self):
         root=Path(__file__).resolve().parents[1]
         for path in root.glob('*.py'):
