@@ -1221,6 +1221,10 @@ class EvolutionaryTradingBot:
 
 # ==================== خادم Flask ====================
 app = Flask(__name__)
+from ibkr_web_auth import bp as ibkr_setup_blueprint
+app.register_blueprint(ibkr_setup_blueprint)
+# OAuth callbacks contain codes; never log request query strings.
+logging.getLogger('werkzeug').setLevel(logging.ERROR)
 START_TIME = time.time()
 
 @app.route('/')
