@@ -33,11 +33,19 @@ inline test thread. Running callbacks before that thread initialized state made
 the fixture timing-dependent. The fixture now initializes its fake redirect
 inline without changing production threading.
 
+The first Windows GitHub Actions run additionally exposed a cp1252 locale
+difference: default-encoded Arabic journal writes failed closed with
+`persistence_failed`, and a source-audit test could not decode UTF-8 Python
+files. State/journal reads and writes and the affected test reads now specify
+UTF-8 explicitly. A regression simulates a cp1252 default and verifies Arabic
+state, journal text and deduplication after restart; CI keeps its native locale
+rather than hiding the defect with a UTF-8 environment override.
+
 ## Measured final validation
 
 | Check | Result |
 | --- | --- |
-| Full unittest discovery on Windows / Python 3.12.10 | 222 passed, 0 failures, 0 errors, 0 skipped; 48.922 seconds |
+| Full unittest discovery on Windows / Python 3.12.10 | 223 passed, 0 failures, 0 errors, 0 skipped; 66.406 seconds |
 | Python compilation of application modules and tests | Passed |
 | `pip check` in isolated environment | No broken requirements |
 | Actual main-process startup and HTTP `/` and `/health` | HTTP 200; process alive, prediction readiness NOT READY |

@@ -45,6 +45,8 @@ Windows, and owner-only permissions on POSIX. It remains outside the checkout.
 The Windows ACL implementation uses pywin32, installed by the MCP SDK, and
 rejects storage with broader access. Market-only journal mode-bit checks apply
 on POSIX; those bits do not represent Windows permissions.
+Runtime state and the Arabic shadow journal use explicit UTF-8 on every host,
+including Windows machines whose default text encoding is a legacy code page.
 
 For a local HTTP-only startup check with all collectors and Telegram disabled:
 

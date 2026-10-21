@@ -1,5 +1,6 @@
 """Safety and lifecycle regressions; these are not prediction-quality evidence."""
 import json
+import io
 import tempfile
 import unittest
 from datetime import datetime, timedelta, timezone
@@ -101,7 +102,7 @@ class RuntimeTests(unittest.TestCase):
         self.frame = pd.concat([self.frame, row])
 
     def records(self):
-        return [json.loads(line) for line in self.journal.read_text().splitlines()]
+        return [json.loads(line) for line in self.journal.read_text(encoding="utf-8").splitlines()]
 
     def test_setup_dedup_survives_process_restart(self):
         first = self.poll()
@@ -112,6 +113,21 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(self.poll()["events"], [])
         self.assertEqual(self.poll(runtime=self.new_runtime())["events"], [])
         self.assertEqual(len([item for item in self.records() if item["record_type"] == "event"]), 1)
+
+    def test_arabic_state_and_journal_survive_non_utf8_host_restart(self):
+        native_open = io.open
+        def legacy_open(file, mode='r', buffering=-1, encoding=None, *args, **kwargs):
+            if 'b' not in mode and encoding is None:
+                encoding = 'cp1252'
+            return native_open(file, mode, buffering, encoding, *args, **kwargs)
+        with patch('io.open', legacy_open):
+            self.runtime.state['portability_note'] = 'استعداد'
+            first = self.poll()
+            self.assertEqual(first['events'][0]['state_ar'], 'استعداد')
+            restarted = self.new_runtime()
+            self.assertEqual(restarted.state['portability_note'], 'استعداد')
+            self.assertEqual(self.poll(runtime=restarted)['events'], [])
+            self.assertIn('استعداد', self.journal.read_text(encoding='utf-8'))
 
     def test_two_close_hysteresis_trigger_exit_cooldown(self):
         self.poll()

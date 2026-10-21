@@ -144,7 +144,7 @@ class HunterRuntime:
         self.persistence_error = None
         try:
             if self.state_path.exists():
-                loaded = json.loads(self.state_path.read_text())
+                loaded = json.loads(self.state_path.read_text(encoding="utf-8"))
                 if not isinstance(loaded, dict) or loaded.get("version") != 1 or not isinstance(loaded.get("symbols"), dict):
                     raise ValueError("invalid state schema")
                 if not isinstance(loaded.get("pending"), list) or not isinstance(loaded.get("notifications"), dict):
@@ -181,7 +181,7 @@ class HunterRuntime:
     def _save(self):
         self.state_path.parent.mkdir(parents=True, exist_ok=True)
         temporary = self.state_path.with_suffix(self.state_path.suffix + ".tmp")
-        with temporary.open("w") as handle:
+        with temporary.open("w", encoding="utf-8") as handle:
             json.dump(self.state, handle, allow_nan=False, ensure_ascii=False)
             handle.flush()
             os.fsync(handle.fileno())
@@ -189,7 +189,7 @@ class HunterRuntime:
 
     def _record(self, entry):
         self.journal_path.parent.mkdir(parents=True, exist_ok=True)
-        with self.journal_path.open("a") as handle:
+        with self.journal_path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(entry, allow_nan=False, ensure_ascii=False) + "\n")
             handle.flush()
 

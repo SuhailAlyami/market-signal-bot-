@@ -131,7 +131,7 @@ class IBKRDataTests(unittest.TestCase):
     def test_no_active_yahoo_imports_or_synthetic_coin_fallback(self):
         root=Path(__file__).resolve().parents[1]
         for path in root.glob('*.py'):
-            text=path.read_text()
+            text=path.read_text(encoding='utf-8')
             self.assertNotIn('import yfinance',text,str(path))
             self.assertNotIn('api.coingecko.com',text,str(path))
-        self.assertNotIn('yfinance',(root/'requirements.txt').read_text())
+        self.assertNotIn('yfinance',(root/'requirements.txt').read_text(encoding='utf-8'))
