@@ -144,7 +144,7 @@ class ReadOnlyTools:
         return await self.session.call_tool(tool.name, arguments=arguments)
 
 
-def oauth_provider(storage, redirect, receive):
+def oauth_provider(storage, redirect, receive, callback_url=CALLBACK):
     from mcp.client.auth import OAuthClientProvider
     from mcp.shared.auth import OAuthClientMetadata
     from pydantic import AnyUrl, ConfigDict, field_validator
@@ -163,13 +163,14 @@ def oauth_provider(storage, redirect, receive):
     return OAuthClientProvider(
         server_url=ENDPOINT,
         client_metadata=ReadOnlyMetadata(
-            client_name="Suhail Hunter market-data reader", redirect_uris=[AnyUrl(CALLBACK)],
+            client_name="Suhail Hunter market-data reader", redirect_uris=[AnyUrl(callback_url)],
             grant_types=["authorization_code", "refresh_token"], response_types=["code"],
             token_endpoint_auth_method="none", scope="mcp.read"),
         storage=storage, redirect_handler=redirect, callback_handler=receive)
 
 
-async def run_collection(*, authorize=False, storage=None, history_sink=None, collector=None):
+async def run_collection(*, authorize=False, storage=None, history_sink=None, collector=None,
+                         web_authorization=None):
     """No implicit sign-in in a scheduled job; auth failures are observable."""
     base = {"schema_version": 1, "source": SOURCE, "orders_enabled": False,
             "readiness": "NOT_READY", "contracts": [], "candidates": {},
@@ -183,7 +184,7 @@ async def run_collection(*, authorize=False, storage=None, history_sink=None, co
         storage = storage or PrivateOAuthStorage()
         if not authorize and (await storage.get_tokens() is None or await storage.get_client_info() is None):
             return {**base, "status": "authorization_required", "reason": "authorize_runtime_separately"}
-        if authorize:
+        if authorize and web_authorization is None:
             callback = LoopbackCallback()
             callback.start()
 
@@ -193,15 +194,21 @@ async def run_collection(*, authorize=False, storage=None, history_sink=None, co
             parsed = urlparse(url)
             if parsed.scheme != "https" or parsed.hostname != "api.ibkr.com":
                 raise ValueError("Unexpected authorization host")
-            print("Open this IBKR authorization link on this machine (do not paste credentials into chat):")
-            print(url)
+            if web_authorization is not None:
+                web_authorization.set_redirect(url)
+            else:
+                print("Open this IBKR authorization link on this machine (do not paste credentials into chat):")
+                print(url)
 
         async def receive():
+            if web_authorization is not None:
+                return await web_authorization.wait()
             if callback is None:
                 raise AuthorizationRequired()
             return await callback.wait()
 
-        oauth = oauth_provider(storage, redirect, receive)
+        oauth = oauth_provider(storage, redirect, receive,
+                              web_authorization.callback_url if web_authorization else CALLBACK)
         async with httpx.AsyncClient(auth=oauth, timeout=30, follow_redirects=False) as http:
             async with streamable_http_client(ENDPOINT, http_client=http) as transport:
                 async with ClientSession(transport[0], transport[1]) as session:
@@ -223,3 +230,4 @@ async def run_collection(*, authorize=False, storage=None, history_sink=None, co
     finally:
         if callback is not None:
             callback.close()
+
