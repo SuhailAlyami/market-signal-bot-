@@ -25,8 +25,7 @@ class HostedSetupTests(unittest.TestCase):
     def setUp(self):
         for item in [patch.dict('os.environ', IBKR_WEB_ORIGIN=ORIGIN, IBKR_WEB_SETUP_KEY=KEY),
                      patch.object(web, '_active', None),
-                     patch.object(web, '_run', lambda c: c.set_redirect(auth_url())),
-                     patch.object(web.threading, 'Thread', InlineThread)]:
+                     patch.object(web, '_run', lambda c: c.set_redirect(auth_url()))]:
             item.start()
             self.addCleanup(item.stop)
         self.app = Flask(__name__)
