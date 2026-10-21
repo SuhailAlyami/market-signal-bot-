@@ -2,7 +2,7 @@ pyTelegramBotAPI==4.14.0
 Flask==3.0.0
 requests==2.31.0
 pandas==2.1.4
-numpy==1.24.3
+numpy==1.26.4
 gunicorn==21.2.0
 pandas-market-calendars>=4.4,<6
 -r requirements-ibkr.txt

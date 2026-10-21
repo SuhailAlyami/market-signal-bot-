@@ -1,5 +1,7 @@
 import asyncio
 import tempfile
+import threading
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 from urllib.parse import urlencode
@@ -25,6 +27,7 @@ class HostedSetupTests(unittest.TestCase):
     def setUp(self):
         for item in [patch.dict('os.environ', IBKR_WEB_ORIGIN=ORIGIN, IBKR_WEB_SETUP_KEY=KEY),
                      patch.object(web, '_active', None),
+                     patch.object(web, 'threading', SimpleNamespace(Thread=InlineThread, Event=threading.Event)),
                      patch.object(web, '_run', lambda c: c.set_redirect(auth_url()))]:
             item.start()
             self.addCleanup(item.stop)

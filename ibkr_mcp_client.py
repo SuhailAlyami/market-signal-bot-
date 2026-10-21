@@ -25,6 +25,59 @@ class AuthorizationRequired(Exception):
     pass
 
 
+def _windows_user_sid():
+    import win32api
+    import win32con
+    import win32security
+
+    token = win32security.OpenProcessToken(win32api.GetCurrentProcess(), win32con.TOKEN_QUERY)
+    try:
+        return win32security.GetTokenInformation(token, win32security.TokenUser)[0]
+    finally:
+        token.Close()
+
+
+def _protect_oauth_path(path, *, directory=False):
+    """Use a protected current-user DACL on Windows, owner-only modes on POSIX."""
+    if path.is_symlink():
+        raise ValueError('OAuth storage must not be a symlink')
+    if os.name != 'nt':
+        os.chmod(path, 0o700 if directory else 0o600)
+        return
+    # pywin32 is installed by the MCP SDK on Windows. Missing ACL support must
+    # fail closed; Windows chmod only changes the read-only attribute.
+    import ntsecuritycon
+    import win32security
+
+    acl = win32security.ACL()
+    flags = (win32security.OBJECT_INHERIT_ACE | win32security.CONTAINER_INHERIT_ACE) if directory else 0
+    acl.AddAccessAllowedAceEx(win32security.ACL_REVISION, flags,
+                            ntsecuritycon.FILE_ALL_ACCESS, _windows_user_sid())
+    win32security.SetNamedSecurityInfo(
+        str(path), win32security.SE_FILE_OBJECT,
+        win32security.DACL_SECURITY_INFORMATION | win32security.PROTECTED_DACL_SECURITY_INFORMATION,
+        None, None, acl, None)
+
+
+def _oauth_path_is_private(path):
+    if path.is_symlink():
+        return False
+    if os.name != 'nt':
+        return not path.stat().st_mode & 0o077
+    import ntsecuritycon
+    import win32security
+
+    descriptor = win32security.GetNamedSecurityInfo(
+        str(path), win32security.SE_FILE_OBJECT, win32security.DACL_SECURITY_INFORMATION)
+    acl = descriptor.GetSecurityDescriptorDacl()
+    if acl is None or acl.GetAceCount() != 1:
+        return False
+    kind, mask, sid = acl.GetAce(0)
+    return (bool(descriptor.GetSecurityDescriptorControl()[0] & win32security.SE_DACL_PROTECTED)
+            and kind[0] == win32security.ACCESS_ALLOWED_ACE_TYPE
+            and mask == ntsecuritycon.FILE_ALL_ACCESS and sid == _windows_user_sid())
+
+
 class PrivateOAuthStorage:
     """Persist only on an operator-controlled filesystem outside the checkout."""
     def __init__(self, directory=None):
@@ -38,16 +91,17 @@ class PrivateOAuthStorage:
         path = self.directory / name
         if not path.exists():
             return None
-        if path.is_symlink() or path.stat().st_mode & 0o077:
-            raise ValueError("OAuth file permissions must be 0600")
+        if not _oauth_path_is_private(path):
+            raise ValueError("OAuth files must be private to the current user (POSIX 0600 or Windows DACL)")
         return json.loads(path.read_text())
 
     def _write(self, name, value):
         self.directory.mkdir(mode=0o700, parents=True, exist_ok=True)
-        os.chmod(self.directory, 0o700)
+        _protect_oauth_path(self.directory, directory=True)
         fd, temporary = tempfile.mkstemp(dir=self.directory, prefix=".oauth-")
         try:
             with os.fdopen(fd, "w") as stream:
+                _protect_oauth_path(Path(temporary))
                 json.dump(value.model_dump(mode="json"), stream)
                 stream.flush()
                 os.fsync(stream.fileno())

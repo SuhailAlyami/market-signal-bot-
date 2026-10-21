@@ -158,8 +158,40 @@ class StorageAndTransportTests(unittest.IsolatedAsyncioTestCase):
             from mcp.shared.auth import OAuthToken
             store = PrivateOAuthStorage(directory)
             await store.set_tokens(OAuthToken(access_token="not-a-real-token", token_type="Bearer"))
-            self.assertEqual((Path(directory) / "tokens.json").stat().st_mode & 0o777, 0o600)
+            if os.name != 'nt':
+                self.assertEqual((Path(directory) / "tokens.json").stat().st_mode & 0o777, 0o600)
             self.assertEqual((await store.get_tokens()).access_token, "not-a-real-token")
+
+    async def test_broadened_oauth_file_access_is_rejected(self):
+        from mcp.shared.auth import OAuthToken
+        with tempfile.TemporaryDirectory() as directory:
+            store = PrivateOAuthStorage(directory)
+            await store.set_tokens(OAuthToken(access_token='test-only', token_type='Bearer'))
+            path = Path(directory) / 'tokens.json'
+            if os.name == 'nt':
+                import ntsecuritycon
+                import win32security
+                descriptor = win32security.GetNamedSecurityInfo(
+                    str(path), win32security.SE_FILE_OBJECT, win32security.DACL_SECURITY_INFORMATION)
+                acl = descriptor.GetSecurityDescriptorDacl()
+                acl.AddAccessAllowedAce(win32security.ACL_REVISION, ntsecuritycon.FILE_GENERIC_READ,
+                                       win32security.CreateWellKnownSid(win32security.WinWorldSid))
+                win32security.SetNamedSecurityInfo(
+                    str(path), win32security.SE_FILE_OBJECT, win32security.DACL_SECURITY_INFORMATION,
+                    None, None, acl, None)
+            else:
+                os.chmod(path, 0o644)
+            with self.assertRaises(ValueError):
+                await store.get_tokens()
+
+    async def test_acl_failure_cannot_persist_oauth_data(self):
+        from mcp.shared.auth import OAuthToken
+        with tempfile.TemporaryDirectory() as directory:
+            store = PrivateOAuthStorage(directory)
+            with patch('ibkr_mcp_client._protect_oauth_path', side_effect=[None, PermissionError('denied')]):
+                with self.assertRaises(PermissionError):
+                    await store.set_tokens(OAuthToken(access_token='test-only', token_type='Bearer'))
+            self.assertEqual(list(Path(directory).iterdir()), [])
 
     async def test_account_and_order_tools_blocked_before_transport(self):
         session = SimpleNamespace(call_tool=AsyncMock())

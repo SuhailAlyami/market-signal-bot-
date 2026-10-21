@@ -10,19 +10,29 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python-version: '3.11'
+          - os: ubuntu-latest
+            python-version: '3.12'
+          - os: windows-latest
+            python-version: '3.12'
     env:
       TZ: UTC
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
       - name: Install application and regression dependencies
         run: pip install -r requirements.txt -r requirements-ibkr.txt -r requirements-research.txt
       - name: Compile all application modules and regression fixtures
-        run: python -m compileall -q *.py tests
+        run: python -m compileall -q .
       - name: Full deterministic regression suite (not predictive validation)
         run: python -m unittest discover -s tests -p 'test_*.py' -v
 
