@@ -1,4 +1,4 @@
-"""Native SPX primary monitor; ES supplies explicitly lagged confirmation only."""
+"""Native SPX-only shadow monitor; no companion or options dependency."""
 from datetime import datetime,timezone
 import json
 from pathlib import Path
@@ -10,7 +10,8 @@ import pandas as pd
 from ibapi.contract import Contract
 from gateway_spx_probe import Probe
 from hunter_runtime import HunterRuntime
-from strategy_rules import candidate,features
+from spx_price_watch import candidate, observe, market_open, VERSION
+from spx_price_runtime import SPXPriceRuntime
 from es_signal_plan import complete_plan
 from spx_option_selector import OptionQuote,select_spx_0dte
 
@@ -93,7 +94,7 @@ def option_candidate(client,frame,direction,now=None):
         'live_verified':True,'quote_timestamp_kind':'local_receipt_not_exchange_timestamp'}
 
 
-def connect_primary():
+def connect_primary(include_options=False):
     client=Probe();client.options={}
     def run():
         try:client.connect('127.0.0.1',4001,clientId=20331024);client.run()
@@ -106,6 +107,9 @@ def connect_primary():
         if contract is None:raise RuntimeError('spx_contract_unresolved')
         client.reqMarketDataType(1);client.reqMktData(201,contract,'',False,False,[])
         client.reqHistoricalData(301,contract,'','7200 S','1 min','TRADES',0,2,True,[])
+        if not include_options:
+            client.history_ready.wait(15)
+            return client
         client.reqSecDefOptParams(401,'SPX','','IND',contract.conId)
         client.chain_done.wait(15);client.history_ready.wait(15)
         # HMDS/secdef can finish before the first quote snapshot reaches us.
@@ -134,26 +138,17 @@ def connect_primary():
 
 def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
     directory=Path(directory)/'spx';directory.mkdir(parents=True,exist_ok=True)
-    def detect(bars,index):
-        try:
-            es=es_fetch();derived=supporting_frame(bars,es)
-            # SPX direction is its own price direction; ES additionally confirms.
-            if bars.index[index] not in derived.index:return None
-            found=candidate(derived,derived.index.get_loc(bars.index[index]))
-            if not found:return None
-            key=bars.index[index]-pd.Timedelta(minutes=1)
-            match=es.index.get_loc(key);support=features(es,match)
-            if support is None or found['direction']*support['trend_5']<=0 or found['direction']*support['trend_15']<0:return None
-            return found
-        except (ValueError,KeyError,RuntimeError):return None
-    runtime=HunterRuntime(directory/'state.json',directory/'shadow.jsonl',symbols=('SPX',),detector=detect)
+    # es_fetch remains a compatibility argument for existing launchers only.
+    # Neither detection nor connection calls it in the SPX-only path.
+    runtime=SPXPriceRuntime(directory/'price_watch_state.json',directory/'price_watch_shadow.jsonl')
     client=None;retry=0;failures=0;connected_at=0;last_status=None
     def journal(value):
         with (directory/'connection.jsonl').open('a',encoding='utf-8') as stream:
             stream.write(json.dumps({'time':datetime.now(UTC).isoformat(),**value})+'\n')
     while not stop.is_set():
-        now=datetime.now(UTC);report={'time':now.isoformat(),'primary_symbol':'SPX','support_symbol':'ES',
-            'orders_enabled':False,'options_scope':'three nearby strikes, both rights; not every chain contract'}
+        now=datetime.now(UTC);report={'time':now.isoformat(),'primary_symbol':'SPX','support_symbol':None,
+            'orders_enabled':False,'options_scope':'not_requested_price_watch_only',
+            'detector_version':VERSION,'readiness':'NOT_READY','notifications_enabled':False}
         try:
             if client is None:
                 if time.monotonic()<retry:stop.wait(2);continue
@@ -172,30 +167,13 @@ def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
                 try:index_frame(client)
                 except RuntimeError as exc:report['blocker']=str(exc)
             else:
-                from github_signal_delivery import deliver
-                from telegram_signal_delivery import deliver as telegram_deliver
+                complete=frame.loc[frame.index+pd.Timedelta(minutes=1)<=pd.Timestamp(now)]
+                report['latest_decision']=observe(complete,len(complete)-1)
+                # Existing option-recommendation senders accept executable-plan
+                # fields. These hypotheses do not manufacture such a plan.
                 for event in result['events']:
-                    if event['state']!='TRIGGER':continue
-                    es=es_fetch();derived=supporting_frame(frame,es)
-                    last_key=pd.Timestamp(event['bar_end'])-pd.Timedelta(minutes=2)
-                    support=features(es,es.index.get_loc(last_key)) if last_key in es.index else None
-                    sign=1 if event['direction']=='UP' else -1
-                    if support is None or sign*support['trend_5']<=0 or sign*support['trend_15']<0:
-                        runtime.reject_plan(event,'es_confirmation_lost')
-                        journal({'status':'signal_blocked','reason':'es_confirmation_lost'});continue
-                    plan,reason=complete_plan(event,derived,tick_size=0.01)
-                    option=option_candidate(client,frame,event['direction']) if plan else None
-                    if not plan or option is None:
-                        runtime.reject_plan(event,reason or 'no_fresh_spx_option')
-                        journal({'status':'signal_blocked','reason':reason or 'no_fresh_spx_option'});continue
-                    plan['option_contract']=option;plan['support_symbol']='ES'
-                    channels=[]
-                    if github_enabled:channels.append(('github',deliver))
-                    if telegram_enabled:channels.append(('telegram',telegram_deliver))
-                    for channel,sender in channels:
-                        try:
-                            for receipt in sender([plan],result['heartbeat'],directory):journal({'channel':channel,**receipt})
-                        except Exception as exc:journal({'channel':channel,'status':'unavailable','error_type':type(exc).__name__})
+                    journal({'status':'research_event','event':event,
+                             'detector_version':VERSION,'notifications_enabled':False})
             if client.lost or time.monotonic()-connected_at>300 or report.get('blocker')=='spx_bars_stale':
                 client.disconnect();client=None
             failures=0
@@ -209,3 +187,25 @@ def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
             journal({'status':'status_persistence_failed','publication_status':'previous_status_may_be_stale'})
         stop.wait(5)
     if client:client.disconnect()
+
+
+if __name__ == '__main__':
+    import argparse
+    import signal
+    from gateway_hunter import reader_lock
+    parser=argparse.ArgumentParser(description='Native SPX-only shadow WATCH; no options or senders')
+    parser.add_argument('--state-dir',default='.hunter-state/spx-only')
+    parser.add_argument('--seconds',type=int,default=0,help='0 runs until Ctrl+C')
+    args=parser.parse_args()
+    if args.seconds<0:parser.error('seconds must be nonnegative')
+    stop=threading.Event()
+    signal.signal(signal.SIGINT,lambda *unused:stop.set())
+    if hasattr(signal,'SIGTERM'):signal.signal(signal.SIGTERM,lambda *unused:stop.set())
+    timer=threading.Timer(args.seconds,stop.set) if args.seconds else None
+    if timer:timer.start()
+    try:
+        with reader_lock(args.state_dir):
+            run(args.state_dir,None,stop)
+    finally:
+        if timer:timer.cancel()
+
