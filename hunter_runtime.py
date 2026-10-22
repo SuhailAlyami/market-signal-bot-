@@ -1,8 +1,8 @@
 """Single, fail-closed 1m underlying research runtime. No orders or option quotes.
 
-The experimental detector is shared with the chronological research harness. It
-is deliberately impossible to enable its notifications through an environment
-flag: unit tests and service uptime are not evidence of an out-of-sample edge.
+The experimental detector is shared with the chronological research harness.
+Canonical events remain research-only. Explicitly authorized ES rule alerts are
+assembled and gated separately; they do not imply an out-of-sample edge.
 """
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ UTC = timezone.utc
 NY = ZoneInfo("America/New_York")
 BAR = timedelta(minutes=1)
 MAX_AGE = timedelta(minutes=2)
-SOURCE = "IBKR MCP native futures; realtime status validated by data adapter"
+SOURCE = "IBKR native futures; realtime status validated by data adapter"
 ARABIC_STATES = {"SETUP": "استعداد", "TRIGGER": "دخول مشروط", "INVALIDATION": "إلغاء", "EXIT": "خروج"}
 
 
@@ -144,7 +144,7 @@ class HunterRuntime:
         self.persistence_error = None
         try:
             if self.state_path.exists():
-                loaded = json.loads(self.state_path.read_text())
+                loaded = json.loads(self.state_path.read_text(encoding="utf-8"))
                 if not isinstance(loaded, dict) or loaded.get("version") != 1 or not isinstance(loaded.get("symbols"), dict):
                     raise ValueError("invalid state schema")
                 if not isinstance(loaded.get("pending"), list) or not isinstance(loaded.get("notifications"), dict):
@@ -181,7 +181,7 @@ class HunterRuntime:
     def _save(self):
         self.state_path.parent.mkdir(parents=True, exist_ok=True)
         temporary = self.state_path.with_suffix(self.state_path.suffix + ".tmp")
-        with temporary.open("w") as handle:
+        with temporary.open("w", encoding="utf-8") as handle:
             json.dump(self.state, handle, allow_nan=False, ensure_ascii=False)
             handle.flush()
             os.fsync(handle.fileno())
@@ -189,7 +189,7 @@ class HunterRuntime:
 
     def _record(self, entry):
         self.journal_path.parent.mkdir(parents=True, exist_ok=True)
-        with self.journal_path.open("a") as handle:
+        with self.journal_path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(entry, allow_nan=False, ensure_ascii=False) + "\n")
             handle.flush()
 
@@ -345,6 +345,8 @@ class HunterRuntime:
                         now = receipt_time()
                         data, status = validate_completed_bars(frame, now)
                         status["feed_metadata"] = dict(frame.attrs)
+                        status["source"] = frame.attrs.get("source", SOURCE)
+                        status["live_feed_verified"] = bool(data is not None and frame.attrs.get("live_feed_verified"))
                         try:
                             market_open_at_receipt = futures_active(now)
                         except Exception as exc:

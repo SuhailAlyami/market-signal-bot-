@@ -1,5 +1,6 @@
 from datetime import timedelta
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -30,7 +31,8 @@ class ArchiveTests(unittest.TestCase):
             self.assertEqual(records[0]['received_at'], first.isoformat())
             self.assertNotEqual(records[0]['version_sha256'], records[1]['version_sha256'])
             self.assertEqual(records[0]['bar_start'], records[1]['bar_start'])
-            self.assertEqual(path.stat().st_mode & 0o777, 0o600)
+            if os.name != 'nt':  # chmod mode bits do not describe Windows ACLs.
+                self.assertEqual(path.stat().st_mode & 0o777, 0o600)
 
     def test_market_only_allowlist_excludes_account_and_tokens(self):
         data = bars(1)

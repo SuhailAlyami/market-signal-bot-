@@ -23,6 +23,46 @@ pip install -r requirements.txt
 python -m unittest discover -s tests -v
 ```
 
+Python 3.11 and 3.12 are supported. NumPy 1.26.4 provides wheels for both;
+the former 1.24.3 pin had no Python 3.12 wheel. CI runs the deterministic
+regression suite on both Python versions, plus Windows on Python 3.12.
+
+On Windows PowerShell, run from the repository directory:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt -r requirements-research.txt
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+If installation reports `WinError 206`, create the virtual environment in a
+shorter writable path (for example under `$env:TEMP`) and use its Python
+executable for the same commands. Gunicorn is the Linux deployment server;
+use `python market_signal_bot.py` for local Windows startup.
+
+OAuth storage uses a protected DACL granting access only to the current user on
+Windows, and owner-only permissions on POSIX. It remains outside the checkout.
+The Windows ACL implementation uses pywin32, installed by the MCP SDK, and
+rejects storage with broader access. Market-only journal mode-bit checks apply
+on POSIX; those bits do not represent Windows permissions.
+Runtime state and the Arabic shadow journal use explicit UTF-8 on every host,
+including Windows machines whose default text encoding is a legacy code page.
+
+For a local HTTP-only startup check with all collectors and Telegram disabled:
+
+```powershell
+$env:IBKR_MCP_ENABLED = 'false'
+$env:GLOBEX_RENDER_ENABLED = 'false'
+$env:ENABLE_TELEGRAM_POLLING = 'false'
+$env:TELEGRAM_BOT_TOKEN = ''
+$env:TELEGRAM_CHAT_ID = ''
+.\.venv\Scripts\python.exe market_signal_bot.py
+```
+
+Open `/health` on port 8080. Process liveness does not verify market data or
+prediction quality. Restart with the collector settings you intend to use;
+an authorized independent IBKR session is still required for market data.
+
 The canonical runtime is `hunter_runtime.py`, shared by `cloud_scan.py` and
 `globex_render_worker.py`. It validates completed 1m candles, rejects stale or
 invalid data, persists lifecycle/dedupe state, and appends observations, heartbeat

@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -105,7 +106,8 @@ class OutcomeTests(unittest.TestCase):
             self.assertEqual(first['scored'], 1)
             self.assertEqual(first['target_hits'], 1)
             self.assertEqual(len((path/'premium_outcomes.jsonl').read_text().splitlines()), 1)
-            self.assertEqual((path/'premium_outcomes.jsonl').stat().st_mode & 0o777, 0o600)
+            if os.name != 'nt':  # These market-only journals use POSIX 0600 where supported.
+                self.assertEqual((path/'premium_outcomes.jsonl').stat().st_mode & 0o777, 0o600)
 
     def test_corrupt_outcomes_fail_without_reset(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install test requirements
-        run: pip install -r requirements.txt -r requirements-ibkr.txt
+        run: pip install -r requirements.txt -r requirements-ibkr.txt -r requirements-gateway.txt
       - name: Full syntax and unit regression (not predictive validation)
         run: |
           python -m compileall -q *.py tests

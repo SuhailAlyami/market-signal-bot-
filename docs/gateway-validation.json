@@ -1,0 +1,48 @@
+{
+  "time": "2026-10-22T03:43:46.983043+00:00",
+  "source": "IBKR Gateway TWS API",
+  "tick_count": 299,
+  "first_sample": {
+    "time": "2026-10-22T03:40:45.457168+00:00",
+    "status": "sample",
+    "tick_count": 9,
+    "last_trade_time": 1792640444,
+    "session": 1
+  },
+  "last_sample": {
+    "time": "2026-10-22T03:43:46.984040+00:00",
+    "status": "sample",
+    "tick_count": 174,
+    "last_trade_time": 1792640625,
+    "session": 2
+  },
+  "sample_count": 36,
+  "reconnect_seconds": 8.30492,
+  "last_completed_bar": "2026-10-22T03:43:00+00:00",
+  "market_data_type": 1,
+  "orders_enabled": false,
+  "local_telegram_credentials_available": false,
+  "telegram_receipt": null,
+  "spx_index": {
+    "contract_id": 416904,
+    "type": 1,
+    "latest_trade_epoch": 1792614681,
+    "fresh": false
+  },
+  "spx_options": {
+    "type": 1,
+    "expiry": "20261022",
+    "strike": 7755,
+    "call_contract": 931268737,
+    "put_contract": 931269049,
+    "call_bidask_callbacks": 16,
+    "put_bidask_callbacks": 118,
+    "permission_errors": []
+  },
+  "limitations": [
+    "SPX index last is stale; type1 alone is not freshness",
+    "Two option samples do not certify all chains",
+    "No independently verified exchange bid/ask timestamps",
+    "Research NOT_READY; no option recommendations"
+  ]
+}
