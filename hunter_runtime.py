@@ -133,6 +133,7 @@ class HunterRuntime:
         self.state_path, self.journal_path = Path(state_path), Path(journal_path)
         self.symbols = tuple(symbols)
         self.detector = detector or experimental_candidate
+        self.price_context_status = {}
         self.state = {"version": 1, "symbols": {}, "pending": [], "notifications": {}}
         self.persistence_error = None
         try:
@@ -294,9 +295,20 @@ class HunterRuntime:
                 state["active"] = active
                 events.append(self._event(symbol, "SETUP", active, now, end, price, "experimental_causal_setup"))
         state["last_bar_end"] = end
+        # Research annotation cannot create/suppress lifecycle events or delivery.
+        try:
+            from price_action_context import observe
+            price_context = observe(data, index)
+        except Exception as exc:
+            price_context = {"status": "context_error", "error_type": type(exc).__name__,
+                             "mode": "SHADOW", "notify_eligible": False}
+        self.price_context_status[symbol] = {
+            "version": price_context.get("version"), "status": price_context["status"],
+            "last_bar_end": end, "mode": "SHADOW", "notify_eligible": False}
         self._record({"record_type": "observation", "symbol": symbol, "bar_end": end,
                       "detected_at": now.isoformat(), "decision": events[-1]["state"] if events else "NO_TRANSITION",
                       "active_state": state.get("active", {}).get("phase"), "price": price,
+                      "price_action_context": price_context,
                       "analysis_only": True, "source": SOURCE, "notify_eligible": False})
         return events
 
@@ -391,6 +403,7 @@ class HunterRuntime:
                                 break
                 heartbeat["symbols"][symbol] = status
             heartbeat["timestamp"] = receipt_time().isoformat()
+            heartbeat["price_action_context"] = dict(self.price_context_status)
             self._save()
             self._record(heartbeat)
         except (OSError, ValueError, TypeError) as exc:
