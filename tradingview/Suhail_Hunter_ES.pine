@@ -1,6 +1,6 @@
 //@version=6
 indicator("Suhail Hunter v2 | SPX primary / ES support", overlay=true, max_labels_count=100)
-// PYTHON_RULE_SHA256: 0cb647bb4dcb4c881fa396c05f8aa3cb34db41e9ff4e04cc8738300fd7e4b8f6
+// PYTHON_RULE_SHA256: c8c4684664173f7a95082c384949455b52f2b766016db0a258907724b6076ab8
 // Legacy ES-supported comparison; not a port of spx-price-watch-v1.
 // Rule levels are the prior20 completed bars. No option contract/quote is invented.
 const string RULE_VERSION = "hunter-rolling20-v2"
