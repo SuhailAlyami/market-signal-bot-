@@ -262,6 +262,32 @@ class HunterRuntime:
                             active, now, status.get("last_completed_bar") or state.get("last_bar_end"),
                             None, reason)]
 
+    def reject_plan(self, event, reason):
+        """Release only the rejected trigger, never a newer scenario or dedupe.
+
+        A strategy/risk rejection is not an entered position and earns no
+        position lifetime or cooldown. Durable bar dedupe still forbids replay.
+        """
+        if event.get('state') != 'TRIGGER' or self.persistence_error:
+            return False
+        state = self.state['symbols'].get(event.get('symbol'), {})
+        active = state.get('active')
+        if not active or active.get('phase') != 'TRIGGER':
+            return False
+        key = f"{event['symbol']}:TRIGGER:{event.get('bar_end')}:{active['started_at']}"
+        if hashlib.sha256(key.encode()).hexdigest()[:24] != event.get('event_id'):
+            return False
+        state.pop('active')
+        try:
+            self._record({'record_type':'plan_rejection','event_id':event['event_id'],
+                'symbol':event['symbol'],'bar_end':event['bar_end'],'reason':reason,
+                'next_state':'READY','analysis_only':True,'execution_assumed':False})
+            self._save()
+        except (OSError,ValueError,TypeError):
+            self.persistence_error = 'persistence_failed'
+            return False
+        return True
+
     def _process_bar(self, symbol, data, index, now):
         state = self.state["symbols"].setdefault(symbol, {})
         row = data.iloc[index]
