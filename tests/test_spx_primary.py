@@ -61,7 +61,7 @@ class SPXTests(unittest.TestCase):
 class PineSyncTests(unittest.TestCase):
     def test_rule_source_fingerprint_must_be_updated_with_pine(self):
         root=Path(__file__).resolve().parents[1]
-        files=['strategy_rules.py','hunter_runtime.py','es_signal_plan.py','spx_primary.py']
+        files=['strategy_rules.py','hunter_runtime.py','es_signal_plan.py','spx_primary.py','price_action_context.py']
         digest=hashlib.sha256(''.join((root/f).read_text(encoding='utf-8') for f in files).encode()).hexdigest()
         pine=(root/'tradingview/Suhail_Hunter_ES.pine').read_text(encoding='utf-8')
         self.assertIn('// PYTHON_RULE_SHA256: '+digest,pine)

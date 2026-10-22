@@ -1,6 +1,6 @@
 //@version=6
 indicator("Suhail Hunter v2 | SPX primary / ES support", overlay=true, max_labels_count=100)
-// PYTHON_RULE_SHA256: cdf797d608d7658f97b85a50ebaaa19d4373589521384fb7c2bb2e77d26a6e9d
+// PYTHON_RULE_SHA256: a6666d68e01d86b89862051bea3bdb6ecea268d53df0c6ea15e6febd837073c0
 // Rule levels are the prior20 completed bars. No option contract/quote is invented.
 const string RULE_VERSION = "hunter-rolling20-v2"
 const int WINDOW = 20
@@ -37,6 +37,31 @@ supportUp = not isSPX or (esClose > esClose5 and esClose >= esClose15)
 supportDown = not isSPX or (esClose < esClose5 and esClose <= esClose15)
 up = valid and 0 <= nearHigh and nearHigh <= PROXIMITY and move > 0 and trend5 > 0 and trend15 >= 0 and rvol >= MIN_RVOL and supportUp
 down = valid and 0 <= nearLow and nearLow <= PROXIMITY and move < 0 and trend5 < 0 and trend15 <= 0 and rvol >= MIN_RVOL and supportDown
+// PDF price context v1: observations only; no changes to up/down or alert rules.
+// No volume-at-price, HTF rejection, CISD or SMT is certified by these marks.
+showPDFContext = input.bool(false, "Show experimental PDF sweep context (no alerts)")
+pdfSweepUp = valid and low < levelLow and close > levelLow
+pdfSweepDown = valid and high > levelHigh and close < levelHigh
+pdfGap = low > high[2] ? 1 : high < low[2] ? -1 : 0
+int pdfInversion = 0
+if barstate.isconfirmed and valid
+    for scan = 1 to 19
+        gapAgo = 20-scan
+        bearishGap = high[gapAgo] < low[gapAgo+2]
+        bullishGap = low[gapAgo] > high[gapAgo+2]
+        unbrokenBear = true
+        unbrokenBull = true
+        for ago = 1 to gapAgo
+            unbrokenBear := unbrokenBear and close[ago] <= low[gapAgo+2]
+            unbrokenBull := unbrokenBull and close[ago] >= high[gapAgo+2]
+        if bearishGap and close > low[gapAgo+2] and unbrokenBear
+            pdfInversion := 1
+        if bullishGap and close < high[gapAgo+2] and unbrokenBull
+            pdfInversion := -1
+plotshape(showPDFContext and barstate.isconfirmed and pdfSweepUp and not pdfSweepDown, title="Shadow sweep UP", text="SHADOW", style=shape.circle, location=location.belowbar, color=color.gray, size=size.tiny)
+plotshape(showPDFContext and barstate.isconfirmed and pdfSweepDown and not pdfSweepUp, title="Shadow sweep DOWN", text="SHADOW", style=shape.circle, location=location.abovebar, color=color.gray, size=size.tiny)
+plot(barstate.isconfirmed and valid ? pdfGap : na, "Shadow FVG direction", display=display.data_window)
+plot(barstate.isconfirmed and valid ? pdfInversion : na, "Shadow iFVG direction", display=display.data_window)
 var int phase = 0
 var int side = 0
 var int started = na
