@@ -17,6 +17,23 @@ from spx_option_selector import OptionQuote,select_spx_0dte
 UTC=timezone.utc
 
 
+def write_status(directory, report):
+    """A transient Windows reader/AV lock must not kill the primary thread."""
+    temporary = directory/'status.tmp'
+    try:
+        temporary.write_text(json.dumps(report, indent=2), encoding='utf-8')
+        for attempt in range(5):
+            try:
+                temporary.replace(directory/'status.json')
+                return True
+            except PermissionError:
+                if attempt == 4:
+                    return False
+                time.sleep(0.05 * (attempt+1))
+    except OSError:
+        return False
+
+
 def supporting_frame(spx,es):
     """SPX OHLC untouched; derived Volume is labelled ES previous-minute evidence."""
     value=spx[['Open','High','Low','Close']].copy()
@@ -186,6 +203,7 @@ def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
             failures+=1;retry=time.monotonic()+min(60,2**min(failures,6))
         if report.get('status')!=last_status:
             journal({'status':report.get('status'),'blocker':report.get('blocker')});last_status=report.get('status')
-        temporary=directory/'status.tmp';temporary.write_text(json.dumps(report,indent=2),encoding='utf-8');temporary.replace(directory/'status.json')
+        if not write_status(directory, report):
+            journal({'status':'status_persistence_failed','publication_status':'previous_status_may_be_stale'})
         stop.wait(5)
     if client:client.disconnect()

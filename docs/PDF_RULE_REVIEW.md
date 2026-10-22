@@ -59,3 +59,14 @@ event precision/recall, false alarms, misses, lead time and cost/latency limitat
 compared with the frozen baseline. Existing NOT_READY/negative evidence is preserved.
 True volume-profile models additionally need actual ES trade-price/size coverage;
 no subscription, tick entitlement or extra paid service is enabled by this change.
+
+## Operational issue discovered during rollout
+
+At 10:19 UTC the old reader PID7192 was no longer alive and its heartbeat was
+stale (07:50 UTC, last ES bar05:56 UTC). This is new measured evidence, not a
+reused diagnosis. The earlier primary-thread traceback shows Windows WinError5
+replacing `spx/status.tmp` with `status.json`; the exact cause of the entire
+reader's later exit is not established. Gateway port4001 was still listening.
+Bounded status-write retries now tolerate transient sharing locks; persistent
+failure is journaled without killing the primary thread or claiming fresh status.
+Two targeted failure/recovery tests cover this independently of market connectivity.

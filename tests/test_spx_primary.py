@@ -2,16 +2,39 @@ from datetime import datetime,timezone,timedelta
 from pathlib import Path
 from types import SimpleNamespace
 import hashlib
+import json
+import tempfile
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 import pandas as pd
 
-from spx_primary import supporting_frame,index_frame,option_candidate
+from spx_primary import supporting_frame,index_frame,option_candidate,write_status
 from hunter_runtime import validate_completed_bars
 from github_signal_delivery import recommendation
 
 
 class SPXTests(unittest.TestCase):
+    def test_transient_windows_status_lock_retries_and_recovers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            real_replace=Path.replace
+            attempts=[]
+            def replace(path,target):
+                attempts.append(1)
+                if len(attempts)<3:raise PermissionError('fixture sharing violation')
+                return real_replace(path,target)
+            with patch.object(Path,'replace',replace), patch('spx_primary.time.sleep'):
+                self.assertTrue(write_status(root,{'status':'ok'}))
+            self.assertEqual(len(attempts),3)
+            self.assertEqual(json.loads((root/'status.json').read_text()),{'status':'ok'})
+
+    def test_persistent_status_lock_keeps_previous_evidence_without_raising(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'status.json').write_text('{"status":"old"}')
+            with patch.object(Path,'replace',side_effect=PermissionError('fixture')), patch('spx_primary.time.sleep'):
+                self.assertFalse(write_status(root,{'status':'ok'}))
+            self.assertEqual(json.loads((root/'status.json').read_text()),{'status':'old'})
+
     def test_native_index_has_no_fabricated_volume(self):
         now=datetime(2026,10,22,15,tzinfo=timezone.utc)
         index=pd.date_range(end=now-timedelta(minutes=1),periods=32,freq='min')
