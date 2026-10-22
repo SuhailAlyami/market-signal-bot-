@@ -1,0 +1,52 @@
+{
+  "started_at": "2026-10-22T11:41:12.030121+00:00",
+  "usage": "consumed_development_only",
+  "query": {
+    "end": "20260903-00:00:00",
+    "duration": "1 D",
+    "bar_size": "5 secs",
+    "useRTH": 1
+  },
+  "rows": 5400,
+  "errors": [
+    {
+      "time": "2026-10-22T11:41:12.042124+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfarm.nj"
+    },
+    {
+      "time": "2026-10-22T11:41:12.042124+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfuture"
+    },
+    {
+      "time": "2026-10-22T11:41:12.042124+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usopt"
+    },
+    {
+      "time": "2026-10-22T11:41:12.042124+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfarm"
+    },
+    {
+      "time": "2026-10-22T11:41:12.042124+00:00",
+      "request_id": -1,
+      "code": 2106,
+      "message": "HMDS data farm connection is OK:ushmds"
+    },
+    {
+      "time": "2026-10-22T11:41:12.043123+00:00",
+      "request_id": -1,
+      "code": 2158,
+      "message": "Sec-def data farm connection is OK:secdefnj"
+    }
+  ],
+  "status": "available",
+  "sha256": "b56a81dda35337b689722076f929eb45ac6937879df3c9a1b7a15dac81f1f9bf",
+  "finished_at": "2026-10-22T11:41:15.320573+00:00"
+}

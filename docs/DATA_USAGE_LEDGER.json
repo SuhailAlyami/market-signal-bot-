@@ -10,6 +10,12 @@
       "source": "IBKR ESU6",
       "sha256": "bb2f5c0d7d4e1da4e2f68d3c4717515d5c9a6f760d6cc61b9e566bf2d21bb0e4",
       "reason": "user authorized missed-event diagnosis; no longer independent"
+    },
+    {
+      "period": "2026-09-01/2026-09-15 (same ten sessions)",
+      "source": "IBKR ESU6 native 5second TRADES",
+      "sha256": "5704e0a957c7d0b8a6e67902304a7cc15ec4ddb0c5e99d6a51821630a8886346",
+      "reason": "resolution refinement and sweep/carry development; never independent"
     }
   ],
   "locked_unused_micro_test_dates": [

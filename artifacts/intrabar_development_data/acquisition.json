@@ -1,0 +1,168 @@
+{
+  "started_at": "2026-10-22T11:57:04.486762+00:00",
+  "protocol_commit": "65722911a42f4e6d079387001d731d57eaa72dad",
+  "phase": "development",
+  "requested_dates": [
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15"
+  ],
+  "bar_size": "5 secs",
+  "source": "IBKR native ESU6/CME historical TRADES",
+  "orders_enabled": false,
+  "account_requests": false,
+  "paid_requests": false,
+  "requests": [
+    {
+      "date": "2026-09-01",
+      "request_id": 401,
+      "end_utc": "20260902-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    },
+    {
+      "date": "2026-09-02",
+      "reused_source": "artifacts\\micro_range_development\\development_5sec_20260902.csv.gz",
+      "rows": 5400,
+      "sha256": "b56a81dda35337b689722076f929eb45ac6937879df3c9a1b7a15dac81f1f9bf"
+    },
+    {
+      "date": "2026-09-03",
+      "request_id": 403,
+      "end_utc": "20260904-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    },
+    {
+      "date": "2026-09-04",
+      "request_id": 404,
+      "end_utc": "20260905-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    },
+    {
+      "date": "2026-09-08",
+      "request_id": 405,
+      "end_utc": "20260909-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    },
+    {
+      "date": "2026-09-09",
+      "request_id": 406,
+      "end_utc": "20260910-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    },
+    {
+      "date": "2026-09-10",
+      "request_id": 407,
+      "end_utc": "20260911-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    },
+    {
+      "date": "2026-09-11",
+      "request_id": 408,
+      "end_utc": "20260912-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    },
+    {
+      "date": "2026-09-14",
+      "request_id": 409,
+      "end_utc": "20260915-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    },
+    {
+      "date": "2026-09-15",
+      "request_id": 410,
+      "end_utc": "20260916-00:00:00",
+      "duration": "1 D",
+      "bar_size": "5 secs",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 5400
+    }
+  ],
+  "contract": {
+    "conId": 649180671,
+    "localSymbol": "ESU6",
+    "lastTradeDateOrContractMonth": "20260918",
+    "exchange": "CME"
+  },
+  "status": "acquired",
+  "rows": 54000,
+  "input_sha256": "5704e0a957c7d0b8a6e67902304a7cc15ec4ddb0c5e99d6a51821630a8886346",
+  "errors": [
+    {
+      "time": "2026-10-22T11:57:04.546485+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfarm.nj"
+    },
+    {
+      "time": "2026-10-22T11:57:04.546485+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfuture"
+    },
+    {
+      "time": "2026-10-22T11:57:04.546485+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usopt"
+    },
+    {
+      "time": "2026-10-22T11:57:04.546485+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfarm"
+    },
+    {
+      "time": "2026-10-22T11:57:04.546485+00:00",
+      "request_id": -1,
+      "code": 2106,
+      "message": "HMDS data farm connection is OK:ushmds"
+    },
+    {
+      "time": "2026-10-22T11:57:04.546485+00:00",
+      "request_id": -1,
+      "code": 2158,
+      "message": "Sec-def data farm connection is OK:secdefnj"
+    }
+  ],
+  "finished_at": "2026-10-22T11:59:38.214526+00:00"
+}
