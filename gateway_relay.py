@@ -21,6 +21,9 @@ _lock = threading.Lock()
 _runtime = None
 _seen = {}
 _health = {'status':'awaiting_gateway','source':'IBKR Gateway HTTPS relay','symbols':{}}
+# Transport receipt clocks can differ slightly. Exchange quote/bar ages retain
+# their original strict gates; this applies only to sender-owned timestamps.
+TRANSPORT_CLOCK_SKEW_SECONDS = 2
 
 
 def enabled():
@@ -50,7 +53,8 @@ def decode_frame(payload, now):
         raise ValueError('realtime_unverified')
     for name,limit in [('observed_at',30),('last_trade_time',60)]:
         value=datetime.fromisoformat(attrs[name])
-        if value.tzinfo is None or not 0<=(now-value).total_seconds()<=limit:
+        minimum = -TRANSPORT_CLOCK_SKEW_SECONDS if name == 'observed_at' else 0
+        if value.tzinfo is None or not minimum<=(now-value).total_seconds()<=limit:
             raise ValueError('stale_or_future_quote')
     if not attrs.get('live_feed_verified') or not isinstance(payload['bars'],list) or not 31<=len(payload['bars'])<=180:
         raise ValueError('incomplete_feed')
@@ -72,7 +76,7 @@ def ingest():
     timestamp=request.headers.get('X-Gateway-Time','');nonce=request.headers.get('X-Gateway-Nonce','')
     try:
         age=time.time()-float(timestamp)
-        if not 0<=age<=30 or not 16<=len(nonce)<=100: raise ValueError()
+        if not -TRANSPORT_CLOCK_SKEW_SECONDS<=age<=30 or not 16<=len(nonce)<=100: raise ValueError()
     except ValueError:
         return jsonify(status='invalid_auth_time'),401
     if not hmac.compare_digest(signature(secret,timestamp,nonce,raw),request.headers.get('X-Gateway-Signature','')):
@@ -101,7 +105,7 @@ def ingest():
             _health['primary']={k:primary[k] for k in allowed if k in primary}
             try:
                 age=(now-datetime.fromisoformat(primary['time'])).total_seconds()
-                if not 0<=age<=30:_health['primary']['status']='stale_primary_monitor'
+                if not -TRANSPORT_CLOCK_SKEW_SECONDS<=age<=30:_health['primary']['status']='stale_primary_monitor'
             except (KeyError,ValueError,TypeError):
                 _health['primary']['status']='unverified_primary_monitor'
         plans=[];blocked=[]

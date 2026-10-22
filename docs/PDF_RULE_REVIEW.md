@@ -70,3 +70,11 @@ reader's later exit is not established. Gateway port4001 was still listening.
 Bounded status-write retries now tolerate transient sharing locks; persistent
 failure is journaled without killing the primary thread or claiming fresh status.
 Two targeted failure/recovery tests cover this independently of market connectivity.
+
+The restored native feed also exposed relay401 `invalid_auth_time`: Windows time
+service reports unsynchronized CMOS and HTTPS Date differed by about one second.
+Accept at most two seconds of skew **only** for signed request/sender observation/
+primary-monitor timestamps. Authentication, nonce replay checks and30second maximum
+request age remain; actual exchange quotes still reject future times and age>60s,
+bars and all strategy/notification gates are unchanged. Regression tests verify
+four-second future authentication and future/stale exchange quotes are rejected.

@@ -1,4 +1,4 @@
-from datetime import datetime,timezone
+from datetime import datetime,timezone,timedelta
 import json
 import os
 import tempfile
@@ -73,6 +73,19 @@ class RelayTests(unittest.TestCase):
         self.assertEqual(self.post(nonce='b'*32).status_code,422)
         self.payload['metadata']['market_data_type']=1;self.payload['symbol']='SPX'
         self.assertEqual(self.post(nonce='c'*32).status_code,422)
+
+    def test_small_transport_clock_skew_does_not_weaken_quote_freshness(self):
+        now=datetime.now(timezone.utc)
+        self.payload['metadata']['observed_at']=(now+timedelta(seconds=1)).isoformat()
+        runtime=Mock();runtime.poll.return_value={'heartbeat':{'status':'ok','timestamp':now.isoformat()},'events':[]}
+        with patch.object(relay,'_runtime',runtime):
+            self.assertEqual(self.post(timestamp=str(time.time()+1)).status_code,200)
+            self.assertEqual(self.post(nonce='b'*32,timestamp=str(time.time()+4)).status_code,401)
+            self.payload['metadata']['last_trade_time']=(now+timedelta(seconds=1)).isoformat()
+            self.assertEqual(self.post(nonce='c'*32).status_code,422)
+            self.payload['metadata']['last_trade_time']=(now-timedelta(seconds=61)).isoformat()
+            self.assertEqual(self.post(nonce='d'*32).status_code,422)
+        self.assertEqual(runtime.poll.call_count,1)
 
     def test_disabled_without_secret_and_stale_health(self):
         with patch.dict(os.environ,{'GATEWAY_RELAY_SECRET':''}):
