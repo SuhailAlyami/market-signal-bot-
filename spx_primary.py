@@ -181,10 +181,12 @@ def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
                     support=features(es,es.index.get_loc(last_key)) if last_key in es.index else None
                     sign=1 if event['direction']=='UP' else -1
                     if support is None or sign*support['trend_5']<=0 or sign*support['trend_15']<0:
+                        runtime.reject_plan(event,'es_confirmation_lost')
                         journal({'status':'signal_blocked','reason':'es_confirmation_lost'});continue
                     plan,reason=complete_plan(event,derived,tick_size=0.01)
                     option=option_candidate(client,frame,event['direction']) if plan else None
                     if not plan or option is None:
+                        if not plan:runtime.reject_plan(event,reason)
                         journal({'status':'signal_blocked','reason':reason or 'no_fresh_spx_option'});continue
                     plan['option_contract']=option;plan['support_symbol']='ES'
                     channels=[]

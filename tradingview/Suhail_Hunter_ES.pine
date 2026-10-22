@@ -1,6 +1,6 @@
 //@version=6
 indicator("Suhail Hunter v2 | SPX primary / ES support", overlay=true, max_labels_count=100)
-// PYTHON_RULE_SHA256: 92229b4ecf582caf2f9d9e24428a9785a99d35d52a11d6f9d5556ea265a038bf
+// PYTHON_RULE_SHA256: c2a7d175ffa6ec02ca29bcd6499b56af208a9ce34c1e2d0bfe3247b6bd6204b3
 // Rule levels are the prior20 completed bars. No option contract/quote is invented.
 const string RULE_VERSION = "hunter-rolling20-v2"
 const int WINDOW = 20
@@ -113,6 +113,10 @@ if barstate.isconfirmed
                     target1 := anchor + side*risk
                     target2 := anchor + side*2*risk
                     eligible := eligible and target1 > 0 and target2 > 0
+                    // Rejected plan is not an active entry and adds no cooldown.
+                    if not eligible
+                        phase := 0
+                        confirmations := 0
         else if (na(cooldownUntil) or time_close >= cooldownUntil) and (up or down)
             side := up ? 1 : -1
             phase := 1

@@ -112,7 +112,9 @@ def ingest():
         for event in result['events']:
             plan,reason=complete_plan(event,frame)
             if plan: plans.append(plan)
-            elif event.get('state')=='TRIGGER': blocked.append(reason)
+            elif event.get('state')=='TRIGGER':
+                _runtime.reject_plan(event,reason)
+                blocked.append(reason)
         return jsonify(heartbeat=_health,events=plans,blocked=blocked,orders_enabled=False)
 
 
