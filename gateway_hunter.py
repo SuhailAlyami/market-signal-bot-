@@ -218,7 +218,7 @@ def send_test(directory, evidence):
         return {'status': 'delivery_failed', 'error_type': type(exc).__name__, 'time': stamp()}
 
 
-def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, github_signals=False, relay_config=None):
+def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, github_signals=False, relay_config=None,telegram_signals=False):
     directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
     runtime = HunterRuntime(directory/'state.json', directory/'shadow.jsonl', symbols=('ES=F',))
     client = None; started = time.monotonic(); retry_at = 0; failures = 0
@@ -256,13 +256,13 @@ def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, gith
                     from gateway_relay import push_frame
                     relay=push_frame(current.frame('ES'),current.contract,relay_config['url'],relay_config['secret'])
                     delivery_heartbeat=relay['heartbeat']
-                    if github_signals: outgoing=relay['events']
+                    if github_signals or telegram_signals: outgoing=relay['events']
                     journal({'event':'relay','status':relay['heartbeat']['status'],
                              'remote_timestamp':relay['heartbeat']['timestamp']})
                 except Exception as exc:
                     journal({'event':'relay','status':'relay_unavailable','error_type':type(exc).__name__})
                     # Cloud operation is explicitly selected: no silent local fallback publication.
-            elif github_signals and current:
+            elif (github_signals or telegram_signals) and current:
                 from es_signal_plan import complete_plan
                 for event in result['events']:
                     try:
@@ -272,9 +272,19 @@ def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, gith
                     if plan: outgoing.append(plan)
                     elif event.get('state')=='TRIGGER':
                         journal({'event':'signal_blocked','reason':reason,'event_id':event['event_id']})
-            deliveries = deliver(outgoing, delivery_heartbeat, directory)
+            deliveries = deliver(outgoing, delivery_heartbeat, directory) if github_signals else []
             for delivery in deliveries:
                 journal({'event': 'github_delivery', **delivery})
+            if telegram_signals:
+                try:
+                    from telegram_signal_delivery import deliver as telegram_deliver,verify_once
+                    verification=verify_once(directory,delivery_heartbeat)
+                    if verification and verification['status']!='telegram_credentials_unavailable':
+                        journal({'event':'telegram_verification',**verification})
+                    for delivery in telegram_deliver(outgoing,delivery_heartbeat,directory):
+                        journal({'event':'telegram_delivery',**delivery})
+                except Exception as exc:
+                    journal({'event':'telegram_delivery','status':'unavailable','error_type':type(exc).__name__})
             status = heartbeat['status']
             evidence = {'time': stamp(), 'status': status, 'source': SOURCE,
                         'sessions': session_count, 'orders_enabled': False,
@@ -320,6 +330,7 @@ if __name__ == '__main__':
     parser.add_argument('--test-alert', action='store_true')
     parser.add_argument('--reconnect-test-after', type=int, default=0)
     parser.add_argument('--github-signals',action='store_true',help='Explicit opt-in to complete experimental ES rule alerts')
+    parser.add_argument('--telegram-signals',action='store_true',help='Independent Telegram alerts using private local credentials')
     parser.add_argument('--relay-config',type=Path,help='Private local generated relay configuration outside repo')
     args = parser.parse_args()
     relay_config=None
@@ -328,4 +339,4 @@ if __name__ == '__main__':
         if not _oauth_path_is_private(args.relay_config): raise PermissionError('Relay config must be private')
         relay_config=json.loads(args.relay_config.read_text(encoding='utf-8'))
     with reader_lock(args.state_dir):
-        monitor(args.state_dir, args.seconds, args.test_alert, args.reconnect_test_after,args.github_signals,relay_config)
+        monitor(args.state_dir, args.seconds, args.test_alert, args.reconnect_test_after,args.github_signals,relay_config,args.telegram_signals)
