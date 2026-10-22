@@ -186,7 +186,7 @@ def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
                     plan,reason=complete_plan(event,derived,tick_size=0.01)
                     option=option_candidate(client,frame,event['direction']) if plan else None
                     if not plan or option is None:
-                        if not plan:runtime.reject_plan(event,reason)
+                        runtime.reject_plan(event,reason or 'no_fresh_spx_option')
                         journal({'status':'signal_blocked','reason':reason or 'no_fresh_spx_option'});continue
                     plan['option_contract']=option;plan['support_symbol']='ES'
                     channels=[]
