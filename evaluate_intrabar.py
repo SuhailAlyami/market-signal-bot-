@@ -13,8 +13,12 @@ from intrabar_compression import detect,refine_events,VERSION
 
 
 def evaluate(path,output,mode,candidate='compression'):
-    if candidate=='sweep':
+    if candidate in ('sweep','carry'):
         from intrabar_sweep import detect as detector,VERSION as version
+        if candidate=='carry':
+            base_detector=detector
+            detector=lambda data:base_detector(data,carry_sweep=True)
+            version='intrabar-sweep-carry-v1'
     else:detector,version=detect,VERSION
     raw=pd.read_csv(path,index_col=0,parse_dates=True).astype(float)
     if mode=='independent':
@@ -61,7 +65,7 @@ def evaluate(path,output,mode,candidate='compression'):
     report=dict(created_at=datetime.now(timezone.utc).isoformat(),mode=mode,rule_version=version,
         input_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),raw_rows=len(raw),minute_rows=len(minute),
         protocol_sha256=hashlib.sha256(Path('docs/INTRABAR_PRESSURE_PROTOCOL.md').read_bytes()).hexdigest(),
-        amendment_sha256=hashlib.sha256(Path('docs/INTRABAR_SWEEP_AMENDMENT.md').read_bytes()).hexdigest() if candidate=='sweep' else None,
+        amendment_sha256=hashlib.sha256(Path('docs/INTRABAR_CARRY_PROTOCOL.md' if candidate=='carry' else 'docs/INTRABAR_SWEEP_AMENDMENT.md').read_bytes()).hexdigest() if candidate in ('sweep','carry') else None,
         coverage=coverage,coarse_events=len(coarse),refined_events=len(fine),unrefinable_events=len(coarse)-len(fine),
         results=results,diagnostics=diagnostics,paired_interval=interval,stress_gain=stress,
         development_promising=new['early_f1']>old['early_f1'],accepted=accepted,
@@ -78,5 +82,5 @@ def evaluate(path,output,mode,candidate='compression'):
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--input',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True);parser.add_argument('--mode',choices=['development','independent'],required=True)
-    parser.add_argument('--candidate',choices=['compression','sweep'],default='compression')
+    parser.add_argument('--candidate',choices=['compression','sweep','carry'],default='compression')
     args=parser.parse_args();evaluate(args.input,args.output,args.mode,args.candidate)
