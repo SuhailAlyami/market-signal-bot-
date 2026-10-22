@@ -239,6 +239,10 @@ def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0):
                 return current.frame(symbol)
             result = runtime.poll(datetime.now(UTC), fetch, clock=lambda: datetime.now(UTC))
             heartbeat = result['heartbeat']
+            from github_signal_delivery import deliver
+            deliveries = deliver(result['events'], heartbeat, directory)
+            for delivery in deliveries:
+                journal({'event': 'github_delivery', **delivery})
             status = heartbeat['status']
             evidence = {'time': stamp(), 'status': status, 'source': SOURCE,
                         'sessions': session_count, 'orders_enabled': False,

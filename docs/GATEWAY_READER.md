@@ -45,3 +45,30 @@ Experimental strategy events remain shadow-only / NOT_READY. No automatic trade
 or SPX option recommendation is enabled. The optional ibapi9.81 diagnostic client
 is verified against this Gateway server157; this is not certification against
 every modern Gateway/API version. System memory fixes need longer observation.
+
+## GitHub recommendation gate
+
+`github_signal_delivery.py` receives canonical events from the local reader.
+It requires READY + notify_eligible + TRIGGER, ES identity, realtime quote
+freshness, recent heartbeat/bar/event, complete finite entry zone/stop/targets,
+valid directional ordering and a reason. Missing conditions are logged as blocked.
+The current unvalidated detector remains NOT_READY and does not manufacture
+entry zones/targets, so no recommendation is published from it. A corrected,
+validated detector must supply these fields before this gate will publish.
+
+Publishing needs host-side `GITHUB_TOKEN` with issue-write permission. The
+interactive GitHub connection is not exported into the host process; no such
+local credential was found. A durable per-event reservation prevents duplicates
+on the same filesystem, including uncertain network outcomes (manual review is
+then required; delivery is deliberately not guaranteed). Preserve the state
+directory on restart. Do not delete reservations to force retransmission.
+
+This runs on the signed-in Windows host. A Render instance cannot connect to
+this host's127.0.0.1 socket. No cloud deployment or secure tunnel was configured,
+and no existing Render service was modified. Gateway transport/reconnect evidence
+does not demonstrate a market edge or validate the experimental detector.
+
+Telegram test outcome2026-10-22: local and GitHub Actions both returned
+`credentials_unavailable`; no successful message receipt exists. Workflow run:
+https://github.com/SuhailAlyami/market-signal-bot-/actions/runs/39718579453
+Do not call this a successful alert test. No credentials were copied or exposed.
