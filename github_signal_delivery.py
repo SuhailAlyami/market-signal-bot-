@@ -6,6 +6,7 @@ import math
 import os
 from pathlib import Path
 import re
+import subprocess
 import urllib.request
 
 
@@ -17,8 +18,8 @@ def recommendation(event, heartbeat, now):
         return (now-parsed).total_seconds()
     try:
         if heartbeat.get('status') != 'ok': return None, 'unhealthy_feed'
-        if event.get('readiness') != 'READY' or event.get('notify_eligible') is not True:
-            return None, 'detector_not_ready'
+        if event.get('signal_status') != 'COMPLETE' or event.get('notify_eligible') is not True:
+            return None, 'conditions_not_complete'
         if event.get('state') != 'TRIGGER' or event.get('symbol') not in ('ES','ES=F'):
             return None, 'not_confirmed_es'
         status = heartbeat['symbols'][event['symbol']]
@@ -30,6 +31,7 @@ def recommendation(event, heartbeat, now):
                 (heartbeat['timestamp'],30),(metadata['last_trade_time'],60),
                 (event['detected_at'],60),(event['bar_end'],90))):
             return None, 'stale_or_future_data'
+        current = float(metadata['last_price'])
         zone = [float(x) for x in event['entry_zone']]
         targets = [float(x) for x in event['targets']]
         stop = float(event['stop_loss'])
@@ -40,9 +42,13 @@ def recommendation(event, heartbeat, now):
                  targets[1] < targets[0] < zone[0] <= zone[1] < stop if direction=='DOWN' else False)
         if not valid or not str(event['reason']).strip() or not str(event['event_id']).strip():
             return None, 'inconsistent_or_missing_conditions'
-        key = hashlib.sha256(str(event['event_id']).encode()).hexdigest()[:24]
+        if not math.isfinite(current) or not zone[0] <= current <= zone[1]:
+            return None, 'price_outside_entry_zone'
+        identity='|'.join(('ES',direction,event['bar_end'],event.get('rule_version','v1')))
+        key = hashlib.sha256(identity.encode()).hexdigest()[:24]
         return {'key':key,'title':f"[Suhail ES {key}] {'UP' if direction=='UP' else 'DOWN'}",
-            'body': ('الأصل: ES (عقد مستقبلي؛ ليست توصية على خيارات SPX)\n'
+            'body': ('رصد تجريبي بقواعد محددة؛ الأداء خارج العينة غير مثبت.\n'
+                'الأصل: ES (عقد مستقبلي؛ ليست توصية على خيارات SPX)\n'
                 f"الاتجاه: {direction}\nسبب الإشارة: {event['reason']}\n"
                 f"منطقة الدخول: {zone}\nوقف الخسارة: {stop}\nالأهداف: {targets}\n"
                 f"وقت الإشارة UTC: {event['detected_at']}\nالشمعة UTC: {event['bar_end']}\n"
@@ -54,6 +60,7 @@ def recommendation(event, heartbeat, now):
 
 
 def deliver(events, heartbeat, directory, now=None):
+    fixed_clock=now is not None
     now = now or datetime.now(timezone.utc)
     directory = Path(directory)/'github-delivery'; directory.mkdir(parents=True,exist_ok=True)
     results = []
@@ -67,14 +74,46 @@ def deliver(events, heartbeat, directory, now=None):
             results.append({'status':'deduplicated','key':message['key']}); continue
         token = os.getenv('GITHUB_TOKEN','')
         repo = os.getenv('HUNTER_GITHUB_REPOSITORY','SuhailAlyami/market-signal-bot-')
-        if not token:
+        try:
+            gh = Path(os.environ['HUNTER_GH_EXECUTABLE']) if os.getenv('HUNTER_GH_EXECUTABLE') else Path.home()/'.local/share/suhail-hunter/gh/gh.exe'
+        except RuntimeError:
+            gh = Path('/nonexistent-gh')
+        cli = False
+        if not token and gh.is_file():
+            try:
+                cli = subprocess.run([str(gh),'auth','status','--hostname','github.com'],
+                        stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=5).returncode==0
+            except (OSError,subprocess.TimeoutExpired):
+                pass
+        if not token and not cli:
             results.append({'status':'github_auth_unavailable','key':message['key']}); continue
         if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repo):
             raise ValueError('Invalid repository')
+        # Authentication can take time: recheck immediately before reserving/sending.
+        if not fixed_clock:
+            message,reason=recommendation(event,heartbeat,datetime.now(timezone.utc))
+            if message is None:
+                results.append({'status':'blocked','reason':reason});continue
         # Durable reservation before network: uncertain outcomes never auto-resend.
         with receipt.open('x',encoding='utf-8') as stream:
             json.dump({'status':'reserved','time':now.isoformat(),'key':message['key']},stream)
         try:
+            if cli:
+                body_path = directory/(message['key']+'.md')
+                body_path.write_text(message['body'],encoding='utf-8')
+                try:
+                    result = subprocess.run([str(gh),'issue','create','--repo',repo,
+                        '--title',message['title'],'--body-file',str(body_path)],
+                        capture_output=True,text=True,timeout=20)
+                    if result.returncode: raise RuntimeError('github_cli_delivery_failed')
+                    url=result.stdout.strip()
+                    if not re.fullmatch(r'https://github.com/'+re.escape(repo)+r'/issues/[0-9]+',url):
+                        raise ValueError('github_receipt_unverified')
+                    status={'status':'github_accepted','issue_number':int(url.rsplit('/',1)[-1]),'url':url}
+                finally:
+                    body_path.unlink(missing_ok=True)
+                receipt.write_text(json.dumps(status),encoding='utf-8');results.append(status)
+                continue
             request = urllib.request.Request(f'https://api.github.com/repos/{repo}/issues',
                 data=json.dumps({k:message[k] for k in ('title','body')}).encode(),
                 headers={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json',

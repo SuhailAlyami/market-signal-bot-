@@ -1188,12 +1188,14 @@ class EvolutionaryTradingBot:
     def run(self):
         """تشغيل البوت"""
         from ibkr_mcp_worker import start_worker as start_ibkr_reader
-        start_ibkr_reader()
+        from gateway_relay import enabled as gateway_relay_enabled
+        if not gateway_relay_enabled():
+            start_ibkr_reader()
         # Archived Asia/US/legacy rules have no verified holdout edge. Keep their
         # functions for comparative research, but never start duplicate senders.
         logger.info("Archived scanner alerts OFF; canonical Hunter shadow only")
         # One canonical 1m research runtime; unverified detectors stay in shadow.
-        if os.getenv("GLOBEX_RENDER_ENABLED", "true").lower() == "true":
+        if not gateway_relay_enabled() and os.getenv("GLOBEX_RENDER_ENABLED", "true").lower() == "true":
             try:
                 from globex_render_worker import start_worker as start_globex_worker
                 start_globex_worker(TELEGRAM_TOKEN, CHAT_ID)
@@ -1223,6 +1225,8 @@ class EvolutionaryTradingBot:
 app = Flask(__name__)
 from ibkr_web_auth import bp as ibkr_setup_blueprint
 app.register_blueprint(ibkr_setup_blueprint)
+from gateway_relay import bp as gateway_relay_blueprint
+app.register_blueprint(gateway_relay_blueprint)
 # OAuth callbacks contain codes; never log request query strings.
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
 START_TIME = time.time()
@@ -1241,7 +1245,8 @@ def home():
 def health():
     from globex_render_worker import get_status
     from ibkr_mcp_worker import get_status as ibkr_status
-    snapshot = get_status()
+    from gateway_relay import enabled as gateway_relay_enabled, health as relay_health
+    snapshot = relay_health() if gateway_relay_enabled() else get_status()
     return jsonify({
         'process': 'alive',
         'prediction_readiness': 'NOT READY',

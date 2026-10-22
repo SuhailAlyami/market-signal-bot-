@@ -1,8 +1,8 @@
 """Single, fail-closed 1m underlying research runtime. No orders or option quotes.
 
-The experimental detector is shared with the chronological research harness. It
-is deliberately impossible to enable its notifications through an environment
-flag: unit tests and service uptime are not evidence of an out-of-sample edge.
+The experimental detector is shared with the chronological research harness.
+Canonical events remain research-only. Explicitly authorized ES rule alerts are
+assembled and gated separately; they do not imply an out-of-sample edge.
 """
 from __future__ import annotations
 

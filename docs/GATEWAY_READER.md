@@ -41,32 +41,47 @@ through a manual CI relay; it does not install those credentials locally or
 prove unattended local Telegram delivery. API acceptance/message_id is delivery
 to Telegram, not proof that a person read the message.
 
-Experimental strategy events remain shadow-only / NOT_READY. No automatic trade
-or SPX option recommendation is enabled. The optional ibapi9.81 diagnostic client
+Canonical strategy events remain research-only / NOT_READY. Explicitly authorized
+experimental ES rule alerts can be enabled with `--github-signals`; this is not
+evidence of a statistical edge. No automatic trade or SPX option recommendation
+is enabled. The optional ibapi9.81 diagnostic client
 is verified against this Gateway server157; this is not certification against
 every modern Gateway/API version. System memory fixes need longer observation.
 
 ## GitHub recommendation gate
 
 `github_signal_delivery.py` receives canonical events from the local reader.
-It requires READY + notify_eligible + TRIGGER, ES identity, realtime quote
+It requires COMPLETE + notify_eligible + TRIGGER, ES identity, realtime quote
 freshness, recent heartbeat/bar/event, complete finite entry zone/stop/targets,
 valid directional ordering and a reason. Missing conditions are logged as blocked.
-The current unvalidated detector remains NOT_READY and does not manufacture
-entry zones/targets, so no recommendation is published from it. A corrected,
-validated detector must supply these fields before this gate will publish.
+`es_signal_plan.py` fills the missing causal ES plan after the existing two-close
+confirmation, rechecks relative volume>=1.2 and compatible5/15min trends, and
+requires a directional confirming candle. Entry is close±0.05ATR rounded to ES
+0.25ticks, stop is the original invalidation rounded outward, maximum risk2ATR,
+targets1R/2R. A current last price outside that entry zone blocks sending.
+The detector's unvalidated research status is preserved and stated in each issue.
 
-Publishing needs host-side `GITHUB_TOKEN` with issue-write permission. The
-interactive GitHub connection is not exported into the host process; no such
-local credential was found. A durable per-event reservation prevents duplicates
+Publishing uses host-side `GITHUB_TOKEN` or the official GitHub CLI's approved
+browser login, without exporting connector credentials or printing OAuth tokens.
+A durable per-event reservation (ES/direction/bar/rule identity) prevents duplicates
 on the same filesystem, including uncertain network outcomes (manual review is
 then required; delivery is deliberately not guaranteed). Preserve the state
 directory on restart. Do not delete reservations to force retransmission.
 
-This runs on the signed-in Windows host. A Render instance cannot connect to
-this host's127.0.0.1 socket. No cloud deployment or secure tunnel was configured,
-and no existing Render service was modified. Gateway transport/reconnect evidence
-does not demonstrate a market edge or validate the experimental detector.
+The Windows reader can push signed market-data-only HTTPS requests to the
+existing Render `/gateway/ingest` route with `--relay-config` pointing to its
+private generated configuration outside the repository. The server validates
+HMAC, request age, replay nonce, ES contract identity and quote freshness before
+running the same HunterRuntime. It returns complete candidate plans; the Windows
+publisher rechecks freshness and current entry eligibility before creating issues.
+No IB socket or account/order API is exposed. A failed cloud relay does not fall
+back to publishing local detector events. Relay credentials use current-user
+DACLs on Windows and Render secret environment variables, never source control.
+The matching existing service is `srv-da44n0qjobas73a9cen0`, repo same as this PR.
+`GATEWAY_RELAY_ENABLED=true` selects this path and stops competing MCP collectors.
+Health changes to gateway_relay_stale after30seconds without a fresh ingest.
+The free host may sleep, lose dedupe state or restart: the Windows durable issue
+reservations remain authoritative. Signed-in Windows/Gateway must stay running.
 
 Telegram test outcome2026-10-22: local and GitHub Actions both returned
 `credentials_unavailable`; no successful message receipt exists. Workflow run:

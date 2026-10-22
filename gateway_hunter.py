@@ -61,6 +61,7 @@ class DataClient(EWrapper, EClient):
         self.trade_time = 0
         self.received = 0
         self.tick_count = 0
+        self.last_price = None
         self.lost = False
         self.errors = []
 
@@ -97,6 +98,8 @@ class DataClient(EWrapper, EClient):
         if price > 0:
             self.received = time.time()
             self.tick_count += 1
+            if tickType == 4:
+                self.last_price = price
 
     def tickString(self, reqId, tickType, value):
         if tickType == 45:
@@ -139,6 +142,7 @@ class DataClient(EWrapper, EClient):
         frame.attrs.update(source=SOURCE, live_feed_verified=True,
                            observed_at=stamp(), market_data_type=self.kind,
                            last_trade_time=datetime.fromtimestamp(self.trade_time, UTC).isoformat(),
+                           last_price=self.last_price,
                            bar_publication_latency_verified=False)
         return frame
 
@@ -209,7 +213,7 @@ def send_test(directory, evidence):
         return {'status': 'delivery_failed', 'error_type': type(exc).__name__, 'time': stamp()}
 
 
-def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0):
+def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, github_signals=False, relay_config=None):
     directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
     runtime = HunterRuntime(directory/'state.json', directory/'shadow.jsonl', symbols=('ES=F',))
     client = None; started = time.monotonic(); retry_at = 0; failures = 0
@@ -240,7 +244,30 @@ def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0):
             result = runtime.poll(datetime.now(UTC), fetch, clock=lambda: datetime.now(UTC))
             heartbeat = result['heartbeat']
             from github_signal_delivery import deliver
-            deliveries = deliver(result['events'], heartbeat, directory)
+            outgoing = []
+            delivery_heartbeat=heartbeat
+            if relay_config and current:
+                try:
+                    from gateway_relay import push_frame
+                    relay=push_frame(current.frame('ES'),current.contract,relay_config['url'],relay_config['secret'])
+                    delivery_heartbeat=relay['heartbeat']
+                    if github_signals: outgoing=relay['events']
+                    journal({'event':'relay','status':relay['heartbeat']['status'],
+                             'remote_timestamp':relay['heartbeat']['timestamp']})
+                except Exception as exc:
+                    journal({'event':'relay','status':'relay_unavailable','error_type':type(exc).__name__})
+                    # Cloud operation is explicitly selected: no silent local fallback publication.
+            elif github_signals and current:
+                from es_signal_plan import complete_plan
+                for event in result['events']:
+                    try:
+                        plan,reason = complete_plan(event,current.frame('ES'))
+                    except RuntimeError:
+                        plan,reason = None,'feed_lost_before_plan'
+                    if plan: outgoing.append(plan)
+                    elif event.get('state')=='TRIGGER':
+                        journal({'event':'signal_blocked','reason':reason,'event_id':event['event_id']})
+            deliveries = deliver(outgoing, delivery_heartbeat, directory)
             for delivery in deliveries:
                 journal({'event': 'github_delivery', **delivery})
             status = heartbeat['status']
@@ -287,6 +314,13 @@ if __name__ == '__main__':
     parser.add_argument('--seconds', type=int, default=0, help='0 means continuous')
     parser.add_argument('--test-alert', action='store_true')
     parser.add_argument('--reconnect-test-after', type=int, default=0)
+    parser.add_argument('--github-signals',action='store_true',help='Explicit opt-in to complete experimental ES rule alerts')
+    parser.add_argument('--relay-config',type=Path,help='Private local generated relay configuration outside repo')
     args = parser.parse_args()
+    relay_config=None
+    if args.relay_config:
+        from ibkr_mcp_client import _oauth_path_is_private
+        if not _oauth_path_is_private(args.relay_config): raise PermissionError('Relay config must be private')
+        relay_config=json.loads(args.relay_config.read_text(encoding='utf-8'))
     with reader_lock(args.state_dir):
-        monitor(args.state_dir, args.seconds, args.test_alert, args.reconnect_test_after)
+        monitor(args.state_dir, args.seconds, args.test_alert, args.reconnect_test_after,args.github_signals,relay_config)
