@@ -141,7 +141,7 @@ def development(path, output, protocol_commit):
     result = dict(protocol_commit=protocol_commit, input_sha256=hashlib.sha256(raw).hexdigest(),
                   mode='CONSUMED_OCT22_DEVELOPMENT_SMOKE_ONLY', bars=len(bars),
                   events=len(baseline['events']), models=metrics,
-                  independent_acquisition='ONE_MONTH/ONE_MIN rejected twice by IBKR connector; no raw provider error persisted',
+                  independent_acquisition='ONE_MONTH/ONE_MIN rejected twice; explicit10000bar read alternative also rejected; no raw provider error persisted',
                   quality_splits='NOT_RUN_INSUFFICIENT_INDEPENDENT_COVERAGE',
                   model_selected=None, holdout_opened=False, accepted=False,
                   readiness='NOT_READY', notifications_enabled=False, orders_enabled=False,

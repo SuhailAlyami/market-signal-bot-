@@ -5,6 +5,9 @@ requesting new SPX history. Exact native US SPX IND resolved again to416904,
 CBOE. Two read-only ONE_MONTH/ONE_MIN requests were rejected by the IBKR
 connector. No provider error text, credentials or authentication URL is persisted.
 No substitute symbol, fabricated prices or synthetic index volume was used.
+After the development pass, a final read-only acquisition alternative using an
+explicit10000bar count instead of period was also rejected. This was an access
+format alternative, not a model/threshold change; no new usable data arrived.
 
 The minimum20complete independent sessions needed for12/4/4(or larger) temporal
 train/validation/holdout partitions are unavailable in this run. Those quality
