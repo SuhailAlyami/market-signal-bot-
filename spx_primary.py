@@ -115,7 +115,7 @@ def connect_primary():
         client.disconnect();raise
 
 
-def run(directory,es_fetch,stop):
+def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
     directory=Path(directory)/'spx';directory.mkdir(parents=True,exist_ok=True)
     def detect(bars,index):
         try:
@@ -170,7 +170,10 @@ def run(directory,es_fetch,stop):
                     if not plan or option is None:
                         journal({'status':'signal_blocked','reason':reason or 'no_fresh_spx_option'});continue
                     plan['option_contract']=option;plan['support_symbol']='ES'
-                    for channel,sender in [('github',deliver),('telegram',telegram_deliver)]:
+                    channels=[]
+                    if github_enabled:channels.append(('github',deliver))
+                    if telegram_enabled:channels.append(('telegram',telegram_deliver))
+                    for channel,sender in channels:
                         try:
                             for receipt in sender([plan],result['heartbeat'],directory):journal({'channel':channel,**receipt})
                         except Exception as exc:journal({'channel':channel,'status':'unavailable','error_type':type(exc).__name__})

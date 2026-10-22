@@ -228,7 +228,7 @@ def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, gith
         def es_support():
             if client is None:raise RuntimeError('es_support_unavailable')
             return client.frame('ES')
-        threading.Thread(target=run_spx_primary,args=(directory,es_support,primary_stop),daemon=True,name='spx-primary').start()
+        threading.Thread(target=run_spx_primary,args=(directory,es_support,primary_stop,github_signals,telegram_signals),daemon=True,name='spx-primary').start()
     last_status = None; injected = False; session_count = 0; alert_attempted = False
     def journal(item):
         with (directory/'connection.jsonl').open('a', encoding='utf-8') as stream:
