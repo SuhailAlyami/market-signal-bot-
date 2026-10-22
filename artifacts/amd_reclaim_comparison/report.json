@@ -1,0 +1,4970 @@
+{
+  "created_at": "2026-10-22T10:44:20.943820+00:00",
+  "input_sha256": "c1ecfcb9711f6a96a472f27f3973f6ac014588d6cfd5b4e2da70358d1f66938e",
+  "rows": 27336,
+  "first_bar": "2026-09-21T00:00:00+00:00",
+  "last_bar": "2026-10-18T23:59:00+00:00",
+  "protocol_sha256": "4876690a4899a752c629c43b155bfc1b728d02ef9b7ea235bedd90d358c85454",
+  "source": "retained Yahoo ES continuous proxy; not native SPX/options or live-latency evidence",
+  "historical_test_previously_used": true,
+  "splits": {
+    "train": {
+      "first": "2026-09-21T13:40:00+00:00",
+      "last": "2026-10-02T19:49:00+00:00"
+    },
+    "validation": {
+      "first": "2026-10-05T13:40:00+00:00",
+      "last": "2026-10-09T19:49:00+00:00"
+    },
+    "test": {
+      "first": "2026-10-12T13:40:00+00:00",
+      "last": "2026-10-16T19:49:00+00:00"
+    }
+  },
+  "results": {
+    "train": {
+      "0": {
+        "current": {
+          "availability_delay_minutes": 0,
+          "sessions": 10,
+          "eligible_minutes": 3780,
+          "events": 273,
+          "signals": 3,
+          "matched_events": 1,
+          "precision": 0.3333333333333333,
+          "recall": 0.003663003663003663,
+          "early_precision": 0.3333333333333333,
+          "early_event_recall": 0.003663003663003663,
+          "median_lead_minutes": 2.0,
+          "early_matched_events": 1,
+          "false_alarms": 2,
+          "early_false_alarms": 2,
+          "false_alarms_per_session": 0.2,
+          "missed_events": 272,
+          "precision_wilson_95": [
+            0.06149194472039621,
+            0.7923403991979522
+          ],
+          "recall_wilson_95": [
+            0.0006469030014178041,
+            0.02045347280781945
+          ],
+          "early_precision_wilson_95": [
+            0.06149194472039621,
+            0.7923403991979522
+          ],
+          "early_recall_wilson_95": [
+            0.0006469030014178041,
+            0.02045347280781945
+          ],
+          "session_counts": {
+            "2026-09-21": {
+              "events": 26,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-22": {
+              "events": 21,
+              "signals": 1,
+              "matched": 1,
+              "early": 1,
+              "leads": [
+                2.0
+              ]
+            },
+            "2026-09-23": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-24": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-25": {
+              "events": 30,
+              "signals": 1,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-28": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-29": {
+              "events": 26,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-30": {
+              "events": 31,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-01": {
+              "events": 30,
+              "signals": 1,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-02": {
+              "events": 24,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.0,
+              1.0
+            ],
+            "recall": [
+              0.0,
+              0.011742876838235293
+            ],
+            "early_precision": [
+              0.0,
+              1.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.011742876838235293
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.5
+            ],
+            "median_lead_minutes": [
+              2.0,
+              2.0
+            ]
+          },
+          "early_f1": 0.007246376811594204,
+          "candidate_signals_total": 3,
+          "censored_signals": 0
+        },
+        "amd": {
+          "availability_delay_minutes": 0,
+          "sessions": 10,
+          "eligible_minutes": 3780,
+          "events": 273,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 273,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.013876024339194723
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.013876024339194723
+          ],
+          "session_counts": {
+            "2026-09-21": {
+              "events": 26,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-22": {
+              "events": 21,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-23": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-24": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-25": {
+              "events": 30,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-28": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-29": {
+              "events": 26,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-30": {
+              "events": 31,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-01": {
+              "events": 30,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-02": {
+              "events": 24,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 0,
+          "censored_signals": 0
+        }
+      },
+      "1": {
+        "current": {
+          "availability_delay_minutes": 1,
+          "sessions": 10,
+          "eligible_minutes": 3780,
+          "events": 273,
+          "signals": 3,
+          "matched_events": 1,
+          "precision": 0.3333333333333333,
+          "recall": 0.003663003663003663,
+          "early_precision": 0.3333333333333333,
+          "early_event_recall": 0.003663003663003663,
+          "median_lead_minutes": 1.0,
+          "early_matched_events": 1,
+          "false_alarms": 2,
+          "early_false_alarms": 2,
+          "false_alarms_per_session": 0.2,
+          "missed_events": 272,
+          "precision_wilson_95": [
+            0.06149194472039621,
+            0.7923403991979522
+          ],
+          "recall_wilson_95": [
+            0.0006469030014178041,
+            0.02045347280781945
+          ],
+          "early_precision_wilson_95": [
+            0.06149194472039621,
+            0.7923403991979522
+          ],
+          "early_recall_wilson_95": [
+            0.0006469030014178041,
+            0.02045347280781945
+          ],
+          "session_counts": {
+            "2026-09-21": {
+              "events": 26,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-22": {
+              "events": 21,
+              "signals": 1,
+              "matched": 1,
+              "early": 1,
+              "leads": [
+                1.0
+              ]
+            },
+            "2026-09-23": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-24": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-25": {
+              "events": 30,
+              "signals": 1,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-28": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-29": {
+              "events": 26,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-30": {
+              "events": 31,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-01": {
+              "events": 30,
+              "signals": 1,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-02": {
+              "events": 24,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.0,
+              1.0
+            ],
+            "recall": [
+              0.0,
+              0.011742876838235293
+            ],
+            "early_precision": [
+              0.0,
+              1.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.011742876838235293
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.5
+            ],
+            "median_lead_minutes": [
+              1.0,
+              1.0
+            ]
+          },
+          "early_f1": 0.007246376811594204,
+          "candidate_signals_total": 3,
+          "censored_signals": 0
+        },
+        "amd": {
+          "availability_delay_minutes": 1,
+          "sessions": 10,
+          "eligible_minutes": 3780,
+          "events": 273,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 273,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.013876024339194723
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.013876024339194723
+          ],
+          "session_counts": {
+            "2026-09-21": {
+              "events": 26,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-22": {
+              "events": 21,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-23": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-24": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-25": {
+              "events": 30,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-28": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-29": {
+              "events": 26,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-30": {
+              "events": 31,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-01": {
+              "events": 30,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-02": {
+              "events": 24,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 0,
+          "censored_signals": 0
+        }
+      }
+    },
+    "validation": {
+      "0": {
+        "current": {
+          "availability_delay_minutes": 0,
+          "sessions": 5,
+          "eligible_minutes": 1880,
+          "events": 121,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 121,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "session_counts": {
+            "2026-10-05": {
+              "events": 25,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-06": {
+              "events": 23,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-07": {
+              "events": 24,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-08": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-09": {
+              "events": 20,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 0,
+          "censored_signals": 0
+        },
+        "amd": {
+          "availability_delay_minutes": 0,
+          "sessions": 5,
+          "eligible_minutes": 1880,
+          "events": 121,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 121,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "session_counts": {
+            "2026-10-05": {
+              "events": 25,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-06": {
+              "events": 23,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-07": {
+              "events": 24,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-08": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-09": {
+              "events": 20,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 0,
+          "censored_signals": 0
+        }
+      },
+      "1": {
+        "current": {
+          "availability_delay_minutes": 1,
+          "sessions": 5,
+          "eligible_minutes": 1880,
+          "events": 121,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 121,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "session_counts": {
+            "2026-10-05": {
+              "events": 25,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-06": {
+              "events": 23,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-07": {
+              "events": 24,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-08": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-09": {
+              "events": 20,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 0,
+          "censored_signals": 0
+        },
+        "amd": {
+          "availability_delay_minutes": 1,
+          "sessions": 5,
+          "eligible_minutes": 1880,
+          "events": 121,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 121,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "session_counts": {
+            "2026-10-05": {
+              "events": 25,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-06": {
+              "events": 23,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-07": {
+              "events": 24,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-08": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-09": {
+              "events": 20,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 0,
+          "censored_signals": 0
+        }
+      }
+    },
+    "test": {
+      "0": {
+        "current": {
+          "availability_delay_minutes": 0,
+          "sessions": 5,
+          "eligible_minutes": 1880,
+          "events": 121,
+          "signals": 1,
+          "matched_events": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 1,
+          "early_false_alarms": 1,
+          "false_alarms_per_session": 0.2,
+          "missed_events": 121,
+          "precision_wilson_95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "early_precision_wilson_95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "early_recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "session_counts": {
+            "2026-10-12": {
+              "events": 13,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-13": {
+              "events": 21,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-14": {
+              "events": 31,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-15": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-16": {
+              "events": 27,
+              "signals": 1,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.0,
+              0.0
+            ],
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": [
+              0.0,
+              0.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.6
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 1,
+          "censored_signals": 0
+        },
+        "amd": {
+          "availability_delay_minutes": 0,
+          "sessions": 5,
+          "eligible_minutes": 1880,
+          "events": 121,
+          "signals": 1,
+          "matched_events": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 1,
+          "early_false_alarms": 1,
+          "false_alarms_per_session": 0.2,
+          "missed_events": 121,
+          "precision_wilson_95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "early_precision_wilson_95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "early_recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "session_counts": {
+            "2026-10-12": {
+              "events": 13,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-13": {
+              "events": 21,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-14": {
+              "events": 31,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-15": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-16": {
+              "events": 27,
+              "signals": 1,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.0,
+              0.0
+            ],
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": [
+              0.0,
+              0.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.6
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 1,
+          "censored_signals": 0
+        }
+      },
+      "1": {
+        "current": {
+          "availability_delay_minutes": 1,
+          "sessions": 5,
+          "eligible_minutes": 1880,
+          "events": 121,
+          "signals": 1,
+          "matched_events": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 1,
+          "early_false_alarms": 1,
+          "false_alarms_per_session": 0.2,
+          "missed_events": 121,
+          "precision_wilson_95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "early_precision_wilson_95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "early_recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "session_counts": {
+            "2026-10-12": {
+              "events": 13,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-13": {
+              "events": 21,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-14": {
+              "events": 31,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-15": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-16": {
+              "events": 27,
+              "signals": 1,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.0,
+              0.0
+            ],
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": [
+              0.0,
+              0.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.6
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 1,
+          "censored_signals": 0
+        },
+        "amd": {
+          "availability_delay_minutes": 1,
+          "sessions": 5,
+          "eligible_minutes": 1880,
+          "events": 121,
+          "signals": 1,
+          "matched_events": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 1,
+          "early_false_alarms": 1,
+          "false_alarms_per_session": 0.2,
+          "missed_events": 121,
+          "precision_wilson_95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "early_precision_wilson_95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "early_recall_wilson_95": [
+            0.0,
+            0.03077069794747827
+          ],
+          "session_counts": {
+            "2026-10-12": {
+              "events": 13,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-13": {
+              "events": 21,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-14": {
+              "events": 31,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-15": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-10-16": {
+              "events": 27,
+              "signals": 1,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.0,
+              0.0
+            ],
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": [
+              0.0,
+              0.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.6
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "candidate_signals_total": 1,
+          "censored_signals": 0
+        }
+      }
+    }
+  },
+  "diagnostics": {
+    "setups": [
+      61,
+      89,
+      107,
+      151,
+      198,
+      225,
+      297,
+      307,
+      329,
+      363,
+      405,
+      423,
+      482,
+      510,
+      539,
+      561,
+      603,
+      664,
+      682,
+      714,
+      741,
+      762,
+      814,
+      836,
+      862,
+      913,
+      989,
+      1056,
+      1104,
+      1173,
+      1193,
+      1244,
+      1437,
+      1450,
+      1471,
+      1495,
+      1549,
+      1561,
+      1605,
+      1662,
+      1677,
+      1690,
+      1817,
+      1833,
+      2078,
+      2155,
+      2174,
+      2217,
+      2241,
+      2290,
+      2319,
+      2368,
+      2401,
+      2474,
+      2496,
+      2553,
+      2665,
+      2724,
+      2787,
+      2830,
+      2931,
+      2953,
+      3123,
+      3197,
+      3293,
+      3341,
+      3374,
+      3456,
+      3519,
+      3534,
+      3558,
+      3580,
+      3677,
+      3707,
+      3742,
+      3864,
+      4056,
+      4095,
+      4115,
+      4147,
+      4295,
+      4328,
+      4440,
+      4457,
+      4510,
+      4565,
+      4590,
+      4607,
+      4672,
+      4743,
+      4771,
+      4801,
+      4829,
+      4853,
+      4870,
+      4911,
+      4937,
+      5072,
+      5152,
+      5177,
+      5200,
+      5288,
+      5346,
+      5396,
+      5423,
+      5461,
+      5539,
+      5577,
+      5659,
+      5766,
+      5820,
+      5838,
+      5876,
+      5911,
+      5943,
+      6004,
+      6021,
+      6063,
+      6101,
+      6191,
+      6213,
+      6223,
+      6252,
+      6268,
+      6304,
+      6361,
+      6391,
+      6427,
+      6517,
+      6642,
+      6782,
+      6867,
+      6912,
+      6921,
+      6939,
+      6999,
+      7045,
+      7115,
+      7130,
+      7150,
+      7168,
+      7262,
+      7347,
+      7380,
+      7436,
+      7556,
+      7604,
+      7710,
+      7725,
+      7982,
+      8085,
+      8233,
+      8277,
+      8399,
+      8431,
+      8440,
+      8510,
+      8534,
+      8559,
+      8591,
+      8645,
+      8726,
+      8771,
+      8846,
+      8886,
+      8895,
+      8939,
+      8978,
+      9100,
+      9122,
+      9154,
+      9272,
+      9286,
+      9381,
+      9400,
+      9513,
+      9521,
+      9567,
+      9652,
+      9673,
+      9694,
+      9876,
+      9898,
+      9955,
+      9990,
+      10037,
+      10055,
+      10080,
+      10090,
+      10112,
+      10228,
+      10272,
+      10301,
+      10368,
+      10473,
+      10553,
+      10720,
+      10902,
+      10939,
+      10949,
+      11078,
+      11144,
+      11258,
+      11306,
+      11375,
+      11416,
+      11432,
+      11453,
+      11494,
+      11563,
+      11632,
+      11655,
+      11676,
+      11750,
+      11775,
+      11836,
+      11923,
+      11976,
+      12251,
+      12293,
+      12324,
+      12374,
+      12394,
+      12420,
+      12444,
+      12460,
+      12494,
+      12596,
+      12668,
+      12724,
+      12830,
+      12926,
+      12962,
+      13027,
+      13044,
+      13099,
+      13207,
+      13287,
+      13302,
+      13323,
+      13344,
+      13498,
+      13543,
+      13644,
+      13659,
+      13761,
+      13786,
+      13824,
+      13910,
+      13996,
+      14032,
+      14062,
+      14098,
+      14162,
+      14311,
+      14352,
+      14377,
+      14406,
+      14433,
+      14465,
+      14482,
+      14571,
+      14603,
+      14663,
+      14677,
+      14845,
+      14929,
+      15009,
+      15054,
+      15123,
+      15233,
+      15255,
+      15325,
+      15420,
+      15494,
+      15524,
+      15565,
+      15595,
+      15643,
+      15664,
+      15688,
+      15720,
+      15754,
+      15787,
+      15809,
+      15848,
+      15864,
+      15890,
+      16018,
+      16075,
+      16174,
+      16208,
+      16233,
+      16354,
+      16405,
+      16431,
+      16470,
+      16518,
+      16527,
+      16542,
+      16571,
+      16625,
+      16730,
+      16762,
+      16772,
+      16802,
+      16844,
+      16882,
+      16892,
+      16942,
+      17029,
+      17069,
+      17124,
+      17154,
+      17223,
+      17355,
+      17485,
+      17549,
+      17586,
+      17604,
+      17642,
+      17700,
+      17731,
+      17776,
+      17795,
+      17883,
+      17943,
+      17971,
+      18006,
+      18059,
+      18124,
+      18154,
+      18173,
+      18194,
+      18251,
+      18305,
+      18334,
+      18360,
+      18393,
+      18440,
+      18484,
+      18497,
+      18552,
+      18584,
+      18643,
+      18677,
+      18730,
+      18821,
+      18940,
+      19018,
+      19030,
+      19069,
+      19101,
+      19120,
+      19141,
+      19183,
+      19257,
+      19300,
+      19340,
+      19390,
+      19435,
+      19481,
+      19508,
+      19525,
+      19541,
+      19618,
+      19672,
+      19710,
+      19784,
+      19874,
+      19898,
+      19953,
+      20036,
+      20150,
+      20221,
+      20273,
+      20313,
+      20329,
+      20471,
+      20566,
+      20624,
+      20662,
+      20697,
+      20726,
+      20745,
+      20795,
+      20814,
+      20822,
+      20843,
+      20852,
+      20876,
+      20933,
+      20997,
+      21047,
+      21116,
+      21175,
+      21243,
+      21293,
+      21340,
+      21359,
+      21414,
+      21435,
+      21463,
+      21494,
+      21568,
+      21600,
+      21635,
+      21685,
+      21702,
+      21765,
+      21828,
+      21845,
+      21879,
+      21890,
+      21936,
+      21955,
+      21986,
+      21998,
+      22017,
+      22122,
+      22197,
+      22297,
+      22341,
+      22405,
+      22465,
+      22492,
+      22513,
+      22540,
+      22550,
+      22611,
+      22644,
+      22773,
+      22809,
+      23019,
+      23075,
+      23189,
+      23199,
+      23262,
+      23317,
+      23381,
+      23418,
+      23480,
+      23540,
+      23598,
+      23657,
+      23671,
+      23769,
+      23810,
+      23965,
+      23990,
+      24024,
+      24063,
+      24270,
+      24306,
+      24375,
+      24408,
+      24565,
+      24613,
+      24700,
+      24900,
+      24935,
+      25035,
+      25112,
+      25172,
+      25229,
+      25245,
+      25321,
+      25410,
+      25484,
+      25501,
+      25631,
+      25657,
+      25747,
+      25758,
+      25949,
+      26020,
+      26079,
+      26131,
+      26192,
+      26341,
+      26391,
+      26434,
+      26472,
+      26521,
+      26558,
+      26584,
+      26663,
+      26719,
+      26769,
+      26776,
+      26866,
+      26975,
+      27073,
+      27117,
+      27158,
+      27303
+    ],
+    "triggers": {
+      "current": [
+        66,
+        109,
+        206,
+        334,
+        407,
+        512,
+        541,
+        609,
+        666,
+        747,
+        764,
+        841,
+        865,
+        915,
+        991,
+        1175,
+        1199,
+        1564,
+        1669,
+        1825,
+        1837,
+        2292,
+        2555,
+        2668,
+        2792,
+        2933,
+        3125,
+        3199,
+        3295,
+        3343,
+        3458,
+        3536,
+        3561,
+        3582,
+        3679,
+        3710,
+        3866,
+        4059,
+        4117,
+        4149,
+        4443,
+        4460,
+        4516,
+        4568,
+        4676,
+        4745,
+        4804,
+        4832,
+        4873,
+        4939,
+        5159,
+        5179,
+        5202,
+        5351,
+        5398,
+        5426,
+        5463,
+        5842,
+        5945,
+        6008,
+        6029,
+        6065,
+        6225,
+        6254,
+        6271,
+        6306,
+        6363,
+        6393,
+        6644,
+        6791,
+        6941,
+        7048,
+        7117,
+        7132,
+        7265,
+        7349,
+        7382,
+        7438,
+        7607,
+        7713,
+        7984,
+        8087,
+        8284,
+        8402,
+        8433,
+        8442,
+        8536,
+        8561,
+        8647,
+        8853,
+        8941,
+        9105,
+        9124,
+        9163,
+        9274,
+        9383,
+        9569,
+        9676,
+        9879,
+        9901,
+        9957,
+        9992,
+        10057,
+        10114,
+        10233,
+        10274,
+        10555,
+        10906,
+        10951,
+        11260,
+        11309,
+        11377,
+        11434,
+        11455,
+        11496,
+        11565,
+        11634,
+        11778,
+        11925,
+        11978,
+        12328,
+        12377,
+        12422,
+        12498,
+        12598,
+        12671,
+        12732,
+        12832,
+        13049,
+        13209,
+        13325,
+        13347,
+        13545,
+        13663,
+        13766,
+        13788,
+        13827,
+        13912,
+        14002,
+        14034,
+        14067,
+        14106,
+        14165,
+        14354,
+        14379,
+        14435,
+        14471,
+        14484,
+        14606,
+        14854,
+        15011,
+        15236,
+        15424,
+        15567,
+        15645,
+        15666,
+        15697,
+        15726,
+        15757,
+        15790,
+        15811,
+        15854,
+        15893,
+        16020,
+        16077,
+        16179,
+        16235,
+        16434,
+        16544,
+        16573,
+        16804,
+        16846,
+        16884,
+        16894,
+        16944,
+        17071,
+        17128,
+        17156,
+        17225,
+        17358,
+        17589,
+        17606,
+        17646,
+        17733,
+        17779,
+        17799,
+        17885,
+        17945,
+        17975,
+        18063,
+        18126,
+        18158,
+        18196,
+        18253,
+        18309,
+        18337,
+        18398,
+        18500,
+        18556,
+        19124,
+        19144,
+        19185,
+        19342,
+        19392,
+        19515,
+        19527,
+        19543,
+        19623,
+        19712,
+        19786,
+        19878,
+        19900,
+        20040,
+        20154,
+        20275,
+        20336,
+        20475,
+        20665,
+        20855,
+        20878,
+        20935,
+        21049,
+        21180,
+        21245,
+        21297,
+        21342,
+        21361,
+        21417,
+        21437,
+        21467,
+        21496,
+        21602,
+        21637,
+        21687,
+        21704,
+        21767,
+        21830,
+        21938,
+        21958,
+        22000,
+        22124,
+        22200,
+        22345,
+        22516,
+        22646,
+        22779,
+        23201,
+        23265,
+        23319,
+        23483,
+        23600,
+        23771,
+        23814,
+        23967,
+        23993,
+        24065,
+        24272,
+        24703,
+        24937,
+        25119,
+        25235,
+        25412,
+        25505,
+        25659,
+        25761,
+        25951,
+        26028,
+        26082,
+        26347,
+        26523,
+        26561,
+        26587,
+        26667,
+        26778,
+        26868,
+        26977,
+        27119,
+        27305
+      ],
+      "amd": [
+        371,
+        515,
+        525,
+        712,
+        789,
+        819,
+        904,
+        1038,
+        1086,
+        1108,
+        1133,
+        1178,
+        1290,
+        1374,
+        1700,
+        1827,
+        1844,
+        1870,
+        1999,
+        2025,
+        2111,
+        2169,
+        2293,
+        2536,
+        2777,
+        2824,
+        2841,
+        2875,
+        2934,
+        3028,
+        3096,
+        3122,
+        3230,
+        3417,
+        3562,
+        3582,
+        3592,
+        3664,
+        3843,
+        4160,
+        4279,
+        4316,
+        4403,
+        4428,
+        4484,
+        4492,
+        4530,
+        4575,
+        4677,
+        4851,
+        4871,
+        4994,
+        5160,
+        5399,
+        5428,
+        5629,
+        5672,
+        5759,
+        5806,
+        5958,
+        6031,
+        6077,
+        6114,
+        6171,
+        6225,
+        6242,
+        6269,
+        6316,
+        6407,
+        6425,
+        6630,
+        6645,
+        6652,
+        6762,
+        6811,
+        6862,
+        6872,
+        6943,
+        6959,
+        7042,
+        7144,
+        7216,
+        7265,
+        7283,
+        7638,
+        7711,
+        7858,
+        7905,
+        7934,
+        8025,
+        8139,
+        8270,
+        8519,
+        8854,
+        8946,
+        8995,
+        9124,
+        9223,
+        9250,
+        9287,
+        9303,
+        9569,
+        9629,
+        9670,
+        9862,
+        9877,
+        9922,
+        9994,
+        10057,
+        10178,
+        10237,
+        10286,
+        10354,
+        10444,
+        10606,
+        10654,
+        10672,
+        10754,
+        10761,
+        10953,
+        11179,
+        11227,
+        11260,
+        11356,
+        11505,
+        11554,
+        11585,
+        11644,
+        11779,
+        11813,
+        11930,
+        12008,
+        12073,
+        12124,
+        12167,
+        12334,
+        12735,
+        12826,
+        12876,
+        12927,
+        12951,
+        13007,
+        13019,
+        13087,
+        13185,
+        13209,
+        13345,
+        13351,
+        13426,
+        13554,
+        13632,
+        13844,
+        13991,
+        14008,
+        14047,
+        14085,
+        14114,
+        14155,
+        14166,
+        14356,
+        14395,
+        14410,
+        14481,
+        14523,
+        14654,
+        14678,
+        14718,
+        14832,
+        14979,
+        15004,
+        15077,
+        15208,
+        15270,
+        15530,
+        15627,
+        15693,
+        15759,
+        15891,
+        16041,
+        16081,
+        16099,
+        16266,
+        16338,
+        16464,
+        16528,
+        16731,
+        16885,
+        17059,
+        17097,
+        17212,
+        17298,
+        17358,
+        17415,
+        17522,
+        17543,
+        17847,
+        17885,
+        17972,
+        17980,
+        18007,
+        18069,
+        18153,
+        18306,
+        18314,
+        18556,
+        18570,
+        18597,
+        18637,
+        18787,
+        18822,
+        18928,
+        19004,
+        19145,
+        19189,
+        19325,
+        19432,
+        19550,
+        19626,
+        19645,
+        19745,
+        19917,
+        19954,
+        20005,
+        20078,
+        20135,
+        20183,
+        20248,
+        20343,
+        20393,
+        20511,
+        20549,
+        20580,
+        20635,
+        20667,
+        20801,
+        21034,
+        21096,
+        21247,
+        21272,
+        21390,
+        21588,
+        21712,
+        21989,
+        22007,
+        22102,
+        22168,
+        22207,
+        22299,
+        22389,
+        22512,
+        22599,
+        22722,
+        22775,
+        22842,
+        22865,
+        22883,
+        23034,
+        23076,
+        23435,
+        23606,
+        23975,
+        23993,
+        24223,
+        24287,
+        24409,
+        24645,
+        24673,
+        24723,
+        24767,
+        24906,
+        25023,
+        25173,
+        25262,
+        25332,
+        25506,
+        25660,
+        25709,
+        25736,
+        25745,
+        25756,
+        25897,
+        25957,
+        26004,
+        26028,
+        26110,
+        26193,
+        26284,
+        26346,
+        26392,
+        26431,
+        26627,
+        26656,
+        26665,
+        26697,
+        26782,
+        26788,
+        26927,
+        26941,
+        26967,
+        27050,
+        27136,
+        27160,
+        27273,
+        27333
+      ]
+    },
+    "rejections": {
+      "current": [
+        {
+          "index": 66,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 109,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 206,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 334,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 407,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 512,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 541,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 609,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 666,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 747,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 764,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 841,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 865,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 915,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 991,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 1175,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1199,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 1564,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 1669,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1825,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1837,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 2555,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 2668,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 2792,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 2933,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3125,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 3199,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3295,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3343,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3458,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3561,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 3582,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3679,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3710,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3866,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4059,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 4117,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4149,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4443,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4460,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4568,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 4676,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 4745,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4804,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 4832,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 4873,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4939,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 5159,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5179,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 5202,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5351,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5398,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5426,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5463,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 5842,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5945,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6008,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6029,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6065,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6225,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6254,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 6271,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 6306,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 6393,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 6644,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 6791,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 7048,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7117,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7132,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 7265,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7349,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7382,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7438,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 7713,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 7984,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8087,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8284,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8402,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8433,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8442,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8536,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 8647,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 8853,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 8941,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 9105,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 9124,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9163,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9274,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9383,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 9569,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9676,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9879,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 9901,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 9957,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9992,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10057,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10114,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 10233,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 10274,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10555,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10906,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10951,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 11260,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11309,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11377,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 11434,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11455,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11496,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11565,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11634,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11925,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 11978,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 12328,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 12377,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12422,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12498,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12598,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12671,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 12732,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12832,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13049,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13209,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13325,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13347,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 13545,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13663,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 13766,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13788,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 13827,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 13912,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 14002,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14034,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 14067,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14106,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14165,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 14354,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14379,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14435,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 14471,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14484,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 14606,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14854,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 15011,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15236,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15424,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 15567,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 15645,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15666,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15697,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15726,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 15757,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15790,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 15811,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15854,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15893,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16020,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16077,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16179,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 16235,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16434,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 16544,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16573,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16804,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16846,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 16884,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16894,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16944,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17071,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17128,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17156,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 17225,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17358,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17589,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17606,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17646,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 17733,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 17779,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17799,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17885,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17945,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 17975,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18063,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18158,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18196,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 18253,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 18309,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18337,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18398,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 18500,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18556,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19124,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 19144,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 19185,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 19342,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 19392,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 19515,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19527,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 19543,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19623,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 19712,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19786,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 19878,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19900,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 20040,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20154,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 20275,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20336,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20475,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20665,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20855,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20878,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 20935,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21049,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21180,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21245,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 21297,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 21342,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21361,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 21417,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21437,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21467,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21496,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 21602,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21637,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 21687,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 21704,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21767,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 21830,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 21938,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21958,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 22000,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22124,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 22200,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 22345,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 22516,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 22646,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22779,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23201,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23265,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 23319,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 23483,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 23600,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23771,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23814,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 23967,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 23993,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24065,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 24272,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24703,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24937,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25119,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25235,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 25412,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 25505,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25659,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 25761,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25951,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 26028,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26082,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26347,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26523,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 26561,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26587,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26667,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 26778,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26868,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26977,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 27305,
+          "reason": "risk_or_entry_invalid"
+        }
+      ],
+      "amd": [
+        {
+          "index": 371,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 515,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 525,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 712,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 789,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 819,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 904,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1038,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1086,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1108,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1133,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1178,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1290,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1374,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1700,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1827,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1844,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1870,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 1999,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2025,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2111,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2169,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2293,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2536,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2777,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2824,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2841,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2875,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 2934,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3028,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3096,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3122,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3230,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3417,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3562,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3582,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3592,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3664,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 3843,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4160,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4279,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4316,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4403,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4428,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4484,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4492,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4530,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4575,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4677,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4851,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4871,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 4994,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5160,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5399,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5428,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5629,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5672,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5759,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5806,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 5958,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6031,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6077,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6114,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6171,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6225,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6242,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6269,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6316,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6407,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6425,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6630,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6645,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6652,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6762,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6811,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6862,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6872,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6943,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 6959,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7042,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7144,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7216,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7265,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7283,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7638,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7711,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7858,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7905,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 7934,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8025,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8139,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8270,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8519,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8854,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8946,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 8995,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9124,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9223,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9250,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9287,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9303,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9569,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9629,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9670,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9862,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9877,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9922,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 9994,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10057,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10178,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10237,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10286,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10354,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10444,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10606,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10654,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10672,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10754,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10761,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 10953,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11179,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11227,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11260,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11356,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11505,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11554,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11585,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11644,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11779,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11813,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 11930,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12008,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12073,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12124,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12167,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12334,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12735,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12826,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12876,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12927,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 12951,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13007,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13019,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13087,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13185,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13209,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13345,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13351,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13426,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13554,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13632,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13844,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 13991,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14008,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14047,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14085,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14114,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14155,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14166,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14356,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14395,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14410,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14481,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14523,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14654,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14678,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14718,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14832,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 14979,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15004,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15077,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15208,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15270,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15530,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15627,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15693,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15759,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 15891,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16041,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16081,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16099,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16266,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16338,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16464,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16528,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16731,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 16885,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17059,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17097,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17212,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17298,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17358,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17415,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17522,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17543,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17847,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17885,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17972,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 17980,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18007,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18069,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18153,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18306,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18314,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18556,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18570,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18597,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18637,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18787,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18822,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 18928,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19004,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19145,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19189,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19325,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19432,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19550,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19626,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19645,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19745,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19917,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 19954,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20005,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20078,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20135,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20183,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20248,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20343,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20393,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20511,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20549,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20580,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20635,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20667,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 20801,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21034,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21096,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21247,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21272,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21390,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21588,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21712,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 21989,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22007,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22102,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22168,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22207,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22299,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22389,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22512,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22599,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22722,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22775,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22842,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22865,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 22883,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23034,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23076,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23435,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23606,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23975,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 23993,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24223,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24287,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24409,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24645,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24673,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24723,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24767,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 24906,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25023,
+          "reason": "risk_or_entry_invalid"
+        },
+        {
+          "index": 25173,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25262,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25332,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25506,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25660,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25709,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25736,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25745,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25756,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25897,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 25957,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26004,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26028,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26110,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26193,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26284,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26346,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26392,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26431,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26627,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26656,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26665,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26697,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26782,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26788,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26927,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26941,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 26967,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 27050,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 27160,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 27273,
+          "reason": "confirmation_filters_failed"
+        },
+        {
+          "index": 27333,
+          "reason": "confirmation_filters_failed"
+        }
+      ]
+    },
+    "current_setup_to_trigger_minutes": [
+      5.0,
+      2.0,
+      8.0,
+      5.0,
+      2.0,
+      2.0,
+      2.0,
+      6.0,
+      2.0,
+      6.0,
+      2.0,
+      5.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      6.0,
+      3.0,
+      7.0,
+      8.0,
+      4.0,
+      2.0,
+      2.0,
+      3.0,
+      5.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      3.0,
+      3.0,
+      6.0,
+      3.0,
+      4.0,
+      2.0,
+      3.0,
+      3.0,
+      3.0,
+      2.0,
+      7.0,
+      2.0,
+      2.0,
+      5.0,
+      2.0,
+      3.0,
+      2.0,
+      4.0,
+      2.0,
+      4.0,
+      8.0,
+      2.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      9.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      3.0,
+      3.0,
+      2.0,
+      2.0,
+      7.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      7.0,
+      2.0,
+      5.0,
+      2.0,
+      9.0,
+      2.0,
+      2.0,
+      2.0,
+      3.0,
+      3.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      5.0,
+      2.0,
+      2.0,
+      4.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      4.0,
+      3.0,
+      2.0,
+      4.0,
+      2.0,
+      3.0,
+      8.0,
+      2.0,
+      5.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      4.0,
+      5.0,
+      2.0,
+      3.0,
+      2.0,
+      6.0,
+      2.0,
+      5.0,
+      8.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      6.0,
+      2.0,
+      3.0,
+      9.0,
+      2.0,
+      3.0,
+      4.0,
+      2.0,
+      2.0,
+      2.0,
+      9.0,
+      6.0,
+      3.0,
+      3.0,
+      2.0,
+      6.0,
+      3.0,
+      2.0,
+      2.0,
+      5.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      4.0,
+      2.0,
+      2.0,
+      3.0,
+      3.0,
+      2.0,
+      4.0,
+      2.0,
+      3.0,
+      4.0,
+      2.0,
+      2.0,
+      4.0,
+      4.0,
+      2.0,
+      4.0,
+      2.0,
+      2.0,
+      4.0,
+      3.0,
+      5.0,
+      3.0,
+      4.0,
+      4.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      7.0,
+      2.0,
+      2.0,
+      5.0,
+      2.0,
+      2.0,
+      4.0,
+      2.0,
+      4.0,
+      4.0,
+      2.0,
+      7.0,
+      4.0,
+      3.0,
+      3.0,
+      2.0,
+      2.0,
+      2.0,
+      5.0,
+      2.0,
+      4.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      4.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      3.0,
+      4.0,
+      3.0,
+      2.0,
+      6.0,
+      2.0,
+      3.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      4.0,
+      2.0,
+      3.0,
+      2.0,
+      2.0,
+      3.0,
+      2.0,
+      7.0,
+      6.0,
+      2.0,
+      4.0,
+      2.0,
+      3.0,
+      2.0,
+      8.0,
+      3.0,
+      6.0,
+      2.0,
+      3.0,
+      3.0,
+      4.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0
+    ],
+    "counts": {
+      "current": {
+        "triggers": 278,
+        "complete_plans": 10,
+        "blocked": {
+          "confirmation_filters_failed": 163,
+          "risk_or_entry_invalid": 105
+        }
+      },
+      "amd": {
+        "triggers": 304,
+        "complete_plans": 1,
+        "blocked": {
+          "confirmation_filters_failed": 302,
+          "risk_or_entry_invalid": 1
+        }
+      }
+    },
+    "latency": {
+      "minimum": 2.0,
+      "median": 2.0,
+      "p95": 7.0
+    }
+  },
+  "necessary_improvement_gate": false,
+  "live_promotion": false,
+  "reason": "No promotion without passed comparison AND genuinely unseen native validation."
+}

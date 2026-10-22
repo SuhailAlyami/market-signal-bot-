@@ -163,7 +163,8 @@ def compare(path, output):
                 metrics.update(early_f1=f1(metrics), candidate_signals_total=len(selected),
                                censored_signals=len(selected)-len(scored))
                 by_model[model] = metrics
-                pd.DataFrame(selected).to_csv(output/f'{phase}_{model}_delay{delay}_signals.csv', index=False)
+                pd.DataFrame(selected, columns=['index','direction','bar_time','detected_at','outcome_observable']).to_csv(
+                    output/f'{phase}_{model}_delay{delay}_signals.csv', index=False)
             results[phase][str(delay)] = by_model
             if phase in ('validation', 'test'):
                 gates.append(improvement_gate(by_model['current'], by_model['amd']))
