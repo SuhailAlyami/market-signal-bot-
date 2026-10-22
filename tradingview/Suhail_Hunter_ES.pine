@@ -1,0 +1,117 @@
+//@version=6
+indicator("Suhail Hunter v2 | SPX primary / ES support", overlay=true, max_labels_count=100)
+// PYTHON_RULE_SHA256: cdf797d608d7658f97b85a50ebaaa19d4373589521384fb7c2bb2e77d26a6e9d
+// Rule levels are the prior20 completed bars. No option contract/quote is invented.
+const string RULE_VERSION = "hunter-rolling20-v2"
+const int WINDOW = 20
+const float PROXIMITY = 0.20
+const float MIN_RVOL = 1.20
+const int CONFIRM_BARS = 2
+const float BUFFER_ATR = 0.10
+const int EXPIRY_MINUTES = 10
+const int COOLDOWN_MINUTES = 5
+esSymbol = input.symbol("CME_MINI:ESZ2026", "Exact ES helper expiry (match Gateway)")
+isSPX = syminfo.ticker == "SPX" and syminfo.type == "index"
+isES = syminfo.root == "ES" and syminfo.type == "futures"
+tickSize = isSPX ? 0.01 : 0.25
+if not (isSPX or isES) or not timeframe.isminutes or timeframe.multiplier != 1
+    runtime.error("Use real SPX index or the matching ES futures contract, standard 1-minute candles.")
+
+// Prior completed ES bar only. Exact timestamp check rejects filled/absent helpers.
+[esVol, esMedian, esClose, esClose5, esClose15, esAtr, esCloseTime] = request.security(esSymbol, "1", [volume[1], ta.median(volume[2], WINDOW), close[1], close[6], close[16], ta.sma(ta.tr(true)[2], WINDOW), time_close[1]], gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_on)
+atr = ta.sma(ta.tr(true)[1], WINDOW)
+levelHigh = ta.highest(high[1], WINDOW)
+levelLow = ta.lowest(low[1], WINDOW)
+evidenceVolume = isSPX ? esVol : volume
+medianVolume = isSPX ? esMedian : ta.median(volume[1], WINDOW)
+rvol = medianVolume > 0 ? evidenceVolume / medianVolume : na
+trend5 = (close - close[5]) / atr
+trend15 = (close - close[15]) / atr
+move = (close-open) / atr
+nearHigh = (levelHigh-close) / atr
+nearLow = (close-levelLow) / atr
+helperOK = not isSPX or (esCloseTime == time and esAtr > 0)
+good = open > 0 and low > 0 and high >= math.max(open, close) and low <= math.min(open,close) and evidenceVolume > 0 and helperOK
+valid = ta.sma(good ? 1.0 : 0.0,31) == 1 and ta.sma(time-time[1] == 60000 ? 1.0 : 0.0,30) == 1 and atr > 0 and levelHigh > levelLow and not na(rvol)
+supportUp = not isSPX or (esClose > esClose5 and esClose >= esClose15)
+supportDown = not isSPX or (esClose < esClose5 and esClose <= esClose15)
+up = valid and 0 <= nearHigh and nearHigh <= PROXIMITY and move > 0 and trend5 > 0 and trend15 >= 0 and rvol >= MIN_RVOL and supportUp
+down = valid and 0 <= nearLow and nearLow <= PROXIMITY and move < 0 and trend5 < 0 and trend15 <= 0 and rvol >= MIN_RVOL and supportDown
+var int phase = 0
+var int side = 0
+var int started = na
+var int cooldownUntil = na
+var int confirmations = 0
+var float activeLevel = na
+var float activeAtr = na
+var float stopLevel = na
+setupUp = false
+setupDown = false
+triggerUp = false
+triggerDown = false
+cancelled = false
+eligible = false
+float entryLow = na
+float entryHigh = na
+float target1 = na
+float target2 = na
+float planStop = na
+if barstate.isconfirmed
+    if not valid and phase != 0
+        phase := 0
+        confirmations := 0
+        cancelled := true
+        cooldownUntil := time_close + COOLDOWN_MINUTES*60000
+    else if valid
+        if phase != 0
+            invalid = side*(close-stopLevel) <= 0
+            expired = time_close-started >= EXPIRY_MINUTES*60000
+            if invalid or expired
+                cancelled := true
+                phase := 0
+                confirmations := 0
+                cooldownUntil := time_close + COOLDOWN_MINUTES*60000
+            else if phase == 1
+                beyond = side*(close-activeLevel) >= BUFFER_ATR*activeAtr
+                confirmations := beyond ? confirmations+1 : 0
+                if confirmations >= CONFIRM_BARS
+                    phase := 2
+                    triggerUp := side == 1
+                    triggerDown := side == -1
+                    entryLow := math.floor((close-0.05*atr)/tickSize)*tickSize
+                    entryHigh := math.ceil((close+0.05*atr)/tickSize)*tickSize
+                    roundedStop = (side == 1 ? math.floor(stopLevel/tickSize) : math.ceil(stopLevel/tickSize))*tickSize
+                    planStop := roundedStop
+                    risk = side == 1 ? entryHigh-roundedStop : roundedStop-entryLow
+                    eligible := rvol >= MIN_RVOL and side*trend5 > 0 and side*trend15 >= 0 and side*move > 0 and risk >= tickSize and risk <= 2*atr and (side == 1 ? roundedStop < entryLow : roundedStop > entryHigh) and (side == 1 ? supportUp : supportDown)
+                    anchor = side == 1 ? entryHigh : entryLow
+                    target1 := anchor + side*risk
+                    target2 := anchor + side*2*risk
+                    eligible := eligible and target1 > 0 and target2 > 0
+        else if (na(cooldownUntil) or time_close >= cooldownUntil) and (up or down)
+            side := up ? 1 : -1
+            phase := 1
+            started := time_close
+            confirmations := 0
+            activeLevel := side == 1 ? levelHigh : levelLow
+            activeAtr := atr
+            stopLevel := close-side*atr
+            setupUp := side == 1
+            setupDown := side == -1
+
+plot(phase != 0 ? activeLevel : na,"Observed level",color=color.orange,style=plot.style_linebr)
+plot(phase != 0 ? stopLevel : na,"Underlying invalidation",color=color.red,style=plot.style_linebr)
+plot(entryLow,"Underlying entry low",color=color.blue,style=plot.style_circles)
+plot(entryHigh,"Underlying entry high",color=color.blue,style=plot.style_circles)
+plot(target1,"Underlying target1",color=color.green,style=plot.style_circles)
+plot(target2,"Underlying target2",color=color.green,style=plot.style_circles)
+plot(planStop,"Rounded plan stop",color=color.red,style=plot.style_circles)
+plotshape(setupUp,"UP setup",shape.circle,location.belowbar,color=color.green,size=size.tiny,text="SET")
+plotshape(setupDown,"DOWN setup",shape.circle,location.abovebar,color=color.red,size=size.tiny,text="SET")
+plotshape(triggerUp,"UP research trigger",shape.labelup,location.belowbar,color=color.green,text="UP")
+plotshape(triggerDown,"DOWN research trigger",shape.labeldown,location.abovebar,color=color.red,text="DOWN")
+plotshape(cancelled,"Invalidation/exit",shape.xcross,location.top,color=color.gray,size=size.tiny)
+// SPX is WATCH only here: Pine has no verified IBKR option chain or broker freshness.
+if eligible and barstate.isrealtime and timenow-time_close >= 0 and timenow-time_close <= 90000
+    labelText = isSPX ? "SPX WATCH; option contract unverified" : "ES experimental underlying plan"
+    alert(RULE_VERSION+" | "+labelText+" | "+(side == 1 ? "UP" : "DOWN")+" | "+str.tostring(entryLow)+".."+str.tostring(entryHigh)+" | stop "+str.tostring(planStop)+" | targets "+str.tostring(target1)+", "+str.tostring(target2),alert.freq_once_per_bar_close)

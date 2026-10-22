@@ -87,3 +87,26 @@ Telegram test outcome2026-10-22: local and GitHub Actions both returned
 `credentials_unavailable`; no successful message receipt exists. Workflow run:
 https://github.com/SuhailAlyami/market-signal-bot-/actions/runs/39718579453
 Do not call this a successful alert test. No credentials were copied or exposed.
+
+## Current Telegram setup (2026-10-22)
+
+`--telegram-signals` independently delivers the same strictly gated ES plans.
+`secure_telegram_setup.py` opens a local masked token form. Credentials are
+encrypted with Windows current-user DPAPI and protected DACLs outside the repo
+at `~/.local/share/suhail-hunter/telegram/credentials.dpapi`. They are reloaded
+without restarting the reader, and never copied into source or the cloud relay.
+Start the bot conversation before saving its chat ID. No credential is entered
+through chat. Existing environment/project config/Credential Manager searches
+found no usable pair; Render connector does not expose an environment-read tool.
+
+With healthy data, exactly one explicitly labelled transport verification is
+attempted after credentials become available. Its durable reservation/receipt is
+`.hunter-state/gateway/telegram-delivery/verification.json`. Even an uncertain
+network outcome is not automatically retried. Telegram API acceptance/message ID
+is evidence of server delivery, not human reading. Until a receipt exists,
+Telegram delivery is unverified. Missing/invalid Telegram credentials do not
+disable GitHub. Both channels have independent per-event dedupe and shared
+freshness/complete-plan gates. Research remains unvalidated; no trades.
+
+The required independent-host target and indicative cost are documented in
+`docs/INDEPENDENT_OPERATION.md`; no paid resource has been provisioned.

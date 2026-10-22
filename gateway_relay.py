@@ -85,7 +85,8 @@ def ingest():
         if len(_seen)>=512: return jsonify(status='too_many_requests'),429
         _seen[nonce]=time.time()
         try:
-            frame=decode_frame(json.loads(raw),now)
+            payload=json.loads(raw)
+            frame=decode_frame(payload,now)
         except (KeyError,ValueError,TypeError,OverflowError):
             return jsonify(status='invalid_or_stale_feed'),422
         if _runtime is None:
@@ -93,6 +94,16 @@ def ingest():
             _runtime=HunterRuntime(directory/'state.json',directory/'shadow.jsonl',symbols=('ES=F',))
         result=_runtime.poll(now,lambda symbol:frame,clock=lambda:datetime.now(timezone.utc))
         _health=result['heartbeat'];_health['transport']='authenticated_gateway_https'
+        primary=payload.get('primary_status')
+        if isinstance(primary,dict):
+            # Only operational metadata is public; no option quotes or credentials.
+            allowed=('primary_symbol','support_symbol','status','blocker','time','index_data_type','sampled_option_count')
+            _health['primary']={k:primary[k] for k in allowed if k in primary}
+            try:
+                age=(now-datetime.fromisoformat(primary['time'])).total_seconds()
+                if not 0<=age<=30:_health['primary']['status']='stale_primary_monitor'
+            except (KeyError,ValueError,TypeError):
+                _health['primary']['status']='unverified_primary_monitor'
         plans=[];blocked=[]
         for event in result['events']:
             plan,reason=complete_plan(event,frame)
@@ -101,7 +112,7 @@ def ingest():
         return jsonify(heartbeat=_health,events=plans,blocked=blocked,orders_enabled=False)
 
 
-def push_frame(frame,contract,url,secret):
+def push_frame(frame,contract,url,secret,primary_status=None):
     # No redirects: never forward authentication signatures to another host.
     if url!='https://market-signal-bot-sw7t.onrender.com/gateway/ingest':
         raise ValueError('unexpected_relay_destination')
@@ -109,6 +120,7 @@ def push_frame(frame,contract,url,secret):
              'contract_id':contract.conId,'expiry':contract.lastTradeDateOrContractMonth},
              'metadata':dict(frame.attrs),'bars':[[int(index.timestamp()),*[float(v) for v in row]]
               for index,row in frame.tail(180).iterrows()]}
+    if primary_status is not None:payload['primary_status']=primary_status
     raw=json.dumps(payload,allow_nan=False,separators=(',',':')).encode()
     timestamp=str(time.time());nonce=secrets.token_hex(16)
     headers={'Content-Type':'application/json','X-Gateway-Time':timestamp,'X-Gateway-Nonce':nonce,

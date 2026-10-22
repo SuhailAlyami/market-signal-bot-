@@ -28,10 +28,12 @@ class Probe(DataClient):
     def tickPrice(self, reqId, tickType, price, attrib):
         if price > 0:
             self.quotes.setdefault(reqId, []).append({'type': tickType, 'price': price, 'received_at': stamp()})
+            self.quotes[reqId]=self.quotes[reqId][-150:]
 
     def tickString(self, reqId, tickType, value):
         if tickType in (45, 88):
             self.quotes.setdefault(reqId, []).append({'type': tickType, 'value': value, 'received_at': stamp()})
+            self.quotes[reqId]=self.quotes[reqId][-150:]
 
     def securityDefinitionOptionParameter(self, reqId, exchange, underlyingConId, tradingClass, multiplier, expirations, strikes):
         if exchange == 'CBOE':
