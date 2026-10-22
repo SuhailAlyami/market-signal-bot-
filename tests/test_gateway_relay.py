@@ -79,3 +79,14 @@ class RelayTests(unittest.TestCase):
             self.assertEqual(self.post().status_code,503)
         with patch.object(relay,'_health',{'status':'ok','timestamp':'2020-01-01T00:00:00+00:00'}):
             self.assertEqual(relay.health()['status'],'gateway_relay_stale')
+
+    def test_primary_health_exposes_status_without_book_or_secrets(self):
+        self.payload['primary_status']={'primary_symbol':'SPX','support_symbol':'ES','status':'degraded',
+            'time':datetime.now(timezone.utc).isoformat(),'blocker':'spx_index_stale',
+            'option_quotes':[{'bid':1,'ask':2}],'secret':'fixture-not-a-secret'}
+        runtime=Mock();runtime.poll.return_value={'heartbeat':{'status':'ok','timestamp':datetime.now(timezone.utc).isoformat()},'events':[]}
+        with patch.object(relay,'_runtime',runtime):
+            response=self.post()
+        primary=response.json['heartbeat']['primary']
+        self.assertEqual(primary['primary_symbol'],'SPX')
+        self.assertNotIn('option_quotes',primary);self.assertNotIn('secret',primary)

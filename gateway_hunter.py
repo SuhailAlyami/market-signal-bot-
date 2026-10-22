@@ -218,10 +218,17 @@ def send_test(directory, evidence):
         return {'status': 'delivery_failed', 'error_type': type(exc).__name__, 'time': stamp()}
 
 
-def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, github_signals=False, relay_config=None,telegram_signals=False):
+def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, github_signals=False, relay_config=None,telegram_signals=False,spx_primary=False):
     directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
     runtime = HunterRuntime(directory/'state.json', directory/'shadow.jsonl', symbols=('ES=F',))
     client = None; started = time.monotonic(); retry_at = 0; failures = 0
+    primary_stop=threading.Event()
+    if spx_primary:
+        from spx_primary import run as run_spx_primary
+        def es_support():
+            if client is None:raise RuntimeError('es_support_unavailable')
+            return client.frame('ES')
+        threading.Thread(target=run_spx_primary,args=(directory,es_support,primary_stop),daemon=True,name='spx-primary').start()
     last_status = None; injected = False; session_count = 0; alert_attempted = False
     def journal(item):
         with (directory/'connection.jsonl').open('a', encoding='utf-8') as stream:
@@ -254,7 +261,14 @@ def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, gith
             if relay_config and current:
                 try:
                     from gateway_relay import push_frame
-                    relay=push_frame(current.frame('ES'),current.contract,relay_config['url'],relay_config['secret'])
+                    primary_status=None
+                    primary_path=directory/'spx'/'status.json'
+                    if spx_primary and primary_path.exists():
+                        raw_status=json.loads(primary_path.read_text(encoding='utf-8'))
+                        fields=('primary_symbol','support_symbol','status','blocker','time','index_data_type')
+                        primary_status={k:raw_status[k] for k in fields if k in raw_status}
+                        primary_status['sampled_option_count']=len(raw_status.get('sampled_options',[]))
+                    relay=push_frame(current.frame('ES'),current.contract,relay_config['url'],relay_config['secret'],primary_status=primary_status)
                     delivery_heartbeat=relay['heartbeat']
                     if github_signals or telegram_signals: outgoing=relay['events']
                     journal({'event':'relay','status':relay['heartbeat']['status'],
@@ -313,6 +327,7 @@ def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, gith
                     failures += 1; retry_at = time.monotonic()+min(60,2**min(failures,6))
             time.sleep(5)
     finally:
+        primary_stop.set()
         if client:
             client.disconnect()
         journal({'status': 'monitor_stopped'})
@@ -331,6 +346,7 @@ if __name__ == '__main__':
     parser.add_argument('--reconnect-test-after', type=int, default=0)
     parser.add_argument('--github-signals',action='store_true',help='Explicit opt-in to complete experimental ES rule alerts')
     parser.add_argument('--telegram-signals',action='store_true',help='Independent Telegram alerts using private local credentials')
+    parser.add_argument('--spx-primary',action='store_true',help='Native SPX primary/options monitor; ES is auxiliary')
     parser.add_argument('--relay-config',type=Path,help='Private local generated relay configuration outside repo')
     args = parser.parse_args()
     relay_config=None
@@ -339,4 +355,4 @@ if __name__ == '__main__':
         if not _oauth_path_is_private(args.relay_config): raise PermissionError('Relay config must be private')
         relay_config=json.loads(args.relay_config.read_text(encoding='utf-8'))
     with reader_lock(args.state_dir):
-        monitor(args.state_dir, args.seconds, args.test_alert, args.reconnect_test_after,args.github_signals,relay_config,args.telegram_signals)
+        monitor(args.state_dir, args.seconds, args.test_alert, args.reconnect_test_after,args.github_signals,relay_config,args.telegram_signals,args.spx_primary)

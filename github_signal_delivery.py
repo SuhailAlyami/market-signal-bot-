@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import subprocess
 import urllib.request
+from zoneinfo import ZoneInfo
 
 
 def recommendation(event, heartbeat, now):
@@ -20,15 +21,16 @@ def recommendation(event, heartbeat, now):
         if heartbeat.get('status') != 'ok': return None, 'unhealthy_feed'
         if event.get('signal_status') != 'COMPLETE' or event.get('notify_eligible') is not True:
             return None, 'conditions_not_complete'
-        if event.get('state') != 'TRIGGER' or event.get('symbol') not in ('ES','ES=F'):
+        if event.get('state') != 'TRIGGER' or event.get('symbol') not in ('ES','ES=F','SPX'):
             return None, 'not_confirmed_es'
+        symbol='SPX' if event['symbol']=='SPX' else 'ES'
         status = heartbeat['symbols'][event['symbol']]
         metadata = status['feed_metadata']
         if (status['status'] != 'ok' or metadata.get('source') != 'IBKR Gateway TWS API'
                 or metadata.get('market_data_type') != 1 or not status.get('live_feed_verified')):
             return None, 'realtime_unverified'
         if not all(0 <= age(t) <= limit for t,limit in (
-                (heartbeat['timestamp'],30),(metadata['last_trade_time'],60),
+                (heartbeat['timestamp'],30),(metadata['last_trade_time'],10 if symbol=='SPX' else 60),
                 (event['detected_at'],60),(event['bar_end'],90))):
             return None, 'stale_or_future_data'
         current = float(metadata['last_price'])
@@ -44,17 +46,32 @@ def recommendation(event, heartbeat, now):
             return None, 'inconsistent_or_missing_conditions'
         if not math.isfinite(current) or not zone[0] <= current <= zone[1]:
             return None, 'price_outside_entry_zone'
-        identity='|'.join(('ES',direction,event['bar_end'],event.get('rule_version','v1')))
+        contract_text=''
+        if symbol=='SPX':
+            option=event['option_contract']
+            bid,ask=float(option['bid']),float(option['ask'])
+            if (option['symbol']!='SPX' or option['market_data_type']!=1 or not option['live_verified']
+                or option['right']!=('C' if direction=='UP' else 'P') or int(option['contract_id'])<=0
+                or option['expiry']!=now.astimezone(ZoneInfo('America/New_York')).date().isoformat()
+                or not 0<=age(option['quote_time'])<=10 or not 0<bid<=ask
+                or not all(math.isfinite(x) for x in (bid,ask,float(option['strike'])))
+                or abs(float(option['strike'])/current-1)>.01 or (ask-bid)/((ask+bid)/2)>.15):
+                return None,'spx_option_unverified_or_stale'
+            contract_text=(f"العقد المرصود: SPX {option['expiry']} {option['right']} {option['strike']}\n"
+                f"Bid: {bid} | Ask: {ask} | ConId: {option['contract_id']}\n"
+                f"وقت استلام عرض العقد: {option['quote_time']} | المصدر: {option['source']}\n"
+                'مستويات الدخول والوقف والأهداف أعلاه تخص مؤشر SPX؛ ليست أسعار خروج لعقد الخيار.\n')
+        identity='|'.join((symbol,direction,event['bar_end'],event.get('rule_version','v1')))
         key = hashlib.sha256(identity.encode()).hexdigest()[:24]
-        return {'key':key,'title':f"[Suhail ES {key}] {'UP' if direction=='UP' else 'DOWN'}",
-            'body': ('رصد تجريبي بقواعد محددة؛ الأداء خارج العينة غير مثبت.\n'
-                'الأصل: ES (عقد مستقبلي؛ ليست توصية على خيارات SPX)\n'
+        return {'key':key,'title':f"[Suhail {symbol} {key}] {'UP' if direction=='UP' else 'DOWN'}",
+            'body': ('رصد تجريبي بقواعد محددة؛ الأداء خارج العينة غير مثبت.\n' +
+                ('الأصل: SPX | تأكيد مساعد من ES، دون تحويل أسعاره\n' if symbol=='SPX' else 'الأصل: ES (عقد مستقبلي؛ ليست توصية على خيارات SPX)\n') +
                 f"الاتجاه: {direction}\nسبب الإشارة: {event['reason']}\n"
                 f"منطقة الدخول: {zone}\nوقف الخسارة: {stop}\nالأهداف: {targets}\n"
                 f"وقت الإشارة UTC: {event['detected_at']}\nالشمعة UTC: {event['bar_end']}\n"
-                f"مصدر البيانات: {metadata['source']} — REALTIME\n"
-                'تنبيه فقط؛ لا تنفيذ صفقات.\n'
-                f"<!-- suhail-es-event:{key} -->")}, None
+                f"مصدر البيانات: {metadata['source']} — REALTIME\n" +
+                contract_text+'تنبيه فقط؛ لا تنفيذ صفقات.\n'
+                f"<!-- suhail-event:{key} -->")}, None
     except (KeyError, TypeError, ValueError, OverflowError):
         return None, 'incomplete_conditions'
 

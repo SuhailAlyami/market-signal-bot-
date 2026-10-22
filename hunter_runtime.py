@@ -16,12 +16,13 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pandas as pd
+from strategy_rules import CONFIRM_BARS,BUFFER_ATR,EXPIRY_MINUTES,COOLDOWN_MINUTES
 
 UTC = timezone.utc
 NY = ZoneInfo("America/New_York")
 BAR = timedelta(minutes=1)
 MAX_AGE = timedelta(minutes=2)
-SOURCE = "IBKR native futures; realtime status validated by data adapter"
+SOURCE = "IBKR native market data; realtime status validated by data adapter"
 ARABIC_STATES = {"SETUP": "استعداد", "TRIGGER": "دخول مشروط", "INVALIDATION": "إلغاء", "EXIT": "خروج"}
 
 
@@ -75,7 +76,9 @@ def validate_completed_bars(frame: pd.DataFrame, now: datetime, min_bars: int = 
         return reject("naive_or_invalid_timestamps")
     if frame.index.has_duplicates:
         return reject("duplicate_timestamps")
-    required = ["Open", "High", "Low", "Close", "Volume"]
+    index_prices = (frame.attrs.get('symbol')=='SPX' and frame.attrs.get('security_type')=='IND'
+                    and frame.attrs.get('source')=='IBKR Gateway TWS API')
+    required = ["Open", "High", "Low", "Close"] + ([] if index_prices else ["Volume"])
     if any(col not in frame for col in required):
         return reject("missing_ohlcv")
     data = frame.sort_index().copy()
@@ -102,7 +105,7 @@ def validate_completed_bars(frame: pd.DataFrame, now: datetime, min_bars: int = 
         return reject("invalid_ohlcv")
     if not all(math.isfinite(float(value)) for value in values.to_numpy().flat):
         return reject("nonfinite_ohlcv")
-    if (values.Volume <= 0).any():
+    if not index_prices and (values.Volume <= 0).any():
         return reject("zero_or_negative_volume")
     if (values[["Open", "High", "Low", "Close"]] <= 0).any().any():
         return reject("nonpositive_price")
@@ -115,18 +118,8 @@ def validate_completed_bars(frame: pd.DataFrame, now: datetime, min_bars: int = 
 
 def experimental_candidate(bars: pd.DataFrame, index: int):
     """Use precisely the causal research rule, without implying a verified edge."""
-    from hunter_research import DEFAULT_PARAMS, causal_features, candidate_signal
-
-    features = causal_features(bars, index)
-    if features is None:
-        return None
-    direction = candidate_signal(features, "pre_level", DEFAULT_PARAMS)
-    if not direction:
-        return None
-    price, atr = float(features["close"]), float(features["atr"])
-    return {"direction": int(direction), "price": price, "atr": atr,
-            "level": float(features["level_high"] if direction > 0 else features["level_low"]),
-            "invalidation": price - direction * atr, "rvol": float(features["rvol"])}
+    from strategy_rules import candidate
+    return candidate(bars,index)
 
 
 class HunterRuntime:
@@ -262,7 +255,7 @@ class HunterRuntime:
         active = state.pop("active", None)
         if not active:
             return []
-        state["cooldown_until"] = (now + timedelta(minutes=5)).isoformat()
+        state["cooldown_until"] = (now + timedelta(minutes=COOLDOWN_MINUTES)).isoformat()
         # Missing prices never create synthetic fills, terminal returns or P&L.
         return [self._event(symbol, "EXIT" if active["phase"] == "TRIGGER" else "INVALIDATION",
                             active, now, status.get("last_completed_bar") or state.get("last_bar_end"),
@@ -280,17 +273,17 @@ class HunterRuntime:
             elapsed = datetime.fromisoformat(end) - datetime.fromisoformat(active["started_at"])
             direction = active["direction"]
             invalid = direction * (price - active["invalidation"]) <= 0
-            if invalid or elapsed >= timedelta(minutes=10):
+            if invalid or elapsed >= timedelta(minutes=EXPIRY_MINUTES):
                 phase = "EXIT" if active["phase"] == "TRIGGER" else "INVALIDATION"
                 events.append(self._event(symbol, phase, active, now, end, price,
                                           "invalidation_crossed" if invalid else "scenario_expired"))
                 state.pop("active")
-                state["cooldown_until"] = (datetime.fromisoformat(end) + timedelta(minutes=5)).isoformat()
+                state["cooldown_until"] = (datetime.fromisoformat(end) + timedelta(minutes=COOLDOWN_MINUTES)).isoformat()
             elif active["phase"] == "SETUP":
                 # Two distinct closes beyond a 0.1 ATR buffer avoid single-tick churn.
-                beyond = direction * (price - active["level"]) >= 0.1 * active["atr"]
+                beyond = direction * (price - active["level"]) >= BUFFER_ATR * active["atr"]
                 active["confirmation_bars"] = active.get("confirmation_bars", 0) + 1 if beyond else 0
-                if active["confirmation_bars"] >= 2:
+                if active["confirmation_bars"] >= CONFIRM_BARS:
                     active["phase"] = "TRIGGER"
                     events.append(self._event(symbol, "TRIGGER", active, now, end, price, "two_buffered_closes"))
         else:
