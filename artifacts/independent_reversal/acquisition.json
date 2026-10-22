@@ -1,0 +1,170 @@
+{
+  "started_at": "2026-10-22T11:03:56.648263+00:00",
+  "protocol_commit": "3438bc76361b07554e5ccea26a78cfad2364c1ab",
+  "orders_enabled": false,
+  "account_requests": false,
+  "paid_requests": false,
+  "requested_dates": [
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15"
+  ],
+  "source": "IBKR Gateway native historical TRADES; not a live quote test",
+  "requests": [
+    {
+      "date": "2026-09-01",
+      "request_id": 301,
+      "end_utc": "20260902-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-02",
+      "request_id": 302,
+      "end_utc": "20260903-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-03",
+      "request_id": 303,
+      "end_utc": "20260904-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-04",
+      "request_id": 304,
+      "end_utc": "20260905-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-08",
+      "request_id": 305,
+      "end_utc": "20260909-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-09",
+      "request_id": 306,
+      "end_utc": "20260910-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-10",
+      "request_id": 307,
+      "end_utc": "20260911-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-11",
+      "request_id": 308,
+      "end_utc": "20260912-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-14",
+      "request_id": 309,
+      "end_utc": "20260915-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    },
+    {
+      "date": "2026-09-15",
+      "request_id": 310,
+      "end_utc": "20260916-00:00:00",
+      "duration": "1 D",
+      "bar_size": "1 min",
+      "useRTH": 1,
+      "errors": [],
+      "rows": 450
+    }
+  ],
+  "contract": {
+    "conId": 649180671,
+    "localSymbol": "ESU6",
+    "lastTradeDateOrContractMonth": "20260918",
+    "exchange": "CME",
+    "currency": "USD"
+  },
+  "status": "acquired",
+  "errors": [
+    {
+      "time": "2026-10-22T11:03:56.661263+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfarm.nj"
+    },
+    {
+      "time": "2026-10-22T11:03:56.661263+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfuture"
+    },
+    {
+      "time": "2026-10-22T11:03:56.661263+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usopt"
+    },
+    {
+      "time": "2026-10-22T11:03:56.661263+00:00",
+      "request_id": -1,
+      "code": 2104,
+      "message": "Market data farm connection is OK:usfarm"
+    },
+    {
+      "time": "2026-10-22T11:03:56.661263+00:00",
+      "request_id": -1,
+      "code": 2106,
+      "message": "HMDS data farm connection is OK:ushmds"
+    },
+    {
+      "time": "2026-10-22T11:03:56.661263+00:00",
+      "request_id": -1,
+      "code": 2158,
+      "message": "Sec-def data farm connection is OK:secdefnj"
+    }
+  ],
+  "input_sha256": "bb2f5c0d7d4e1da4e2f68d3c4717515d5c9a6f760d6cc61b9e566bf2d21bb0e4",
+  "finished_at": "2026-10-22T11:04:05.819994+00:00"
+}
