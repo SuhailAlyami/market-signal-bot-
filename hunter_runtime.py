@@ -21,7 +21,7 @@ UTC = timezone.utc
 NY = ZoneInfo("America/New_York")
 BAR = timedelta(minutes=1)
 MAX_AGE = timedelta(minutes=2)
-SOURCE = "IBKR MCP native futures; realtime status validated by data adapter"
+SOURCE = "IBKR native futures; realtime status validated by data adapter"
 ARABIC_STATES = {"SETUP": "استعداد", "TRIGGER": "دخول مشروط", "INVALIDATION": "إلغاء", "EXIT": "خروج"}
 
 
@@ -345,6 +345,8 @@ class HunterRuntime:
                         now = receipt_time()
                         data, status = validate_completed_bars(frame, now)
                         status["feed_metadata"] = dict(frame.attrs)
+                        status["source"] = frame.attrs.get("source", SOURCE)
+                        status["live_feed_verified"] = bool(data is not None and frame.attrs.get("live_feed_verified"))
                         try:
                             market_open_at_receipt = futures_active(now)
                         except Exception as exc:

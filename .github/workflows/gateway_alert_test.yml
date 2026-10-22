@@ -1,0 +1,41 @@
+name: Gateway Hunter explicit Telegram TEST
+on:
+  push:
+    branches: [codex/fix-local-startup-20261021]
+    paths: ['.github/workflows/gateway_alert_test.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  telegram-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt -r requirements-gateway.txt
+      - name: Send one explicitly labelled transport TEST from captured Gateway evidence
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from gateway_hunter import send_test
+          evidence=json.loads(Path('docs/gateway-validation.json').read_text())
+          target=Path('.hunter-state/telegram-test');target.mkdir(parents=True,exist_ok=True)
+          receipt=send_test(target,evidence)
+          print(json.dumps(receipt))
+          if receipt['status']!='telegram_api_accepted':
+              raise SystemExit('Telegram delivery not established; see safe status above')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gateway-telegram-test-receipt
+          path: .hunter-state/telegram-test/telegram-test.json
+          if-no-files-found: ignore
