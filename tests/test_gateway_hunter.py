@@ -20,7 +20,7 @@ class GatewayTests(unittest.TestCase):
         c = DataClient()
         c.isConnected = lambda: True
         c.kind = 1; c.trade_time = 1000; c.received = 1000
-        c.rows = {960: [10, 12, 9, 11, 50]}
+        c.rows = {900: [10, 12, 9, 11, 50]}
         return c
 
     def test_realtime_fresh_frame(self):
@@ -42,6 +42,20 @@ class GatewayTests(unittest.TestCase):
         c = self.client(); c.error(-1, 1100, 'Connection lost')
         with self.assertRaises(RuntimeError): c.frame('ES', 1001)
         self.assertEqual(c.errors[0]['code'], 1100)
+
+    def test_fresh_quotes_cannot_hide_stalled_bars(self):
+        c = self.client(); c.rows = {780: [10,12,9,11,50]}
+        with self.assertRaisesRegex(RuntimeError,'stale_completed_bars'):
+            c.frame('ES',1002)
+        # A fresh historical backfill permits the existing reconnect path to recover.
+        c.rows[900]=[10,12,9,11,50]
+        self.assertTrue(c.frame('ES',1002).attrs['live_feed_verified'])
+
+    def test_historical_subscription_bust_requires_reconnect(self):
+        c = self.client(); c.error(301,10225,'Historical subscription reset required')
+        self.assertTrue(c.lost)
+        with self.assertRaisesRegex(RuntimeError,'gateway_disconnected'):
+            c.frame('ES',1002)
 
     def test_orders_always_blocked(self):
         with self.assertRaises(PermissionError): self.client().placeOrder(1, None, None)

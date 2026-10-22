@@ -82,7 +82,7 @@ class DataClient(EWrapper, EClient):
             self.errors.append({'time': stamp(), 'request_id': reqId, 'code': errorCode,
                                 'message': errorString})
             self.errors = self.errors[-30:]
-            if errorCode in (1100, 1101, 1102, 1300, 502, 504):
+            if errorCode in (1100, 1101, 1102, 1300, 502, 504, 10225):
                 self.lost = True
 
     def contractDetails(self, reqId, details):
@@ -136,6 +136,11 @@ class DataClient(EWrapper, EClient):
             raise RuntimeError('stale_quote')
         with self.lock:
             keys = sorted(self.rows)
+            completed = [key for key in keys if key+60 <= now]
+            # Fresh quotes do not prove that the independent bar subscription
+            # is advancing. Rebuild the session rather than remain stuck forever.
+            if not completed or now-(completed[-1]+60)>90:
+                raise RuntimeError('stale_completed_bars')
             frame = pd.DataFrame([self.rows[k] for k in keys],
                 index=pd.to_datetime(keys, unit='s', utc=True),
                 columns=['Open', 'High', 'Low', 'Close', 'Volume'])
