@@ -1,0 +1,54 @@
+{
+  "observed_at": "2026-10-23T15:18:30.457595+00:00",
+  "recorder_pid": 13136,
+  "status": "recording",
+  "callback_counts": {
+    "start": 1,
+    "connect_attempt": 1,
+    "api_error": 6,
+    "subscriptions": 1,
+    "market_data_type": 1,
+    "quote_callback": 566,
+    "historical_subscription": 1,
+    "historical_backfill": 121,
+    "initial_history_end": 1,
+    "historical_update": 27,
+    "first_completed_observation": 2
+  },
+  "api_error_codes_only": {
+    "2104": 4,
+    "2106": 1,
+    "2158": 1
+  },
+  "market_data_types": [
+    1
+  ],
+  "completed_observations": [
+    {
+      "received_at": "2026-10-23T15:17:00.227405+00:00",
+      "provider_bar_end": 1792768620,
+      "completion_evidence": "live_update_received_after_bar_end",
+      "local_availability_lag_seconds": 0.22740507125854492,
+      "parallel_quote_mode": 1,
+      "bar_final_revision_verified": false
+    },
+    {
+      "received_at": "2026-10-23T15:18:00.415265+00:00",
+      "provider_bar_end": 1792768680,
+      "completion_evidence": "live_update_received_after_bar_end",
+      "local_availability_lag_seconds": 0.4152650833129883,
+      "parallel_quote_mode": 1,
+      "bar_final_revision_verified": false
+    }
+  ],
+  "full_prospective_trace": false,
+  "started_before_open": false,
+  "next_possible_full_session": {
+    "day": "2026-10-26",
+    "open_riyadh": "2026-10-26T16:30:00+03:00",
+    "close_riyadh": "2026-10-26T23:00:00+03:00"
+  },
+  "orders_enabled": false,
+  "notifications_enabled": false,
+  "predictive_quality": "NOT_READY"
+}

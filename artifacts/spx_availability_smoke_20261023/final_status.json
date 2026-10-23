@@ -1,0 +1,14 @@
+{
+  "observed_at": "2026-10-23T15:23:19.413993+00:00",
+  "observer_status": "recording",
+  "observer_pid": 13136,
+  "completed_minutes_observed": 7,
+  "full_prospective_trace": false,
+  "original_reader_status": "ok",
+  "original_provider_time": "2026-10-23T15:23:17+00:00",
+  "original_provider_age_seconds": 2.413993,
+  "market_data_type": 1,
+  "research_quality": "NOT_READY",
+  "next_input": "full prospective availability diagnostic session Oct26 if uninterrupted",
+  "pr": "https://github.com/SuhailAlyami/market-signal-bot-/pull/45"
+}
