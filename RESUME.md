@@ -271,3 +271,34 @@ Protocolf88f5d6 and implementationf928b4c committed before Aug11-Aug14 outcomes.
 AllJuly20-Aug14 now consumed development; previous Aug11-Aug14 holdout became this protocol validation explicitly. Aug17-Aug20 still UNACQUIRED/uninspected because validation failed. More native historical data remains available at existing cost; do not claim missing entitlement. AionUI still requires official browser sign-in; opened ALONE after computation, thenclosed; Antigravity remainedclosed. Live original reader continues independently with saved flags.
 
 NEXT SCHEDULED CYCLE: one small protocol-only step. Read these reports and saved consumed TRAINING timing diagnostic, not raw market files or any new outcomes. Create only a NEW docs/SPX_NEXT_HYPOTHESIS_20261023.md (or a new dated doc if it already exists), proposing exactly one defensible structurally different native-SPX hypothesis with causal availability, fixed rules, bounded budget and new chronological split, or explain the exact missing observation if no candidate is justified. No acquisition, parameter search, candidate evaluation, repeated tests/Gateway checks, production/auth/task edits or alerts in this next cycle. Existing failed EMA/compression/inside-pressure/slope/consensus variants are not new independent hypotheses. Allknown20days development-only. Return exact new-doc checkpoint manifest. Host guard commits outside sandbox; preserve model budget.
+
+
+## 2026-10-23 - bounded protocol-only missing-observation checkpoint
+
+Read the latest frozen protocols, both negative July/August reports and saved
+consumed TRAINING timing diagnostic only. New decision is documented in
+`docs/SPX_NEXT_HYPOTHESIS_20261023.md`: no defensible structurally different
+candidate is established by this evidence. Do not retune the failed families.
+No raw files, new outcomes, acquisition, Gateway checks or repeated tests read/run.
+The scoped protocol-only instruction takes precedence over generic test guidance.
+
+NOT_READY remains; runner WAIT_DATA. Exact missing input: one previously
+uninspected complete native-SPX session with original minute bars AND a
+prospectively retained per-bar first-availability/receipt trace with source mode
+and separate provider timestamps. Historical retrieval receipts alone are not
+live bar latency. Use an already-retained complete Oct23 trace if available;
+otherwise the next prospectively complete session. The new document gives a
+bounded one-session historical collector command, explicitly insufficient by
+itself for the live trace. Do not recollect an existing capture. No claim that
+current Gateway needs recovery; needs_gateway=false. All July20-Aug14 remain
+consumed development; Aug17-Aug20 remain unacquired/uninspected with no new role.
+
+Next: wait for changed raw input and aligned availability trace, reserve that
+session as diagnostic development, and check coverage/timestamp availability
+before proposing new causal signal rules. No candidate evaluation is authorized
+by this document. Alerts remain off. Document/UTF-8 integrity checked only;
+no market-quality improvement or GitHub save is claimed. Trusted host runner
+handles the exact two-file manifest outside protected Git metadata.
+
+??????? ???????: ????? ????? SPX ????? ????? ?? ????? ????? ?????? ???? ????????
+?? ???? ?????? ??? ??????? ??? ????? ???? ??????. ?? ???? ????? ?????? ???? Gateway.
