@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import shutil
 import subprocess
 import time
@@ -126,12 +126,53 @@ def git(root, *args):
                           env={**os.environ, "GIT_TERMINAL_PROMPT": "0"})
 
 
+
+def commit_checkpoint(root, files):
+    """Host-side explicit research checkpoint; model keeps workspace sandbox."""
+    status = git(root, "status", "--porcelain=v1", "-z", "--untracked-files=all")
+    if status.returncode:
+        raise RuntimeError("checkpoint_status_failed")
+    changed = set()
+    for entry in status.stdout.split("\0"):
+        if not entry:
+            continue
+        if any(letter in entry[:2] for letter in "RCD"):
+            raise RuntimeError("checkpoint_rename_or_delete_forbidden")
+        changed.add(entry[3:])
+    if not changed:
+        return
+    if not isinstance(files, list) or not files or len(files) > 20 or any(not isinstance(x, str) for x in files):
+        raise RuntimeError("explicit_checkpoint_manifest_required")
+    if len(set(files)) != len(files) or set(files) != changed:
+        raise RuntimeError("checkpoint_manifest_mismatch")
+    for name in files:
+        path = PurePosixPath(name)
+        if path.is_absolute() or ".." in path.parts or "\\" in name or ":" in name or any(part.startswith(".") for part in path.parts):
+            raise RuntimeError("checkpoint_path_forbidden")
+        actual = root / name
+        if not actual.is_file() or actual.is_symlink() or not actual.resolve().is_relative_to(root.resolve()):
+            raise RuntimeError("checkpoint_path_forbidden")
+        if name == "RESUME.md":
+            continue
+        tracked = git(root, "ls-files", "--error-unmatch", "--", name).returncode == 0
+        allowed = ((name.startswith("docs/") and path.suffix == ".md") or
+                   (name.startswith("artifacts/") and path.suffix in {".json", ".csv", ".md"}) or
+                   (path.parent == PurePosixPath(".") and path.name.startswith("research_spx_") and path.suffix == ".py") or
+                   (name.startswith("tests/test_spx_") and path.suffix == ".py"))
+        if tracked or not allowed or path.name.lower() in {"raw.json", "private.log", "agents.md"} or path.name.lower().endswith(".raw.json"):
+            raise RuntimeError("checkpoint_file_not_research")
+    if git(root, "add", "--", *files).returncode:
+        raise RuntimeError("checkpoint_stage_failed")
+    if git(root, "commit", "-m", "Save bounded SPX research cycle checkpoint").returncode:
+        raise RuntimeError("checkpoint_commit_failed")
+
+
 def fingerprint(root):
     """Only market inputs wake WAIT_DATA; code/checkpoint churn must not do so."""
     digest = hashlib.sha256()
     for folder in (root / "artifacts", root / ".hunter-state"):
         if folder.exists():
-            for path in sorted(folder.rglob("raw.json")):
+            for path in sorted(set(folder.rglob("raw.json")) | set(folder.rglob("*.raw.json"))):
                 digest.update(str(path.relative_to(root)).encode())
                 digest.update(path.read_bytes())
     return digest.hexdigest()
@@ -215,8 +256,9 @@ def tick(root, state_dir, executable=None):
     save(schema, {"type": "object", "properties": {
         "status": {"type": "string", "enum": sorted(STATUSES)},
         "summary": {"type": "string"}, "next_step": {"type": "string"},
+        "checkpoint_files": {"type": "array", "items": {"type": "string"}, "maxItems": 20},
         "needs_gateway": {"type": "boolean"}},
-        "required": ["status", "summary", "next_step", "needs_gateway"], "additionalProperties": False})
+        "required": ["status", "summary", "next_step", "checkpoint_files", "needs_gateway"], "additionalProperties": False})
     prompt = (root / "tools" / "SPX_AGENT_TASK.md").read_text(encoding="utf-8")
     prompt += "\nPrevious runner checkpoint (not evidence of market quality):\n" + json.dumps(state, ensure_ascii=False)
     try:
@@ -228,10 +270,11 @@ def tick(root, state_dir, executable=None):
             raise RuntimeError("invalid_cycle_report")
         if git(root, "branch", "--show-current").stdout.strip() != BRANCH:
             raise RuntimeError("branch_changed")
-        if git(root, "status", "--porcelain").stdout.strip():
-            raise RuntimeError("checkpoint_not_committed")
+        commit_checkpoint(root, result.get("checkpoint_files", []))
         pushed = git(root, "push", "-u", "origin", BRANCH).returncode == 0
-        state.update(result, needs_gateway=result.get("needs_gateway", False), reason="cycle_complete", push_pending=not pushed)
+        state.update(result, needs_gateway=result.get("needs_gateway", False),
+                     reason="cycle_complete", push_pending=not pushed,
+                     checkpoint_commit=git(root, "rev-parse", "HEAD").stdout.strip())
     except (RuntimeError, ValueError, OSError, subprocess.SubprocessError) as exc:
         # No provider messages, auth data or model logs in public checkpoint.
         state.update(status="BLOCKED", needs_gateway=False, reason=type(exc).__name__, next_step="Inspect local private log; recover checkpoint, then use --resume.")
