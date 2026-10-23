@@ -1,6 +1,7 @@
 //@version=6
 indicator("Suhail Hunter v2 | SPX primary / ES support", overlay=true, max_labels_count=100)
-// PYTHON_RULE_SHA256: d8691d6072bd1529a5eb7e78301ea4385bdcc47c4ed221353fd147e8a04f7aa6
+// PYTHON_RULE_SHA256: dd0f3976bce191e3adbc97abd18eece23d6e8d475b2fd4bafc13b535e340411b
+// Legacy ES-supported comparison; not a port of spx-price-watch-v1.
 // Rule levels are the prior20 completed bars. No option contract/quote is invented.
 const string RULE_VERSION = "hunter-rolling20-v2"
 const int WINDOW = 20
@@ -144,3 +145,4 @@ plotshape(cancelled,"Invalidation/exit",shape.xcross,location.top,color=color.gr
 if eligible and barstate.isrealtime and timenow-time_close >= 0 and timenow-time_close <= 90000
     labelText = isSPX ? "SPX WATCH; option contract unverified" : "ES experimental underlying plan"
     alert(RULE_VERSION+" | "+labelText+" | "+(side == 1 ? "UP" : "DOWN")+" | "+str.tostring(entryLow)+".."+str.tostring(entryHigh)+" | stop "+str.tostring(planStop)+" | targets "+str.tostring(target1)+", "+str.tostring(target2),alert.freq_once_per_bar_close)
+
