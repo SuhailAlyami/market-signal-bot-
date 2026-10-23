@@ -250,3 +250,64 @@ AionUI2.2.2 blocks at official browser sign-in; its two assignments are ready bu
 ### Final new operational evidence - Gateway login required
 
 Current feed is NOT running: after the observed app memory pressure no Gateway/reader/listener4001 remained. Fresh crash hs_err_pid11388.log header proves native Java allocation failure1070808bytes at14:01:04UTC/17:01Riyadh. Exact individual cause not isolated. Closed only newly opened Antigravity/AionUI trees, then launched existing GatewayPID1380 unchanged. Native window is now login form, password empty, API not yet listening. User must log in inside Gateway and approve IBKR2FA if requested. Do not claim the old390/390 history or Ready/LastTaskResult0 establishes current live data. Reader is stopped pending login; use its saved launch/config afterward and confirm actual data, without repeat test alerts. AionUI separately requires official browser sign-in. Full details in SPX_LOCAL_APPS_EXECUTION_20261023.md.
+
+
+## 2026-10-23 - reader recovery and fixed unseen cohort before acquisition
+
+Gateway logged in/listening4001. Restored saved original gateway_hunter flags without tests or source changes, launcher5728/child7888. Actual SPX type1 source trade14:34:38UTC arrived14:34:38.126587UTC, heartbeatok, options/detection success NOT inferred. First proof saved privately. Imported reviewed local-app checkpoint25973cf by clean fast-forward, preserving original worktree. New fixed cohort docs/SPX_UNTOUCHED_COHORT_20261023.md is committed BEFORE acquisition/outcomes. July20-Aug14 remain untouched;12/4/4split, original frozen rules/gates. No paid services/trades/experimental activation. Temporary host-owned STOP coordinates research only; live reader unaffected.
+
+
+## Frozen cohort negative result and one next hypothesis before measurement
+
+20/20native SPX sessions July20-Aug14 complete,7800minutes. Frozen evaluator selectedpullback_release; Aug5-Aug10 validation failed all gates,early2/95,precision25.61percent,medianlead-1min,false15.25/session. HoldoutAug11-Aug14 NOT opened. Full derived study/coverage and consumed-training timing diagnostic are retained. StateNOT_READY. Current original is also NOT accepted.
+
+Preregistered docs/SPX_PREPARATION_PROTOCOL_20261023.md before any Aug11-Aug14 outcomes: one continuation READINESS while still on pullback side of EMA5,recross remains confirmation. Same gates/no newnumericthresholds. Old16days consumeddevelopment; previousunopened4days become newvalidation explicitly; futureAug17-Aug20 reservedunacquired conditionalholdout. AionUI still blocks at official browser sign-in; opened alone thenclosed to preserve RAM. No appagent evaluation claimed.
+
+
+## 2026-10-23 - preparation hypothesis ALSO failed; next bounded research
+
+Protocolf88f5d6 and implementationf928b4c committed before Aug11-Aug14 outcomes. Evaluated once with permanent validation reservations. Preparation48signals,2early/70events,precision16.67percent,earlyprecision4.17percent,medianlead-2minutes,false10/session. Recross84signals,5early/70,precision32.14percent,medianlead-1,false14.25/session. All gates failed; fewer alerts is NOT improvement. No detector/Pine/alert promotion.12focused checks passed; no broad repeat. Full docs/SPX_PREPARATION_RESULT_20261023.md and artifacts/spx_preparation_validation_20261023/result.json.
+
+AllJuly20-Aug14 now consumed development; previous Aug11-Aug14 holdout became this protocol validation explicitly. Aug17-Aug20 still UNACQUIRED/uninspected because validation failed. More native historical data remains available at existing cost; do not claim missing entitlement. AionUI still requires official browser sign-in; opened ALONE after computation, thenclosed; Antigravity remainedclosed. Live original reader continues independently with saved flags.
+
+NEXT SCHEDULED CYCLE: one small protocol-only step. Read these reports and saved consumed TRAINING timing diagnostic, not raw market files or any new outcomes. Create only a NEW docs/SPX_NEXT_HYPOTHESIS_20261023.md (or a new dated doc if it already exists), proposing exactly one defensible structurally different native-SPX hypothesis with causal availability, fixed rules, bounded budget and new chronological split, or explain the exact missing observation if no candidate is justified. No acquisition, parameter search, candidate evaluation, repeated tests/Gateway checks, production/auth/task edits or alerts in this next cycle. Existing failed EMA/compression/inside-pressure/slope/consensus variants are not new independent hypotheses. Allknown20days development-only. Return exact new-doc checkpoint manifest. Host guard commits outside sandbox; preserve model budget.
+
+
+## 2026-10-23 - bounded protocol-only missing-observation checkpoint
+
+Read the latest frozen protocols, both negative July/August reports and saved
+consumed TRAINING timing diagnostic only. New decision is documented in
+`docs/SPX_NEXT_HYPOTHESIS_20261023.md`: no defensible structurally different
+candidate is established by this evidence. Do not retune the failed families.
+No raw files, new outcomes, acquisition, Gateway checks or repeated tests read/run.
+The scoped protocol-only instruction takes precedence over generic test guidance.
+
+NOT_READY remains; runner WAIT_DATA. Exact missing input: one previously
+uninspected complete native-SPX session with original minute bars AND a
+prospectively retained per-bar first-availability/receipt trace with source mode
+and separate provider timestamps. Historical retrieval receipts alone are not
+live bar latency. Use an already-retained complete Oct23 trace if available;
+otherwise the next prospectively complete session. The new document gives a
+bounded one-session historical collector command, explicitly insufficient by
+itself for the live trace. Do not recollect an existing capture. No claim that
+current Gateway needs recovery; needs_gateway=false. All July20-Aug14 remain
+consumed development; Aug17-Aug20 remain unacquired/uninspected with no new role.
+
+Next: wait for changed raw input and aligned availability trace, reserve that
+session as diagnostic development, and check coverage/timestamp availability
+before proposing new causal signal rules. No candidate evaluation is authorized
+by this document. Alerts remain off. Document/UTF-8 integrity checked only;
+no market-quality improvement or GitHub save is claimed. Trusted host runner
+handles the exact two-file manifest outside protected Git metadata.
+
+??????? ???????: ????? ????? SPX ????? ????? ?? ????? ????? ?????? ???? ????????
+?? ???? ?????? ??? ??????? ??? ????? ???? ??????. ?? ???? ????? ?????? ???? Gateway.
+
+
+## 2026-10-23 - owner clarifies wait discipline; prospective recorder installed
+
+Supersedes earlier manual-owner capture request: host installed separate taskSuhail SPX Availability from branchcodex/spx-availability-trace-20261023/ac772d1, PR45. Actual observerPID13136 has real type1 quotes/historyupdates and first completed-bar receipts15:17:00.227405UTC/15:18:00.415265UTC.10targeted tests passed. Existing main reader stayedok; no source/settings/alert changes. GUI apps closed; no new model call or quota reset.
+
+Source/protocol/tests/live sanitized evidence are onPR45; originals private. Oct23trace is PARTIAL, not a full input. Next possible full sessionMonOct26,16:30-23:00Riyadh+5min grace, PC/network/Gateway needed. Complete trace+finalnativebars will publish new ignored market input here; partials do not wake the model. See docs/SPX_WAIT_DATA_20261023.md.
+
+OWNER POLICY: exante fixed rules/metrics, every experiment inclfailures onGitHub, independent data, replication and liveSHADOW before generalization. A single passing study is insufficient. When inputmissing WAIT; do not rerun consumeddata or alter gates. Primary goal awaits actual fullsession data, qualityNOT_READY. Only coverage/asof-latencydiagnostic permitted on next new input; that session is diagnosticdevelopment, not signalholdout. No new directionhypothesis/evaluation until separatelypreregistered.

@@ -1,0 +1,56 @@
+{
+  "source": "IBKR Gateway TWS API",
+  "symbol": "SPX",
+  "security_type": "IND",
+  "market_data_type": 1,
+  "reader_launcher_pid": 5728,
+  "reader_socket_owner_pid": 7888,
+  "gateway_pid": 1380,
+  "saved_flags_restored": [
+    "--spx-primary",
+    "--github-signals",
+    "--telegram-signals",
+    "--relay-config (private existing path)"
+  ],
+  "test_alert_sent": false,
+  "orders_enabled": false,
+  "first": {
+    "status_time": "2026-10-23T14:35:43.741897+00:00",
+    "status": "ok",
+    "feed_metadata": {
+      "source": "IBKR Gateway TWS API",
+      "symbol": "SPX",
+      "security_type": "IND",
+      "volume_semantics": "index volume not published; no synthetic SPX volume",
+      "market_data_type": 1,
+      "live_feed_verified": true,
+      "last_trade_time": "2026-10-23T14:35:43+00:00",
+      "last_price": 7621.26,
+      "observed_at": "2026-10-23T14:35:43.742944+00:00",
+      "bar_publication_latency_verified": false
+    },
+    "last_completed_bar": "2026-10-23T14:35:00+00:00"
+  },
+  "second": {
+    "sampled_at": "2026-10-23T14:36:29.463846+00:00",
+    "status_time": "2026-10-23T14:36:26.997842+00:00",
+    "status": "ok",
+    "blocker": null,
+    "market_data_type": 1,
+    "provider_trade_time": "2026-10-23T14:36:26+00:00",
+    "receipt_time": "2026-10-23T14:36:26.998846+00:00",
+    "provider_age_seconds": 3.463846,
+    "last_completed_bar": "2026-10-23T14:36:00+00:00",
+    "source": "IBKR Gateway TWS API",
+    "bar_publication_latency_verified": false,
+    "readiness": "NOT_READY",
+    "alerts_enabled": false
+  },
+  "provider_timestamp_advanced": true,
+  "bar_publication_latency_verified": false,
+  "predictive_quality": "NOT_READY",
+  "source_file_sha256": {
+    "gateway_hunter.py": "0f930b1588ff4a81c2a0598130d6a11a2d444b728b39d5d97b9431c5d8c67226",
+    "spx_primary.py": "2fc64c7c98f4ce402b8bb7f0b7c4d2ef2f4db1e9730704c0e530ac32bc304168"
+  }
+}

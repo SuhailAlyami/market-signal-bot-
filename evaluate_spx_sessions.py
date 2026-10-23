@@ -135,7 +135,7 @@ def quality_gate(metric):
     return dict(passed=all(tests.values()), checks=tests)
 
 
-def evaluate_partition(dataset, days, models):
+def evaluate_partition(dataset, days, models, *, scheduler=None):
     config = ResearchConfig()
     bars = pd.concat([dataset[day] for day in days])
     bars.attrs.update(symbol='SPX', security_type='IND')
@@ -154,7 +154,7 @@ def evaluate_partition(dataset, days, models):
         event['onset_time'] = bars.index[i + 1 + int(hits[0])].isoformat()
     allowed, reports = set(eligible), {}
     for model in models:
-        scheduled = signal_schedule(f, model)
+        scheduled = (scheduler or signal_schedule)(f, model)
         signals = [s for s in scheduled if s['index'] in allowed]
         report = dict(total_signals=len(scheduled), censored=len(scheduled) - len(signals),
                       strict={}, auxiliary={}, signal_matches={})

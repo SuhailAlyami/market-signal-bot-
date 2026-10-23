@@ -1,0 +1,15 @@
+{
+  "sampled_at": "2026-10-23T14:56:31.038707+00:00",
+  "status_time": "2026-10-23T14:56:28.329704+00:00",
+  "status": "ok",
+  "blocker": null,
+  "provider_trade_time": "2026-10-23T14:56:28+00:00",
+  "receipt_time": "2026-10-23T14:56:28.330704+00:00",
+  "provider_age_seconds": 3.038707,
+  "market_data_type": 1,
+  "source": "IBKR Gateway TWS API",
+  "last_completed_bar": "2026-10-23T14:56:00+00:00",
+  "fresh": true,
+  "readiness": "NOT_READY",
+  "bar_publication_latency_verified": false
+}

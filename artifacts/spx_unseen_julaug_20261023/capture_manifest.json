@@ -1,0 +1,219 @@
+{
+  "source": "IBKR_TWS_API_HISTORY",
+  "live_feed_verified": false,
+  "readiness": "NOT_READY",
+  "requested_sessions": 20,
+  "notifications_enabled": false,
+  "orders_enabled": false,
+  "sessions": [
+    {
+      "date": "2026-07-20",
+      "raw_sha256": "30c0dc8a7cbbbdc394bd6256911b6e792671e561c55d10e53ef9d84ad256863e",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-21",
+      "raw_sha256": "fd53e4a2eb1d74f61bf0c551dc7f607ad12b1ff2acf4583daea038e5ed27001b",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-22",
+      "raw_sha256": "9b5d1975b643b049d873c00cda2db18bcf94489e00d0c2a347ddf2449dbda2e4",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-23",
+      "raw_sha256": "3faee19985d0f4fd13fd8e587bef4b914c5a554b3ee4d4396dcb329683dbfada",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-24",
+      "raw_sha256": "8242d647d2bab5622befd24b3d118e5fe664234cf4134d177ac9e0dd04ac38a7",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-27",
+      "raw_sha256": "2f9274919b04b6ac0344b1dbc712e755cb98de459c5375cb400779513d6de727",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-28",
+      "raw_sha256": "897e99fce9b97ec32ac5e60f1d783adc298ce39e0ea1996ea82f09980e66bf4e",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-29",
+      "raw_sha256": "8d340602aa3a7c06c39f35fecfc05f17c1e794c542e4d714e563add78ddf9348",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-30",
+      "raw_sha256": "fd83654e449708de20edb128baa02b47d7d111d9a4f8ad97c3cc025a741a13b6",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-07-31",
+      "raw_sha256": "4123aeb925b0ca88776346791a5ca581fe5cff767c3f5335bc4c065933f579dd",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-03",
+      "raw_sha256": "ad3ab682497d0e8863ffb6d1463c951df4da3d81ba22b72325dff893f439659a",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-04",
+      "raw_sha256": "e368d148c0e759f08dfa72fc23353a716e4147b837e784ccb5b9153df1331924",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-05",
+      "raw_sha256": "37495f54bc202f6b8ff59318c9714ea5c7682323b53ba7f50443ceaed7195eb8",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-06",
+      "raw_sha256": "047670c80fe87274cf4854bc6ab840e7ed2e714267be400eca0f55b6a6b9f4a7",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-07",
+      "raw_sha256": "3795356256df4d16f3ecf3442787e17bc46241334f32d74d2fa18a60bcb95156",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-10",
+      "raw_sha256": "c8e2ba306529bf6cf7ef1a21ed60df78a49865d4153db9a6308cf6a3b43e8e2d",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-11",
+      "raw_sha256": "02410e176fc4c84a57fd647b044906d85459d25fcef03308a33960d7ebe3e86f",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-12",
+      "raw_sha256": "beb64b9caea221a884858b11ba8afc8646270eb429634cfdc3491be56e066cbc",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-13",
+      "raw_sha256": "4ba59362e6881d2d917909e5a030f503f06bdd4c6dc4bf35375b2b03d0834911",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    },
+    {
+      "date": "2026-08-14",
+      "raw_sha256": "b70493118bec7b62e16e9a529780f831d30960f804f75dc9400744ba75bc50df",
+      "complete": true,
+      "expected_bars": 390,
+      "bars": 390,
+      "missing_minutes": [],
+      "identical_duplicates": 0,
+      "outside_session_bars": 0
+    }
+  ],
+  "contract": {
+    "symbol": "SPX",
+    "security_type": "IND",
+    "exchange": "CBOE",
+    "currency": "USD",
+    "contract_id": 416904
+  },
+  "data_complete": true,
+  "finished_at": "2026-10-23T14:41:32.800842+00:00"
+}
