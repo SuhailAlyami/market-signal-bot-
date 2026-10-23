@@ -143,3 +143,18 @@ python research_spx_inside_range.py --input artifacts/spx_extension_20261023/raw
 وبعد تثبيت بروتوكول كتابي قبل رؤية الناتج: التقاط جلسات SPX نقدية كاملة
 بتواريخ بعد 2026-10-22، ثم تقييم هذه القواعد نفسها مرة واحدة من غير تعديل.
 حتى يحدث ذلك تبقى الحالة NOT_READY والتنبيهات مطفأة.
+
+
+
+## تحديث الاستئناف: تصحيح دورة الحالات في 23 أكتوبر
+
+الأصل أعلاه محفوظ. آخر عمل الآن: `spx_inside_range_safe.py` وإصدار lifecycle-v2 منفصل، دون تعديل v1 أو قواعد الأسعار. قبل حساب الأثر ثُبت البروتوكول في `48940e18e031b3f803d494665a2861e121d5a6b2`.
+
+ملفات جديدة: `spx_inside_range_safe.py`، `research_spx_lifecycle_repair.py`، `tests/test_spx_inside_range_safe.py`، `docs/SPX_LIFECYCLE_REPAIR_PROTOCOL.md`، `docs/SPX_LIFECYCLE_REPAIR_RESULT.md`، `artifacts/spx_lifecycle_repair_20261023/result.json`.
+
+المقارنة الوصفية للحالات على نفس الشرائح: 91→83 استعدادًا مقيمًا، و69→60 غير مطابق، والمبكر بقي حالتين. ليست مقارنة بجدول التهدئة ولا تحققًا مستقلًا. أربعة اختبارات جديدة و20 فحص سببية passed. لا تغيير main أو التنبيهات. NOT_READY.
+
+أمر إعادة الإنتاج إلى مسار جديد:
+`python research_spx_lifecycle_repair.py --input artifacts/spx_extension_20261023/raw.json --output .hunter-state/spx-lifecycle-repair-new.json --protocol-commit 48940e18e031b3f803d494665a2861e121d5a6b2`
+
+الخطوة البحثية التالية: جلسات كاملة جديدة للقواعد المثبتة، مع قياس وصول حي؛ لا تدوير العتبات على البيانات المستهلكة. لا يُختار v2 كفائز من هذه النتيجة. أحدث commit بعيد يحتوي هذا الملف هو نقطة الاستئناف، ولا يصح الاعتماد على SHA القديم في أعلى المستند.
