@@ -22,6 +22,11 @@ Official references:
 
 ## Run on the computer hosting the already configured Gateway
 
+For acquisition followed automatically by the frozen study, use
+`python run_spx_research.py`; it stops if acquisition is incomplete and preserves
+the negative research result. See `docs/SPX_CHRONOLOGICAL_STUDY.md` for output
+paths and the persistent holdout reuse guard.
+
 Use the same Python environment and official `ibapi` installation used by the
 existing `spx_primary.py`. Pandas and pandas-market-calendars are already declared
 in this repository's requirements. Gateway must already be signed in with API

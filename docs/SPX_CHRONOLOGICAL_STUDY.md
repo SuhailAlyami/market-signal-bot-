@@ -9,6 +9,22 @@ The native Gateway collector is documented in `docs/SPX_HISTORY_COLLECTION.md`.
 
 On the computer hosting the already configured Gateway, from PR41's branch:
 
+The single-command entry point performs both steps and automatically stops
+before research if acquisition fails or any requested minute is missing:
+
+```powershell
+python run_spx_research.py
+```
+
+It uses the already-configured localhost port4001 and a separate client ID,
+requests20sessions ending2026-10-21, and creates a new timestamped directory under
+`.hunter-state/` containing `capture/` and `study.json`. Use `--port` only to match
+the existing Gateway setting. It does not install dependencies, sign in, change
+settings, open options subscriptions, send alerts, or access account/order APIs.
+The existing `requirements.txt` and `requirements-gateway.txt` define dependencies.
+
+The two individual commands remain available for inspecting each stage:
+
 ```powershell
 python collect_spx_sessions.py --end 2026-10-21 --sessions 20 --output .hunter-state/spx-history-20 --port 4001
 ```
@@ -76,6 +92,24 @@ validation and conditional holdout metrics, event labels, every scored signal
 and its match/miss, censored counts, Wilson intervals, deterministic session
 bootstrap intervals and 0/1/2-minute simulated delivery delay. Historical bars
 cannot establish actual live arrival latency or executable option performance.
+
+## Holdout reservation and interrupted evaluations
+
+Before computing holdout outcomes, the CLI exclusively creates a reservation for
+each holdout session under `.hunter-state/spx-holdout-locks/<protocol-commit>/`.
+Keep this registry across runs and run from the same checkout directory. A
+different output filename or a new capture receipt cannot reopen a reserved
+session. Overlapping holdout dates are also rejected; a formerly held-out date
+cannot subsequently enter training/validation under the same protocol. A failed
+reservation may conservatively leave preceding session dates reserved.
+
+The output path is reserved before calculations start. A report checkpoint is
+written before holdout scoring. If scoring fails, the result records
+`holdout_opened=true`, `NOT_READY` and a sanitized failure type; reservations are
+preserved. Failed validation creates no holdout reservations. Do not delete the
+registry or change `--registry` to make consumed data look independent. This is
+a local accidental-reuse guard, not a provider signature or a cross-machine
+registry; older/manual evaluations outside this tool are not detected.
 
 ## Verification and current evidence
 

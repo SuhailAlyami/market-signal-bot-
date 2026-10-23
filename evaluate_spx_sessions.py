@@ -6,6 +6,7 @@ No live market data, alerts, options, orders or strategy deployment.
 """
 import argparse
 from datetime import date
+from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
@@ -31,6 +32,7 @@ CAPTURE_FAILURES = {
     'missing_provider_bounds', 'incomplete_capture',
     'need_at_least_20_independent_full_sessions', 'insufficient_split_sizes',
     'unordered_bars', 'conflicting_duplicate', 'invalid_ohlc_or_timestamp',
+    'previous_holdout_in_training_or_validation',
 }
 
 
@@ -167,7 +169,29 @@ def evaluate_partition(dataset, days, models):
     return dict(days=days, bars=len(bars), events=events, models=reports)
 
 
-def study(dataset, inventory, manifest_sha256):
+def reserve_holdout(days, manifest_sha256, registry):
+    """Reserve session dates before computing outcomes, including failed attempts.
+
+    Per-date exclusive creation prevents a recapture, new output name or an
+    overlapping split from silently reusing the same held-out sessions.
+    """
+    registry = Path(registry) / PROTOCOL_COMMIT
+    registry.mkdir(parents=True, exist_ok=True)
+    for day in days:
+        path = registry / f'{day}.json'
+        reservation = dict(protocol_commit=PROTOCOL_COMMIT, session=day,
+                           manifest_sha256=manifest_sha256,
+                           reserved_at=datetime.now(timezone.utc).isoformat(),
+                           status='CONSUMED_OR_RESERVED_DO_NOT_REUSE')
+        try:
+            with path.open('x', encoding='utf-8') as stream:
+                json.dump(reservation, stream, indent=2)
+                stream.write('\n')
+        except FileExistsError:
+            raise ValueError('holdout_session_already_reserved') from None
+
+
+def study(dataset, inventory, manifest_sha256, before_holdout=None):
     splits = chronological_days(list(dataset))
     result = dict(protocol_commit=PROTOCOL_COMMIT, manifest_sha256=manifest_sha256,
                   mode='FROZEN_CHRONOLOGICAL_HISTORY_STUDY', inventory=inventory,
@@ -190,8 +214,23 @@ def study(dataset, inventory, manifest_sha256):
     if not gate['passed']:
         result['reason'] = 'validation_failed_holdout_not_evaluated'
         return result
+    if before_holdout is not None:
+        try:
+            before_holdout(splits['holdout'], result)
+        except ValueError as exc:
+            if str(exc) != 'holdout_session_already_reserved':
+                raise
+            result['reason'] = 'holdout_session_already_reserved'
+            result['holdout_previously_reserved'] = True
+            return result
     result['holdout_opened'] = True
-    result['holdout'] = evaluate_partition(dataset, splits['holdout'], evaluated)
+    try:
+        result['holdout'] = evaluate_partition(dataset, splits['holdout'], evaluated)
+    except Exception as exc:
+        # A failed calculation does not make a revealed holdout untouched again.
+        result['reason'] = 'holdout_evaluation_failed_session_consumed'
+        result['error_type'] = type(exc).__name__
+        return result
     selected = result['holdout']['models'][chosen]['strict']['0']
     original = result['holdout']['models']['original_candidate']['strict']['0']
     result['holdout_gate'] = quality_gate(selected)
@@ -203,24 +242,52 @@ def study(dataset, inventory, manifest_sha256):
     return result
 
 
+def run_capture(capture, output, registry='.hunter-state/spx-holdout-locks'):
+    output = Path(output)
+    # Reserve the report path before any outcomes are computed. A crash leaves
+    # an IN_PROGRESS record rather than a falsely untouched holdout.
+    with output.open('x', encoding='utf-8') as stream:
+        initial = dict(readiness='NOT_READY', reason='IN_PROGRESS',
+                       accepted=False, holdout_opened=False)
+        json.dump(initial, stream)
+        stream.flush()
+
+        def checkpoint(days, partial):
+            reserve_holdout(days, partial['manifest_sha256'], registry)
+            partial['holdout_opened'] = True
+            partial['reason'] = 'HOLDOUT_RESERVED_EVALUATION_IN_PROGRESS'
+            stream.seek(0)
+            json.dump(partial, stream, indent=2, allow_nan=False)
+            stream.truncate()
+            stream.flush()
+
+        try:
+            dataset, inventory, digest = load_capture(capture)
+            splits = chronological_days(list(dataset))
+            if any((Path(registry) / PROTOCOL_COMMIT / f'{day}.json').exists()
+                   for day in splits['train'] + splits['validation']):
+                raise ValueError('previous_holdout_in_training_or_validation')
+            result = study(dataset, inventory, digest, before_holdout=checkpoint)
+        except (ValueError, KeyError, TypeError, OSError) as exc:
+            result = dict(readiness='NOT_READY', accepted=False, holdout_opened=False,
+                          protocol_commit=PROTOCOL_COMMIT,
+                          reason=str(exc) if str(exc) in CAPTURE_FAILURES else 'capture_or_study_rejected',
+                          error_type=type(exc).__name__, notifications_enabled=False, orders_enabled=False)
+        stream.seek(0)
+        json.dump(result, stream, indent=2, allow_nan=False)
+        stream.write('\n')
+        stream.truncate()
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--capture', required=True)
     parser.add_argument('--output', required=True, help='New result file; existing files are never replaced')
+    parser.add_argument('--registry', default='.hunter-state/spx-holdout-locks',
+                        help='Persistent holdout session reservations; keep across acquisitions')
     args = parser.parse_args()
-    if Path(args.output).exists():
-        raise SystemExit('output_already_exists')
-    try:
-        dataset, inventory, digest = load_capture(args.capture)
-        result = study(dataset, inventory, digest)
-    except (ValueError, KeyError, TypeError, OSError) as exc:
-        result = dict(readiness='NOT_READY', accepted=False, holdout_opened=False,
-                      protocol_commit=PROTOCOL_COMMIT,
-                      reason=str(exc) if str(exc) in CAPTURE_FAILURES else 'capture_or_study_rejected',
-                      error_type=type(exc).__name__, notifications_enabled=False, orders_enabled=False)
-    with Path(args.output).open('x', encoding='utf-8') as stream:
-        json.dump(result, stream, indent=2, allow_nan=False)
-        stream.write('\n')
+    result = run_capture(args.capture, args.output, args.registry)
     print(json.dumps({k: result.get(k) for k in
                       ('readiness', 'reason', 'model_selected', 'holdout_opened')}))
     raise SystemExit(0 if result['accepted'] else 2)
