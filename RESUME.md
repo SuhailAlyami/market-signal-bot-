@@ -304,6 +304,15 @@ handles the exact two-file manifest outside protected Git metadata.
 ?? ???? ?????? ??? ??????? ??? ????? ???? ??????. ?? ???? ????? ?????? ???? Gateway.
 
 
+## 2026-10-23 - owner clarifies wait discipline; prospective recorder installed
+
+Supersedes earlier manual-owner capture request: host installed separate taskSuhail SPX Availability from branchcodex/spx-availability-trace-20261023/ac772d1, PR45. Actual observerPID13136 has real type1 quotes/historyupdates and first completed-bar receipts15:17:00.227405UTC/15:18:00.415265UTC.10targeted tests passed. Existing main reader stayedok; no source/settings/alert changes. GUI apps closed; no new model call or quota reset.
+
+Source/protocol/tests/live sanitized evidence are onPR45; originals private. Oct23trace is PARTIAL, not a full input. Next possible full sessionMonOct26,16:30-23:00Riyadh+5min grace, PC/network/Gateway needed. Complete trace+finalnativebars will publish new ignored market input here; partials do not wake the model. See docs/SPX_WAIT_DATA_20261023.md.
+
+OWNER POLICY: exante fixed rules/metrics, every experiment inclfailures onGitHub, independent data, replication and liveSHADOW before generalization. A single passing study is insufficient. When inputmissing WAIT; do not rerun consumeddata or alter gates. Primary goal awaits actual fullsession data, qualityNOT_READY. Only coverage/asof-latencydiagnostic permitted on next new input; that session is diagnosticdevelopment, not signalholdout. No new directionhypothesis/evaluation until separatelypreregistered.
+
+
 ## 2026-10-23 - missing live-availability observation now being recorded
 
 User clarified fixed exante rules, independent data, every negative result saved, replication and liveSHADOW before rollout; do not repeatedly experiment when data is missing. Authoritative docs/SPX_RESEARCH_ACCEPTANCE.md records this policy. The prior protocol-only scheduled cycle9561489 completed with no candidate;2/2model calls remain consumed today. Do not reset quota or ask the user to collect manually.
