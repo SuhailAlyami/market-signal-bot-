@@ -177,3 +177,27 @@ python research_spx_inside_range.py --input artifacts/spx_extension_20261023/raw
 ## عامل Codex محلي مجدول
 
 أضيف tools/spx_research_agent.py وtools/install_spx_agent.ps1 ومهمة tools/SPX_AGENT_TASK.md ودليل docs/SPX_LOCAL_AGENT.md. ستة اختبارات موجهة ناجحة محليًا؛ PowerShell/جدولة Windows وCodex الحقيقي وGateway المحلي لم تُختبر أو تُشغّل من هذه البيئة. تثبيت مرة واحدة ينشئ worktree research/local-spx-agent ومهمة عند تسجيل الدخول وكل15دقيقة؛ سقف دورتين ذكيتين/يوم،15دقيقة/دورة. WAIT_DATA ينتظر raw.json جديدًا ولا ينفق رصيدًا على إعادة نفس التجربة. الفشل يحفظ الحالة ويوقف المحاولات، والدفع المتعذر يُعاد قبل عمل جديد. لا نجاح سوقي جديد ولا تفعيل تنبيهات ولا تغيير main. الحالة NOT_READY. الخطوة المحلية: شغّل المثبت كما في الدليل من نسخة فرع البحث ثم تحقق من state.json ورأس الفرع البعيد. لا حاجة إلى نفق Remote Tunnel.
+
+
+## Local-agent first-cycle checkpoint ? 2026-10-23
+
+The actual scheduled Codex call checked documented127.0.0.1:4001 TCP successfully
+at12:17:15UTC. Four existing collector tests passed with SYNTHETIC fixtures only.
+It did NOT complete an API handshake or collect new bars; mode/latency remain
+UNKNOWN. Its pre-acquisition plan and full honest blocked result are preserved
+in docs/SPX_LOCAL_GATEWAY_CHECK_20261023.md and
+artifacts/spx_local_gateway_check_20261023/connectivity.json.
+
+The model sandbox blocked linked Git index.lock writes. The host reviewed exactly
+these three research checkpoint files and recovered their commit/push without
+disabling the sandbox, changing Gateway or resetting the daily call budget.
+This recovery is not a market-quality improvement; NOT_READY remains.
+Next: execute the already frozen bounded Oct19 daily acquisition ONCE after this
+checkpoint is committed, then record actual provider coverage separately.
+
+
+## تنبيه المستخدم وتوزيع الوكلاء المحليين
+
+أضيف إشعار Windows عند WAIT_DATA/BLOCKED/مراجعة نتيجة، مع needs_gateway=true فقط عند دليل الحاجة إلى فتح البوابة. لا يُستنتج من FROZEN أو إغلاق السوق. منع التكرار مستمر عبر إعادة التشغيل، وattention.txt/json خارج المستودع، وإعادة المحاولة بعد ساعة عند فشل طلب العرض. --test-notification لا يستهلك حصة. 11 اختبارًا موجهًا نجح محليًا (5 جديدة و6 سابقة)؛ Windows الفعلي لم يختبر من هنا. يلزم تحديث العامل المثبت بعد نهاية الدورة الحالية واختبار إشعاره محليًا دون حذف التقدم.
+
+أضيف docs/SPX_MULTI_AGENT_HANDOFF.md: تدقيق بيانات وسببية لـAntigravity، فرضية ومراجعة لوكيلين AionUI، وتنفيذ وقياس لـCodex مع فروع وتسليم SHA. تعليمات جاهزة وليست ادعاء تشغيل التطبيقات المحلية. لا اشتراكات أو مفاتيح جديدة ولا تغيير إنتاج أو تنبيهات سوق؛ NOT_READY. main لم يتغير.

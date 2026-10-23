@@ -1,0 +1,38 @@
+{
+  "checked_at_utc": "2026-10-23T12:17:15.258520+00:00",
+  "finished_at_utc": "2026-10-23T12:19:17.813618+00:00",
+  "status": "BLOCKED",
+  "research_readiness": "NOT_READY",
+  "branch": "research/local-spx-agent",
+  "head": "1be14a32b464e37a9ddc1b944f6d985b7cb36d88",
+  "pending_commits_at_start": 0,
+  "endpoint": "127.0.0.1:4001",
+  "endpoint_provenance": [
+    "collect_spx_sessions.py",
+    "docs/SPX_HISTORY_COLLECTION.md"
+  ],
+  "tcp_connect": "success",
+  "api_handshake_performed": false,
+  "collector_run": false,
+  "new_market_data_collected": false,
+  "market_data_mode": "UNKNOWN",
+  "live_latency_measured": false,
+  "account_position_order_or_credential_requests": false,
+  "dependencies_available": [
+    "ibapi",
+    "pandas",
+    "pandas_market_calendars"
+  ],
+  "tests": {
+    "command": "python -m unittest tests.test_collect_spx_sessions -q",
+    "passed": 4,
+    "failed": 0,
+    "synthetic_only": true
+  },
+  "existing_raw_sha256": "179678e3917053332c56ee9ce1f9958b6247cc333ba41d7003f9e4d3b0e2afdf",
+  "collector_sha256": "3e0f1b1689d7de63ba9e08535bbd7dc27162d1f5546d88f9998cf832be5f22e5",
+  "blocker": "git add and git commit cannot create linked-worktree index.lock outside writable workspace; Permission denied",
+  "push_attempted": false,
+  "saved_on_github": false,
+  "next_step": "Restore write permission to this linked worktree Git metadata, stage explicit checkpoint files, commit, then push research/local-spx-agent normally before further acquisition."
+}

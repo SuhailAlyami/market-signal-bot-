@@ -50,3 +50,11 @@ Return JSON status CONTINUE only with a concrete useful next step that does not
 require missing data. WAIT_DATA or NOT_READY waits for a changed raw.json input;
 BLOCKED pauses for local recovery; CANDIDATE_FOR_REVIEW pauses for review.
 The runner's two-calls/day ceiling is an invocation limit, not a token/cost guarantee.
+
+Return needs_gateway=true ONLY if you have evidence that further progress needs
+the owner to open/sign in to IB Gateway or approve its local read-only connection.
+Do not infer this from closed NYSE hours, a FROZEN close, insufficient completed
+sessions, or NOT_READY market results alone. Otherwise return false. In summary
+and next_step state the exact missing input and the owner's concrete action in
+Arabic, without secrets or raw authentication/provider errors. The runner emits
+a deduplicated local desktop notice, separate from market/Telegram alerts.

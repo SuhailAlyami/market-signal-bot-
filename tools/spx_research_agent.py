@@ -1,7 +1,8 @@
 """Bounded local Codex research worker. No broker or trading calls in this runner."""
 import argparse
+import base64
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import os
@@ -12,6 +13,87 @@ import time
 
 BRANCH = "research/local-spx-agent"
 STATUSES = {"CONTINUE", "WAIT_DATA", "BLOCKED", "NOT_READY", "CANDIDATE_FOR_REVIEW"}
+
+
+def desktop_notice(title, message):
+    """Request a local Windows tray notice; OS settings may suppress display."""
+    if os.name != "nt":
+        return False
+    powershell = shutil.which("powershell.exe")
+    if not powershell:
+        return False
+    # Encode data separately: no model/provider text is interpolated as PS code.
+    payload = base64.b64encode(json.dumps({"title": title, "message": message}, ensure_ascii=False).encode()).decode()
+    script = r'''
+$ErrorActionPreference = 'Stop'
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+$p = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('PAYLOAD')) | ConvertFrom-Json
+$icon = New-Object System.Windows.Forms.NotifyIcon
+try {
+    $icon.Icon = [System.Drawing.SystemIcons]::Information
+    $icon.Text = 'Suhail SPX Research'
+    $icon.Visible = $true
+    $icon.ShowBalloonTip(10000, $p.title, $p.message, [System.Windows.Forms.ToolTipIcon]::Info)
+    $until = [DateTime]::UtcNow.AddSeconds(12)
+    while ([DateTime]::UtcNow -lt $until) {
+        [System.Windows.Forms.Application]::DoEvents()
+        Start-Sleep -Milliseconds 100
+    }
+} finally {
+    $icon.Visible = $false
+    $icon.Dispose()
+}
+'''.replace("PAYLOAD", payload)
+    encoded = base64.b64encode(script.encode("utf-16le")).decode()
+    try:
+        result = subprocess.run([powershell, "-NoProfile", "-NonInteractive", "-WindowStyle", "Hidden",
+                                 "-EncodedCommand", encoded], capture_output=True, timeout=25)
+        return result.returncode == 0
+    except (OSError, subprocess.SubprocessError):
+        return False
+
+
+def publish_attention(state_dir, sender=None, now=None):
+    """One notice per unresolved reason, with durable Arabic fallback text."""
+    state_path = state_dir / "state.json"
+    if not state_path.exists():
+        return "no_state"
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    status = state.get("status")
+    gateway = state.get("needs_gateway") is True
+    kinds = {"WAIT_DATA": "data", "BLOCKED": "blocked", "CANDIDATE_FOR_REVIEW": "review"}
+    kind = "gateway" if gateway and status in {"WAIT_DATA", "NOT_READY", "BLOCKED"} else kinds.get(status)
+    notice_path = state_dir / "attention.json"
+    previous = json.loads(notice_path.read_text(encoding="utf-8")) if notice_path.exists() else {}
+    if not kind:
+        if previous.get("active"):
+            previous.update(active=False)
+            save(notice_path, previous)
+            (state_dir / "attention.txt").write_text("لا يوجد طلب تدخل حالي من عامل سهيل هنتر.\n", encoding="utf-8")
+        return "no_attention"
+    # Stable reason key. Changing model prose/timestamps must not cause repeated alerts.
+    reason = state.get("reason", "") if kind == "blocked" else ""
+    key = hashlib.sha256(json.dumps([kind, reason], ensure_ascii=False).encode()).hexdigest()
+    now = now or datetime.now(timezone.utc)
+    if previous.get("active") and previous.get("key") == key:
+        if previous.get("popup_requested") or now.timestamp() < previous.get("retry_at", 0):
+            return "deduplicated"
+    title = "سهيل هنتر — مطلوب تدخلك"
+    messages = {
+        "gateway": "أحتاج IB Gateway لجلب بيانات جديدة. افتحه وسجّل الدخول بنفسك، ثم اطلب من Codex متابعة جمع البيانات. لا ترسل كلمة المرور.",
+        "data": "الدورة تنتظر بيانات SPX جديدة. افتح Codex واطلب متابعة جمع البيانات. لم يتأكد أن السبب إغلاق IB Gateway.",
+        "blocked": "تعذّر إكمال دورة البحث. افتح Codex واطلب فحص state.json والسجل المحلي واستئناف العمل دون حذف التقدم.",
+        "review": "اكتملت نتيجة بحث تحتاج المراجعة. افتح Codex لمراجعة الدليل؛ هذا لا يعني ضمان نجاح الكشف أو الربح."
+    }
+    message = messages[kind]
+    requested = (sender or desktop_notice)(title, message)
+    notice = {"active": True, "key": key, "kind": kind, "title": title, "message": message,
+              "at_riyadh": now.astimezone(timezone(timedelta(hours=3))).isoformat(),
+              "popup_requested": bool(requested), "retry_at": now.timestamp() + 3600}
+    save(notice_path, notice)
+    (state_dir / "attention.txt").write_text(title + "\n" + message + "\n" + notice["at_riyadh"] + "\n", encoding="utf-8")
+    return "popup_requested" if requested else "saved_text_only"
 
 
 def save(path, value):
@@ -174,8 +256,9 @@ def tick(root, state_dir, executable=None):
     save(schema, {"type": "object", "properties": {
         "status": {"type": "string", "enum": sorted(STATUSES)},
         "summary": {"type": "string"}, "next_step": {"type": "string"},
-        "checkpoint_files": {"type": "array", "items": {"type": "string"}, "maxItems": 20}},
-        "required": ["status", "summary", "next_step", "checkpoint_files"], "additionalProperties": False})
+        "checkpoint_files": {"type": "array", "items": {"type": "string"}, "maxItems": 20},
+        "needs_gateway": {"type": "boolean"}},
+        "required": ["status", "summary", "next_step", "checkpoint_files", "needs_gateway"], "additionalProperties": False})
     prompt = (root / "tools" / "SPX_AGENT_TASK.md").read_text(encoding="utf-8")
     prompt += "\nPrevious runner checkpoint (not evidence of market quality):\n" + json.dumps(state, ensure_ascii=False)
     try:
@@ -183,17 +266,18 @@ def tick(root, state_dir, executable=None):
         if code:
             raise RuntimeError("codex_exit_" + str(code))
         result = json.loads(output.read_text(encoding="utf-8"))
-        if result.get("status") not in STATUSES or not all(isinstance(result.get(k), str) for k in ("summary", "next_step")):
+        if result.get("status") not in STATUSES or not all(isinstance(result.get(k), str) for k in ("summary", "next_step")) or ("needs_gateway" in result and not isinstance(result["needs_gateway"], bool)):
             raise RuntimeError("invalid_cycle_report")
         if git(root, "branch", "--show-current").stdout.strip() != BRANCH:
             raise RuntimeError("branch_changed")
         commit_checkpoint(root, result.get("checkpoint_files", []))
         pushed = git(root, "push", "-u", "origin", BRANCH).returncode == 0
-        state.update(result, reason="cycle_complete", push_pending=not pushed,
+        state.update(result, needs_gateway=result.get("needs_gateway", False),
+                     reason="cycle_complete", push_pending=not pushed,
                      checkpoint_commit=git(root, "rev-parse", "HEAD").stdout.strip())
     except (RuntimeError, ValueError, OSError, subprocess.SubprocessError) as exc:
         # No provider messages, auth data or model logs in public checkpoint.
-        state.update(status="BLOCKED", reason=type(exc).__name__, next_step="Inspect local private log; recover checkpoint, then use --resume.")
+        state.update(status="BLOCKED", needs_gateway=False, reason=type(exc).__name__, next_step="Inspect local private log; recover checkpoint, then use --resume.")
     save(state_path, state)
     return state["status"]
 
@@ -203,16 +287,23 @@ def main():
     parser.add_argument("--repo", type=Path, required=True)
     parser.add_argument("--state", type=Path, required=True)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--test-notification", action="store_true", help="Test local desktop notice without running Codex or changing budget")
     args = parser.parse_args()
     root, state_dir = args.repo.resolve(), args.state.resolve()
     try:
         with lock(state_dir / "worker.lock"):
+            if args.test_notification:
+                requested = desktop_notice("سهيل هنتر — اختبار التنبيه", "هذا اختبار فقط. لا يعني أن البوابة مطلوبة الآن.")
+                print("popup_requested_not_delivery_confirmed" if requested else "popup_unavailable")
+                return
             if args.resume:
                 path = state_dir / "state.json"
                 state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
                 state.update(status="CONTINUE", reason="manual_resume")
                 save(path, state)  # Does not reset daily budget/backoff.
             print(tick(root, state_dir))
+            if not (state_dir / "STOP").exists():
+                print(publish_attention(state_dir))
     except (OSError, subprocess.SubprocessError):
         print("busy_or_local_error")
 
