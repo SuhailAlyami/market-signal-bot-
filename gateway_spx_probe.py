@@ -25,15 +25,31 @@ class Probe(DataClient):
     def marketDataType(self, reqId, kind):
         self.types[reqId] = kind
 
+    def _record_quote(self, reqId, quote):
+        records = self.quotes.setdefault(reqId, [])
+        records.append(quote)
+        if len(records) > 150:
+            # Price callbacks can outnumber timestamp callbacks. Preserve the
+            # latest actual provider times, including their original receipt;
+            # retaining an old time must never make it current or REALTIME.
+            pinned = {next(i for i in range(len(records)-1, -1, -1)
+                           if records[i]['type'] == kind)
+                      for kind in (45, 88)
+                      if any(q['type'] == kind for q in records)}
+            keep = set(range(len(records)-150, len(records))) | pinned
+            for i in sorted(keep-pinned):
+                if len(keep) <= 150:
+                    break
+                keep.remove(i)
+            self.quotes[reqId] = [records[i] for i in sorted(keep)]
+
     def tickPrice(self, reqId, tickType, price, attrib):
         if price > 0:
-            self.quotes.setdefault(reqId, []).append({'type': tickType, 'price': price, 'received_at': stamp()})
-            self.quotes[reqId]=self.quotes[reqId][-150:]
+            self._record_quote(reqId, {'type': tickType, 'price': price, 'received_at': stamp()})
 
     def tickString(self, reqId, tickType, value):
         if tickType in (45, 88):
-            self.quotes.setdefault(reqId, []).append({'type': tickType, 'value': value, 'received_at': stamp()})
-            self.quotes[reqId]=self.quotes[reqId][-150:]
+            self._record_quote(reqId, {'type': tickType, 'value': value, 'received_at': stamp()})
 
     def securityDefinitionOptionParameter(self, reqId, exchange, underlyingConId, tradingClass, multiplier, expirations, strikes):
         if exchange == 'CBOE':
@@ -118,3 +134,4 @@ def main():
 
 
 if __name__ == '__main__': main()
+
