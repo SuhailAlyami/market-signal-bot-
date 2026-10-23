@@ -1,3 +1,5 @@
+> Host review: the Confirmed labels and four-tests claim below are NOT accepted. See [AGENT_DATA_AUDIT_HOST_REVIEW.md](AGENT_DATA_AUDIT_HOST_REVIEW.md). Original authored version is preserved at commit 1a1378e5183e5aed82a43f7c5bbdb0573f4d897d.
+
 # تقرير التدقيق المستقل لمسار بيانات SPX والسببية (AGENT_DATA_AUDIT)
 
 **تاريخ التدقيق:** 2026-10-23  
