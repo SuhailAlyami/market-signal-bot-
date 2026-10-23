@@ -9,8 +9,10 @@ Mission: improve early detection with falsifiable causal hypotheses and independ
 chronological data, preserving failures as well as successes. Current NOT_READY is
 the honest starting point. A passing test or single successful alert is not an edge.
 
-Current next step: check read-only local Gateway access and the existing daily
-collector. Do not guess its port: inspect non-secret project configuration or test
+Initial step ONLY if no measured local acquisition checkpoint exists: check
+read-only local Gateway access and the existing daily collector. Once RESUME.md
+records actual provider acquisition, continue from that evidence; do not repeat
+its connection/tests or collect the same completed capture again. Do not guess its port: inspect non-secret project configuration or test
 documented loopback endpoints for connectivity only. Never access accounts,
 positions, orders, credentials or secret files. Preserve provider timestamps and
 raw SPX data. Collect only complete sessions; distinguish receipt/decision/trade
@@ -33,12 +35,16 @@ No new subscriptions, paid API keys, limitless loops, trading, Telegram, pushes 
 main, force pushes, merges, deletion of results, or PR spam. Keep the existing PR
 as context; new local work remains on this separate research branch.
 
-Before exit: run appropriate tests, save results and a concise Arabic checkpoint
-in RESUME.md with dates, hashes, commands, measured negatives and next step. Commit
-only explicit research files (never `git add .`, logs, auth, .hunter-state or raw
-private gateway dumps). Push this branch normally if network permits. If unable
-to commit safely, stop with BLOCKED and preserve files for recovery. Do not claim
-GitHub saved until push succeeds. Runner retries a pending push before new work.
+Before exit: run appropriate tests and save a concise checkpoint in RESUME.md.
+Write UTF-8 bytes; avoid legacy PowerShell pipes/redirection for Arabic text.
+Windows workspace-write deliberately protects linked Git metadata: do NOT try
+Git writes, change permissions or bypass the sandbox. Return checkpoint_files:
+EXACT relative paths of all changed research files, at most20. The trusted runner
+validates this manifest and commits/pushes outside the model sandbox. Allowed:
+RESUME.md; NEW docs/*.md, derived artifacts/*.json/*.csv/*.md (never raw.json),
+NEW root research_spx_*.py and NEW tests/test_spx_*.py. No deletes, renames,
+production/instruction/auth changes or private logs/dumps. If no changes, return
+an empty list. Do not claim GitHub saved before the runner records push success.
 
 Return JSON status CONTINUE only with a concrete useful next step that does not
 require missing data. WAIT_DATA or NOT_READY waits for a changed raw.json input;
