@@ -196,6 +196,13 @@ Next: execute the already frozen bounded Oct19 daily acquisition ONCE after this
 checkpoint is committed, then record actual provider coverage separately.
 
 
+## تنبيه المستخدم وتوزيع الوكلاء المحليين
+
+أضيف إشعار Windows عند WAIT_DATA/BLOCKED/مراجعة نتيجة، مع needs_gateway=true فقط عند دليل الحاجة إلى فتح البوابة. لا يُستنتج من FROZEN أو إغلاق السوق. منع التكرار مستمر عبر إعادة التشغيل، وattention.txt/json خارج المستودع، وإعادة المحاولة بعد ساعة عند فشل طلب العرض. --test-notification لا يستهلك حصة. 11 اختبارًا موجهًا نجح محليًا (5 جديدة و6 سابقة)؛ Windows الفعلي لم يختبر من هنا. يلزم تحديث العامل المثبت بعد نهاية الدورة الحالية واختبار إشعاره محليًا دون حذف التقدم.
+
+أضيف docs/SPX_MULTI_AGENT_HANDOFF.md: تدقيق بيانات وسببية لـAntigravity، فرضية ومراجعة لوكيلين AionUI، وتنفيذ وقياس لـCodex مع فروع وتسليم SHA. تعليمات جاهزة وليست ادعاء تشغيل التطبيقات المحلية. لا اشتراكات أو مفاتيح جديدة ولا تغيير إنتاج أو تنبيهات سوق؛ NOT_READY. main لم يتغير.
+
+
 ## Recovered Windows agent and actual SPX acquisition - 2026-10-23
 
 First actual scheduled Codex call used1of2UTCday calls and stopped on sandboxed
