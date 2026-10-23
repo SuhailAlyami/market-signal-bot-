@@ -250,3 +250,8 @@ AionUI2.2.2 blocks at official browser sign-in; its two assignments are ready bu
 ### Final new operational evidence - Gateway login required
 
 Current feed is NOT running: after the observed app memory pressure no Gateway/reader/listener4001 remained. Fresh crash hs_err_pid11388.log header proves native Java allocation failure1070808bytes at14:01:04UTC/17:01Riyadh. Exact individual cause not isolated. Closed only newly opened Antigravity/AionUI trees, then launched existing GatewayPID1380 unchanged. Native window is now login form, password empty, API not yet listening. User must log in inside Gateway and approve IBKR2FA if requested. Do not claim the old390/390 history or Ready/LastTaskResult0 establishes current live data. Reader is stopped pending login; use its saved launch/config afterward and confirm actual data, without repeat test alerts. AionUI separately requires official browser sign-in. Full details in SPX_LOCAL_APPS_EXECUTION_20261023.md.
+
+
+## 2026-10-23 - reader recovery and fixed unseen cohort before acquisition
+
+Gateway logged in/listening4001. Restored saved original gateway_hunter flags without tests or source changes, launcher5728/child7888. Actual SPX type1 source trade14:34:38UTC arrived14:34:38.126587UTC, heartbeatok, options/detection success NOT inferred. First proof saved privately. Imported reviewed local-app checkpoint25973cf by clean fast-forward, preserving original worktree. New fixed cohort docs/SPX_UNTOUCHED_COHORT_20261023.md is committed BEFORE acquisition/outcomes. July20-Aug14 remain untouched;12/4/4split, original frozen rules/gates. No paid services/trades/experimental activation. Temporary host-owned STOP coordinates research only; live reader unaffected.

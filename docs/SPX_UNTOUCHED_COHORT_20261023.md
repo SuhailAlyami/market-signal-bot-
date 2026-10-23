@@ -1,0 +1,11 @@
+# Fixed untouched cohort acquisition before outcomes - 2026-10-23
+
+Use the existing frozen pre-movement protocol355c2d8d728b119c4768c6767051132fe7afd8d6 and evaluator unchanged. Existing October20-22 SPX data and all previously inspected data are consumed. Do not use the default endingOct21 runner. The reserved July20-Aug14 dates remain unacquired/uninspected according to prior RESUME evidence. This is a historical unseen-data experiment, not a forward live test.
+
+Acquire once via existing read-only native collector:20NYSE sessions ending2026-08-14, expected2026-07-20through2026-08-14. Exact chronological partition: trainingJuly20-Aug4(12sessions), validationAug5-Aug10(4), holdoutAug11-Aug14(4). Check this before outcomes; never adjust dates for a favorable result. Oldest cohort is chosen to avoid all consumed October and inspected September cohorts. No provider subscription, synthetic minutes, ES volume, options, account/order API or new model search.
+
+Existing candidate grid, strict anchor/onset scoring, causal10minute cooldown and training tie breaks remain unchanged. Validation gates: precision>=50percent, Wilson95lower>=40percent, strict early recall>=20percent, medianlead>=1minute, false alarms<=2/session. Only if validation passes open holdout once, with the same gates and F1 improvement over original baseline. Otherwise leave holdout outcomes unopened and report NOT_READY. Do not count an absent signal policy as success. Report strict lead and separate auxiliary matching without changing acceptance.
+
+Raw files stay ignored under .hunter-state/spx-unseen-julaug-20261023/capture. Use the existing persistent .hunter-state/spx-holdout-locks registry. Hash raw inputs, retain provider bounds and request/receipt times. Publish sanitized coverage and derived study results, not credentials or private provider logs. One acquisition attempt only; preserve partial failure and report exact code instead of retrying unchanged input.
+
+The host temporarily uses the documented private STOP marker to keep the scheduled model worker from concurrently inspecting a partial capture; its daily call budget is unchanged. The live reader continues independently with saved flags. No GUI research app is open. Remove only the host-owned marker after checkpointing.
