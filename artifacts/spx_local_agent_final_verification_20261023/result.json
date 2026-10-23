@@ -1,0 +1,37 @@
+{
+  "verified_at_utc": "2026-10-23T12:39:39.232797+00:00",
+  "latest_upstream": "9745929e3b13af12b211acfa620639b4683c6b63",
+  "fix_commit": "ae884527417f8e1c0cf94397d3976427517a7e60",
+  "task_name": "Suhail SPX Research",
+  "last_observed_task_state": "Ready",
+  "last_task_result": 0,
+  "interval_minutes": 15,
+  "network_required": true,
+  "multiple_instances": "IgnoreNew",
+  "interactive_user_required": true,
+  "state": "WAIT_DATA",
+  "needs_gateway": false,
+  "model_calls_used": 1,
+  "daily_limit_utc": 2,
+  "notification_test": "popup_requested_not_delivery_confirmed",
+  "notification_test_invocations": 1,
+  "latest_focused_tests_passed": 16,
+  "tests_are_detection_evidence": false,
+  "private_logs_uploaded": false,
+  "history": {
+    "symbol": "SPX",
+    "security_type": "IND",
+    "exchange": "CBOE",
+    "session": "2026-10-19",
+    "bars": 390,
+    "complete": true
+  },
+  "live_mode": "UNKNOWN",
+  "quality": "NOT_READY",
+  "orders_enabled": false,
+  "experimental_alerts_enabled": false,
+  "original_git_metadata_unchanged": {
+    "HEAD": true,
+    "index": true
+  }
+}

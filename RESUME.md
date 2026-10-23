@@ -223,3 +223,18 @@ forward validation. After Oct23 closes20:00UTC, a new-directory native capture
 can supply new raw input; do not re-score consumed Oct20-22 or this diagnostic
 session as independent evidence. Collector is not automatically run in WAIT_DATA.
 Original user repo/index/HEAD were untouched. No production changes/alerts/trades.
+
+
+## Final local-agent verification after upstream update - 2026-10-23
+
+Imported upstream9745929 and kept both checkpoint histories plus guarded host
+commits. Installed schema includes checkpoint_files and needs_gateway;16merged
+worker/guard tests pass. One native Windows notification test returned
+popup_requested_not_delivery_confirmed (no inference or Telegram). TaskReady/
+LastTaskResult0, WAIT_DATA,1of2UTCday calls; backoff preserved and Gateway not
+required now. Raw SPX Oct19 capture remains complete390/390 and unscored/private.
+Live mode/latency and quality still unproven/NOT_READY. See
+docs/SPX_AGENT_FINAL_VERIFICATION_20261023.md and matching sanitized artifact.
+Next: new COMPLETE SPX raw input for frozen forward protocols; no repeated
+connection/tests or recycling consumed outcomes. Collector not auto-run in wait.
+Original user working tree was never used. No production/trading/paid changes.
