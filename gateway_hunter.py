@@ -285,6 +285,7 @@ def monitor(directory, seconds=0, test_alert=False, reconnect_test_after=0, gith
                         plan,reason = None,'feed_lost_before_plan'
                     if plan: outgoing.append(plan)
                     elif event.get('state')=='TRIGGER':
+                        runtime.reject_plan(event,reason)
                         journal({'event':'signal_blocked','reason':reason,'event_id':event['event_id']})
             deliveries = deliver(outgoing, delivery_heartbeat, directory) if github_signals else []
             for delivery in deliveries:

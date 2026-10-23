@@ -1,0 +1,700 @@
+{
+  "created_at": "2026-10-23T11:54:14.368700+00:00",
+  "mode": "CONSUMED_DEVELOPMENT_CHRONOLOGICAL_VALIDATION",
+  "rule_version": "native-linear-onset-watch-v1",
+  "protocol_commit": "b6cd10dd6fb18c9df689c7e679524eae495cdb0a",
+  "protocol_sha256": "051b67fb050da74f905af3b33b4484c9905a2d2bcc5dc8387fada76fb44528bf",
+  "input_sha256": "5704e0a957c7d0b8a6e67902304a7cc15ec4ddb0c5e99d6a51821630a8886346",
+  "train_days": [
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04"
+  ],
+  "validation_days": [
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15"
+  ],
+  "coverage": [
+    {
+      "day": "2026-09-01",
+      "complete": true
+    },
+    {
+      "day": "2026-09-02",
+      "complete": true
+    },
+    {
+      "day": "2026-09-03",
+      "complete": true
+    },
+    {
+      "day": "2026-09-04",
+      "complete": true
+    },
+    {
+      "day": "2026-09-08",
+      "complete": true
+    },
+    {
+      "day": "2026-09-09",
+      "complete": true
+    },
+    {
+      "day": "2026-09-10",
+      "complete": true
+    },
+    {
+      "day": "2026-09-11",
+      "complete": true
+    },
+    {
+      "day": "2026-09-14",
+      "complete": true
+    },
+    {
+      "day": "2026-09-15",
+      "complete": true
+    }
+  ],
+  "training_class_counts": [
+    1290,
+    34,
+    36
+  ],
+  "ambiguous_training_rows": 0,
+  "independent": false,
+  "accepted": false,
+  "readiness": "NOT_READY",
+  "results": {
+    "train": {
+      "0": {
+        "forecast": {
+          "availability_delay_minutes": 0,
+          "sessions": 4,
+          "eligible_minutes": 1360,
+          "events": 86,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 86,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.042758197285742226
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.042758197285742226
+          ],
+          "session_counts": {
+            "2026-09-01": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-03": {
+              "events": 18,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-04": {
+              "events": 17,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "early_f1": 0.0,
+          "absolute_gate": false
+        },
+        "released_setup": {
+          "availability_delay_minutes": 0,
+          "sessions": 4,
+          "eligible_minutes": 1360,
+          "events": 86,
+          "signals": 24,
+          "matched_events": 7,
+          "precision": 0.2916666666666667,
+          "recall": 0.08139534883720931,
+          "early_precision": 0.041666666666666664,
+          "early_event_recall": 0.011627906976744186,
+          "median_lead_minutes": -3.0,
+          "early_matched_events": 1,
+          "false_alarms": 17,
+          "early_false_alarms": 23,
+          "false_alarms_per_session": 4.25,
+          "missed_events": 79,
+          "precision_wilson_95": [
+            0.14914648196960875,
+            0.49167693664496637
+          ],
+          "recall_wilson_95": [
+            0.03998643153878242,
+            0.15860182665393202
+          ],
+          "early_precision_wilson_95": [
+            0.0073934561655057685,
+            0.20241806478655938
+          ],
+          "early_recall_wilson_95": [
+            0.0020555686652495644,
+            0.06296406589291725
+          ],
+          "session_counts": {
+            "2026-09-01": {
+              "events": 29,
+              "signals": 5,
+              "matched": 3,
+              "early": 0,
+              "leads": [
+                -0.9166666666666666,
+                -2.0,
+                -5.0
+              ]
+            },
+            "2026-09-02": {
+              "events": 22,
+              "signals": 4,
+              "matched": 1,
+              "early": 0,
+              "leads": [
+                -3.0
+              ]
+            },
+            "2026-09-03": {
+              "events": 18,
+              "signals": 7,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-04": {
+              "events": 17,
+              "signals": 8,
+              "matched": 3,
+              "early": 1,
+              "leads": [
+                2.1666666666666665,
+                -4.083333333333333,
+                -4.833333333333333
+              ]
+            }
+          },
+          "early_f1": 0.01818181818181818,
+          "absolute_gate": false
+        }
+      },
+      "1": {
+        "forecast": {
+          "availability_delay_minutes": 1,
+          "sessions": 4,
+          "eligible_minutes": 1360,
+          "events": 86,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 86,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.042758197285742226
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.042758197285742226
+          ],
+          "session_counts": {
+            "2026-09-01": {
+              "events": 29,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-03": {
+              "events": 18,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-04": {
+              "events": 17,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "early_f1": 0.0,
+          "absolute_gate": false
+        },
+        "released_setup": {
+          "availability_delay_minutes": 1,
+          "sessions": 4,
+          "eligible_minutes": 1360,
+          "events": 86,
+          "signals": 24,
+          "matched_events": 7,
+          "precision": 0.2916666666666667,
+          "recall": 0.08139534883720931,
+          "early_precision": 0.041666666666666664,
+          "early_event_recall": 0.011627906976744186,
+          "median_lead_minutes": -4.0,
+          "early_matched_events": 1,
+          "false_alarms": 17,
+          "early_false_alarms": 23,
+          "false_alarms_per_session": 4.25,
+          "missed_events": 79,
+          "precision_wilson_95": [
+            0.14914648196960875,
+            0.49167693664496637
+          ],
+          "recall_wilson_95": [
+            0.03998643153878242,
+            0.15860182665393202
+          ],
+          "early_precision_wilson_95": [
+            0.0073934561655057685,
+            0.20241806478655938
+          ],
+          "early_recall_wilson_95": [
+            0.0020555686652495644,
+            0.06296406589291725
+          ],
+          "session_counts": {
+            "2026-09-01": {
+              "events": 29,
+              "signals": 5,
+              "matched": 3,
+              "early": 0,
+              "leads": [
+                -1.9166666666666667,
+                -3.0,
+                -6.0
+              ]
+            },
+            "2026-09-02": {
+              "events": 22,
+              "signals": 4,
+              "matched": 1,
+              "early": 0,
+              "leads": [
+                -4.0
+              ]
+            },
+            "2026-09-03": {
+              "events": 18,
+              "signals": 7,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-04": {
+              "events": 17,
+              "signals": 8,
+              "matched": 3,
+              "early": 1,
+              "leads": [
+                1.1666666666666667,
+                -5.083333333333333,
+                -5.833333333333333
+              ]
+            }
+          },
+          "early_f1": 0.01818181818181818,
+          "absolute_gate": false
+        }
+      }
+    },
+    "development_validation": {
+      "0": {
+        "forecast": {
+          "availability_delay_minutes": 0,
+          "sessions": 6,
+          "eligible_minutes": 2040,
+          "events": 137,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 137,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            1.734723475976807e-18,
+            0.027275057024116055
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            1.734723475976807e-18,
+            0.027275057024116055
+          ],
+          "session_counts": {
+            "2026-09-08": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-09": {
+              "events": 23,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-10": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-11": {
+              "events": 20,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-14": {
+              "events": 21,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-15": {
+              "events": 23,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "early_f1": 0.0,
+          "absolute_gate": false
+        },
+        "released_setup": {
+          "availability_delay_minutes": 0,
+          "sessions": 6,
+          "eligible_minutes": 2040,
+          "events": 137,
+          "signals": 29,
+          "matched_events": 9,
+          "precision": 0.3103448275862069,
+          "recall": 0.06569343065693431,
+          "early_precision": 0.10344827586206896,
+          "early_event_recall": 0.021897810218978103,
+          "median_lead_minutes": -1.5,
+          "early_matched_events": 3,
+          "false_alarms": 20,
+          "early_false_alarms": 26,
+          "false_alarms_per_session": 3.3333333333333335,
+          "missed_events": 128,
+          "precision_wilson_95": [
+            0.17275616744483216,
+            0.4923013423309317
+          ],
+          "recall_wilson_95": [
+            0.03494333900466338,
+            0.12013499519876591
+          ],
+          "early_precision_wilson_95": [
+            0.03581489135067707,
+            0.26385081090773804
+          ],
+          "early_recall_wilson_95": [
+            0.007474758336188016,
+            0.06240139108103243
+          ],
+          "session_counts": {
+            "2026-09-08": {
+              "events": 22,
+              "signals": 3,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-09": {
+              "events": 23,
+              "signals": 5,
+              "matched": 1,
+              "early": 0,
+              "leads": [
+                -1.4166666666666667
+              ]
+            },
+            "2026-09-10": {
+              "events": 28,
+              "signals": 3,
+              "matched": 2,
+              "early": 0,
+              "leads": [
+                -1.5,
+                -4.833333333333333
+              ]
+            },
+            "2026-09-11": {
+              "events": 20,
+              "signals": 4,
+              "matched": 1,
+              "early": 0,
+              "leads": [
+                -6.25
+              ]
+            },
+            "2026-09-14": {
+              "events": 21,
+              "signals": 9,
+              "matched": 3,
+              "early": 2,
+              "leads": [
+                0.8333333333333334,
+                0.5833333333333334,
+                -5.833333333333333
+              ]
+            },
+            "2026-09-15": {
+              "events": 23,
+              "signals": 5,
+              "matched": 2,
+              "early": 1,
+              "leads": [
+                -3.75,
+                0.08333333333333333
+              ]
+            }
+          },
+          "early_f1": 0.03614457831325301,
+          "absolute_gate": false
+        }
+      },
+      "1": {
+        "forecast": {
+          "availability_delay_minutes": 1,
+          "sessions": 6,
+          "eligible_minutes": 2040,
+          "events": 137,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 137,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            1.734723475976807e-18,
+            0.027275057024116055
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            1.734723475976807e-18,
+            0.027275057024116055
+          ],
+          "session_counts": {
+            "2026-09-08": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-09": {
+              "events": 23,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-10": {
+              "events": 28,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-11": {
+              "events": 20,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-14": {
+              "events": 21,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-15": {
+              "events": 23,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "early_f1": 0.0,
+          "absolute_gate": false
+        },
+        "released_setup": {
+          "availability_delay_minutes": 1,
+          "sessions": 6,
+          "eligible_minutes": 2040,
+          "events": 137,
+          "signals": 29,
+          "matched_events": 7,
+          "precision": 0.2413793103448276,
+          "recall": 0.051094890510948905,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": -2.4166666666666665,
+          "early_matched_events": 0,
+          "false_alarms": 22,
+          "early_false_alarms": 29,
+          "false_alarms_per_session": 3.6666666666666665,
+          "missed_events": 130,
+          "precision_wilson_95": [
+            0.12218422442520088,
+            0.42107601617811335
+          ],
+          "recall_wilson_95": [
+            0.02496794443140947,
+            0.10170966150995021
+          ],
+          "early_precision_wilson_95": [
+            0.0,
+            0.11696979849974075
+          ],
+          "early_recall_wilson_95": [
+            1.734723475976807e-18,
+            0.027275057024116055
+          ],
+          "session_counts": {
+            "2026-09-08": {
+              "events": 22,
+              "signals": 3,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            },
+            "2026-09-09": {
+              "events": 23,
+              "signals": 5,
+              "matched": 1,
+              "early": 0,
+              "leads": [
+                -2.4166666666666665
+              ]
+            },
+            "2026-09-10": {
+              "events": 28,
+              "signals": 3,
+              "matched": 1,
+              "early": 0,
+              "leads": [
+                -2.5
+              ]
+            },
+            "2026-09-11": {
+              "events": 20,
+              "signals": 4,
+              "matched": 1,
+              "early": 0,
+              "leads": [
+                -7.25
+              ]
+            },
+            "2026-09-14": {
+              "events": 21,
+              "signals": 9,
+              "matched": 2,
+              "early": 0,
+              "leads": [
+                -0.16666666666666666,
+                -0.4166666666666667
+              ]
+            },
+            "2026-09-15": {
+              "events": 23,
+              "signals": 5,
+              "matched": 2,
+              "early": 0,
+              "leads": [
+                -4.75,
+                -0.9166666666666666
+              ]
+            }
+          },
+          "early_f1": 0.0,
+          "absolute_gate": false
+        }
+      }
+    }
+  },
+  "model_sha256": "895ef84ce03881f775fe03f79b37e4037cc4ffcc70140cba60c6f53febe4808d",
+  "paired_interval": [
+    -0.08235294117647059,
+    0.0
+  ],
+  "stress_gain": 0.0,
+  "development_qualified": false
+}

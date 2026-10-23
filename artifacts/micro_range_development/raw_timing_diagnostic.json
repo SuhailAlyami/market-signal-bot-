@@ -1,0 +1,11 @@
+{
+  "usage": "CONSUMED_DEVELOPMENT_DIAGNOSTIC_NOT_A_RULE_CHANGE",
+  "all_raw_candidates_before_risk": 101,
+  "raw_scored": {
+    "signals": 94,
+    "matched_events": 32,
+    "early_matched_events": 1,
+    "early_event_recall": 0.004484304932735426,
+    "median_lead_minutes": -1.0
+  }
+}

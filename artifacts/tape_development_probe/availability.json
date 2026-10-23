@@ -1,0 +1,24 @@
+{
+  "started_at": "2026-10-22T12:04:58.453643+00:00",
+  "orders_enabled": false,
+  "usage": "consumed_development_capability_and_sampling_span_only",
+  "requests": [
+    {
+      "kind": "BID_ASK",
+      "completed": true,
+      "rows": 1004,
+      "span_seconds": 8,
+      "errors": []
+    },
+    {
+      "kind": "TRADES",
+      "completed": true,
+      "rows": 1004,
+      "span_seconds": 28,
+      "errors": []
+    }
+  ],
+  "contract_id": 649180671,
+  "status": "available",
+  "finished_at": "2026-10-22T12:05:01.219836+00:00"
+}

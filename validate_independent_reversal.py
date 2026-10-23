@@ -40,7 +40,7 @@ def paired_interval(old,new,draws=5000):
     return [float(v) for v in np.quantile(differences,[.025,.975])]
 
 
-def replay(bars,features):
+def replay(bars,features,alternative=None):
     fs=[f for _,f in features.iterrows()]
     runtime=MemoryRuntime(lambda data,i:baseline_candidate(fs[i]))
     plans={'continuation':[],'reversal':[]};diagnostics={m:Counter() for m in plans}
@@ -66,7 +66,7 @@ def replay(bars,features):
                     active=None;cooldown=end+pd.Timedelta(minutes=5)
                 previous=row;continue
             if cooldown is not None and end<cooldown:previous=row;continue
-            found=reversal_candidate(f,row,previous) if previous is not None else None
+            found=(alternative or reversal_candidate)(f,row,previous) if previous is not None else None
             if found:
                 diagnostics['reversal']['triggers']+=1;active={**found,'started':end}
                 event={**found,'direction':'UP' if found['direction']>0 else 'DOWN'}

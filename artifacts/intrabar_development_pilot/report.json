@@ -1,0 +1,583 @@
+{
+  "created_at": "2026-10-22T11:51:22.651452+00:00",
+  "mode": "development",
+  "rule_version": "intrabar-compression-v1",
+  "input_sha256": "b56a81dda35337b689722076f929eb45ac6937879df3c9a1b7a15dac81f1f9bf",
+  "raw_rows": 5400,
+  "minute_rows": 450,
+  "protocol_sha256": "ac32d0b7a7461c1d0346329a458a0f2eb72ae11f9ffd303466b3c4bd9cab3ae5",
+  "coverage": [
+    {
+      "day": "2026-09-02",
+      "rows": 390,
+      "complete": true
+    }
+  ],
+  "coarse_events": 22,
+  "refined_events": 22,
+  "unrefinable_events": 0,
+  "results": {
+    "fine": {
+      "0": {
+        "continuation": {
+          "availability_delay_minutes": 0,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 22,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        },
+        "intrabar": {
+          "availability_delay_minutes": 0,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 7,
+          "matched_events": 4,
+          "precision": 0.5714285714285714,
+          "recall": 0.18181818181818182,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": -1.8333333333333333,
+          "early_matched_events": 0,
+          "false_alarms": 3,
+          "early_false_alarms": 7,
+          "false_alarms_per_session": 3.0,
+          "missed_events": 18,
+          "precision_wilson_95": [
+            0.2504583645276572,
+            0.8417801447485302
+          ],
+          "recall_wilson_95": [
+            0.07306884583422052,
+            0.38516607437126543
+          ],
+          "early_precision_wilson_95": [
+            5.551115123125783e-17,
+            0.35433043506668743
+          ],
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 7,
+              "matched": 4,
+              "early": 0,
+              "leads": [
+                -0.16666666666666666,
+                -2.75,
+                -3.0,
+                -0.9166666666666666
+              ]
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.5714285714285714,
+              0.5714285714285714
+            ],
+            "recall": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "early_precision": [
+              0.0,
+              0.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              3.0,
+              3.0
+            ],
+            "median_lead_minutes": [
+              -1.8333333333333333,
+              -1.8333333333333333
+            ]
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        }
+      },
+      "1": {
+        "continuation": {
+          "availability_delay_minutes": 1,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 22,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        },
+        "intrabar": {
+          "availability_delay_minutes": 1,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 7,
+          "matched_events": 4,
+          "precision": 0.5714285714285714,
+          "recall": 0.18181818181818182,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": -2.8333333333333335,
+          "early_matched_events": 0,
+          "false_alarms": 3,
+          "early_false_alarms": 7,
+          "false_alarms_per_session": 3.0,
+          "missed_events": 18,
+          "precision_wilson_95": [
+            0.2504583645276572,
+            0.8417801447485302
+          ],
+          "recall_wilson_95": [
+            0.07306884583422052,
+            0.38516607437126543
+          ],
+          "early_precision_wilson_95": [
+            5.551115123125783e-17,
+            0.35433043506668743
+          ],
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 7,
+              "matched": 4,
+              "early": 0,
+              "leads": [
+                -1.1666666666666667,
+                -3.75,
+                -4.0,
+                -1.9166666666666667
+              ]
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.5714285714285714,
+              0.5714285714285714
+            ],
+            "recall": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "early_precision": [
+              0.0,
+              0.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              3.0,
+              3.0
+            ],
+            "median_lead_minutes": [
+              -2.8333333333333335,
+              -2.8333333333333335
+            ]
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        }
+      }
+    },
+    "coarse": {
+      "0": {
+        "continuation": {
+          "availability_delay_minutes": 0,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 22,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        },
+        "intrabar": {
+          "availability_delay_minutes": 0,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 7,
+          "matched_events": 4,
+          "precision": 0.5714285714285714,
+          "recall": 0.18181818181818182,
+          "early_precision": 0.2857142857142857,
+          "early_event_recall": 0.09090909090909091,
+          "median_lead_minutes": -0.08333333333333333,
+          "early_matched_events": 2,
+          "false_alarms": 3,
+          "early_false_alarms": 5,
+          "false_alarms_per_session": 3.0,
+          "missed_events": 18,
+          "precision_wilson_95": [
+            0.2504583645276572,
+            0.8417801447485302
+          ],
+          "recall_wilson_95": [
+            0.07306884583422052,
+            0.38516607437126543
+          ],
+          "early_precision_wilson_95": [
+            0.08221892400405678,
+            0.6410655481673808
+          ],
+          "early_recall_wilson_95": [
+            0.025295428990995267,
+            0.27814946841605814
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 7,
+              "matched": 4,
+              "early": 2,
+              "leads": [
+                0.8333333333333334,
+                -0.5,
+                -0.3333333333333333,
+                0.16666666666666666
+              ]
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.5714285714285714,
+              0.5714285714285714
+            ],
+            "recall": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "early_precision": [
+              0.2857142857142857,
+              0.2857142857142857
+            ],
+            "early_event_recall": [
+              0.09090909090909091,
+              0.09090909090909091
+            ],
+            "false_alarms_per_session": [
+              3.0,
+              3.0
+            ],
+            "median_lead_minutes": [
+              -0.08333333333333333,
+              -0.08333333333333333
+            ]
+          },
+          "early_f1": 0.13793103448275862,
+          "censored": 0,
+          "absolute_gate": false
+        }
+      },
+      "1": {
+        "continuation": {
+          "availability_delay_minutes": 1,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 22,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        },
+        "intrabar": {
+          "availability_delay_minutes": 1,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 7,
+          "matched_events": 4,
+          "precision": 0.5714285714285714,
+          "recall": 0.18181818181818182,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": -1.0833333333333333,
+          "early_matched_events": 0,
+          "false_alarms": 3,
+          "early_false_alarms": 7,
+          "false_alarms_per_session": 3.0,
+          "missed_events": 18,
+          "precision_wilson_95": [
+            0.2504583645276572,
+            0.8417801447485302
+          ],
+          "recall_wilson_95": [
+            0.07306884583422052,
+            0.38516607437126543
+          ],
+          "early_precision_wilson_95": [
+            5.551115123125783e-17,
+            0.35433043506668743
+          ],
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 7,
+              "matched": 4,
+              "early": 0,
+              "leads": [
+                -0.16666666666666666,
+                -1.5,
+                -1.3333333333333333,
+                -0.8333333333333334
+              ]
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.5714285714285714,
+              0.5714285714285714
+            ],
+            "recall": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "early_precision": [
+              0.0,
+              0.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              3.0,
+              3.0
+            ],
+            "median_lead_minutes": [
+              -1.0833333333333333,
+              -1.0833333333333333
+            ]
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        }
+      }
+    }
+  },
+  "diagnostics": {
+    "pressure_contexts": 33,
+    "qualified_pairs": 10,
+    "complete_plans": 8,
+    "risk_or_entry_invalid": 2
+  },
+  "paired_interval": [
+    0.0,
+    0.0
+  ],
+  "stress_gain": 0.0,
+  "development_promising": false,
+  "accepted": false,
+  "readiness": "NOT_READY"
+}

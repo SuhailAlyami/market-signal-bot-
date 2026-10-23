@@ -30,10 +30,11 @@ class HistoryClient(Probe):
         if reqId >= 301:self.finished.setdefault(reqId,threading.Event()).set()
 
 
-def acquire(output, protocol_commit):
+def acquire(output, protocol_commit, dates=None):
+    dates=list(DATES if dates is None else dates)
     output.mkdir(parents=True, exist_ok=True)
     metadata=dict(started_at=datetime.now(timezone.utc).isoformat(), protocol_commit=protocol_commit,
-        orders_enabled=False, account_requests=False, paid_requests=False, requested_dates=DATES,
+        orders_enabled=False, account_requests=False, paid_requests=False, requested_dates=dates,
         source='IBKR Gateway native historical TRADES; not a live quote test', requests=[])
     client=HistoryClient(); rows=[]
     def run():
@@ -48,7 +49,7 @@ def acquire(output, protocol_commit):
         if resolved is None:raise RuntimeError('expired_ES_contract_unresolved')
         resolved.includeExpired=True
         metadata['contract']={k:getattr(resolved,k) for k in ('conId','localSymbol','lastTradeDateOrContractMonth','exchange','currency')}
-        for n, day in enumerate(DATES):
+        for n, day in enumerate(dates):
             req=301+n;client.finished[req]=threading.Event()
             end=(datetime.fromisoformat(day)+timedelta(days=1)).strftime('%Y%m%d-00:00:00')
             record=dict(date=day, request_id=req, end_utc=end, duration='1 D', bar_size='1 min', useRTH=1)
@@ -83,4 +84,6 @@ def acquire(output, protocol_commit):
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--protocol-commit',required=True)
     parser.add_argument('--output',type=Path,default=Path('artifacts/independent_reversal'))
-    args=parser.parse_args();acquire(args.output,args.protocol_commit)
+    parser.add_argument('--dates-file',type=Path)
+    args=parser.parse_args();acquire(args.output,args.protocol_commit,
+        json.loads(args.dates_file.read_text()) if args.dates_file else None)

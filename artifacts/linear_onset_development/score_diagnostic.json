@@ -1,0 +1,73 @@
+{
+  "usage": "POST_RUN_DEVELOPMENT_DIAGNOSTIC_NOT_THRESHOLD_SELECTION",
+  "results": {
+    "train": {
+      "class_counts": [
+        1290,
+        34,
+        36
+      ],
+      "max_directional_score": 0.4627268989078631,
+      "directional_score_quantiles": [
+        0.3597374114441517,
+        0.3917996500551793,
+        0.425141994111084
+      ],
+      "one_vs_rest_rank_auc": {
+        "1": 0.6668219323928667,
+        "2": 0.6599320241691843
+      },
+      "argmax_confusion": [
+        [
+          165,
+          527,
+          598
+        ],
+        [
+          2,
+          22,
+          10
+        ],
+        [
+          4,
+          7,
+          25
+        ]
+      ]
+    },
+    "consumed_development_validation": {
+      "class_counts": [
+        1942,
+        54,
+        44
+      ],
+      "max_directional_score": 0.5921945002374773,
+      "directional_score_quantiles": [
+        0.35984345337326273,
+        0.38807335155073247,
+        0.42145647700230415
+      ],
+      "one_vs_rest_rank_auc": {
+        "1": 0.5620081309910111,
+        "2": 0.7549075423574422
+      },
+      "argmax_confusion": [
+        [
+          264,
+          867,
+          811
+        ],
+        [
+          10,
+          28,
+          16
+        ],
+        [
+          4,
+          6,
+          34
+        ]
+      ]
+    }
+  }
+}

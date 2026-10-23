@@ -1,0 +1,575 @@
+{
+  "created_at": "2026-10-22T11:55:26.873013+00:00",
+  "mode": "development",
+  "rule_version": "intrabar-sweep-v1",
+  "input_sha256": "b56a81dda35337b689722076f929eb45ac6937879df3c9a1b7a15dac81f1f9bf",
+  "raw_rows": 5400,
+  "minute_rows": 450,
+  "protocol_sha256": "ac32d0b7a7461c1d0346329a458a0f2eb72ae11f9ffd303466b3c4bd9cab3ae5",
+  "amendment_sha256": "e7b9a0bca393d069f7927e05deafcbd2155d1a834ea6bd522db968feae72a92c",
+  "coverage": [
+    {
+      "day": "2026-09-02",
+      "rows": 390,
+      "complete": true
+    }
+  ],
+  "coarse_events": 22,
+  "refined_events": 22,
+  "unrefinable_events": 0,
+  "results": {
+    "fine": {
+      "0": {
+        "continuation": {
+          "availability_delay_minutes": 0,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 22,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        },
+        "intrabar": {
+          "availability_delay_minutes": 0,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 11,
+          "matched_events": 2,
+          "precision": 0.18181818181818182,
+          "recall": 0.09090909090909091,
+          "early_precision": 0.09090909090909091,
+          "early_event_recall": 0.045454545454545456,
+          "median_lead_minutes": -0.9166666666666667,
+          "early_matched_events": 1,
+          "false_alarms": 9,
+          "early_false_alarms": 10,
+          "false_alarms_per_session": 9.0,
+          "missed_events": 20,
+          "precision_wilson_95": [
+            0.05136768974608513,
+            0.4769805619608442
+          ],
+          "recall_wilson_95": [
+            0.025295428990995267,
+            0.27814946841605814
+          ],
+          "early_precision_wilson_95": [
+            0.016232172885884855,
+            0.37735843645159567
+          ],
+          "early_recall_wilson_95": [
+            0.00806942762126385,
+            0.21798045838657332
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 11,
+              "matched": 2,
+              "early": 1,
+              "leads": [
+                0.9166666666666666,
+                -2.75
+              ]
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "recall": [
+              0.09090909090909091,
+              0.09090909090909091
+            ],
+            "early_precision": [
+              0.09090909090909091,
+              0.09090909090909091
+            ],
+            "early_event_recall": [
+              0.045454545454545456,
+              0.045454545454545456
+            ],
+            "false_alarms_per_session": [
+              9.0,
+              9.0
+            ],
+            "median_lead_minutes": [
+              -0.9166666666666667,
+              -0.9166666666666667
+            ]
+          },
+          "early_f1": 0.060606060606060615,
+          "censored": 0,
+          "absolute_gate": false
+        }
+      },
+      "1": {
+        "continuation": {
+          "availability_delay_minutes": 1,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 22,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        },
+        "intrabar": {
+          "availability_delay_minutes": 1,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 11,
+          "matched_events": 2,
+          "precision": 0.18181818181818182,
+          "recall": 0.09090909090909091,
+          "early_precision": 0.0,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": -1.9166666666666667,
+          "early_matched_events": 0,
+          "false_alarms": 9,
+          "early_false_alarms": 11,
+          "false_alarms_per_session": 9.0,
+          "missed_events": 20,
+          "precision_wilson_95": [
+            0.05136768974608513,
+            0.4769805619608442
+          ],
+          "recall_wilson_95": [
+            0.025295428990995267,
+            0.27814946841605814
+          ],
+          "early_precision_wilson_95": [
+            0.0,
+            0.2588329669680317
+          ],
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 11,
+              "matched": 2,
+              "early": 0,
+              "leads": [
+                -0.08333333333333333,
+                -3.75
+              ]
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "recall": [
+              0.09090909090909091,
+              0.09090909090909091
+            ],
+            "early_precision": [
+              0.0,
+              0.0
+            ],
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              9.0,
+              9.0
+            ],
+            "median_lead_minutes": [
+              -1.9166666666666667,
+              -1.9166666666666667
+            ]
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        }
+      }
+    },
+    "coarse": {
+      "0": {
+        "continuation": {
+          "availability_delay_minutes": 0,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 22,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        },
+        "intrabar": {
+          "availability_delay_minutes": 0,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 11,
+          "matched_events": 2,
+          "precision": 0.18181818181818182,
+          "recall": 0.09090909090909091,
+          "early_precision": 0.18181818181818182,
+          "early_event_recall": 0.09090909090909091,
+          "median_lead_minutes": 3.875,
+          "early_matched_events": 2,
+          "false_alarms": 9,
+          "early_false_alarms": 9,
+          "false_alarms_per_session": 9.0,
+          "missed_events": 20,
+          "precision_wilson_95": [
+            0.05136768974608513,
+            0.4769805619608442
+          ],
+          "recall_wilson_95": [
+            0.025295428990995267,
+            0.27814946841605814
+          ],
+          "early_precision_wilson_95": [
+            0.05136768974608513,
+            0.4769805619608442
+          ],
+          "early_recall_wilson_95": [
+            0.025295428990995267,
+            0.27814946841605814
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 11,
+              "matched": 2,
+              "early": 2,
+              "leads": [
+                3.0833333333333335,
+                4.666666666666667
+              ]
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "recall": [
+              0.09090909090909091,
+              0.09090909090909091
+            ],
+            "early_precision": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "early_event_recall": [
+              0.09090909090909091,
+              0.09090909090909091
+            ],
+            "false_alarms_per_session": [
+              9.0,
+              9.0
+            ],
+            "median_lead_minutes": [
+              3.875,
+              3.875
+            ]
+          },
+          "early_f1": 0.12121212121212123,
+          "censored": 0,
+          "absolute_gate": false
+        }
+      },
+      "1": {
+        "continuation": {
+          "availability_delay_minutes": 1,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 0,
+          "matched_events": 0,
+          "precision": null,
+          "recall": 0.0,
+          "early_precision": null,
+          "early_event_recall": 0.0,
+          "median_lead_minutes": null,
+          "early_matched_events": 0,
+          "false_alarms": 0,
+          "early_false_alarms": 0,
+          "false_alarms_per_session": 0.0,
+          "missed_events": 22,
+          "precision_wilson_95": null,
+          "recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "early_precision_wilson_95": null,
+          "early_recall_wilson_95": [
+            0.0,
+            0.14865487460862087
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 0,
+              "matched": 0,
+              "early": 0,
+              "leads": []
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": null,
+            "recall": [
+              0.0,
+              0.0
+            ],
+            "early_precision": null,
+            "early_event_recall": [
+              0.0,
+              0.0
+            ],
+            "false_alarms_per_session": [
+              0.0,
+              0.0
+            ],
+            "median_lead_minutes": null
+          },
+          "early_f1": 0.0,
+          "censored": 0,
+          "absolute_gate": false
+        },
+        "intrabar": {
+          "availability_delay_minutes": 1,
+          "sessions": 1,
+          "eligible_minutes": 340,
+          "events": 22,
+          "signals": 11,
+          "matched_events": 2,
+          "precision": 0.18181818181818182,
+          "recall": 0.09090909090909091,
+          "early_precision": 0.18181818181818182,
+          "early_event_recall": 0.09090909090909091,
+          "median_lead_minutes": 2.875,
+          "early_matched_events": 2,
+          "false_alarms": 9,
+          "early_false_alarms": 9,
+          "false_alarms_per_session": 9.0,
+          "missed_events": 20,
+          "precision_wilson_95": [
+            0.05136768974608513,
+            0.4769805619608442
+          ],
+          "recall_wilson_95": [
+            0.025295428990995267,
+            0.27814946841605814
+          ],
+          "early_precision_wilson_95": [
+            0.05136768974608513,
+            0.4769805619608442
+          ],
+          "early_recall_wilson_95": [
+            0.025295428990995267,
+            0.27814946841605814
+          ],
+          "session_counts": {
+            "2026-09-02": {
+              "events": 22,
+              "signals": 11,
+              "matched": 2,
+              "early": 2,
+              "leads": [
+                2.0833333333333335,
+                3.6666666666666665
+              ]
+            }
+          },
+          "session_bootstrap_95": {
+            "precision": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "recall": [
+              0.09090909090909091,
+              0.09090909090909091
+            ],
+            "early_precision": [
+              0.18181818181818182,
+              0.18181818181818182
+            ],
+            "early_event_recall": [
+              0.09090909090909091,
+              0.09090909090909091
+            ],
+            "false_alarms_per_session": [
+              9.0,
+              9.0
+            ],
+            "median_lead_minutes": [
+              2.875,
+              2.875
+            ]
+          },
+          "early_f1": 0.12121212121212123,
+          "censored": 0,
+          "absolute_gate": false
+        }
+      }
+    }
+  },
+  "diagnostics": {
+    "sweep_observations": 198,
+    "qualified_reclaims": 13,
+    "complete_plans": 13
+  },
+  "paired_interval": [
+    0.06060606060606061,
+    0.06060606060606061
+  ],
+  "stress_gain": 0.0,
+  "development_promising": true,
+  "accepted": false,
+  "readiness": "NOT_READY"
+}
