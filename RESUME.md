@@ -255,3 +255,10 @@ Current feed is NOT running: after the observed app memory pressure no Gateway/r
 ## 2026-10-23 - reader recovery and fixed unseen cohort before acquisition
 
 Gateway logged in/listening4001. Restored saved original gateway_hunter flags without tests or source changes, launcher5728/child7888. Actual SPX type1 source trade14:34:38UTC arrived14:34:38.126587UTC, heartbeatok, options/detection success NOT inferred. First proof saved privately. Imported reviewed local-app checkpoint25973cf by clean fast-forward, preserving original worktree. New fixed cohort docs/SPX_UNTOUCHED_COHORT_20261023.md is committed BEFORE acquisition/outcomes. July20-Aug14 remain untouched;12/4/4split, original frozen rules/gates. No paid services/trades/experimental activation. Temporary host-owned STOP coordinates research only; live reader unaffected.
+
+
+## Frozen cohort negative result and one next hypothesis before measurement
+
+20/20native SPX sessions July20-Aug14 complete,7800minutes. Frozen evaluator selectedpullback_release; Aug5-Aug10 validation failed all gates,early2/95,precision25.61percent,medianlead-1min,false15.25/session. HoldoutAug11-Aug14 NOT opened. Full derived study/coverage and consumed-training timing diagnostic are retained. StateNOT_READY. Current original is also NOT accepted.
+
+Preregistered docs/SPX_PREPARATION_PROTOCOL_20261023.md before any Aug11-Aug14 outcomes: one continuation READINESS while still on pullback side of EMA5,recross remains confirmation. Same gates/no newnumericthresholds. Old16days consumeddevelopment; previousunopened4days become newvalidation explicitly; futureAug17-Aug20 reservedunacquired conditionalholdout. AionUI still blocks at official browser sign-in; opened alone thenclosed to preserve RAM. No appagent evaluation claimed.

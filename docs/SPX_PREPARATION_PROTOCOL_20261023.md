@@ -1,0 +1,13 @@
+# One fixed pullback-readiness hypothesis, before new validation outcomes
+
+Motivation from consumed training only:60/67matched pullback_release signals were non-early. Existing EMA5recross is entry confirmation; readiness should be observable while price is still within the pullback. No new numeric thresholds or parameter search. This is a continuation model, not a reversal model.
+
+Fixed native SPX minute inputs and existing session-local EMA5/EMA15,15minute close displacement and31contiguous-minute validity. UP readiness requires EMA5>EMA15,close15ago<close, previous_close<=previous_EMA5, current_close<=current_EMA5 and current bullish body. DOWN is exact inequality/sign symmetry. Equality at EMA is admitted for readiness; the current close has NOT crossed to the trend side. Existing pullback_release crossing rule remains the separate confirmation baseline. Do not require a breakout or later two-bar confirmation to label readiness. No options/ES volume/production lifecycle edits.
+
+Use the unchanged causal10minute scheduler, movement universe, strict matching,0/1/2minute delays, uncertainty measures and five quality gates. Evaluate one fixed preparation model versus pullback_release, original_candidate and no_signal on identical dates. No alternate thresholds/variants, no choose-a-winner on validation. This is a different signal stage, not relaxation of acceptance gates.
+
+Chronological data roles for THIS protocol: the16already-inspected July20-Aug10 sessions are consumed development/training. ValidationAug11-Aug14 consists of the previous study's unopened4sessions: integrity checks read their raw OHLC, but no features/labels/outcomes were computed. No fresh independent claim applies to the former Aug5-Aug10 validation. HoldoutAug17-Aug20 remains unacquired/uninspected, to be collected only if preparation passes all validation gates. No need to recollect earlier sessions.
+
+Precision>=50percent,Wilson95lower>=40percent,strict early recall>=20percent,medianlead>=1minute,false<=2/session remain required in validation and conditional holdout. Require strict early F1>original_candidate in holdout too. Auxiliary pre-anchor output stays diagnostic only. Failure means NOT_READY with no parameter tuning or alert deployment. A zero-signal result is not accepted.
+
+Testing: readiness can precede the EMA crossing while confirmation remains absent; invalid/gapped data fail closed; future-price mutation leaves prefix decisions unchanged; the default frozen evaluator path retains its behavior. Version implementation in Git before evaluating the4newvalidationdays. Keep the persistent registry; if a conditional holdout is opened, reserve its dates before outcomes. No paid services/trades or GUI app concurrent with the computation.

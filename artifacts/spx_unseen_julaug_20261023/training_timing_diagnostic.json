@@ -1,0 +1,101 @@
+{
+  "mode": "CONSUMED_TRAINING_DIAGNOSTIC_ONLY",
+  "days": [
+    "2026-07-20",
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23",
+    "2026-07-24",
+    "2026-07-27",
+    "2026-07-28",
+    "2026-07-29",
+    "2026-07-30",
+    "2026-07-31",
+    "2026-08-03",
+    "2026-08-04"
+  ],
+  "events": 313,
+  "constrained_anchor_windows_without_strict_early_slot": 172,
+  "models": {
+    "compression_0.35": {
+      "signals": 192,
+      "matched": 64,
+      "early": 3,
+      "at_onset": 9,
+      "late": 52,
+      "unmatched": 128,
+      "early_precision": 0.015625,
+      "median_lead_minutes": -2.0
+    },
+    "compression_0.50": {
+      "signals": 319,
+      "matched": 96,
+      "early": 5,
+      "at_onset": 7,
+      "late": 84,
+      "unmatched": 223,
+      "early_precision": 0.01567398119122257,
+      "median_lead_minutes": -2.5
+    },
+    "compression_0.65": {
+      "signals": 368,
+      "matched": 126,
+      "early": 5,
+      "at_onset": 10,
+      "late": 111,
+      "unmatched": 242,
+      "early_precision": 0.01358695652173913,
+      "median_lead_minutes": -2.0
+    },
+    "pullback_release": {
+      "signals": 227,
+      "matched": 67,
+      "early": 7,
+      "at_onset": 9,
+      "late": 51,
+      "unmatched": 160,
+      "early_precision": 0.030837004405286344,
+      "median_lead_minutes": -1.0
+    },
+    "sweep_reclaim": {
+      "signals": 187,
+      "matched": 43,
+      "early": 8,
+      "at_onset": 10,
+      "late": 25,
+      "unmatched": 144,
+      "early_precision": 0.0427807486631016,
+      "median_lead_minutes": -1.0
+    },
+    "original_candidate": {
+      "signals": 371,
+      "matched": 132,
+      "early": 6,
+      "at_onset": 5,
+      "late": 121,
+      "unmatched": 239,
+      "early_precision": 0.016172506738544475,
+      "median_lead_minutes": -2.0
+    },
+    "no_signal": {
+      "signals": 0,
+      "matched": 0,
+      "early": 0,
+      "at_onset": 0,
+      "late": 0,
+      "unmatched": 0,
+      "early_precision": null,
+      "median_lead_minutes": null
+    }
+  },
+  "thresholds_changed": false,
+  "holdout_computed": false,
+  "readiness": "NOT_READY",
+  "limitations": [
+    "An empty anchor-constrained window does not exclude earlier signals before that anchor.",
+    "Late matched signals describe timing; this alone does not prove a causal bug.",
+    "No candidate, gate, matching rule, validation result or alert setting is changed.",
+    "Training outcomes are consumed development evidence, not an independent test."
+  ],
+  "study_sha256": "1a21f6d3cdc8293e6766b7e130a06e55e9ac7fbf03f22699312efb88caab8317"
+}
