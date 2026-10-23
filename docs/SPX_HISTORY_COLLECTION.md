@@ -70,6 +70,11 @@ The collector neither evaluates the frozen train/validation/holdout study nor
 turns on alerts. Dataset quality and model quality are separate gates. Quality
 status stays NOT_READY until the frozen study passes on actual acquired history.
 
+After successful capture, `evaluate_spx_sessions.py` can run the frozen
+chronological study; see `docs/SPX_CHRONOLOGICAL_STUDY.md`. The evaluator independently
+rechecks raw hashes and coverage, and leaves holdout outcomes uncomputed after
+failed validation. It never enables alerts or orders.
+
 ## Verification status
 
 Offline tests cover different daily UTC ends, NYSE Thanksgiving closure, early
