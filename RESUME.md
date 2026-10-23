@@ -238,3 +238,10 @@ docs/SPX_AGENT_FINAL_VERIFICATION_20261023.md and matching sanitized artifact.
 Next: new COMPLETE SPX raw input for frozen forward protocols; no repeated
 connection/tests or recycling consumed outcomes. Collector not auto-run in wait.
 Original user working tree was never used. No production/trading/paid changes.
+
+
+## 2026-10-23 - local app handoff execution
+
+Requested9745929 update and the single Windows notification test were already completed in c4ca1e7; no repeat. Read SPX_MULTI_AGENT_HANDOFF. Prepared/pushed three isolated assignment branches: research/audit-data-causality, research/hypothesis-candidate, research/result-review. Antigravity2.25.0 existing Claude quota failed explicitly; stopped and continued same audit serially with available Gemini3.8 Flash. It produced an audit and3illustrative tests. Host review did not substantiate new code defects and corrected the report's4tests claim; NOT_READY unchanged. Full evidence: docs/SPX_LOCAL_APPS_EXECUTION_20261023.md and docs/AGENT_DATA_AUDIT_HOST_REVIEW.md.
+
+AionUI2.2.2 blocks at official browser sign-in; its two assignments are ready but NOT executed. Finish that sign-in and return to the app, then inspect the authenticated model/backend without buying a subscription or copying keys. Machine has about4GiB visible RAM; simultaneous app launch caused0x8007000e, so inspect/run sequentially. Only newly opened app trees were closed; Gateway/reader/task were not stopped or reconfigured. Existing runner WAIT_DATA with one daily call remains unchanged. No trades, subscriptions, production changes, repeated Telegram test or new market acquisition.
