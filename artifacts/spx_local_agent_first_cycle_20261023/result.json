@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-10-23T12:29:45.413622+00:00",
+  "source_commit": "1be14a32b464e37a9ddc1b944f6d985b7cb36d88",
+  "first_scheduled_model_status": "BLOCKED",
+  "initial_blocker": "linked-worktree Git metadata read-only inside Codex sandbox",
+  "host_recovery_checkpoint": "4bdb98ef947ec25ee7c18e4788ea9654ca37b2f4",
+  "recovery": "Explicit reviewed research files committed outside model sandbox; sandbox retained; manifest guard installed",
+  "actual_historical_acquisition": {
+    "source": "IBKR_TWS_API_HISTORY",
+    "live_feed_verified": false,
+    "readiness": "NOT_READY",
+    "requested_sessions": 1,
+    "notifications_enabled": false,
+    "orders_enabled": false,
+    "sessions": [
+      {
+        "date": "2026-10-19",
+        "raw_sha256": "631be4bbbf518990c726cb2cea95639babb3cef54ec24f18d3906369002fd8ec",
+        "complete": true,
+        "expected_bars": 390,
+        "bars": 390,
+        "missing_minutes": [],
+        "identical_duplicates": 0,
+        "outside_session_bars": 0
+      }
+    ],
+    "contract": {
+      "symbol": "SPX",
+      "security_type": "IND",
+      "exchange": "CBOE",
+      "currency": "USD",
+      "contract_id": 416904
+    },
+    "data_complete": true,
+    "finished_at": "2026-10-23T12:24:47.081436+00:00"
+  },
+  "live_market_data_mode": "UNKNOWN",
+  "live_feed_verified": false,
+  "detector_quality": "NOT_READY",
+  "detector_outcomes_computed": false,
+  "orders_enabled": false,
+  "experimental_alerts_enabled": false,
+  "model_calls_used": 1,
+  "daily_call_limit": 2,
+  "original_git_metadata_unchanged": {
+    "HEAD": true,
+    "index": true
+  },
+  "raw_data_published": false,
+  "private_logs_published": false
+}

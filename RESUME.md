@@ -194,3 +194,25 @@ disabling the sandbox, changing Gateway or resetting the daily call budget.
 This recovery is not a market-quality improvement; NOT_READY remains.
 Next: execute the already frozen bounded Oct19 daily acquisition ONCE after this
 checkpoint is committed, then record actual provider coverage separately.
+
+
+## Recovered Windows agent and actual SPX acquisition - 2026-10-23
+
+First actual scheduled Codex call used1of2UTCday calls and stopped on sandboxed
+Git metadata. Reviewed checkpoint pushed4bdb98e. The host subsequently executed
+the committed one-session collector ONCE: Oct19 SPX/IND/CBOE390/390 complete
+provider bars, actual API handshake/contract resolution/history. Private raw and
+validated files are under .hunter-state/spx-gateway-check-20261023-oct19/capture.
+See docs/SPX_LOCAL_AGENT_FIRST_CYCLE_20261023.md and
+artifacts/spx_local_agent_first_cycle_20261023/result.json for sanitized evidence.
+No live mode/latency or predictive edge is established. No outcomes computed.
+
+The installed worker now uses guarded host commits with explicit research-file
+manifests; no sandbox/ACL weakening. Stable hidden launcher pins Git/Python/Codex.
+YYYY-MM-DD.raw.json collection files correctly wake waiting.11focused tests pass.
+Daily budget/backoff preserved, no second model invocation used for recovery.
+Current state WAIT_DATA/NOT_READY; require new complete SPX sessions for frozen
+forward validation. After Oct23 closes20:00UTC, a new-directory native capture
+can supply new raw input; do not re-score consumed Oct20-22 or this diagnostic
+session as independent evidence. Collector is not automatically run in WAIT_DATA.
+Original user repo/index/HEAD were untouched. No production changes/alerts/trades.
