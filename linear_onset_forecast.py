@@ -36,10 +36,10 @@ def training_labels(minute,indices,events):
     return labels,keep
 
 
-def fit(features,indices,labels,keep):
+def fit(features,indices,labels,keep,regularization=1.):
     selected=np.array(indices)[keep];y=labels[keep];counts=np.bincount(y,minlength=3)
     if min(counts[1:])<10:raise ValueError('insufficient_training_directional_support')
-    model=fit_model(features.iloc[selected][NAMES].to_numpy(),y,1.,iterations=300)
+    model=fit_model(features.iloc[selected][NAMES].to_numpy(),y,regularization,iterations=300)
     return dict(version=VERSION,feature_names=NAMES,**model)
 
 
@@ -52,14 +52,15 @@ def scores(features,model):
 
 def warnings(minute,features,model,indices):
     probabilities=scores(features,model);signals=[];active=0;previous=None
+    threshold=model.get('threshold',.65);off=threshold-.15
     for i in indices:
         if previous is not None and minute.index[i]-minute.index[previous]!=pd.Timedelta(minutes=1):active=0
         previous=i
         if not features.valid.iloc[i]:active=0;continue
         p=probabilities[i]
-        if active and p[1 if active==1 else 2]<.5:active=0
+        if active and p[1 if active==1 else 2]<off:active=0
         choice=int(np.argmax(p));other=2 if choice==1 else 1
-        if choice==0 or p[choice]<.65 or p[choice]-p[other]<.1:continue
+        if choice==0 or p[choice]<threshold or p[choice]-p[other]<.1:continue
         side=1 if choice==1 else -1
         if active==side:continue
         active=side;start=minute.index[i]
