@@ -37,3 +37,13 @@ Gemini Flash completed the audit and left exactly docs/AGENT_DATA_AUDIT.md and t
 3. Run the independent review assignment in spx-result-review / research/result-review against a fixed implementation SHA. Do not reselect thresholds.
 4. For Antigravity, reopen project spx-audit-data-causality and conversation SPX Data Causality Audit. Reuse its source reads; Claude quota failure is recorded, Gemini Flash was the available continuation. Do not restart the survey.
 5. Codex reviews exact output commits and novel reproducers before importing reports or any fix. Existing research runner stays WAIT_DATA until genuinely new complete raw SPX input. This app handoff does not change model-call budgets, detector gates or live feed settings.
+
+## Final operational blocker supersedes earlier running-state snapshots
+
+After the desktop-app memory failure, a targeted final process/listener check was justified: no Gateway, no reader and no listener4001 remained. Task Suhail SPX Research was Ready with LastTaskResult0; that is scheduler status, NOT live feed or detection evidence. Prior process IDs and the earlier successful capture are stale for current availability.
+
+New native crash file C:/Jts/ibgateway/1050/hs_err_pid11388.log has modified time2026-10-23T14:01:04.062647Z (17:01Riyadh), during the observed app-memory pressure. Its header says insufficient memory for Java Runtime Environment, native malloc allocation1070808bytes failed, Out of Memory Error arena.cpp186. Raw crash log was not uploaded. Simultaneous desktop startup added system pressure; exact per-process causation was not isolated.
+
+Closed the newly started Antigravity tree after its audit completed; both research GUIs are now closed. Started the existing C:/Jts/ibgateway/1050/ibgateway.exe, PID1380, without changing API, heap, port, trading-mode or other settings. Its actual native window is now the IB Gateway login form with empty password; port4001 is not yet listening. User must enter the password inside Gateway and complete IBKR two-factor authentication if prompted. No password/token was requested or copied. Screenshot remained private outside Git.
+
+Current data availability: STOPPED_PENDING_GATEWAY_LOGIN. Reader was not restarted against an unauthenticated Gateway. After successful login, restore its previously saved reader launch/config and prove actual callback timestamps; do not mistake task Ready, port open or test success for live feed. No extra Telegram or Windows test should be sent. The frozen research study separately remains WAIT_DATA/NOT_READY. No reboot was requested.
