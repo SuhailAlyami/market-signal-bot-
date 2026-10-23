@@ -64,7 +64,9 @@ def evaluate(path,output,protocol_commit):
                     bootstrap=False,availability_delay_minutes=delay)
                 metrics.update(early_f1=f1(metrics),absolute_gate=absolute_gate(metrics))
                 report['results'][phase][str(delay)][name]=metrics
-                if not delay:pd.DataFrame(selected).to_csv(output/f'{phase}_{name}_signals.csv',index=False)
+                if not delay:
+                    columns=list(selected[0]) if selected else ['index','direction','bar_time','detected_at','event_id','lead_minutes']
+                    pd.DataFrame(selected,columns=columns).to_csv(output/f'{phase}_{name}_signals.csv',index=False)
     result=report['results']['development_validation'];new=result['0']['forecast'];old=result['0']['released_setup']
     report['paired_interval']=paired_interval(old,new)
     report['stress_gain']=result['1']['forecast']['early_f1']-result['1']['released_setup']['early_f1']
