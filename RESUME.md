@@ -158,3 +158,17 @@ python research_spx_inside_range.py --input artifacts/spx_extension_20261023/raw
 `python research_spx_lifecycle_repair.py --input artifacts/spx_extension_20261023/raw.json --output .hunter-state/spx-lifecycle-repair-new.json --protocol-commit 48940e18e031b3f803d494665a2861e121d5a6b2`
 
 الخطوة البحثية التالية: جلسات كاملة جديدة للقواعد المثبتة، مع قياس وصول حي؛ لا تدوير العتبات على البيانات المستهلكة. لا يُختار v2 كفائز من هذه النتيجة. أحدث commit بعيد يحتوي هذا الملف هو نقطة الاستئناف، ولا يصح الاعتماد على SHA القديم في أعلى المستند.
+
+
+## تحديث: فرضية توافق الاستعداد والميل
+
+أُضيفت فرضية واحدة spx-consensus-v1، اتفاق inside_range_pressure وslope_projection المجمدين على الاتجاه نفسه في الدقيقة المكتملة. ثُبتت قبل القياس في `f21002340df97cc8dab6a9b20291a958fe0d4833`. لا تغيير في أرقام العتبات ولا اختيار بديل بعد النتيجة.
+
+ملفات: `spx_consensus.py` و`research_spx_consensus.py` و`tests/test_spx_consensus.py` و`docs/SPX_CONSENSUS_PROTOCOL.md` و`docs/SPX_CONSENSUS_RESULT.md` و`artifacts/spx_consensus_20261023/result.json`.
+
+النتيجة الوصفية المستهلكة بالمقارنة بجدول داخل النطاق ذي التهدئة (ليست دورة الحالات): 55→31 إشارة، 40→23 غير مطابق، 3→2 مبكر، والمطابقة 15/55→8/31؛ ليست أفضلية مثبتة ولم تُعتمد. NOT_READY والتنبيهات معطلة. لا تعيد تعديلها على نفس البيانات. أربعة اختبارات جديدة للاتفاق والسببية والتحويل الخطي.
+
+إعادة الإنتاج إلى ملف جديد:
+`python research_spx_consensus.py --input artifacts/spx_extension_20261023/raw.json --output .hunter-state/spx-consensus-new.json --protocol-commit f21002340df97cc8dab6a9b20291a958fe0d4833`
+
+الخطوة التالية ما زالت بيانات جلسات جديدة كاملة؛ لا يكفي جمع شروط أكثر. أصل التجارب محفوظ، وهذا آخر تحديث وليس نجاحًا تجاريًا. رأس الفرع البعيد الذي يحتوي هذا الملف هو نقطة الاستئناف.
