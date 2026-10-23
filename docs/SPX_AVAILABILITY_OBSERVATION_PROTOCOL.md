@@ -1,0 +1,17 @@
+# Prospective SPX availability trace, frozen before collection
+
+Observation-only instrument, not a directional strategy or acceptance change. Implements the missing input in docs/SPX_NEXT_HYPOTHESIS_20261023.md. Existing Gateway/reader/configuration, signals and2/daymodel budget are unchanged. Separate local read-only APIclient; no GUI, account/order API, options or new subscription.
+
+Capture original historicalData backfill separately from historicalDataUpdate. Initial historical receipts NEVER establish prospective availability. Record UTC wall receipt and monotonic receipt at callback, source SPX/IND/CBOE/USD/uniquecontract, raw provider bar start/end semantics, unchanged OHLC and separately provider timestamp tick45/88 and price tick4. Never pair asynchronous price/time callbacks as one verified trade. MarketDataType is the contemporaneous parallel quote mode, not an independent per-bar exchange mode callback.
+
+First completed-bar observation requires a live update received at/after that minute end, or a later provider bar after a previously observed live forming bar. Preserve the previous snapshot, completion-evidence method and possible later revisions. Advancing provider bar is completion evidence, NOT a guarantee its stored OHLC is the provider's eventual final revision. Never mark an idle forming snapshot complete just because the local clock passed. Gaps/reconnects remain observable; no backfill repair or zero-latency assumption.
+
+Use native NYSE calendar, DST/early closes. Record during preopen5minutes through close+5minutes; process waits without subscribing outside this interval. Restart/reconnect with bounded backoff; explicit request rejection/permission errors stop unchanged retries for that session. Preserve only numeric errorcodes, not provider/account messages. Independent lock prevents duplicates.
+
+Full prospective session requires recording begun before open, every expected minute with first completed observation and contemporaneous quote mode1, and no synthesized missing minute. CurrentOct23 begins mid-session and MUST remain partial. First possible full prospective session is next complete trading day if computer/network/Gateway remain available. Persist partials and reasons. No full-session success inferred from a short smoke test.
+
+Only after a prospectively full trace, obtain that completed day's native final historical capture ONCE through existing collect_spx_sessions with separateclient20331028. Skip if already exists; no rejected-request retries. Preserve trace versus final revisions explicitly. Publish a new ignored market-input raw.json to the installed research worktree ONLY after both trace and daily capture are complete. Other partial/status files must not wake the model worker or reset its quota. Raw callbacks and provider data stay private; Git gets source/tests and sanitized derived coverage only.
+
+No directional fitting, new model claim, deployment or alert testing follows automatically. The session becomes availabilityDIAGNOSTICDEVELOPMENT, not untouched signal validation. Research gates, independent-data requirements, strict scoring and Pine synchronization condition remain intact.
+
+Authoritative semantics: https://www.interactivebrokers.com/docs/tws-api/doc/md/historical-bars and https://interactivebrokers.github.io/tws-api/historical_bars.html . keepUpToDate returns changing unfinished bars; historical receipt is not original live availability.
