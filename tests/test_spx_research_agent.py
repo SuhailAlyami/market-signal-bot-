@@ -12,6 +12,61 @@ spec.loader.exec_module(w)
 
 
 class ResearchWorkerTests(unittest.TestCase):
+    def test_gateway_notice_deduplicated_across_ticks_and_restart(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp)
+            w.save(state/'state.json', {'status':'WAIT_DATA','needs_gateway':True,'calls':1})
+            sender = unittest.mock.Mock(return_value=True)
+            self.assertEqual(w.publish_attention(state,sender),'popup_requested')
+            self.assertEqual(w.publish_attention(state,sender),'deduplicated')
+            sender.assert_called_once()
+            self.assertIn('IB Gateway',(state/'attention.txt').read_text(encoding='utf-8'))
+            self.assertEqual(w.json.loads((state/'state.json').read_text())['calls'],1)
+
+    def test_generic_wait_does_not_invent_gateway_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp)
+            w.save(state/'state.json',{'status':'WAIT_DATA','summary':'FROZEN before opening'})
+            sender = unittest.mock.Mock(return_value=True)
+            w.publish_attention(state,sender)
+            message = sender.call_args.args[1]
+            self.assertIn('لم يتأكد',message)
+            self.assertEqual(w.json.loads((state/'attention.json').read_text())['kind'],'data')
+            w.save(state/'state.json',{'status':'NOT_READY','needs_gateway':False})
+            self.assertEqual(w.publish_attention(state,sender),'no_attention')
+            self.assertEqual(sender.call_count,1)
+
+    def test_recovery_allows_same_requirement_to_notify_again(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp)
+            sender = unittest.mock.Mock(return_value=True)
+            for status in ('WAIT_DATA','CONTINUE','WAIT_DATA'):
+                w.save(state/'state.json',{'status':status,'needs_gateway':True})
+                w.publish_attention(state,sender)
+            self.assertEqual(sender.call_count,2)
+
+    def test_popup_failure_keeps_fallback_and_retries_after_hour(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp)
+            w.save(state/'state.json',{'status':'WAIT_DATA','needs_gateway':True})
+            sender = unittest.mock.Mock(return_value=False)
+            now = datetime.now(timezone.utc)
+            self.assertEqual(w.publish_attention(state,sender,now),'saved_text_only')
+            self.assertTrue((state/'attention.txt').exists())
+            self.assertEqual(w.publish_attention(state,sender,now+w.timedelta(minutes=15)),'deduplicated')
+            w.publish_attention(state,sender,now+w.timedelta(hours=1))
+            self.assertEqual(sender.call_count,2)
+
+    def test_notice_never_executes_or_displays_provider_text(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp)
+            secret = "PROVIDER_PRIVATE_MESSAGE_'$(command)"
+            w.save(state/'state.json',{'status':'BLOCKED','reason':'RuntimeError','summary':secret,'next_step':secret})
+            sender = unittest.mock.Mock(return_value=True)
+            w.publish_attention(state,sender)
+            self.assertNotIn(secret,(state/'attention.txt').read_text(encoding='utf-8'))
+            self.assertNotIn(secret,str(sender.call_args))
+
     def test_success_checkpoint_waits_without_spending_again(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)/'repo'
