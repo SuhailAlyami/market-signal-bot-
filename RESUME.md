@@ -302,3 +302,14 @@ handles the exact two-file manifest outside protected Git metadata.
 
 ??????? ???????: ????? ????? SPX ????? ????? ?? ????? ????? ?????? ???? ????????
 ?? ???? ?????? ??? ??????? ??? ????? ???? ??????. ?? ???? ????? ?????? ???? Gateway.
+
+
+## 2026-10-23 - missing live-availability observation now being recorded
+
+User clarified fixed exante rules, independent data, every negative result saved, replication and liveSHADOW before rollout; do not repeatedly experiment when data is missing. Authoritative docs/SPX_RESEARCH_ACCEPTANCE.md records this policy. The prior protocol-only scheduled cycle9561489 completed with no candidate;2/2model calls remain consumed today. Do not reset quota or ask the user to collect manually.
+
+Implemented separate spx_availability_recorder.py and installed new taskSuhail SPX Availability using existing Python/runtime/Gateway, no GUI/paidservice/order/alert. ObserverPID13136; main reader remains unchanged and healthy. Original quote price and provider timestamp callbacks are separate, initial backfill never becomes prospective availability, live versions/revisions and first-completed receipts persist.10targeted checks passed; real callback evidence saved in artifacts/spx_availability_smoke_20261023. Full details docs/SPX_AVAILABILITY_RECORDER.md and exante protocol5d941c5.
+
+Actual partial Oct23 observations: first two completed-bar receipts15:17:00.227405UTC and15:18:00.415265UTC, parallel quote mode1. This does NOT prove full-session latency or directional detection. Current day began mid-session:partial, never independent signal evidence. Next possible full prospective sessionOct26Mon16:30-23:00Riyadh plus5min grace, requiring awake/network/Gateway. Complete capture will publish ignored market input for the existing research worker; partials will not trigger repeated model calls. More historical sampling is not a substitute for this missing trace.
+
+NEXT: leave recorder and existing reader running, wait for the prospective complete session and aligned final native history. Review coverage/revisions using as-of snapshots, reserve this day as diagnosticdevelopment, keep NOT_READY. No directional fitting or repeated old validation during the wait. A full trace is only the next research input; independent replicated model improvement plus live shadow is still required before promotion/Pine rollout.
