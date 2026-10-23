@@ -172,3 +172,8 @@ python research_spx_inside_range.py --input artifacts/spx_extension_20261023/raw
 `python research_spx_consensus.py --input artifacts/spx_extension_20261023/raw.json --output .hunter-state/spx-consensus-new.json --protocol-commit f21002340df97cc8dab6a9b20291a958fe0d4833`
 
 الخطوة التالية ما زالت بيانات جلسات جديدة كاملة؛ لا يكفي جمع شروط أكثر. أصل التجارب محفوظ، وهذا آخر تحديث وليس نجاحًا تجاريًا. رأس الفرع البعيد الذي يحتوي هذا الملف هو نقطة الاستئناف.
+
+
+## عامل Codex محلي مجدول
+
+أضيف tools/spx_research_agent.py وtools/install_spx_agent.ps1 ومهمة tools/SPX_AGENT_TASK.md ودليل docs/SPX_LOCAL_AGENT.md. ستة اختبارات موجهة ناجحة محليًا؛ PowerShell/جدولة Windows وCodex الحقيقي وGateway المحلي لم تُختبر أو تُشغّل من هذه البيئة. تثبيت مرة واحدة ينشئ worktree research/local-spx-agent ومهمة عند تسجيل الدخول وكل15دقيقة؛ سقف دورتين ذكيتين/يوم،15دقيقة/دورة. WAIT_DATA ينتظر raw.json جديدًا ولا ينفق رصيدًا على إعادة نفس التجربة. الفشل يحفظ الحالة ويوقف المحاولات، والدفع المتعذر يُعاد قبل عمل جديد. لا نجاح سوقي جديد ولا تفعيل تنبيهات ولا تغيير main. الحالة NOT_READY. الخطوة المحلية: شغّل المثبت كما في الدليل من نسخة فرع البحث ثم تحقق من state.json ورأس الفرع البعيد. لا حاجة إلى نفق Remote Tunnel.
