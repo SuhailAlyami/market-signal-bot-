@@ -1,55 +1,73 @@
 # RESUME.md — Suhail Hunter
 
-**Status: NOT READY**  
-Last examined: 2026-10-24 (Grok session)  
-Base commit: `0564c0667be0373a65831c2d514bf51a378ed9bf` (main, 2026-10-22)
+**Status: NOT READY** (ready for *connection/health verification only*; not ready for live early-detection use)
+
+Last examined: 2026-10-24  
+Latest commit before this update: `5cfb97f797e538b5dfa6e7a80cf9a1b8428b9d6e`
+
+## Verification readiness (what "جاهز للتحقق" means here)
+
+The project is prepared so the owner can **verify infrastructure and data path**, not so that detection is claimed working.
+
+### Can verify today (Saturday — market closed)
+
+| Check | Expected | Notes |
+| --- | --- | --- |
+| IBKR account connector | Connected | Account summary readable (2026-10-24 probe) |
+| Flow type | REVIEW_AND_APPROVE | No autonomous live orders from this path |
+| SPX index contract resolve | contract_id 416904 @ CBOE | `search_contracts` OK |
+| SPX live snapshot | **REJECT** (top-status) | Expected on weekend / missing entitlement / frozen; do not treat as live edge |
+| Software unit tests | Pass offline | No market required |
+| Shadow / fail-closed on stale data | Can be exercised on saved data | Do not enable experimental Telegram alerts |
+
+### Requires open RTH (or confirmed live session)
+
+| Check | Required evidence |
+| --- | --- |
+| SPX cash last-trade timestamp freshness | Positive trade `ts` ≤ ~10s repeatedly |
+| Option book sample (nearby SPXW) | Repeated callbacks, uncrossed bid/ask, age limits |
+| Continuous collector heartbeat | Same-host IB Gateway + runner, not chat-only connector |
+| Early-detection quality | New unconsumed dates + measured lead/false/miss vs baseline |
+
+Until those open-session checks pass with retained logs, keep **NOT READY** and alerts **OFF**.
 
 ## What is already done (evidence)
 
-- Issue #16 research completed and preserved under `artifacts/issue16/`.
-- Selected research method (`failed_breakout` + RVOL) on untouched holdout:
-  - ES RTH early recall ≈ 4.13%, precision ≈ 10.64%; most events missed.
-  - NQ RTH early recall ≈ 1.40%; worse than simple baselines on early F1.
-  - Yahoo/CME completed bars observed ~9–10 min old → early detection destroyed for short-horizon labels.
-- Canonical runtime (`hunter_runtime.py`) exists with causal features, SETUP/TRIGGER/INVALIDATION/EXIT, cooldown, dedupe, stale-data fail-closed, shadow journal.
-- Experimental alerts remain **OFF**. No promotion of the research detector.
-- Software regressions: 60/60 deterministic tests reported passing at Issue #16 close-out; plan-rejection lifecycle tests added later.
-- Active production Telegram path is documented as the separate repo `SuhailAlyami/spx-agent`.
-- Multiple docs: AGENTS.md, ISSUE16_REPORT.md, OPERATIONAL_READINESS.md, DATA_SOURCES.md, HUNTER_INVENTORY.md, etc.
+- Issue #16 research preserved under `artifacts/issue16/`.
+- Selected rule on spent holdout: low early recall; Yahoo bars ~9–10 min old.
+- Canonical runtime with SETUP/TRIGGER/INVALIDATION/EXIT, cooldown, dedupe, stale fail-closed.
+- Experimental alerts **OFF**.
+- `spx_primary.py` / Gateway SPX path documented in `docs/SPX_PRIMARY_AND_PINE.md`.
+- Active Telegram production path documented as separate repo `SuhailAlyami/spx-agent`.
 
-## Why still NOT READY (evidence-based)
+## Why still NOT READY
 
-1. **Feed timing**: Lawful free Yahoo futures data arrives too late for the defined early-event horizon. No verified timely SPX cash source is integrated and proven continuous.
-2. **Detection quality**: Selected rule does not beat relevant baselines consistently on early metrics; sample of holdout sessions is small.
-3. **Operational host**: No proven always-on authorized IBKR collector reachable by scheduled runners. Missing `IBKR_RUNNER` is now visible as `COLLECTOR_NOT_CONFIGURED` rather than silent skip.
-4. **SPX cash + options**: Goal is cash SPX early explosion + eventual 0DTE context. Current retained research is ES/NQ futures proxies. No verified live option chain.
+1. **Feed timing / entitlement**: Free delayed futures and Saturday SPX snapshot REJECT do not prove timely cash SPX.
+2. **Detection quality**: No generalized early edge on independent holdout.
+3. **Host**: Chat IBKR connector ≠ always-on collector for Actions/runtime. Gateway on owner machine helps only while that machine stays up and authorized.
+4. **SPX + options**: Live freshness and repeated option-book evidence not yet retained for open session.
 
 ## Data already consumed
 
-- Holdout windows Oct 12–16 (RTH) and Oct 13–16 (all-session) are **spent**. Do not retune on them.
-- Any future claim of improvement requires new unseen dates or a freshly frozen forward protocol.
+- Holdout Oct 12–16 (RTH) and Oct 13–16 (all-session) are **spent**. Do not retune on them.
 
-## Current blockers that need owner action
+## Owner actions for full verification week
 
-- Provision or confirm an authorized host that can keep IB Gateway / session alive and expose a runner secret for GitHub Actions (or equivalent free continuous path).
-- Confirm whether the product priority remains cash SPX (vs ES/NQ futures research) and whether any new free/timely data source is acceptable.
+1. Keep IB Gateway running on a machine that stays on through the session you want to test.
+2. On next open RTH: capture SPX last + top-status + receipt time; sample nearby SPXW books; save journals under a dated `artifacts/` folder.
+3. Only after repeated fresh SPX trade timestamps: run shadow (no user alerts) for multiple sessions.
+4. New research protocol only on **unconsumed** dates if claiming improvement.
 
-## Next safe step (do not skip)
-
-1. Do **not** enable experimental alerts.
-2. Do **not** retune on the spent holdout.
-3. If a new timely SPX cash (or confirmed lower-latency) source becomes available, freeze a new protocol + new date range before any parameter search.
-4. Otherwise continue research offline on any remaining unused historical windows, or acquire fresh bounded data with explicit as-of timestamps, keeping alerts off.
-
-## Resume command (when returning)
+## Resume command
 
 ```text
-Read RESUME.md + docs/ISSUE16_REPORT.md + AGENTS.md.
-Confirm no experimental alerts are enabled.
-If IBKR collector host is now available, verify heartbeat + freshness before any live shadow.
-Otherwise stay in research-only mode on unconsumed data.
+Read RESUME.md + docs/ISSUE16_REPORT.md + AGENTS.md + docs/SPX_PRIMARY_AND_PINE.md.
+Confirm experimental alerts OFF.
+If Gateway is up on open RTH: verify SPX top-status + last ts age, then shadow only.
+If Saturday/closed: only connection + offline tests; do not claim live detection.
 ```
 
-## Change log for this file
+## Change log
 
-- 2026-10-24: Initial RESUME.md created from repository examination. No code or detector changes. Status remains NOT READY.
+- 2026-10-24 (earlier): Initial RESUME.md from repo exam.
+- 2026-10-24 (this update): Verification checklist; IBKR chat connector account OK; SPX snapshot top-status REJECT on Saturday; still NOT READY; alerts remain OFF.
