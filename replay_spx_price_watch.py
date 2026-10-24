@@ -58,7 +58,7 @@ def replay(path, output, protocol_commit):
         future=data.iloc[i+1:event['target_index']+1]
         hits=np.flatnonzero((future.High>=threshold if side>0 else future.Low<=threshold).to_numpy())
         event['onset_time']=data.index[i+1+int(hits[0])].isoformat()
-    candidates=[];confirmations=[]
+    candidates=[];confirmations=[];dispositions=[]
     with tempfile.TemporaryDirectory() as directory:
         runtime=SPXPriceRuntime(Path(directory)/'state.json',Path(directory)/'journal.jsonl')
         for i in range(len(data)):
@@ -70,6 +70,8 @@ def replay(path, output, protocol_commit):
                         'detected_at':end.isoformat(),'pattern':event['pattern']}
                 if event['state']=='SETUP':candidates.append(signal)
                 elif event['state']=='TRIGGER':confirmations.append(signal)
+        dispositions=[json.loads(line) for line in (Path(directory)/'journal.jsonl').read_text(encoding='utf-8').splitlines()
+                      if json.loads(line).get('record_type')=='candidate_disposition']
     metrics={};allowed=set(eligible)
     for name,signals in [('watch',candidates),('confirmation',confirmations)]:
         scored=[dict(s) for s in signals if s['index'] in allowed]
@@ -91,6 +93,9 @@ def replay(path, output, protocol_commit):
             'onset_semantics':'START of first minute whose high/low touches 25% target; conservative, intraminute path unknown',
             'baseline_comparison':'not performed: original SPX model requires missing ES observations',
             'reason_counts':dict(Counter(r['reason'] for r in observations)),
+            'candidate_disposition_counts':dict(Counter(r['reason'] for r in dispositions)),
+            'candidate_dispositions':dispositions,
+            'delivery_blocker':'research_notifications_disabled',
             'metrics':metrics,'watch':candidates,'confirmations':confirmations,'events':events,
             'readiness':'NOT_READY','accepted':False,'notifications_enabled':False,
             'orders_enabled':False,'holdout':False}

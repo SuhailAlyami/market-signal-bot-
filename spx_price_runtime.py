@@ -24,4 +24,23 @@ class SPXPriceRuntime(HunterRuntime):
                                       float(data.iloc[index].Close), 'opposite_price_watch'))
             state.pop('active')
             state['cooldown_until'] = end
-        return events+super()._process_bar(symbol, data, index, now)
+        transitions = events+super()._process_bar(symbol, data, index, now)
+        # Distinguish a silent detector from a detected candidate held by the
+        # lifecycle. This is evidence only; it cannot authorize a notification.
+        phase = state.get('active', {}).get('phase')
+        if found is None:
+            reason = 'no_candidate'
+        elif any(e['state'] == 'SETUP' for e in transitions):
+            reason = 'setup_created'
+        elif phase:
+            reason = 'active_' + phase.lower()
+        else:
+            reason = 'cooldown'
+        self._record({'record_type': 'candidate_disposition', 'symbol': symbol,
+                      'bar_end': end, 'detected_at': now.isoformat(),
+                      'candidate': found, 'reason': reason,
+                      'transition_states': [e['state'] for e in transitions],
+                      'active_state': phase, 'readiness': 'NOT_READY',
+                      'delivery_blocker': 'research_notifications_disabled',
+                      'notify_eligible': False, 'analysis_only': True})
+        return transitions
