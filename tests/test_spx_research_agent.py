@@ -21,7 +21,7 @@ class ResearchWorkerTests(unittest.TestCase):
             self.assertEqual(w.publish_attention(state,sender),'deduplicated')
             sender.assert_called_once()
             self.assertIn('IB Gateway',(state/'attention.txt').read_text(encoding='utf-8'))
-            self.assertEqual(w.json.loads((state/'state.json').read_text())['calls'],1)
+            self.assertEqual(w.json.loads((state/'state.json').read_text(encoding='utf-8'))['calls'],1)
 
     def test_generic_wait_does_not_invent_gateway_failure(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -31,7 +31,7 @@ class ResearchWorkerTests(unittest.TestCase):
             w.publish_attention(state,sender)
             message = sender.call_args.args[1]
             self.assertIn('لم يتأكد',message)
-            self.assertEqual(w.json.loads((state/'attention.json').read_text())['kind'],'data')
+            self.assertEqual(w.json.loads((state/'attention.json').read_text(encoding='utf-8'))['kind'],'data')
             w.save(state/'state.json',{'status':'NOT_READY','needs_gateway':False})
             self.assertEqual(w.publish_attention(state,sender),'no_attention')
             self.assertEqual(sender.call_count,1)
@@ -82,7 +82,7 @@ class ResearchWorkerTests(unittest.TestCase):
                 self.assertEqual(w.tick(root,state,executable='fake'),'WAIT_DATA')
                 self.assertEqual(w.tick(root,state,executable='fake'),'waiting')
                 self.assertEqual(model.call_count,1)
-            self.assertFalse(w.json.loads((state/'state.json').read_text())['push_pending'])
+            self.assertFalse(w.json.loads((state/'state.json').read_text(encoding='utf-8'))['push_pending'])
 
     def test_budget_backoff_and_review_pause(self):
         now = datetime(2026, 10, 23, tzinfo=timezone.utc)
@@ -134,7 +134,7 @@ class ResearchWorkerTests(unittest.TestCase):
                 return subprocess.CompletedProcess(args,0,stdout=w.BRANCH if args[0]=='branch' else '',stderr='')
             with patch.object(w,'git',side_effect=fake_git), patch.object(w,'run_codex',return_value=1) as model:
                 self.assertEqual(w.tick(root,state,executable='fake'), 'BLOCKED')
-                result = w.json.loads((state/'state.json').read_text())
+                result = w.json.loads((state/'state.json').read_text(encoding='utf-8'))
                 self.assertEqual(result['calls'],1)
                 self.assertEqual(w.tick(root,state,executable='fake'), 'waiting')
                 self.assertEqual(model.call_count,1)
@@ -151,7 +151,7 @@ class ResearchWorkerTests(unittest.TestCase):
                 self.assertEqual(w.tick(root,state,executable='fake'),'waiting')
                 self.assertTrue(any(call.args[1]=='push' for call in calls.call_args_list))
                 model.assert_not_called()
-            self.assertFalse(w.json.loads((state/'state.json').read_text())['push_pending'])
+            self.assertFalse(w.json.loads((state/'state.json').read_text(encoding='utf-8'))['push_pending'])
 
 
 if __name__ == '__main__':
