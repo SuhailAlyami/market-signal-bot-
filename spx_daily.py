@@ -11,7 +11,8 @@ import pandas as pd
 import pandas_market_calendars as mcal
 from flask import Flask, jsonify, Response
 
-VERSION = 'spx-daily-analog-v1'
+VERSION = 'spx-daily-structure-v2'
+BASELINE_VERSION = 'spx-daily-analog-v1'
 
 def schedule(start, end):
     return mcal.get_calendar('NYSE').schedule(start_date=start, end_date=end)
@@ -19,7 +20,7 @@ def schedule(start, end):
 def direction(change, atr):
     return 'Bullish' if change > .1*atr else 'Bearish' if change < -.1*atr else 'Sideways'
 
-def features(rows):
+def features(rows, structure=True):
     f = pd.DataFrame(rows).copy()
     prev = f.close.shift(1)
     tr = pd.concat([f.high-f.low, (f.high-prev).abs(), (f.low-prev).abs()], axis=1).max(axis=1)
@@ -30,14 +31,25 @@ def features(rows):
         'trend':(f.close-f.close.shift(5))/atr,
         'volatility':f.close.pct_change().rolling(20).std()*f.close/atr,
         'support':(f.close-support)/atr,'resistance':(resistance-f.close)/atr})
+    if structure:
+        prior_hi=f.high.shift(1).rolling(20).max()
+        prior_lo=f.low.shift(1).rolling(20).min()
+        x['close_location']=(f.close-f.low)/(f.high-f.low).replace(0,np.nan)
+        x['upper_rejection']=(f.high-f[['open','close']].max(axis=1))/atr
+        x['lower_rejection']=(f[['open','close']].min(axis=1)-f.low)/atr
+        x['structure_up']=((f.high>f.high.shift(1)) & (f.low>f.low.shift(1))).astype(float)
+        x['structure_down']=((f.high<f.high.shift(1)) & (f.low<f.low.shift(1))).astype(float)
+        x['failed_high']=((f.high>prior_hi) & (f.close<prior_hi)).astype(float)
+        x['failed_low']=((f.low<prior_lo) & (f.close>prior_lo)).astype(float)
     # SPX is an index: volume is optional, never invented or proxied silently.
     return f, x, atr
 
-def forecast(rows):
+def forecast(rows, structure=True):
     if len(rows) < 81:
         raise ValueError('need at least 81 complete native SPX daily sessions')
-    f,x,atr = features(rows)
+    f,x,atr = features(rows, structure)
     valid = np.flatnonzero(np.isfinite(x.to_numpy()).all(axis=1) & (atr.to_numpy()>0))
+    if len(f)-1 not in valid: raise ValueError('invalid latest features')
     train = valid[valid < len(f)-1]  # labels only for already completed next sessions
     if len(train)<40:
         raise ValueError('insufficient training examples')
@@ -57,7 +69,9 @@ def forecast(rows):
         'high_interval':[round(c+a*float(v),2) for v in np.quantile(hi,[.1,.9])],
         'low_interval':[round(c+a*float(v),2) for v in np.quantile(lo,[.1,.9])],
         'high_confidence':None,'low_confidence':None,'atr':a,
-        'volume_used':False,'status':'RESEARCH_NOT_VALIDATED','model_version':VERSION}
+        'volume_used':False,'status':'RESEARCH_NOT_VALIDATED','model_version':VERSION if structure else BASELINE_VERSION,
+        'reference_high':float(f.high.iloc[-20:].max()),
+        'reference_low':float(f.low.iloc[-20:].min())}
 
 def connect(path):
     db=sqlite3.connect(path)
@@ -119,10 +133,10 @@ def issue(db, now=None):
         input_sha256=hashlib.sha256(json.dumps(rows,sort_keys=True).encode()).hexdigest())
     # Expanding-window learner: each newly completed session adds one labeled analog.
     # Confidence is empirical prior prospective accuracy, not neighbor agreement.
-    outcomes=[r[0] for r in db.execute('SELECT direction_accuracy FROM predictions WHERE direction_accuracy IS NOT NULL AND json_extract(payload,\'$.direction\')=?',(p['direction'],))]
+    outcomes=[r[0] for r in db.execute("SELECT direction_accuracy FROM predictions WHERE direction_accuracy IS NOT NULL AND json_extract(payload,'$.direction')=? AND json_extract(payload,'$.model_version')=?",(p['direction'],VERSION))]
     if len(outcomes)>=30: p['confidence']=round(100*sum(outcomes)/len(outcomes),2)
     p['confidence_samples']=len(outcomes)
-    evaluated=db.execute('SELECT payload,actual_high,actual_low FROM predictions WHERE actual_high IS NOT NULL').fetchall()
+    evaluated=db.execute("SELECT payload,actual_high,actual_low FROM predictions WHERE actual_high IS NOT NULL AND json_extract(payload,'$.model_version')=?",(VERSION,)).fetchall()
     if len(evaluated)>=30:
         for key,column in (('high',1),('low',2)):
             hits=[json.loads(r[0])[key+'_interval'][0]<=r[column]<=json.loads(r[0])[key+'_interval'][1] for r in evaluated]
