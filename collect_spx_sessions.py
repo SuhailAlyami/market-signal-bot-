@@ -175,6 +175,19 @@ def gateway(port, client_id):
             finally:
                 self.cancelHistoricalData(request_id)
 
+        def daily_history(self, contract, close, request_id):
+            """One bounded daily request; daily bar dates are yyyyMMdd, not epochs."""
+            self.begin(request_id)
+            try:
+                self.reqHistoricalData(request_id, contract, request_end(close),
+                                       '2 Y', '1 day', 'TRADES', 1, 1, False, [])
+                self.wait()
+                if self.bounds is None or not self.rows:
+                    raise RuntimeError('missing_daily_history')
+                return list(self.rows), dict(self.bounds)
+            finally:
+                self.cancelHistoricalData(request_id)
+
     reader = Reader()
     try:
         reader.connect('127.0.0.1', port, clientId=client_id)

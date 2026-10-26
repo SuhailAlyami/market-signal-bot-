@@ -60,3 +60,40 @@ direction/range, not an evaluated minute-level explosion detector. Analog class
 weights are NOT calibrated confidence; confidence stays null. The paired
 bootstrap in this initial gate resamples individual days and does not establish
 independence or replace a future replication/shadow study.
+
+## Source reconciliation follow-up (before any model outcomes)
+One additional native IBKR IND daily request with FIVE_YEARS is permitted solely
+to test whether the malformed daily export is reproducible across request
+windows. Keep all model rules and the original 2025 validation/holdout dates.
+Restrict the evaluation slice to the SAME 2024-10-28..2025-12-31 dates. Never
+replace individual prices, merge rows from responses, or omit bad sessions.
+Save the second raw export separately and compare shared-date OHLC and validity.
+If malformed again, do not retry; prepare the official local API acquisition path.
+
+## Reconciliation outcome and direct Gateway path
+The single FIVE_YEARS request returned 1,252 bars. Its original experiment slice
+is identical to the TWO_YEARS response, including all five invalid OHLC rows.
+See reconciliation_raw.json and reconciliation_audit.json; no further connector
+retries or provider-price corrections were made. Predictive evaluation is blocked.
+
+Added collect_spx_daily.py, using the existing local read-only Gateway reader.
+It resolves SPX/IND/CBOE/USD identity, makes ONE 2 Y / 1 day / TRADES / RTH request
+with an explicit end time and yyyyMMdd daily dates, preserves raw data and hashes,
+and only emits input.json after native OHLC and consecutive calendar validation.
+No sorting, deduplication, fills or silent repairs. Invalid input preserves raw
+and WAIT_VALID_DATA manifest; output directories and reports cannot be overwritten.
+
+On the Windows machine with the authenticated Gateway running on localhost:4001:
+```
+python collect_spx_daily.py --start 2024-10-28 --end 2025-12-31 --output artifacts/spx-daily-native-2025 --evaluate-protocol
+```
+The optional switch automatically runs the SAME frozen experiment only after a
+validated capture; raw/input hashes are verified first. It does not update the
+issued forecast model, send Telegram, register a scheduled task or place orders.
+This cloud coding environment is not the user's Windows/Gateway host: direct
+acquisition was tested with an offline fake reader only, NOT executed against the
+user's PC, and no valid replacement data or predictive accuracy is claimed.
+
+Official request/date-format references:
+- https://www.interactivebrokers.com/docs/tws-api/doc/md/historical-bars
+- https://interactivebrokers.github.io/tws-api/historical_bars.html
