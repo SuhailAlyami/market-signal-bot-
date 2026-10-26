@@ -1,0 +1,7 @@
+{
+  "model": "spx-daily-regime-v3",
+  "status": "WAIT_VALID_DATA",
+  "reason": "invalid OHLC",
+  "input_sha256": "450635a2d4bbc4fe7b5c4c530f083a40e9d173fd8449d433477a7021a2c15908",
+  "holdout_evaluated": false
+}

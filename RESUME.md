@@ -322,3 +322,63 @@ Implemented separate spx_availability_recorder.py and installed new taskSuhail S
 Actual partial Oct23 observations: first two completed-bar receipts15:17:00.227405UTC and15:18:00.415265UTC, parallel quote mode1. This does NOT prove full-session latency or directional detection. Current day began mid-session:partial, never independent signal evidence. Next possible full prospective sessionOct26Mon16:30-23:00Riyadh plus5min grace, requiring awake/network/Gateway. Complete capture will publish ignored market input for the existing research worker; partials will not trigger repeated model calls. More historical sampling is not a substitute for this missing trace.
 
 NEXT: leave recorder and existing reader running, wait for the prospective complete session and aligned final native history. Review coverage/revisions using as-of snapshots, reserve this day as diagnosticdevelopment, keep NOT_READY. No directional fitting or repeated old validation during the wait. A full trace is only the next research input; independent replicated model improvement plus live shadow is still required before promotion/Pine rollout.
+
+
+## 2026-10-24 — silence audit and candidate attribution
+
+Saturday offline source audit: native SPX price-watch notifications are explicitly disabled/NOT_READY; no message is not proof of no internal detection. Added per-bar candidate_disposition and replay counts without changing rules or authorizing delivery. Consumed1000bar Oct20–22 replay:144setups,87confirmations;250raw candidates suppressed by active lifecycle/cooldown. WATCH precision28.57%,6early/63events,medianlead-1min;NOT_READY. Exact prior-runtime metrics/all signal arrays unchanged,15targeted tests pass. Details docs/SPX_SILENCE_DIAGNOSIS_20261024.md and artifacts/spx_silence_20261024/summary.json. No broker/network market calls, installation, production changes or test alerts. Existing prospective-data wait and independent-replication requirements remain. Authoritative resume commit is the remote head containing this entry.
+
+
+## 2026-10-25 — causal as-of detector diagnostic and Number monitor update
+
+Added spx_asof.py and tests/test_spx_asof.py; details in docs/SPX_ASOF_DIAGNOSTIC_20261025.md. The unchanged native-SPX observe rule now has an offline diagnostic entry point that selects recorded completed-bar versions available by the actual receipt, never final OHLC backdated to an earlier receipt. Refuses identity/clock/completion errors; no filled gaps, stale bars or frozen/unknown quote-mode decisions. Counts first-vs-final revisions separately. Seven new synthetic tests plus existing recorder/watch/lifecycle tests:30targeted checks pass. No new real session/outcome measured, no threshold search, no market requests or production/local Windows installation, no alerts/trades. NOT_READY/WAIT_DATA remains; awaiting first complete prospective raw trace+aligned daily capture, diagnostic-development only. Do not claim a predictive improvement or rerun consumed directional studies. Use the documented offline CLI only once changed real input is available; keep original manifest/raw evidence.
+
+Updated the existing Number monitoring automation prompt with known Oct23 screenshot baseline, seven-day overlapping search, replies/quote attribution, semantic dedupe, access-gap vs no-update distinction and no repeated known-X-error notices. Schedule/enabled state unchanged; no new automation. No newly verified material Number update found in this session. Detector and social forecasts remain separate; no writer formula or price-condition success inferred.
+
+
+## 2026-10-26 — daily forecast research and native post-close cycle
+
+Authoritative daily work is on PR46, branch codex/spx-silence-diagnosis-20261024.
+Head before this cycle addition: f6596b6de704a5fbd50a5aac5587653dd63793c5; all five
+CI jobs passed. Added daily v2 research forecasts, SQLite immutable issue/score,
+API/dashboard, separate unvalidated v3 regime challenger, frozen chronological
+comparison and a direct local Gateway daily collector. NOT_READY remains.
+
+Bounded IBKR history acquisitions (2Y and one 5Y reconciliation) returned the same
+295-session experiment slice (2024-10-28..2025-12-31) with five invalid OHLC rows;
+raw responses, audits and WAIT_VALID_DATA result are retained in
+artifacts/spx_daily_regime_20261026. No prices, gates or split dates were changed;
+no market predictive metrics calculated. See docs/SPX_DAILY_REGIME_PROTOCOL.md.
+
+run_spx_daily.py now joins acquisition -> validation -> previous forecast scoring
+-> next-session research issuance. Calendar grace, persistent before-call source
+session reservation, concurrent/restart dedupe, hash verification and refusal to
+backdate a forecast. Uses issued v2; no automatic promotion of v3. Documentation:
+docs/SPX_DAILY_CYCLE.md. New checks use fake captures; no Windows installation,
+actual Gateway capture, real market edge, orders or Telegram execution claimed.
+This environment cannot reach the user's local Gateway. Next dependent step is
+a valid native capture on that host, followed by unchanged frozen evaluation and
+independent/prospective shadow validation. Existing consumed intraday cohorts and
+wait discipline stay unchanged; do not repeat malformed connector requests.
+
+
+## 2026-10-26 — measured close-only direction experiment rejected
+
+Preregistered code/protocol commit c4b609c429ca337637581935581ac95891eb2ce9 BEFORE
+outcome evaluation. Separate CLOSE-ONLY target +/-0.1% (not ATR), no high/low,
+no new market requests or repaired prices; 295 native daily closes match across
+retained same-provider exports, which is repeatability not independent verification.
+
+2025-04-01..2025-06-30 validation: 62 sessions. Fixed ridge v1 33/62 (53.23%),
+majority 34/62 (54.84%), prior direction 24/62 (38.71%), 5-session momentum
+29/62 (46.77%). Candidate balanced accuracy37.00%; recalls27/34 up,6/19 down,
+0/9 sideways. Failed all baseline comparison gates. NOT_READY. Independent
+2025-07-01..2025-12-31 holdout not evaluated. Validation consumed; no retuning on
+it and claiming independence. See docs/SPX_CLOSE_DIRECTION_PROTOCOL.md,
+docs/SPX_CLOSE_DIRECTION_RESULT.md and artifacts/spx_close_direction_20261026/result.json.
+
+Issued v2/v3 rules, original OHLC validation, forecasts, confidence and alerts
+unchanged. Original range study WAIT_VALID_DATA persists. Primary-source review
+did not justify accepting/repairing the five OHLC conflicts. No deployment,
+Gateway execution, options or new subscription. Future research needs a separately
+fixed hypothesis and independent validation; do not loosen gates to call success.
