@@ -334,3 +334,29 @@ Saturday offline source audit: native SPX price-watch notifications are explicit
 Added spx_asof.py and tests/test_spx_asof.py; details in docs/SPX_ASOF_DIAGNOSTIC_20261025.md. The unchanged native-SPX observe rule now has an offline diagnostic entry point that selects recorded completed-bar versions available by the actual receipt, never final OHLC backdated to an earlier receipt. Refuses identity/clock/completion errors; no filled gaps, stale bars or frozen/unknown quote-mode decisions. Counts first-vs-final revisions separately. Seven new synthetic tests plus existing recorder/watch/lifecycle tests:30targeted checks pass. No new real session/outcome measured, no threshold search, no market requests or production/local Windows installation, no alerts/trades. NOT_READY/WAIT_DATA remains; awaiting first complete prospective raw trace+aligned daily capture, diagnostic-development only. Do not claim a predictive improvement or rerun consumed directional studies. Use the documented offline CLI only once changed real input is available; keep original manifest/raw evidence.
 
 Updated the existing Number monitoring automation prompt with known Oct23 screenshot baseline, seven-day overlapping search, replies/quote attribution, semantic dedupe, access-gap vs no-update distinction and no repeated known-X-error notices. Schedule/enabled state unchanged; no new automation. No newly verified material Number update found in this session. Detector and social forecasts remain separate; no writer formula or price-condition success inferred.
+
+
+## 2026-10-26 — daily forecast research and native post-close cycle
+
+Authoritative daily work is on PR46, branch codex/spx-silence-diagnosis-20261024.
+Head before this cycle addition: f6596b6de704a5fbd50a5aac5587653dd63793c5; all five
+CI jobs passed. Added daily v2 research forecasts, SQLite immutable issue/score,
+API/dashboard, separate unvalidated v3 regime challenger, frozen chronological
+comparison and a direct local Gateway daily collector. NOT_READY remains.
+
+Bounded IBKR history acquisitions (2Y and one 5Y reconciliation) returned the same
+295-session experiment slice (2024-10-28..2025-12-31) with five invalid OHLC rows;
+raw responses, audits and WAIT_VALID_DATA result are retained in
+artifacts/spx_daily_regime_20261026. No prices, gates or split dates were changed;
+no market predictive metrics calculated. See docs/SPX_DAILY_REGIME_PROTOCOL.md.
+
+run_spx_daily.py now joins acquisition -> validation -> previous forecast scoring
+-> next-session research issuance. Calendar grace, persistent before-call source
+session reservation, concurrent/restart dedupe, hash verification and refusal to
+backdate a forecast. Uses issued v2; no automatic promotion of v3. Documentation:
+docs/SPX_DAILY_CYCLE.md. New checks use fake captures; no Windows installation,
+actual Gateway capture, real market edge, orders or Telegram execution claimed.
+This environment cannot reach the user's local Gateway. Next dependent step is
+a valid native capture on that host, followed by unchanged frozen evaluation and
+independent/prospective shadow validation. Existing consumed intraday cohorts and
+wait discipline stay unchanged; do not repeat malformed connector requests.
