@@ -1,5 +1,6 @@
 """Offline daily SPX research forecasts. No broker, notification or order access."""
 import argparse
+from contextlib import closing
 import hashlib
 import json
 import sqlite3
@@ -166,7 +167,7 @@ def create_app(db_path):
     app=Flask(__name__)
     @app.get('/prediction/tomorrow')
     def tomorrow():
-        with connect(db_path) as db:
+        with closing(connect(db_path)) as db:
             row=db.execute('SELECT payload FROM predictions ORDER BY date DESC LIMIT 1').fetchone()
         if not row: return jsonify(error='WAIT_DATA'),503
         p=json.loads(row[0]); close=schedule(p['date'],p['date']).iloc[0].market_close
@@ -174,7 +175,7 @@ def create_app(db_path):
         return jsonify(p)
     @app.get('/performance')
     def performance():
-        with connect(db_path) as db: data=records(db)
+        with closing(connect(db_path)) as db: data=records(db)
         return jsonify(data)
     @app.get('/')
     def dashboard():
@@ -191,7 +192,7 @@ if __name__=='__main__':
     args=parser.parse_args(); Path(args.db).parent.mkdir(parents=True,exist_ok=True)
     if args.import_json:
         while True:
-            with connect(args.db) as db:
+            with closing(connect(args.db)) as db:
                 ingest(db,json.loads(Path(args.import_json).read_text(encoding='utf-8')))
                 try: print(json.dumps(issue(db)))
                 except ValueError as exc: print(json.dumps({'status':'WAIT_DATA','reason':str(exc)}))
