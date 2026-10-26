@@ -360,3 +360,25 @@ This environment cannot reach the user's local Gateway. Next dependent step is
 a valid native capture on that host, followed by unchanged frozen evaluation and
 independent/prospective shadow validation. Existing consumed intraday cohorts and
 wait discipline stay unchanged; do not repeat malformed connector requests.
+
+
+## 2026-10-26 — measured close-only direction experiment rejected
+
+Preregistered code/protocol commit c4b609c429ca337637581935581ac95891eb2ce9 BEFORE
+outcome evaluation. Separate CLOSE-ONLY target +/-0.1% (not ATR), no high/low,
+no new market requests or repaired prices; 295 native daily closes match across
+retained same-provider exports, which is repeatability not independent verification.
+
+2025-04-01..2025-06-30 validation: 62 sessions. Fixed ridge v1 33/62 (53.23%),
+majority 34/62 (54.84%), prior direction 24/62 (38.71%), 5-session momentum
+29/62 (46.77%). Candidate balanced accuracy37.00%; recalls27/34 up,6/19 down,
+0/9 sideways. Failed all baseline comparison gates. NOT_READY. Independent
+2025-07-01..2025-12-31 holdout not evaluated. Validation consumed; no retuning on
+it and claiming independence. See docs/SPX_CLOSE_DIRECTION_PROTOCOL.md,
+docs/SPX_CLOSE_DIRECTION_RESULT.md and artifacts/spx_close_direction_20261026/result.json.
+
+Issued v2/v3 rules, original OHLC validation, forecasts, confidence and alerts
+unchanged. Original range study WAIT_VALID_DATA persists. Primary-source review
+did not justify accepting/repairing the five OHLC conflicts. No deployment,
+Gateway execution, options or new subscription. Future research needs a separately
+fixed hypothesis and independent validation; do not loosen gates to call success.

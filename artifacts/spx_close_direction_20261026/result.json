@@ -1,0 +1,645 @@
+{
+  "model": "spx-close-ridge-v1",
+  "status": "NOT_READY",
+  "target": "next_close_change_0.1_percent",
+  "first": "2024-10-28",
+  "last": "2025-12-31",
+  "validation_start": "2025-04-01",
+  "holdout_start": "2025-07-01",
+  "high_low_used": false,
+  "confidence": null,
+  "holdout_evaluated": false,
+  "input_sha256": "cef22e47fb9d0d8b1a390ed1bb1a9856b526dc18beb091a25aec35d0c7d13792",
+  "validation": {
+    "passed": false,
+    "metrics": {
+      "candidate": {
+        "count": 62,
+        "accuracy": 0.532258064516129,
+        "balanced_accuracy": 0.369969040247678,
+        "class_recall": {
+          "Bullish": 0.7941176470588235,
+          "Bearish": 0.3157894736842105,
+          "Sideways": 0.0
+        },
+        "confusion": {
+          "Bullish": {
+            "Bullish": 27,
+            "Bearish": 7,
+            "Sideways": 0
+          },
+          "Bearish": {
+            "Bullish": 13,
+            "Bearish": 6,
+            "Sideways": 0
+          },
+          "Sideways": {
+            "Bullish": 7,
+            "Bearish": 2,
+            "Sideways": 0
+          }
+        }
+      },
+      "majority": {
+        "count": 62,
+        "accuracy": 0.5483870967741935,
+        "balanced_accuracy": 0.3333333333333333,
+        "class_recall": {
+          "Bullish": 1.0,
+          "Bearish": 0.0,
+          "Sideways": 0.0
+        },
+        "confusion": {
+          "Bullish": {
+            "Bullish": 34,
+            "Bearish": 0,
+            "Sideways": 0
+          },
+          "Bearish": {
+            "Bullish": 19,
+            "Bearish": 0,
+            "Sideways": 0
+          },
+          "Sideways": {
+            "Bullish": 9,
+            "Bearish": 0,
+            "Sideways": 0
+          }
+        }
+      },
+      "previous": {
+        "count": 62,
+        "accuracy": 0.3870967741935484,
+        "balanced_accuracy": 0.28173374613003094,
+        "class_recall": {
+          "Bullish": 0.5294117647058824,
+          "Bearish": 0.3157894736842105,
+          "Sideways": 0.0
+        },
+        "confusion": {
+          "Bullish": {
+            "Bullish": 18,
+            "Bearish": 11,
+            "Sideways": 5
+          },
+          "Bearish": {
+            "Bullish": 9,
+            "Bearish": 6,
+            "Sideways": 4
+          },
+          "Sideways": {
+            "Bullish": 7,
+            "Bearish": 2,
+            "Sideways": 0
+          }
+        }
+      },
+      "momentum_5": {
+        "count": 62,
+        "accuracy": 0.46774193548387094,
+        "balanced_accuracy": 0.3462332301341589,
+        "class_recall": {
+          "Bullish": 0.6176470588235294,
+          "Bearish": 0.42105263157894735,
+          "Sideways": 0.0
+        },
+        "confusion": {
+          "Bullish": {
+            "Bullish": 21,
+            "Bearish": 13,
+            "Sideways": 0
+          },
+          "Bearish": {
+            "Bullish": 11,
+            "Bearish": 8,
+            "Sideways": 0
+          },
+          "Sideways": {
+            "Bullish": 7,
+            "Bearish": 2,
+            "Sideways": 0
+          }
+        }
+      }
+    },
+    "comparisons": {
+      "majority": {
+        "accuracy_gain": -0.016129032258064502,
+        "paired_gain_lower_95": -0.12903225806451613,
+        "passed": false
+      },
+      "previous": {
+        "accuracy_gain": 0.14516129032258063,
+        "paired_gain_lower_95": -0.00040322580645158997,
+        "passed": false
+      },
+      "momentum_5": {
+        "accuracy_gain": 0.06451612903225806,
+        "paired_gain_lower_95": -0.08104838709677417,
+        "passed": false
+      }
+    },
+    "records": [
+      {
+        "date": "2025-04-01",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-02",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-03",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-04",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-07",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-08",
+        "candidate": "Bearish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-09",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-10",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-11",
+        "candidate": "Bearish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-14",
+        "candidate": "Bearish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-04-15",
+        "candidate": "Bearish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-04-16",
+        "candidate": "Bearish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-04-17",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-21",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-04-22",
+        "candidate": "Bearish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-23",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-24",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-04-25",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-04-28",
+        "candidate": "Bullish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-04-29",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-04-30",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-01",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-02",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-05",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-06",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-07",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-08",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-09",
+        "candidate": "Bearish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-12",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-05-13",
+        "candidate": "Bearish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-14",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-15",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-16",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-19",
+        "candidate": "Bullish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-20",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-21",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-05-22",
+        "candidate": "Bullish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-05-23",
+        "candidate": "Bearish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-05-27",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-05-28",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-05-29",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-05-30",
+        "candidate": "Bullish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-02",
+        "candidate": "Bearish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-03",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-04",
+        "candidate": "Bullish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-05",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-06",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-09",
+        "candidate": "Bearish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-10",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-11",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-12",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-13",
+        "candidate": "Bearish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-16",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-06-17",
+        "candidate": "Bearish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-18",
+        "candidate": "Bullish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-06-20",
+        "candidate": "Bullish",
+        "actual": "Bearish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-06-23",
+        "candidate": "Bearish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bearish",
+        "momentum_5": "Bearish"
+      },
+      {
+        "date": "2025-06-24",
+        "candidate": "Bearish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-25",
+        "candidate": "Bullish",
+        "actual": "Sideways",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-26",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Sideways",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-27",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      },
+      {
+        "date": "2025-06-30",
+        "candidate": "Bullish",
+        "actual": "Bullish",
+        "majority": "Bullish",
+        "previous": "Bullish",
+        "momentum_5": "Bullish"
+      }
+    ]
+  },
+  "source_hashes": {
+    "two_year_sha256": "63aa22c5ede745c7461e99871b56208ddb745c98804e98f4bc3f832dd94b1991",
+    "five_year_sha256": "8ce209a3a2a2efa6263bae37055049628826e0b8d57f9a6c6b946183d2d5fdaa"
+  }
+}
