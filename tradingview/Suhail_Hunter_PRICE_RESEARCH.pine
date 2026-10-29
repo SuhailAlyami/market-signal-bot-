@@ -45,7 +45,7 @@ if barstate.isconfirmed
         wasPending = array.get(directions,model) != 0
         if wasPending
             sign = array.get(directions,model)
-            if time != array.get(expected,model)
+            if time != array.get(expected,model) or not ohlcOK
                 array.set(gaps,model,array.get(gaps,model)+1)
                 array.set(directions,model,0)
             else
@@ -86,10 +86,10 @@ if barstate.isconfirmed
             firedM2 := firedM2 or model == 1
 plotshape(firedM1,title="Range readiness research",text="RANGE",style=shape.circle,location=location.belowbar,color=color.aqua,size=size.tiny)
 plotshape(firedM2,title="Failed break research",text="FAILED",style=shape.circle,location=location.abovebar,color=color.orange,size=size.tiny)
-var table summary = table.new(position.bottom_right,8,5)
+var table summary = table.new(position.bottom_right,9,5)
 if barstate.islast
-    for col = 0 to 7
-        header = col == 0 ? "OCT27 DEV" : col == 1 ? "N" : col == 2 ? "Target" : col == 3 ? "Stop" : col == 4 ? "Timeout" : col == 5 ? "Both" : col == 6 ? "Gap" : "Pending"
+    for col = 0 to 8
+        header = col == 0 ? "OCT27 DEV" : col == 1 ? "N" : col == 2 ? "Target" : col == 3 ? "Stop" : col == 4 ? "Timeout" : col == 5 ? "Both" : col == 6 ? "Gap/input" : col == 7 ? "Pending" : "Timeout avg"
         table.cell(summary,col,0,header,text_color=color.white,bgcolor=color.black)
     for model = 0 to 2
         name = model == 0 ? "RANGE_READY" : model == 1 ? "FAILED_BREAK" : "BODY_BASELINE"
@@ -97,6 +97,8 @@ if barstate.islast
         for col = 1 to 7
             value = col == 1 ? array.get(signals,model) : col == 2 ? array.get(targets,model) : col == 3 ? array.get(stops,model) : col == 4 ? array.get(timeouts,model) : col == 5 ? array.get(ambiguous,model) : col == 6 ? array.get(gaps,model) : array.get(directions,model) != 0 ? 1 : 0
             table.cell(summary,col,model+1,str.tostring(value),text_color=color.white,bgcolor=color.black)
+        avgTimeout = array.get(timeouts,model) > 0 ? array.get(timeoutPoints,model)/array.get(timeouts,model) : na
+        table.cell(summary,8,model+1,str.tostring(avgTimeout,"#.##"),text_color=color.white,bgcolor=color.black)
     table.cell(summary,0,4,"NOT_READY",text_color=color.white,bgcolor=color.black)
     table.cell(summary,1,4,"CFD path",text_color=color.white,bgcolor=color.black)
     table.cell(summary,2,4,"No P&L",text_color=color.white,bgcolor=color.black)
