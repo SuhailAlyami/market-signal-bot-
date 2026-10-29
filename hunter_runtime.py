@@ -129,10 +129,11 @@ class HunterRuntime:
     ephemeral filesystem does NOT guarantee survival across replacement or
     redeploy; this limitation is reported and notifications remain disabled.
     """
-    def __init__(self, state_path, journal_path, symbols=("ES=F", "NQ=F"), detector=None):
+    def __init__(self, state_path, journal_path, symbols=("ES=F", "NQ=F"), detector=None, market_active=None):
         self.state_path, self.journal_path = Path(state_path), Path(journal_path)
         self.symbols = tuple(symbols)
         self.detector = detector or experimental_candidate
+        self.market_active = market_active
         self.price_context_status = {}
         self.state = {"version": 1, "symbols": {}, "pending": [], "notifications": {}}
         self.persistence_error = None
@@ -357,7 +358,7 @@ class HunterRuntime:
             heartbeat["status"] = self.persistence_error
             return {"events": events, "heartbeat": heartbeat}
         try:
-            active = futures_active(now)
+            active = (self.market_active or futures_active)(now)
         except Exception as exc:
             active = False
             heartbeat["status"] = "calendar_unavailable"
@@ -379,7 +380,7 @@ class HunterRuntime:
                         status["source"] = frame.attrs.get("source", SOURCE)
                         status["live_feed_verified"] = bool(data is not None and frame.attrs.get("live_feed_verified"))
                         try:
-                            market_open_at_receipt = futures_active(now)
+                            market_open_at_receipt = (self.market_active or futures_active)(now)
                         except Exception as exc:
                             data, active = None, False
                             status.update(status="calendar_unavailable", error_type=type(exc).__name__)
@@ -485,4 +486,5 @@ def format_research_event(event):
             f"شمعة مكتملة: {event['bar_end']} | الرصد: {event['detected_at']}\n"
             f"المصدر: {event['source']} | الثقة: غير معايرة\n"
             "NOT READY — مراقبة الأصل فقط؛ لا أسعار عقود SPX ولا أوامر تداول.")
+
 
