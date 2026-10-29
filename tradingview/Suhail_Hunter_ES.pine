@@ -1,5 +1,5 @@
 //@version=6
-indicator("Suhail Hunter v2 | SPX primary / ES support", overlay=true, max_labels_count=100)
+indicator("Suhail Hunter | TradingView research", overlay=true, max_labels_count=100)
 // PYTHON_RULE_SHA256: b3b886ad24976b3f422ddede9442d9d2c9ce74ab1aa3f5f0080909faa2830a93
 // Rule levels are the prior20 completed bars. No option contract/quote is invented.
 const string RULE_VERSION = "hunter-rolling20-v2"
@@ -10,7 +10,10 @@ const int CONFIRM_BARS = 2
 const float BUFFER_ATR = 0.10
 const int EXPIRY_MINUTES = 10
 const int COOLDOWN_MINUTES = 5
-esSymbol = input.symbol("CME_MINI:ESZ2026", "Exact ES helper expiry (match Gateway)")
+esSymbol = input.symbol("CME_MINI:ESZ2026", "Exact ES helper expiry (TradingView feed)")
+// Chart-native research mode: no IBKR/Gateway connection or verified option quotes.
+enableResearchAlerts = input.bool(false, "Enable RESEARCH_ONLY alerts (not validated)")
+feedDeclaration = input.string("UNVERIFIED", "Chart feed status (manual; not independently verified)", options=["UNVERIFIED", "DELAYED", "REALTIME_USER_DECLARED"])
 isSPX = syminfo.ticker == "SPX" and syminfo.type == "index"
 isES = syminfo.root == "ES" and syminfo.type == "futures"
 tickSize = isSPX ? 0.01 : 0.25
@@ -141,7 +144,15 @@ plotshape(triggerUp,"UP research trigger",shape.labelup,location.belowbar,color=
 plotshape(triggerDown,"DOWN research trigger",shape.labeldown,location.abovebar,color=color.red,text="DOWN")
 plotshape(cancelled,"Invalidation/exit",shape.xcross,location.top,color=color.gray,size=size.tiny)
 // SPX is WATCH only here: Pine has no verified IBKR option chain or broker freshness.
-if eligible and barstate.isrealtime and timenow-time_close >= 0 and timenow-time_close <= 90000
+if enableResearchAlerts and feedDeclaration != "DELAYED" and eligible and barstate.isrealtime and timenow-time_close >= 0 and timenow-time_close <= 90000
     labelText = isSPX ? "SPX WATCH; option contract unverified" : "ES experimental underlying plan"
-    alert(RULE_VERSION+" | "+labelText+" | "+(side == 1 ? "UP" : "DOWN")+" | "+str.tostring(entryLow)+".."+str.tostring(entryHigh)+" | stop "+str.tostring(planStop)+" | targets "+str.tostring(target1)+", "+str.tostring(target2),alert.freq_once_per_bar_close)
+    alert("RESEARCH_ONLY | TradingView | "+feedDeclaration+" | "+syminfo.tickerid+" | KSA "+str.format_time(time_close, "yyyy-MM-dd HH:mm", "Asia/Riyadh")+" | "+RULE_VERSION+" | "+labelText+" | "+(side == 1 ? "UP" : "DOWN")+" | "+str.tostring(entryLow)+".."+str.tostring(entryHigh)+" | stop "+str.tostring(planStop)+" | targets "+str.tostring(target1)+", "+str.tostring(target2),alert.freq_once_per_bar_close)
 
+
+// This dashboard reports chart observations; it is not a provider heartbeat.
+var table chartStatus = table.new(position.top_right, 1, 4)
+if barstate.islast
+    table.cell(chartStatus, 0, 0, "سهيل هنتر | RESEARCH_ONLY")
+    table.cell(chartStatus, 0, 1, syminfo.tickerid+" | TradingView | "+feedDeclaration)
+    table.cell(chartStatus, 0, 2, "وقت الشمعة بالرياض: "+str.format_time(time, "yyyy-MM-dd HH:mm", "Asia/Riyadh"))
+    table.cell(chartStatus, 0, 3, enableResearchAlerts ? "تنبيهات بحثية مفعلة في الكود؛ أنشئ Alert بالحساب" : "تنبيهات بحثية مغلقة")
