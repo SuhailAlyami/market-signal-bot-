@@ -121,6 +121,11 @@ async def collect_history(call, symbol, *, interval='1m', period=None, step_coun
                       snapshot_live_verified=bool(snapshot and snapshot['last_live_verified']),
                       bar_publication_latency_verified=False,
                       latest_bar_age_seconds=age, history_request=args, raw_adjusted=False)
+    if snapshot is not None:
+        # Preserve provider trade time separately from local history receipt.
+        # Downstream consumers must still enforce their own freshness gates.
+        data.attrs.update(last_trade_time=snapshot['last_trade_at'],
+                          last_price=snapshot['last'])
     return data
 
 
@@ -152,3 +157,4 @@ class Ticker:
         # auto_adjust retained as a call compatibility argument; native broker
         # OHLCV are NOT adjusted or synthesized. Metadata explicitly says so.
         return fetch_bars(self.symbol,period=period,interval=interval,require_realtime=require_realtime)
+
