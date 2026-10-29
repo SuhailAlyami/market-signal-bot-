@@ -1,6 +1,6 @@
 //@version=6
 indicator("Suhail Hunter v2 | SPX primary / ES support", overlay=true, max_labels_count=100)
-// PYTHON_RULE_SHA256: 5a6edb3d4c1caa3fda2bc39173fc7208225c43aa19857297736111f030b729ab
+// PYTHON_RULE_SHA256: b3b886ad24976b3f422ddede9442d9d2c9ce74ab1aa3f5f0080909faa2830a93
 // Rule levels are the prior20 completed bars. No option contract/quote is invented.
 const string RULE_VERSION = "hunter-rolling20-v2"
 const int WINDOW = 20
