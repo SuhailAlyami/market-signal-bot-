@@ -1,0 +1,155 @@
+//@version=6
+indicator("Suhail Hunter | Capital.com CFD research", overlay=true, max_labels_count=100)
+// Separate CFD research variant; no claim of Python/SPX price equivalence.
+// Rule levels are the prior20 completed bars. No option contract/quote is invented.
+const string RULE_VERSION = "hunter-cfd-tickvolume-v1"
+const int WINDOW = 20
+const float PROXIMITY = 0.20
+const float MIN_RVOL = 1.20
+const int CONFIRM_BARS = 2
+const float BUFFER_ATR = 0.10
+const int EXPIRY_MINUTES = 10
+const int COOLDOWN_MINUTES = 5
+// Uses only CAPITALCOM:SPX500 OHLC and broker tick counts.
+// Chart-native research mode: no IBKR/Gateway connection or verified option quotes.
+enableResearchAlerts = input.bool(false, "Enable RESEARCH_ONLY alerts (not validated)")
+feedDeclaration = input.string("UNVERIFIED", "Chart feed status (manual; not independently verified)", options=["UNVERIFIED", "DELAYED", "REALTIME_USER_DECLARED"])
+isCFD = syminfo.tickerid == "CAPITALCOM:SPX500"
+tickSize = syminfo.mintick
+if not isCFD or not chart.is_standard or not timeframe.isminutes or timeframe.multiplier != 1
+    runtime.error("Use CAPITALCOM:SPX500, standard 1-minute candles. CFD levels are not SPX cash levels.")
+
+// Tick volume is broker update activity, not exchange trading volume.
+atr = ta.sma(ta.tr(true)[1], WINDOW)
+levelHigh = ta.highest(high[1], WINDOW)
+levelLow = ta.lowest(low[1], WINDOW)
+evidenceVolume = volume
+medianVolume = ta.median(volume[1], WINDOW)
+rvol = medianVolume > 0 ? evidenceVolume / medianVolume : na
+trend5 = (close - close[5]) / atr
+trend15 = (close - close[15]) / atr
+move = (close-open) / atr
+nearHigh = (levelHigh-close) / atr
+nearLow = (close-levelLow) / atr
+good = open > 0 and low > 0 and high >= math.max(open, close) and low <= math.min(open,close) and evidenceVolume > 0
+valid = ta.sma(good ? 1.0 : 0.0,31) == 1 and ta.sma(time-time[1] == 60000 ? 1.0 : 0.0,30) == 1 and atr > 0 and levelHigh > levelLow and not na(rvol)
+supportUp = true
+supportDown = true
+up = valid and 0 <= nearHigh and nearHigh <= PROXIMITY and move > 0 and trend5 > 0 and trend15 >= 0 and rvol >= MIN_RVOL and supportUp
+down = valid and 0 <= nearLow and nearLow <= PROXIMITY and move < 0 and trend5 < 0 and trend15 <= 0 and rvol >= MIN_RVOL and supportDown
+// PDF price context v1: observations only; no changes to up/down or alert rules.
+// No volume-at-price, HTF rejection, CISD or SMT is certified by these marks.
+showPDFContext = input.bool(false, "Show experimental PDF sweep context (no alerts)")
+pdfSweepUp = valid and low < levelLow and close > levelLow
+pdfSweepDown = valid and high > levelHigh and close < levelHigh
+pdfGap = low > high[2] ? 1 : high < low[2] ? -1 : 0
+int pdfInversion = 0
+if barstate.isconfirmed and valid
+    for scan = 1 to 19
+        gapAgo = 20-scan
+        bearishGap = high[gapAgo] < low[gapAgo+2]
+        bullishGap = low[gapAgo] > high[gapAgo+2]
+        unbrokenBear = true
+        unbrokenBull = true
+        for ago = 1 to gapAgo
+            unbrokenBear := unbrokenBear and close[ago] <= low[gapAgo+2]
+            unbrokenBull := unbrokenBull and close[ago] >= high[gapAgo+2]
+        if bearishGap and close > low[gapAgo+2] and unbrokenBear
+            pdfInversion := 1
+        if bullishGap and close < high[gapAgo+2] and unbrokenBull
+            pdfInversion := -1
+plotshape(showPDFContext and barstate.isconfirmed and pdfSweepUp and not pdfSweepDown, title="Shadow sweep UP", text="SHADOW", style=shape.circle, location=location.belowbar, color=color.gray, size=size.tiny)
+plotshape(showPDFContext and barstate.isconfirmed and pdfSweepDown and not pdfSweepUp, title="Shadow sweep DOWN", text="SHADOW", style=shape.circle, location=location.abovebar, color=color.gray, size=size.tiny)
+plot(barstate.isconfirmed and valid ? pdfGap : na, "Shadow FVG direction", display=display.data_window)
+plot(barstate.isconfirmed and valid ? pdfInversion : na, "Shadow iFVG direction", display=display.data_window)
+var int phase = 0
+var int side = 0
+var int started = na
+var int cooldownUntil = na
+var int confirmations = 0
+var float activeLevel = na
+var float activeAtr = na
+var float stopLevel = na
+setupUp = false
+setupDown = false
+triggerUp = false
+triggerDown = false
+cancelled = false
+eligible = false
+float entryLow = na
+float entryHigh = na
+float target1 = na
+float target2 = na
+float planStop = na
+if barstate.isconfirmed
+    if not valid and phase != 0
+        phase := 0
+        confirmations := 0
+        cancelled := true
+        cooldownUntil := time_close + COOLDOWN_MINUTES*60000
+    else if valid
+        if phase != 0
+            invalid = side*(close-stopLevel) <= 0
+            expired = time_close-started >= EXPIRY_MINUTES*60000
+            if invalid or expired
+                cancelled := true
+                phase := 0
+                confirmations := 0
+                cooldownUntil := time_close + COOLDOWN_MINUTES*60000
+            else if phase == 1
+                beyond = side*(close-activeLevel) >= BUFFER_ATR*activeAtr
+                confirmations := beyond ? confirmations+1 : 0
+                if confirmations >= CONFIRM_BARS
+                    phase := 2
+                    triggerUp := side == 1
+                    triggerDown := side == -1
+                    entryLow := math.floor((close-0.05*atr)/tickSize)*tickSize
+                    entryHigh := math.ceil((close+0.05*atr)/tickSize)*tickSize
+                    roundedStop = (side == 1 ? math.floor(stopLevel/tickSize) : math.ceil(stopLevel/tickSize))*tickSize
+                    planStop := roundedStop
+                    risk = side == 1 ? entryHigh-roundedStop : roundedStop-entryLow
+                    eligible := rvol >= MIN_RVOL and side*trend5 > 0 and side*trend15 >= 0 and side*move > 0 and risk >= tickSize and risk <= 2*atr and (side == 1 ? roundedStop < entryLow : roundedStop > entryHigh) and (side == 1 ? supportUp : supportDown)
+                    anchor = side == 1 ? entryHigh : entryLow
+                    target1 := anchor + side*risk
+                    target2 := anchor + side*2*risk
+                    eligible := eligible and target1 > 0 and target2 > 0
+                    // Rejected plan is not an active entry and adds no cooldown.
+                    if not eligible
+                        phase := 0
+                        confirmations := 0
+        else if (na(cooldownUntil) or time_close >= cooldownUntil) and (up or down)
+            side := up ? 1 : -1
+            phase := 1
+            started := time_close
+            confirmations := 0
+            activeLevel := side == 1 ? levelHigh : levelLow
+            activeAtr := atr
+            stopLevel := close-side*atr
+            setupUp := side == 1
+            setupDown := side == -1
+
+plot(phase != 0 ? activeLevel : na,"Observed level",color=color.orange,style=plot.style_linebr)
+plot(phase != 0 ? stopLevel : na,"Underlying invalidation",color=color.red,style=plot.style_linebr)
+plot(entryLow,"Underlying entry low",color=color.blue,style=plot.style_circles)
+plot(entryHigh,"Underlying entry high",color=color.blue,style=plot.style_circles)
+plot(target1,"Underlying target1",color=color.green,style=plot.style_circles)
+plot(target2,"Underlying target2",color=color.green,style=plot.style_circles)
+plot(planStop,"Rounded plan stop",color=color.red,style=plot.style_circles)
+plotshape(setupUp,"UP setup",shape.circle,location.belowbar,color=color.green,size=size.tiny,text="SET")
+plotshape(setupDown,"DOWN setup",shape.circle,location.abovebar,color=color.red,size=size.tiny,text="SET")
+plotshape(triggerUp,"UP research trigger",shape.labelup,location.belowbar,color=color.green,text="UP")
+plotshape(triggerDown,"DOWN research trigger",shape.labeldown,location.abovebar,color=color.red,text="DOWN")
+plotshape(cancelled,"Invalidation/exit",shape.xcross,location.top,color=color.gray,size=size.tiny)
+// SPX is WATCH only here: Pine has no verified IBKR option chain or broker freshness.
+if enableResearchAlerts and feedDeclaration != "DELAYED" and eligible and barstate.isrealtime and timenow-time_close >= 0 and timenow-time_close <= 90000
+    labelText = "CFD WATCH; broker tick volume; NOT SPX cash or option advice"
+    alert("RESEARCH_ONLY | TradingView | "+feedDeclaration+" | "+syminfo.tickerid+" | KSA "+str.format_time(time_close, "yyyy-MM-dd HH:mm", "Asia/Riyadh")+" | "+RULE_VERSION+" | "+labelText+" | "+(side == 1 ? "UP" : "DOWN")+" | "+str.tostring(entryLow)+".."+str.tostring(entryHigh)+" | stop "+str.tostring(planStop)+" | targets "+str.tostring(target1)+", "+str.tostring(target2),alert.freq_once_per_bar_close)
+
+
+// This dashboard reports chart observations; it is not a provider heartbeat.
+var table chartStatus = table.new(position.top_right, 1, 4)
+if barstate.islast
+    table.cell(chartStatus, 0, 0, "سهيل هنتر | RESEARCH_ONLY")
+    table.cell(chartStatus, 0, 1, syminfo.tickerid+" | CFD / TICK VOLUME | "+feedDeclaration)
+    table.cell(chartStatus, 0, 2, "وقت الشمعة بالرياض: "+str.format_time(time, "yyyy-MM-dd HH:mm", "Asia/Riyadh"))
+    table.cell(chartStatus, 0, 3, enableResearchAlerts ? "تنبيهات بحثية مفعلة في الكود؛ أنشئ Alert بالحساب" : "تنبيهات بحثية مغلقة")
