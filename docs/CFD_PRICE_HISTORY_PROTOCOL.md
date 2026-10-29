@@ -1,0 +1,7 @@
+# Fixed prior-date batch — 2026-10-29
+
+Use unchanged RANGE_READY, FAILED_BREAK and BODY_BASELINE rules from c53a08181dda5ae2a2e79d393525a831121f4f51. Dates selected before results: Oct20,21,22,23,26 2026, midnight-to-midnight Asia/Riyadh, decision end exclusive. Exclude Oct19 because loaded chart begins01:00KSA; exclude Oct27 already evaluated, Oct28 consumed FOMC day and Oct29 partial transfer. Report every chosen day and all three models, even negatives or empty cells. Do not retune or select a winner from this batch.
+
+Same next-minute Open reference, priorATR20, target1ATR, stop0.75ATR, ten-minute horizon, samebar-both ambiguity, gap/invalid-input censoring, ten-minute model cooldown and no overlapping observations as the original protocol. Assign outcomes to the decision date, including outcomes settled just after midnight. Preserve model state across contiguous input; exclude new decisions on nonchosen dates. Report pending/unobservable cases and loaded coverage, plus bar counts per selected calendar date to expose missing coverage. No volume/helper data or external alerts.
+
+These dates are new evaluations for this fixed price-only CFD logic, but earlier underlying SPX/ES research consumed some corresponding dates. This is historical development/robustness evidence, not untouched independent validation, and is not option P&L or early-event precision/recall. No annual-plan/payment or market-success claim.
