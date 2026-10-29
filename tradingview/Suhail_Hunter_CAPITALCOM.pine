@@ -209,7 +209,17 @@ if barstate.isconfirmed
         array.push(qGroup, barstate.isrealtime ? 1 : 0)
         array.push(qStep, 0)
         array.push(qEntry, na)
-var table diagnostic = table.new(position.bottom_right, 1, 5)
+var stages = array.new_int(4, 0)
+if barstate.isconfirmed and time_close >= evalFrom and time_close < evalTo
+    if up or down
+        array.set(stages, 0, array.get(stages, 0)+1)
+    if setupUp or setupDown
+        array.set(stages, 1, array.get(stages, 1)+1)
+    if triggerUp or triggerDown
+        array.set(stages, 2, array.get(stages, 2)+1)
+    if eligible
+        array.set(stages, 3, array.get(stages, 3)+1)
+var table diagnostic = table.new(position.bottom_right, 1, 6)
 if barstate.islast
     table.cell(diagnostic, 0, 0, "NOT_READY | CFD 5m direction diagnostic", text_color=color.white, bgcolor=color.black)
     table.cell(diagnostic, 0, 1, "Loaded KSA: "+str.format_time(loadedFrom, "MM-dd HH:mm", "Asia/Riyadh")+" to "+str.format_time(loadedTo, "MM-dd HH:mm", "Asia/Riyadh"), text_color=color.white, bgcolor=color.black)
@@ -217,3 +227,4 @@ if barstate.islast
         tag = group == 0 ? "HISTORY " : "LIVE INSTANCE "
         table.cell(diagnostic, 0, group+2, tag+"positive "+str.tostring(array.get(positives, group))+" / negative "+str.tostring(array.get(negatives, group))+" / flat "+str.tostring(array.get(flats, group))+" / gaps "+str.tostring(array.get(censored, group))+" / points "+str.tostring(array.get(pointSums, group), "#.##"), text_color=color.white, bgcolor=color.black)
     table.cell(diagnostic, 0, 4, "Pending "+str.tostring(array.size(qTime))+" | no fills/options/profit claim", text_color=color.white, bgcolor=color.black)
+    table.cell(diagnostic, 0, 5, "History candidate/setup/trigger/eligible: "+str.tostring(array.get(stages, 0))+"/"+str.tostring(array.get(stages, 1))+"/"+str.tostring(array.get(stages, 2))+"/"+str.tostring(array.get(stages, 3)), text_color=color.white, bgcolor=color.black)
