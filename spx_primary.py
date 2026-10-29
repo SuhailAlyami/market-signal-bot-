@@ -13,6 +13,7 @@ from hunter_runtime import HunterRuntime
 from strategy_rules import candidate,features
 from es_signal_plan import complete_plan
 from spx_option_selector import OptionQuote,select_spx_0dte
+from spx_cash_session import cash_session, cash_active
 
 UTC=timezone.utc
 
@@ -146,7 +147,8 @@ def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
             if support is None or found['direction']*support['trend_5']<=0 or found['direction']*support['trend_15']<0:return None
             return found
         except (ValueError,KeyError,RuntimeError):return None
-    runtime=HunterRuntime(directory/'state.json',directory/'shadow.jsonl',symbols=('SPX',),detector=detect)
+    runtime=HunterRuntime(directory/'state.json',directory/'shadow.jsonl',symbols=('SPX',),detector=detect,
+                          market_active=cash_active)
     client=None;retry=0;failures=0;connected_at=0;last_status=None
     def journal(value):
         with (directory/'connection.jsonl').open('a',encoding='utf-8') as stream:
@@ -155,6 +157,24 @@ def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
         now=datetime.now(UTC);report={'time':now.isoformat(),'primary_symbol':'SPX','support_symbol':'ES',
             'orders_enabled':False,'options_scope':'three nearby strikes, both rights; not every chain contract'}
         try:
+            session=cash_session(now)
+            report['cash_session']=session
+            report['time_riyadh']=now.astimezone(ZoneInfo('Asia/Riyadh')).isoformat()
+            if not session['is_open']:
+                if client:
+                    client.disconnect();client=None
+                result=runtime.poll(now,lambda symbol:None)
+                waiting_status=('waiting_for_cash_session' if result['heartbeat']['status']=='ok'
+                                else result['heartbeat']['status'])
+                report.update(status=waiting_status,heartbeat=result['heartbeat'],
+                              live_feed_verified=False)
+                if last_status!=report['status']:
+                    journal({'status':report['status'],'next_open_riyadh':session['next_open_riyadh']})
+                    last_status=report['status']
+                if not write_status(directory,report):
+                    journal({'status':'status_persistence_failed'})
+                stop.wait(30)
+                continue
             if client is None:
                 if time.monotonic()<retry:stop.wait(2);continue
                 client=connect_primary();connected_at=time.monotonic()
@@ -209,3 +229,4 @@ def run(directory,es_fetch,stop,github_enabled=False,telegram_enabled=False):
             journal({'status':'status_persistence_failed','publication_status':'previous_status_may_be_stale'})
         stop.wait(5)
     if client:client.disconnect()
+
