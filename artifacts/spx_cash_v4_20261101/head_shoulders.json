@@ -1,0 +1,51 @@
+{
+  "status": "EXPLORATORY_NOT_EARLY_PRECISION",
+  "cut_bar": 666,
+  "models": {
+    "head_shoulders": {
+      "development": {
+        "counts": {
+          "target": 1
+        },
+        "N": 1,
+        "conservative_target_share": 1,
+        "events": [
+          {
+            "decision": 1793285280000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {},
+        "N": 0,
+        "conservative_target_share": null,
+        "events": []
+      }
+    },
+    "inverse_head_shoulders": {
+      "development": {
+        "counts": {},
+        "N": 0,
+        "conservative_target_share": null,
+        "events": []
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 1
+        },
+        "N": 1,
+        "conservative_target_share": 1,
+        "events": [
+          {
+            "decision": 1793377680000,
+            "direction": 1,
+            "result": "target"
+          }
+        ]
+      }
+    }
+  },
+  "limits": "Fixed diagnostic 1ATR target/.75ATR adverse/10m, next-open reference. No costs. All dates inspected, no blind holdout. Two bars confirmation delay for divergences. EMA/RSI reset at gaps. No parameter search."
+}
