@@ -1,0 +1,687 @@
+{
+  "status": "RESEARCH_ONLY",
+  "counts": {
+    "signals": 67,
+    "target": 21,
+    "stop": 43,
+    "ambiguous": 2,
+    "gap": 1,
+    "timeout": 0,
+    "pending": 0
+  },
+  "events": [
+    {
+      "decision_at": 1793206260000,
+      "direction": -1,
+      "atr": 1.2960000000000036,
+      "expected": 1793206440000,
+      "entry": 7737.65,
+      "steps": 3,
+      "result": "stop",
+      "resolved_at": 1793206440000
+    },
+    {
+      "decision_at": 1793206500000,
+      "direction": 1,
+      "atr": 1.2760000000000673,
+      "expected": 1793206560000,
+      "entry": 7750.82,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793206560000
+    },
+    {
+      "decision_at": 1793207940000,
+      "direction": -1,
+      "atr": 1.3654999999998836,
+      "expected": 1793208060000,
+      "entry": 7735.85,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793208060000
+    },
+    {
+      "decision_at": 1793209920000,
+      "direction": 1,
+      "atr": 1.18100000000004,
+      "expected": 1793210040000,
+      "entry": 7738.91,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793210040000
+    },
+    {
+      "decision_at": 1793210940000,
+      "direction": -1,
+      "atr": 2.482000000000016,
+      "expected": 1793211000000,
+      "entry": 7727.51,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793211000000
+    },
+    {
+      "decision_at": 1793211240000,
+      "direction": -1,
+      "atr": 2.8345000000000256,
+      "expected": 1793211420000,
+      "entry": 7727.89,
+      "steps": 3,
+      "result": "target",
+      "resolved_at": 1793211420000
+    },
+    {
+      "decision_at": 1793212080000,
+      "direction": 1,
+      "atr": 2.6240000000000236,
+      "expected": 1793212200000,
+      "entry": 7732.68,
+      "steps": 2,
+      "result": "target",
+      "resolved_at": 1793212200000
+    },
+    {
+      "decision_at": 1793212380000,
+      "direction": -1,
+      "atr": 2.9205000000000383,
+      "expected": 1793212440000,
+      "entry": 7726.64,
+      "steps": 1,
+      "result": "ambiguous",
+      "resolved_at": 1793212440000
+    },
+    {
+      "decision_at": 1793212440000,
+      "direction": 1,
+      "atr": 3.0175000000000636,
+      "expected": 1793212500000,
+      "entry": 7741.83,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793212500000
+    },
+    {
+      "decision_at": 1793213160000,
+      "direction": -1,
+      "atr": 6.832500000000119,
+      "expected": 1793213340000,
+      "entry": 7739.38,
+      "steps": 3,
+      "result": "stop",
+      "resolved_at": 1793213340000
+    },
+    {
+      "decision_at": 1793213520000,
+      "direction": -1,
+      "atr": 8.14950000000008,
+      "expected": 1793213700000,
+      "entry": 7735.5,
+      "steps": 3,
+      "result": "stop",
+      "resolved_at": 1793213700000
+    },
+    {
+      "decision_at": 1793214240000,
+      "direction": 1,
+      "atr": 6.8980000000000015,
+      "expected": 1793214360000,
+      "entry": 7747.47,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793214360000
+    },
+    {
+      "decision_at": 1793214420000,
+      "direction": -1,
+      "atr": 6.9769999999999985,
+      "expected": 1793214480000,
+      "entry": 7728.8,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793214480000
+    },
+    {
+      "decision_at": 1793215200000,
+      "direction": 1,
+      "atr": 5.907000000000062,
+      "expected": 1793215500000,
+      "entry": 7736.18,
+      "steps": 5,
+      "result": "stop",
+      "resolved_at": 1793215500000
+    },
+    {
+      "decision_at": 1793216280000,
+      "direction": -1,
+      "atr": 4.001999999999907,
+      "expected": 1793216340000,
+      "entry": 7732.07,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793216340000
+    },
+    {
+      "decision_at": 1793217600000,
+      "direction": 1,
+      "atr": 3.055499999999802,
+      "expected": 1793217600000,
+      "entry": null,
+      "steps": 0,
+      "result": "gap",
+      "resolved_at": 1793280660000
+    },
+    {
+      "decision_at": 1793283060000,
+      "direction": -1,
+      "atr": 5.02150000000006,
+      "expected": 1793283300000,
+      "entry": 7706.07,
+      "steps": 4,
+      "result": "stop",
+      "resolved_at": 1793283300000
+    },
+    {
+      "decision_at": 1793283480000,
+      "direction": 1,
+      "atr": 4.806500000000005,
+      "expected": 1793284080000,
+      "entry": 7718.76,
+      "steps": 10,
+      "result": "stop",
+      "resolved_at": 1793284080000
+    },
+    {
+      "decision_at": 1793284080000,
+      "direction": -1,
+      "atr": 4.102999999999975,
+      "expected": 1793284200000,
+      "entry": 7712.24,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793284200000
+    },
+    {
+      "decision_at": 1793284380000,
+      "direction": 1,
+      "atr": 3.6949999999999816,
+      "expected": 1793284920000,
+      "entry": 7723.41,
+      "steps": 9,
+      "result": "stop",
+      "resolved_at": 1793284920000
+    },
+    {
+      "decision_at": 1793284920000,
+      "direction": -1,
+      "atr": 3.672999999999911,
+      "expected": 1793285040000,
+      "entry": 7716.59,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793285040000
+    },
+    {
+      "decision_at": 1793286060000,
+      "direction": 1,
+      "atr": 4.501999999999953,
+      "expected": 1793286420000,
+      "entry": 7717.54,
+      "steps": 6,
+      "result": "stop",
+      "resolved_at": 1793286420000
+    },
+    {
+      "decision_at": 1793287500000,
+      "direction": 1,
+      "atr": 2.7174999999999274,
+      "expected": 1793287560000,
+      "entry": 7724.37,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793287560000
+    },
+    {
+      "decision_at": 1793288220000,
+      "direction": -1,
+      "atr": 2.4884999999998856,
+      "expected": 1793288340000,
+      "entry": 7724.49,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793288340000
+    },
+    {
+      "decision_at": 1793289000000,
+      "direction": -1,
+      "atr": 2.8090000000000144,
+      "expected": 1793289240000,
+      "entry": 7717.12,
+      "steps": 4,
+      "result": "stop",
+      "resolved_at": 1793289240000
+    },
+    {
+      "decision_at": 1793289540000,
+      "direction": 1,
+      "atr": 2.5705000000001292,
+      "expected": 1793289780000,
+      "entry": 7725.52,
+      "steps": 4,
+      "result": "stop",
+      "resolved_at": 1793289780000
+    },
+    {
+      "decision_at": 1793290320000,
+      "direction": -1,
+      "atr": 2.2610000000000583,
+      "expected": 1793290620000,
+      "entry": 7715.38,
+      "steps": 5,
+      "result": "target",
+      "resolved_at": 1793290620000
+    },
+    {
+      "decision_at": 1793291340000,
+      "direction": 1,
+      "atr": 1.9764999999998962,
+      "expected": 1793291400000,
+      "entry": 7720.31,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793291400000
+    },
+    {
+      "decision_at": 1793291580000,
+      "direction": -1,
+      "atr": 2.0159999999999854,
+      "expected": 1793291700000,
+      "entry": 7711.71,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793291700000
+    },
+    {
+      "decision_at": 1793292180000,
+      "direction": 1,
+      "atr": 2.177499999999964,
+      "expected": 1793292480000,
+      "entry": 7716.54,
+      "steps": 5,
+      "result": "stop",
+      "resolved_at": 1793292480000
+    },
+    {
+      "decision_at": 1793292480000,
+      "direction": -1,
+      "atr": 2.143000000000029,
+      "expected": 1793292780000,
+      "entry": 7713.52,
+      "steps": 5,
+      "result": "stop",
+      "resolved_at": 1793292780000
+    },
+    {
+      "decision_at": 1793293440000,
+      "direction": -1,
+      "atr": 2.0095000000001164,
+      "expected": 1793293620000,
+      "entry": 7716.32,
+      "steps": 3,
+      "result": "target",
+      "resolved_at": 1793293620000
+    },
+    {
+      "decision_at": 1793294100000,
+      "direction": -1,
+      "atr": 1.9174999999999272,
+      "expected": 1793294160000,
+      "entry": 7706.18,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793294160000
+    },
+    {
+      "decision_at": 1793294940000,
+      "direction": 1,
+      "atr": 1.7024999999998272,
+      "expected": 1793295060000,
+      "entry": 7710.58,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793295060000
+    },
+    {
+      "decision_at": 1793295360000,
+      "direction": -1,
+      "atr": 1.8755000000000108,
+      "expected": 1793295420000,
+      "entry": 7704.77,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793295420000
+    },
+    {
+      "decision_at": 1793296080000,
+      "direction": -1,
+      "atr": 2.17450000000008,
+      "expected": 1793296140000,
+      "entry": 7695.97,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793296140000
+    },
+    {
+      "decision_at": 1793297220000,
+      "direction": 1,
+      "atr": 2.124499999999989,
+      "expected": 1793297340000,
+      "entry": 7698.15,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793297340000
+    },
+    {
+      "decision_at": 1793298720000,
+      "direction": -1,
+      "atr": 1.8920000000000528,
+      "expected": 1793299020000,
+      "entry": 7693.41,
+      "steps": 5,
+      "result": "stop",
+      "resolved_at": 1793299020000
+    },
+    {
+      "decision_at": 1793299740000,
+      "direction": 1,
+      "atr": 2.0184999999998126,
+      "expected": 1793299920000,
+      "entry": 7697.43,
+      "steps": 3,
+      "result": "target",
+      "resolved_at": 1793299920000
+    },
+    {
+      "decision_at": 1793301240000,
+      "direction": -1,
+      "atr": 1.6495000000000801,
+      "expected": 1793301360000,
+      "entry": 7697.81,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793301360000
+    },
+    {
+      "decision_at": 1793301480000,
+      "direction": 1,
+      "atr": 1.6190000000000508,
+      "expected": 1793301540000,
+      "entry": 7700.16,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793301540000
+    },
+    {
+      "decision_at": 1793302260000,
+      "direction": 1,
+      "atr": 1.8089999999999236,
+      "expected": 1793302560000,
+      "entry": 7711.05,
+      "steps": 5,
+      "result": "stop",
+      "resolved_at": 1793302560000
+    },
+    {
+      "decision_at": 1793303100000,
+      "direction": -1,
+      "atr": 1.8609999999998763,
+      "expected": 1793303160000,
+      "entry": 7705.57,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793303160000
+    },
+    {
+      "decision_at": 1793303400000,
+      "direction": 1,
+      "atr": 1.984499999999798,
+      "expected": 1793303460000,
+      "entry": 7709.49,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793303460000
+    },
+    {
+      "decision_at": 1793370540000,
+      "direction": 1,
+      "atr": 3.217000000000053,
+      "expected": 1793370720000,
+      "entry": 7602.92,
+      "steps": 3,
+      "result": "target",
+      "resolved_at": 1793370720000
+    },
+    {
+      "decision_at": 1793372640000,
+      "direction": -1,
+      "atr": 3.191000000000031,
+      "expected": 1793372820000,
+      "entry": 7613.34,
+      "steps": 3,
+      "result": "stop",
+      "resolved_at": 1793372820000
+    },
+    {
+      "decision_at": 1793373780000,
+      "direction": 1,
+      "atr": 2.654500000000053,
+      "expected": 1793373840000,
+      "entry": 7611.38,
+      "steps": 1,
+      "result": "ambiguous",
+      "resolved_at": 1793373840000
+    },
+    {
+      "decision_at": 1793374740000,
+      "direction": -1,
+      "atr": 2.671000000000049,
+      "expected": 1793374920000,
+      "entry": 7601.28,
+      "steps": 3,
+      "result": "target",
+      "resolved_at": 1793374920000
+    },
+    {
+      "decision_at": 1793375760000,
+      "direction": 1,
+      "atr": 1.8859999999999673,
+      "expected": 1793375880000,
+      "entry": 7601.53,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793375880000
+    },
+    {
+      "decision_at": 1793376060000,
+      "direction": -1,
+      "atr": 2.029499999999962,
+      "expected": 1793376120000,
+      "entry": 7597.07,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793376120000
+    },
+    {
+      "decision_at": 1793376720000,
+      "direction": -1,
+      "atr": 2.4019999999999984,
+      "expected": 1793376840000,
+      "entry": 7590.55,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793376840000
+    },
+    {
+      "decision_at": 1793377320000,
+      "direction": -1,
+      "atr": 2.2305000000000748,
+      "expected": 1793377440000,
+      "entry": 7592.54,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793377440000
+    },
+    {
+      "decision_at": 1793377680000,
+      "direction": 1,
+      "atr": 2.139500000000089,
+      "expected": 1793377800000,
+      "entry": 7597.29,
+      "steps": 2,
+      "result": "target",
+      "resolved_at": 1793377800000
+    },
+    {
+      "decision_at": 1793378400000,
+      "direction": 1,
+      "atr": 2.1209999999999583,
+      "expected": 1793378460000,
+      "entry": 7600.41,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793378460000
+    },
+    {
+      "decision_at": 1793378760000,
+      "direction": -1,
+      "atr": 2.346499999999878,
+      "expected": 1793378820000,
+      "entry": 7595.71,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793378820000
+    },
+    {
+      "decision_at": 1793380080000,
+      "direction": -1,
+      "atr": 2.704000000000042,
+      "expected": 1793380320000,
+      "entry": 7576.82,
+      "steps": 4,
+      "result": "stop",
+      "resolved_at": 1793380320000
+    },
+    {
+      "decision_at": 1793381460000,
+      "direction": -1,
+      "atr": 2.19350000000004,
+      "expected": 1793381580000,
+      "entry": 7576.03,
+      "steps": 2,
+      "result": "target",
+      "resolved_at": 1793381580000
+    },
+    {
+      "decision_at": 1793382420000,
+      "direction": -1,
+      "atr": 2.280000000000018,
+      "expected": 1793382660000,
+      "entry": 7570.32,
+      "steps": 4,
+      "result": "target",
+      "resolved_at": 1793382660000
+    },
+    {
+      "decision_at": 1793383320000,
+      "direction": -1,
+      "atr": 2.4364999999999326,
+      "expected": 1793383380000,
+      "entry": 7557.07,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793383380000
+    },
+    {
+      "decision_at": 1793383980000,
+      "direction": -1,
+      "atr": 2.249499999999989,
+      "expected": 1793384040000,
+      "entry": 7555.99,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793384040000
+    },
+    {
+      "decision_at": 1793384880000,
+      "direction": -1,
+      "atr": 2.8404999999998837,
+      "expected": 1793385000000,
+      "entry": 7536.78,
+      "steps": 2,
+      "result": "stop",
+      "resolved_at": 1793385000000
+    },
+    {
+      "decision_at": 1793386380000,
+      "direction": -1,
+      "atr": 3.10300000000002,
+      "expected": 1793386440000,
+      "entry": 7527.73,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793386440000
+    },
+    {
+      "decision_at": 1793386560000,
+      "direction": 1,
+      "atr": 3.1320000000000165,
+      "expected": 1793386620000,
+      "entry": 7534.78,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793386620000
+    },
+    {
+      "decision_at": 1793387220000,
+      "direction": 1,
+      "atr": 3.41599999999994,
+      "expected": 1793387280000,
+      "entry": 7546.89,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793387280000
+    },
+    {
+      "decision_at": 1793388900000,
+      "direction": 1,
+      "atr": 3.9874999999998635,
+      "expected": 1793388960000,
+      "entry": 7555.21,
+      "steps": 1,
+      "result": "target",
+      "resolved_at": 1793388960000
+    },
+    {
+      "decision_at": 1793389560000,
+      "direction": 1,
+      "atr": 4.075999999999931,
+      "expected": 1793389800000,
+      "entry": 7560.68,
+      "steps": 4,
+      "result": "target",
+      "resolved_at": 1793389800000
+    },
+    {
+      "decision_at": 1793390220000,
+      "direction": -1,
+      "atr": 4.842999999999938,
+      "expected": 1793390280000,
+      "entry": 7570.27,
+      "steps": 1,
+      "result": "stop",
+      "resolved_at": 1793390280000
+    }
+  ],
+  "limits": "No costs/fills; fixed ATR path diagnostic; no independent edge claim",
+  "input_sha256": "bd1c455d393694b0fb878659a1f528b450f868bb1b0304a1722bdf610d13b77d",
+  "input_bars": 1000
+}
