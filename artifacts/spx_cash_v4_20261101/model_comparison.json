@@ -1,0 +1,1449 @@
+{
+  "status": "EXPLORATORY_NOT_EARLY_PRECISION",
+  "cut_bar": 666,
+  "models": {
+    "v4_impulse": {
+      "development": {
+        "counts": {
+          "stop": 26,
+          "target": 5,
+          "gap": 2
+        },
+        "N": 33,
+        "conservative_target_share": 0.15151515151515152,
+        "events": [
+          {
+            "decision": 1793206500000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793207940000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793209920000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793210940000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793212080000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793212800000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793213520000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793214240000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793215200000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793216280000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793217600000,
+            "direction": 1,
+            "result": "gap"
+          },
+          {
+            "decision": 1793283060000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284080000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284920000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793286060000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793287500000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793288220000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793289000000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793290320000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793291340000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793292180000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793292780000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793293440000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793294040000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793294940000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793295840000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793297220000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793298720000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793299320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793301240000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793302260000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793303100000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793304000000,
+            "direction": 1,
+            "result": "gap"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 12,
+          "stop": 9,
+          "ambiguous": 1
+        },
+        "N": 22,
+        "conservative_target_share": 0.5454545454545454,
+        "events": [
+          {
+            "decision": 1793370540000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793371140000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793372640000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793373780000,
+            "direction": 1,
+            "result": "ambiguous"
+          },
+          {
+            "decision": 1793374740000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793375340000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793376060000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793376720000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793377320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793378400000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793379060000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793380080000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793381460000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793382420000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793383320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793383980000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793384880000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793386380000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793387220000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793388900000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793389560000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793390220000,
+            "direction": -1,
+            "result": "stop"
+          }
+        ]
+      }
+    },
+    "v3_ready": {
+      "development": {
+        "counts": {
+          "target": 8,
+          "stop": 6
+        },
+        "N": 14,
+        "conservative_target_share": 0.5714285714285714,
+        "events": [
+          {
+            "decision": 1793207580000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793209260000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793215080000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793215800000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793282700000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284680000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793285700000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793288700000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793289360000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793295660000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793299500000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793300160000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793302200000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793302860000,
+            "direction": -1,
+            "result": "stop"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "stop": 6,
+          "target": 3
+        },
+        "N": 9,
+        "conservative_target_share": 0.3333333333333333,
+        "events": [
+          {
+            "decision": 1793371620000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793372400000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793373180000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793374560000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793379960000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793380980000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793383080000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793383680000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793386140000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      }
+    },
+    "failed_break": {
+      "development": {
+        "counts": {
+          "target": 14,
+          "stop": 14
+        },
+        "N": 28,
+        "conservative_target_share": 0.5,
+        "events": [
+          {
+            "decision": 1793206320000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793207160000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793208060000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793208780000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793209560000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793210220000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793211420000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793212200000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793213820000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793214480000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793215860000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793217120000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793282760000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793283600000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793284440000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793285640000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793287920000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793289960000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793291400000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793292420000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793293920000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793294820000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793296860000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793297760000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793301300000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793302140000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793303940000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793369220000,
+            "direction": 1,
+            "result": "stop"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "stop": 11,
+          "target": 7
+        },
+        "N": 18,
+        "conservative_target_share": 0.3888888888888889,
+        "events": [
+          {
+            "decision": 1793370660000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793371920000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793372940000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793373540000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793374800000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793375820000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793377260000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793378100000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793380260000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793381700000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793382360000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793383740000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793384400000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793385060000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793386440000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793387040000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793388480000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793389620000,
+            "direction": -1,
+            "result": "stop"
+          }
+        ]
+      }
+    },
+    "range_break10": {
+      "development": {
+        "counts": {
+          "stop": 27,
+          "target": 13
+        },
+        "N": 40,
+        "conservative_target_share": 0.325,
+        "events": [
+          {
+            "decision": 1793206500000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793207280000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793207940000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793208540000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793209860000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793210460000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793211360000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793212020000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793212620000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793213760000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793214660000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793215320000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793216040000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793216760000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793282460000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793283060000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284080000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284920000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793286060000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793286660000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793287860000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793288760000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793289540000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793290200000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793291340000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793292300000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793293200000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793293860000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793294940000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793295720000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793296440000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793297400000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793298420000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793299740000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793301240000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793301960000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793302920000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793303640000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793369340000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793370000000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 11,
+          "stop": 12
+        },
+        "N": 23,
+        "conservative_target_share": 0.4782608695652174,
+        "events": [
+          {
+            "decision": 1793370960000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793371980000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793372640000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793373240000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793374260000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793374860000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793375760000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793376720000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793377680000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793378460000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793379060000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793380080000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793381100000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793381760000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793382480000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793383320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793383980000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793384880000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793385600000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793386260000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793387280000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793387880000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793389740000,
+            "direction": 1,
+            "result": "target"
+          }
+        ]
+      }
+    },
+    "trend_pullback": {
+      "development": {
+        "counts": {
+          "stop": 13,
+          "target": 8,
+          "gap": 1
+        },
+        "N": 22,
+        "conservative_target_share": 0.36363636363636365,
+        "events": [
+          {
+            "decision": 1793208960000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793210580000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793212320000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793213340000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793214120000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793215440000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793216280000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793217600000,
+            "direction": 1,
+            "result": "gap"
+          },
+          {
+            "decision": 1793283420000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793284200000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793285100000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793286480000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793288280000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793289960000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793291460000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793292240000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793292900000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793295000000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793298000000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793299140000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793301480000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793303040000,
+            "direction": 1,
+            "result": "stop"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 4,
+          "stop": 7
+        },
+        "N": 11,
+        "conservative_target_share": 0.36363636363636365,
+        "events": [
+          {
+            "decision": 1793372100000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793373900000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793375820000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793377320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793378280000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793381040000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793382180000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793385780000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793386980000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793388060000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793388900000,
+            "direction": 1,
+            "result": "target"
+          }
+        ]
+      }
+    },
+    "rsi_reentry": {
+      "development": {
+        "counts": {
+          "target": 3,
+          "stop": 5
+        },
+        "N": 8,
+        "conservative_target_share": 0.375,
+        "events": [
+          {
+            "decision": 1793206560000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793211000000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793212680000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793294160000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793296140000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793302560000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793303520000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793369640000,
+            "direction": 1,
+            "result": "stop"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 5,
+          "stop": 4
+        },
+        "N": 9,
+        "conservative_target_share": 0.5555555555555556,
+        "events": [
+          {
+            "decision": 1793370540000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793375340000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793379000000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793382900000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793384100000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793385420000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793386440000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793387580000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793390160000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      }
+    },
+    "confirmed_divergence": {
+      "development": {
+        "counts": {
+          "target": 10,
+          "stop": 4
+        },
+        "N": 14,
+        "conservative_target_share": 0.7142857142857143,
+        "events": [
+          {
+            "decision": 1793207280000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793208900000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793209680000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793210340000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793211540000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793212560000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793284860000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793285760000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793287320000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793289240000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793290740000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793295240000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793295960000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793296620000,
+            "direction": 1,
+            "result": "target"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "stop": 3,
+          "target": 3
+        },
+        "N": 6,
+        "conservative_target_share": 0.5,
+        "events": [
+          {
+            "decision": 1793371680000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793372580000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793376480000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793382480000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793385480000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793388660000,
+            "direction": -1,
+            "result": "stop"
+          }
+        ]
+      }
+    }
+  },
+  "limits": "Fixed diagnostic 1ATR target/.75ATR adverse/10m, next-open reference. No costs. All dates inspected, no blind holdout. Two bars confirmation delay for divergences. EMA/RSI reset at gaps. No parameter search."
+}
