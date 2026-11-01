@@ -1,0 +1,23 @@
+{
+  "losses": 43,
+  "loss_resolution_bars": {
+    "3": 4,
+    "1": 13,
+    "2": 14,
+    "5": 5,
+    "4": 4,
+    "10": 1,
+    "9": 1,
+    "6": 1
+  },
+  "median_resolution_bars": 2,
+  "large_impulse_filter": {
+    "removed_losses": 8,
+    "removed_successes": 2,
+    "removed_gap": 1,
+    "retained_successes": 19,
+    "retained_losses": 35,
+    "retained_ambiguous": 2
+  },
+  "conclusion": "Failure concentrated in first 2 dates; large-bar rejection insufficient. Cannot remove direction channel without losing successes."
+}
