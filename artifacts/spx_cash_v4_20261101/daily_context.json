@@ -1,0 +1,16 @@
+{
+  "status": "POSTHOC_CONTEXT_ONLY",
+  "groups": {
+    "prior_5day_up": {
+      "stop": 21,
+      "target": 15,
+      "ambiguous": 2,
+      "gap": 1
+    },
+    "prior_5day_down": {
+      "stop": 22,
+      "target": 6
+    }
+  },
+  "rule": "Daily close strictly before event UTC date, compare previous close to five sessions earlier. No same-day daily OHLC permitted. Not model training or independent validation."
+}
