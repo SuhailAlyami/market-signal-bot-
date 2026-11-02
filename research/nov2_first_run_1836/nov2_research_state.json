@@ -1,0 +1,13 @@
+{
+  "identity": {
+    "model_sha256": "f14128d2cb868a8004ebb78a595217c62d1b32915356f4368e0772493fa3e3c8",
+    "source": "IBKR_SPX_IND",
+    "start": "2026-11-02 00:00:00+00:00",
+    "consumed_reproduction": false
+  },
+  "last_processed": "2026-11-02 15:36:00+00:00",
+  "last_signal": null,
+  "signals": [],
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "provenance": "source label supplied by caller; not independently authenticated live data"
+}
