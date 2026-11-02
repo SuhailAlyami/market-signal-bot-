@@ -1,0 +1,40 @@
+{
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "frozen_utc": "2026-11-02T07:46:57.706746+00:00",
+  "fit": "SPX Oct20-22, final5rows purged before calibration",
+  "calibration": "SPX Oct28partial session, final5rows purged before later period",
+  "later": "SPX Oct29-30, previously inspected, exploratory only",
+  "classifier": {
+    "max_iter": 60,
+    "max_leaf_nodes": 7,
+    "max_depth": 3,
+    "min_samples_leaf": 50,
+    "l2_regularization": 10,
+    "learning_rate": 0.05,
+    "early_stopping": false,
+    "random_state": 42
+  },
+  "features": [
+    "return1_ATR",
+    "return3_ATR",
+    "return5_ATR",
+    "return15_ATR",
+    "range_ATR",
+    "body_ATR",
+    "close_position",
+    "EMA20distance_ATR",
+    "ATR20_to_prior60TR"
+  ],
+  "threshold_grid": [
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.5
+  ],
+  "selection": "At least15scorable calibration signals; maximize Wilson lowerprecision bound; must beat same-bar direction baseline preservinglongfraction. Tie preferhigherthreshold. If none: abstain; no later tuning. Probabilities are uncalibrated scores, not option confidence.",
+  "decision": "31own consecutive bars minimum, featurefinite; no volume, noCFD, nootherasset. Shared600sec cooldown. Each horizon5bars, TP2priorATR, SL1priorATR.",
+  "source": "Recovered2000SPXminute data,4full+2partial dates, all consumedresearch; no independentholdout or liveoptionsclaim."
+}
