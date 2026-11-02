@@ -1,0 +1,18 @@
+{
+  "rule": "previous bar sweeps prior30 range by >=0.1 prior20 ATR and closes back inside; current closed bar confirms beyond sweep-bar opposite extreme; decision current close",
+  "cooldown_seconds": 600,
+  "development_end_exclusive": "2026-10-26",
+  "later_start": "2026-10-26",
+  "target_ATR": 2,
+  "stop_ATR": 1,
+  "horizon_minutes": 5,
+  "primary_entry": "close",
+  "secondary_entry": "next_open",
+  "optimization": "none; one fixed hypothesis",
+  "limitations": [
+    "all dates already consumed in earlier ACCEL replication",
+    "not independent holdout",
+    "only twelve sessions; later subset five sessions"
+  ],
+  "status": "RESEARCH_ONLY / NOT_READY"
+}
