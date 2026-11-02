@@ -1,0 +1,123 @@
+{
+  "asof_utc": "2026-11-02T20:01:08Z",
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "source": "IBKR Last SPX IND; not independently LIVE_VERIFIED",
+  "today_closed_bars": 331,
+  "last_decision_Riyadh": "2026-11-02 23:01:00+03:00",
+  "last_closed_close": 7573.48,
+  "new_signals": 0,
+  "state": {
+    "identity": {
+      "model_sha256": "f14128d2cb868a8004ebb78a595217c62d1b32915356f4368e0772493fa3e3c8",
+      "source": "IBKR_SPX_IND",
+      "start": "2026-11-02 00:00:00+00:00",
+      "consumed_reproduction": false
+    },
+    "last_processed": "2026-11-02 20:01:00+00:00",
+    "last_signal": "2026-11-02 19:29:00+00:00",
+    "signals": [
+      {
+        "id": "b7a20297e2db3dbe7f0a8db7",
+        "decision_utc": "2026-11-02 15:44:00+00:00",
+        "decision_Riyadh": "2026-11-02 18:44:00+03:00",
+        "direction": 1,
+        "timing_score_uncalibrated": 0.5778479613516866,
+        "status": "RESEARCH_ONLY",
+        "close_result": "FAILURE",
+        "next_open_result": "FAILURE"
+      },
+      {
+        "id": "d866ad0e94f54a3568bea8d0",
+        "decision_utc": "2026-11-02 15:57:00+00:00",
+        "decision_Riyadh": "2026-11-02 18:57:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.6238617392750939,
+        "status": "RESEARCH_ONLY",
+        "close_result": "SUCCESS",
+        "next_open_result": "SUCCESS"
+      },
+      {
+        "id": "c1cb2bc0c7809bc8a2f84a86",
+        "decision_utc": "2026-11-02 17:31:00+00:00",
+        "decision_Riyadh": "2026-11-02 20:31:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.615573211365371,
+        "status": "RESEARCH_ONLY",
+        "close_result": "FAILURE",
+        "next_open_result": "FAILURE"
+      },
+      {
+        "id": "89c537b477d474c3c79abb60",
+        "decision_utc": "2026-11-02 17:45:00+00:00",
+        "decision_Riyadh": "2026-11-02 20:45:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.5572298073468305,
+        "status": "RESEARCH_ONLY",
+        "close_result": "SUCCESS",
+        "next_open_result": "SUCCESS"
+      },
+      {
+        "id": "89e000f65961a1bdb9d6cb00",
+        "decision_utc": "2026-11-02 18:28:00+00:00",
+        "decision_Riyadh": "2026-11-02 21:28:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.5693657019991042,
+        "status": "RESEARCH_ONLY",
+        "close_result": "SUCCESS",
+        "next_open_result": "FAILURE"
+      },
+      {
+        "id": "936cbab484e5e790e1e9f1e2",
+        "decision_utc": "2026-11-02 18:38:00+00:00",
+        "decision_Riyadh": "2026-11-02 21:38:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.6018053083698456,
+        "status": "RESEARCH_ONLY",
+        "close_result": "FAILURE",
+        "next_open_result": "FAILURE"
+      },
+      {
+        "id": "6377d0a8f2468ecf8e871833",
+        "decision_utc": "2026-11-02 18:49:00+00:00",
+        "decision_Riyadh": "2026-11-02 21:49:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.5545909480678585,
+        "status": "RESEARCH_ONLY",
+        "close_result": "FAILURE",
+        "next_open_result": "FAILURE"
+      },
+      {
+        "id": "e4814b6f1914ad0cd8924f28",
+        "decision_utc": "2026-11-02 19:06:00+00:00",
+        "decision_Riyadh": "2026-11-02 22:06:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.6166218611910897,
+        "status": "RESEARCH_ONLY",
+        "close_result": "FAILURE",
+        "next_open_result": "FAILURE"
+      },
+      {
+        "id": "f2654a2e9fd91be14b4db53a",
+        "decision_utc": "2026-11-02 19:19:00+00:00",
+        "decision_Riyadh": "2026-11-02 22:19:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.5580900090961671,
+        "status": "RESEARCH_ONLY",
+        "close_result": "SUCCESS",
+        "next_open_result": "SUCCESS"
+      },
+      {
+        "id": "066a9b9de1915eca2f2dff03",
+        "decision_utc": "2026-11-02 19:29:00+00:00",
+        "decision_Riyadh": "2026-11-02 22:29:00+03:00",
+        "direction": -1,
+        "timing_score_uncalibrated": 0.5516271884078947,
+        "status": "RESEARCH_ONLY",
+        "close_result": "SUCCESS",
+        "next_open_result": "SUCCESS"
+      }
+    ],
+    "status": "RESEARCH_ONLY_NOT_READY",
+    "provenance": "source label supplied by caller; not independently authenticated live data"
+  }
+}
