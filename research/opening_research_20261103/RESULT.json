@@ -1,0 +1,26 @@
+{
+  "training": {
+    "train_rows": 273,
+    "direction_train_rows": 99,
+    "threshold": 0.5402012011742275
+  },
+  "later_eligible_rows": 195,
+  "prefix_checks": 3,
+  "result": [
+    {
+      "entry": "close",
+      "scored": 8,
+      "hits": 0,
+      "precision": 0.0,
+      "matched_direction_base": 0.078125
+    },
+    {
+      "entry": "next_open",
+      "scored": 8,
+      "hits": 0,
+      "precision": 0.0,
+      "matched_direction_base": 0.078125
+    }
+  ],
+  "status": "NOT_READY"
+}
