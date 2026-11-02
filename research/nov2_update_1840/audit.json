@@ -1,0 +1,24 @@
+{
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "asof_utc": "2026-11-02T15:40:33Z",
+  "source": "IBKR Last / SPX IND 416904 CBOE; not independently LIVE_VERIFIED",
+  "closed_today": 70,
+  "eligible_today": 10,
+  "last_closed_decision_Riyadh": "2026-11-02 18:40:00+03:00",
+  "last_closed_close": 7649.05,
+  "new_signals": 0,
+  "state": {
+    "identity": {
+      "model_sha256": "f14128d2cb868a8004ebb78a595217c62d1b32915356f4368e0772493fa3e3c8",
+      "source": "IBKR_SPX_IND",
+      "start": "2026-11-02 00:00:00+00:00",
+      "consumed_reproduction": false
+    },
+    "last_processed": "2026-11-02 15:40:00+00:00",
+    "last_signal": null,
+    "signals": [],
+    "status": "RESEARCH_ONLY_NOT_READY",
+    "provenance": "source label supplied by caller; not independently authenticated live data"
+  },
+  "frozen_model_unchanged": true
+}
