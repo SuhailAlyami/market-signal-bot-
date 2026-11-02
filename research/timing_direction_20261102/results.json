@@ -1,0 +1,109 @@
+{
+  "lock": {
+    "threshold": 0.549072459613172,
+    "fit_rows": 2275,
+    "direction_fit_rows": 895,
+    "train_timing_rate": 0.4158241758241758,
+    "protocol_sha256": "276ad3908f07b0d7e0b6bdf15a8079237ec9ce34fcfc041956eed53c61d4dd02"
+  },
+  "prefix_checks": 3,
+  "later_rows": 1625,
+  "later_timing_base": 0.39876923076923076,
+  "selected_timing_hits": 22,
+  "selected_timing_count": 44,
+  "selected_timing_rate": 0.5,
+  "direction_results": [
+    {
+      "entry": "close",
+      "signals": 45,
+      "scored": 44,
+      "hits": 12,
+      "precision": 0.2727272727272727,
+      "same_times_random_direction": 0.17355371900826447,
+      "direction_permutation_p_exploratory": 0.0173982601739826,
+      "daily": [
+        {
+          "date": "2026-10-26",
+          "n": 13,
+          "hits": 5,
+          "null_expected_hits": 3.3181818181818183
+        },
+        {
+          "date": "2026-10-27",
+          "n": 5,
+          "hits": 2,
+          "null_expected_hits": 1.3636363636363638
+        },
+        {
+          "date": "2026-10-28",
+          "n": 8,
+          "hits": 1,
+          "null_expected_hits": 0.6818181818181819
+        },
+        {
+          "date": "2026-10-29",
+          "n": 10,
+          "hits": 3,
+          "null_expected_hits": 1.6363636363636362
+        },
+        {
+          "date": "2026-10-30",
+          "n": 8,
+          "hits": 1,
+          "null_expected_hits": 0.6363636363636364
+        }
+      ],
+      "daily_bootstrap_difference_95_exploratory": [
+        0.05405405405405405,
+        0.1321353065539112
+      ],
+      "warning": "five day blocks only; many prior research attempts; unadjusted exploratory p"
+    },
+    {
+      "entry": "next_open",
+      "signals": 45,
+      "scored": 44,
+      "hits": 12,
+      "precision": 0.2727272727272727,
+      "same_times_random_direction": 0.16632231404958678,
+      "direction_permutation_p_exploratory": 0.0103989601039896,
+      "daily": [
+        {
+          "date": "2026-10-26",
+          "n": 13,
+          "hits": 5,
+          "null_expected_hits": 3.3181818181818183
+        },
+        {
+          "date": "2026-10-27",
+          "n": 5,
+          "hits": 2,
+          "null_expected_hits": 1.3636363636363638
+        },
+        {
+          "date": "2026-10-28",
+          "n": 8,
+          "hits": 1,
+          "null_expected_hits": 0.6818181818181819
+        },
+        {
+          "date": "2026-10-29",
+          "n": 10,
+          "hits": 3,
+          "null_expected_hits": 1.3181818181818181
+        },
+        {
+          "date": "2026-10-30",
+          "n": 8,
+          "hits": 1,
+          "null_expected_hits": 0.6363636363636364
+        }
+      ],
+      "daily_bootstrap_difference_95_exploratory": [
+        0.05405405405405405,
+        0.14693446088794926
+      ],
+      "warning": "five day blocks only; many prior research attempts; unadjusted exploratory p"
+    }
+  ]
+}
