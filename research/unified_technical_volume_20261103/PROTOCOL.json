@@ -1,0 +1,16 @@
+{
+  "inputs": "18 unchanged previous Python research model signals plus returns/EMA/RSI/MACD/channel/efficiency/body/wicks/engulf/doji and3ES-volume features",
+  "goal": "30minute SPX endpoint direction, no candle-by-candle alerts; only existing-model event candidates, shared10min cooldown",
+  "fit": "Oct15..21 five sessions with same-session30min labels",
+  "calibration": "Oct22..23 score threshold only, labels not used",
+  "later": "Oct26..30 five consumed sessions, exploratory not untouched",
+  "model": "StandardScaler plus LogisticRegression C=.1 max_iter2000 seed42, fixed no tuning",
+  "comparisons": [
+    "majority18 baseline",
+    "learned direction on all event times",
+    "learned direction only if max score>=calibration90th percentile on event times"
+  ],
+  "warmup": "60contiguous minutes for price/channel inputs; same finite-mask across comparisons",
+  "unavailable_inputs": "No synchronized12day VIX/options/orderbook/news; never invent or forward-fill these",
+  "status": "NOT_READY"
+}
