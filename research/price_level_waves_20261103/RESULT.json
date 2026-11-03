@@ -1,0 +1,35 @@
+{
+  "summary": [
+    {
+      "period": "earlier",
+      "waves": 16,
+      "outcomes": {
+        "EXTENDED_2ATR": 7,
+        "STRUCTURE_FAILED": 9,
+        "UNRESOLVED_SESSION_OR_END": 0
+      },
+      "extended_fraction_all_waves": 0.4375,
+      "median_favorable_points": 6.7800000000002,
+      "median_adverse_points": 9.715000000000146,
+      "median_end_displacement_points": -9.715000000000146,
+      "median_already_moved_beyond_range": 5.795000000000073
+    },
+    {
+      "period": "later",
+      "waves": 16,
+      "outcomes": {
+        "EXTENDED_2ATR": 7,
+        "STRUCTURE_FAILED": 8,
+        "UNRESOLVED_SESSION_OR_END": 1
+      },
+      "extended_fraction_all_waves": 0.4375,
+      "median_favorable_points": 5.754999999999654,
+      "median_adverse_points": 9.06500000000051,
+      "median_end_displacement_points": -9.06500000000051,
+      "median_already_moved_beyond_range": 4.114999999999782
+    }
+  ],
+  "prefix_checks": 3,
+  "status": "NOT_READY",
+  "warning": "New wave metric, not comparable to old2ATR-before1ATR-in5min precision. Extension may later reverse and lose; no profitability claim."
+}
