@@ -1,0 +1,7 @@
+{
+  "candidate": "unchanged5m price selective walkforward10/12 endpoints",
+  "primary_metric": "same30min endpoint sign unchanged",
+  "additional_diagnostic": "MFE/MAE on native5min OHLC;2ATR-before1ATR within30min, opening precedence, both intrabar ambiguous not success",
+  "entry": "close and next5min open sensitivity; no executable fills or options PnL assumed",
+  "status": "NOT_READY; no retraining or filtering"
+}
