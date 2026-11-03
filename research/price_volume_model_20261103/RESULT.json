@@ -1,0 +1,199 @@
+{
+  "fold": {
+    "fit_rows": 1820,
+    "cal_rows": 738,
+    "later_rows": 1845,
+    "sklearn": "1.8.0"
+  },
+  "lock": {
+    "price_only": {
+      "threshold": 0.34187280586816987,
+      "features": [
+        "return1_ATR",
+        "return5_ATR",
+        "return15_ATR",
+        "range_ATR",
+        "body_ATR",
+        "close_position",
+        "efficiency5"
+      ]
+    },
+    "price_ES_volume": {
+      "threshold": 0.3861785264089495,
+      "features": [
+        "return1_ATR",
+        "return5_ATR",
+        "return15_ATR",
+        "range_ATR",
+        "body_ATR",
+        "close_position",
+        "efficiency5",
+        "log1p_rvol",
+        "log1p_rvol_lag1",
+        "volume5_prior20mean_ratio"
+      ]
+    }
+  },
+  "prefix_checks": 6,
+  "rows": [
+    {
+      "entry": "close",
+      "signals": 22,
+      "scored": 21,
+      "hits": 3,
+      "precision": 0.14285714285714285,
+      "matched_direction_base": 0.15192743764172337,
+      "same_time_momentum_hits": 3,
+      "momentum_n": 21,
+      "wilson_descriptive_only": [
+        0.04980921798213492,
+        0.346364941492295
+      ],
+      "daily": [
+        {
+          "date": "2026-10-26",
+          "n": 5,
+          "hits": 2
+        },
+        {
+          "date": "2026-10-27",
+          "n": 4,
+          "hits": 1
+        },
+        {
+          "date": "2026-10-28",
+          "n": 2,
+          "hits": 0
+        },
+        {
+          "date": "2026-10-29",
+          "n": 5,
+          "hits": 0
+        },
+        {
+          "date": "2026-10-30",
+          "n": 5,
+          "hits": 0
+        }
+      ],
+      "model": "price_only"
+    },
+    {
+      "entry": "next_open",
+      "signals": 22,
+      "scored": 21,
+      "hits": 3,
+      "precision": 0.14285714285714285,
+      "matched_direction_base": 0.14285714285714285,
+      "same_time_momentum_hits": 3,
+      "momentum_n": 21,
+      "wilson_descriptive_only": [
+        0.04980921798213492,
+        0.346364941492295
+      ],
+      "daily": [
+        {
+          "date": "2026-10-26",
+          "n": 5,
+          "hits": 2
+        },
+        {
+          "date": "2026-10-27",
+          "n": 4,
+          "hits": 1
+        },
+        {
+          "date": "2026-10-28",
+          "n": 2,
+          "hits": 0
+        },
+        {
+          "date": "2026-10-29",
+          "n": 5,
+          "hits": 0
+        },
+        {
+          "date": "2026-10-30",
+          "n": 5,
+          "hits": 0
+        }
+      ],
+      "model": "price_only"
+    },
+    {
+      "entry": "close",
+      "signals": 17,
+      "scored": 17,
+      "hits": 2,
+      "precision": 0.11764705882352941,
+      "matched_direction_base": 0.11764705882352941,
+      "same_time_momentum_hits": 2,
+      "momentum_n": 17,
+      "wilson_descriptive_only": [
+        0.03287908001292092,
+        0.3433684249770991
+      ],
+      "daily": [
+        {
+          "date": "2026-10-26",
+          "n": 5,
+          "hits": 0
+        },
+        {
+          "date": "2026-10-27",
+          "n": 1,
+          "hits": 1
+        },
+        {
+          "date": "2026-10-29",
+          "n": 5,
+          "hits": 0
+        },
+        {
+          "date": "2026-10-30",
+          "n": 6,
+          "hits": 1
+        }
+      ],
+      "model": "price_ES_volume"
+    },
+    {
+      "entry": "next_open",
+      "signals": 17,
+      "scored": 17,
+      "hits": 2,
+      "precision": 0.11764705882352941,
+      "matched_direction_base": 0.11764705882352941,
+      "same_time_momentum_hits": 2,
+      "momentum_n": 17,
+      "wilson_descriptive_only": [
+        0.03287908001292092,
+        0.3433684249770991
+      ],
+      "daily": [
+        {
+          "date": "2026-10-26",
+          "n": 5,
+          "hits": 0
+        },
+        {
+          "date": "2026-10-27",
+          "n": 1,
+          "hits": 1
+        },
+        {
+          "date": "2026-10-29",
+          "n": 5,
+          "hits": 0
+        },
+        {
+          "date": "2026-10-30",
+          "n": 6,
+          "hits": 1
+        }
+      ],
+      "model": "price_ES_volume"
+    }
+  ],
+  "status": "NOT_READY"
+}
