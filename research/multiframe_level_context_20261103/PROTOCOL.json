@@ -1,0 +1,8 @@
+{
+  "hypothesis": "Filter unchanged confirmed/early wave signals by agreeing movement between means of last two COMPLETE5minute close blocks; no threshold or parameter sweep",
+  "availability": "5min block available at block end; minute decision at timestamp+1minute; exclude incomplete blocks; reset at segments",
+  "target": "same30minute endpoint direction audit, not trade success",
+  "filtering": "postfilter original candidates only; original state not rerun after rejection; no new replacement entries",
+  "sample": "12 consumed sessions, later5 descriptive only; chosen posthoc",
+  "status": "NOT_READY"
+}
