@@ -1,0 +1,16 @@
+{
+  "frames": {
+    "FIVE_MINS": 5,
+    "FIFTEEN_MINS": 15,
+    "THIRTY_MINS": 30,
+    "ONE_DAY": null
+  },
+  "adaptation": "Indicator periods measured in bars of chosen timeframe, conventional across closed NYSE sessions; reset on missing expected bars. Original18 generators receive ordinal1min computational clock only, actual timestamps retained for availability/evaluation. No source prices resampled or relabeled as live.",
+  "target": "intraday endpoint30 wall minutes on same session:5m6bars,15m2bars,30m1bar; daily next NYSE session close",
+  "model": "same fixed StandardScaler LogisticRegression C=.1 max_iter2000 seed42, retrained separately each frame",
+  "split": "first60% sessions fit,next20% calibration,last20% evaluation; purge horizon crossing split; cutoff fixed90th percentile calibration event score, labels unused",
+  "eligibility": "60prior trading bars, existing18-model event, shared10trading-bar cooldown; no scan or best-frame selection",
+  "daily_volume": "disabled:809/975 zero ESvolume and daily session definition not established; price+patterns only, volume model explicitly blocked",
+  "minimum": "at least100 fit rows and both classes; else BLOCKED insufficient data",
+  "status": "NOT_READY; archival exploratory histories, no independent untouched claim"
+}
