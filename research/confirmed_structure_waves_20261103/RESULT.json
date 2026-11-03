@@ -1,0 +1,41 @@
+{
+  "summary": [
+    {
+      "period": "earlier",
+      "waves": 20,
+      "outcomes": {
+        "EXTENDED_2ATR": 11,
+        "STRUCTURE_FAILED": 8,
+        "UNRESOLVED": 1
+      },
+      "median_favorable_points": 11.069999999999709,
+      "median_adverse_points": 4.8100000000004,
+      "median_end_displacement_points": -4.350000000000364,
+      "reference_legs": 76,
+      "new_matching_signal_legs": 16,
+      "uncovered_legs": 38,
+      "median_matched_delay_minutes": 14.0,
+      "median_matched_moved_points": 19.71000000000049
+    },
+    {
+      "period": "later",
+      "waves": 26,
+      "outcomes": {
+        "EXTENDED_2ATR": 13,
+        "STRUCTURE_FAILED": 13,
+        "UNRESOLVED": 0
+      },
+      "median_favorable_points": 6.835000000000036,
+      "median_adverse_points": 5.980000000000018,
+      "median_end_displacement_points": -5.860000000000127,
+      "reference_legs": 55,
+      "new_matching_signal_legs": 17,
+      "uncovered_legs": 26,
+      "median_matched_delay_minutes": 14.0,
+      "median_matched_moved_points": 13.090000000000146
+    }
+  ],
+  "prefix_checks": 3,
+  "status": "NOT_READY",
+  "warning": "Wave extension not trade success. Reference pivots are posthoc evaluation only, distinct from causal2right pivots. All data consumed."
+}
