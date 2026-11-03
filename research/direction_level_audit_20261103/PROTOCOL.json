@@ -1,0 +1,10 @@
+{
+  "purpose": "Common30-minute level endpoint direction, not candle shape or temporary excursion",
+  "horizon": 30,
+  "correct": "side*(close_t+30-close_t)>0; flat not success, report points and1ATR endpoint too",
+  "exclusion": "no30-minute contiguous same-session horizon excluded explicitly",
+  "models": "confirmed structure and earlier structure unchanged",
+  "sample": "consumed12sessions, audit chosen after prior results, exploratory only",
+  "baseline": "same times random direction preserving observed long share; no p or independence claim",
+  "status": "NOT_READY"
+}
