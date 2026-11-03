@@ -1,0 +1,11 @@
+{
+  "unit": "price-level wave, no candle shape/RSI/volume rules",
+  "range": "previous20 CLOSED minute closes; freeze at breakout",
+  "confirmation": "two consecutive closes beyond frozen range edge; signal only second close",
+  "state": "one active wave until close crosses frozen range midpoint; same direction blocked until opposite confirmed or new segment",
+  "evaluation": "future CLOSED prices only until structural break or session end; extension2ATR diagnostic, no five-minute constraint and no old1ATR stop",
+  "censoring": "session/gap/end before extension is unresolved, never silently deleted",
+  "sample": "12 consumed SPX sessions; chronological earlier7/later5 descriptive only",
+  "optimization": "none; first fixed wave protocol",
+  "status": "NOT_READY"
+}
