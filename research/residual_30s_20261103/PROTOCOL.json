@@ -1,0 +1,17 @@
+{
+  "rule": "abs(ES30s return/ESprior20_1minATR minus SPX30s return/SPXprior20_1minATR)>=.25; ES return agrees with residual sign",
+  "volume": "ES30s volume>=1.5 previous40 halfminute median",
+  "comparisons": [
+    "price residual only",
+    "price residual plus volume",
+    "residual plus volume shifted one halfminute"
+  ],
+  "barriers": "SPX target2ATR before1ATR in5minutes=10future30s bars, opening precedence and ambiguous failure",
+  "ATR": "SMA20 true ranges from COMPLETE1minute bars strictly before decision current minute; never20halfminute ATR",
+  "warmup": "at least21minutes from RTH open and finite current/lagged features",
+  "cooldown_seconds": 600,
+  "sample": "Nov2 consumed diagnostic only, one day; no Nov3 data loaded",
+  "optimization": "one fixed .25 threshold and1.5rvol, no sweep or tuning",
+  "entry": "current halfminute close primary, next halfminute open sensitivity; no real execution assumed",
+  "status": "RESEARCH_ONLY_NOT_READY"
+}
