@@ -1,0 +1,10 @@
+{
+  "python": "3.12.14",
+  "sklearn": "1.8.0",
+  "pandas": "2.2.3",
+  "numpy": "2.3.5",
+  "source_sha256": {
+    "FirstRate_SPX_sample.zip": "a8003826e036301752a3ee774e5b87015956473a297b04bb4bbb86fd6bc91971",
+    "FirstRate_ES_sample.zip": "22f4afbfffc3895ce32bd69aad7f303a7c5bc57850294fc86f0313648e872a13"
+  }
+}
