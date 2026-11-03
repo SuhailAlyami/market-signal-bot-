@@ -1,0 +1,27 @@
+{
+  "fit": "Oct15-21 inclusive five sessions",
+  "calibration": "Oct22-23 two sessions; labels unused for cutoff",
+  "later": "Oct26-30 five sessions consumed in previous research; exploratory only",
+  "hypothesis": "Pair same fixed model with seven SPX price features vs add three ES bar-volume features only; identical common data mask",
+  "classifier": {
+    "max_iter": 60,
+    "max_leaf_nodes": 7,
+    "max_depth": 3,
+    "min_samples_leaf": 50,
+    "l2_regularization": 10,
+    "learning_rate": 0.05,
+    "early_stopping": false,
+    "random_state": 42
+  },
+  "targets": "two binary targets long/short2prior20ATR before1ATR within5contiguousminutes",
+  "threshold": "fixed98th percentile of max(long,short) scores on calibration features only, independently for each candidate; no label or threshold grid",
+  "side": "larger score; long tie",
+  "cooldown_seconds": 600,
+  "comparison": "same architecture and rules; each model may select different times, so no isolated causal attribution",
+  "warmup": "21 previous contiguous bars, common finite volume features; no hour-long feature",
+  "no_clock_features": true,
+  "Nov2": "not evaluated or fitted in this experiment",
+  "Nov3": "not loaded",
+  "adoption": "no adoption from consumed five-day test; small samples below50 explicitly inconclusive",
+  "status": "RESEARCH_ONLY_NOT_READY"
+}
