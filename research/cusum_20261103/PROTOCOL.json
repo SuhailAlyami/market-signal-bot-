@@ -1,0 +1,18 @@
+{
+  "hypothesis": "two-sided cumulative normalized returns after noise subtraction; no candle morphology, clock classifier, or fitting",
+  "normalizer": "mean20 prior TR excluding decision bar",
+  "update": "gplus=max(0,gplus+return/ATR-.1); gminus=min(0,gminus+return/ATR+.1)",
+  "threshold": 1.5,
+  "crossing": "positive1.5 long, negative1.5 short; reset BOTH accumulators at every crossing, even during cooldown",
+  "cooldown_seconds": 600,
+  "warmup": "21 prior contiguous bars; reset accumulators on every gap or session",
+  "evaluation": "target2priorATR before1priorATR stop within next5contiguous minutes; close primary,nextopen secondary; ambiguous fails",
+  "periods": [
+    "Oct15-23 development",
+    "Oct26-30 consumed later comparison",
+    "Nov2 consumed diagnostic only"
+  ],
+  "Nov3": "not loaded; no future outcome used",
+  "optimization": "one fixed rule, no parameter grid or after-result retuning",
+  "status": "RESEARCH_ONLY_NOT_READY"
+}
