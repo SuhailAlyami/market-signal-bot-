@@ -1,0 +1,17 @@
+{
+  "question": "Do same-source native30s ES returns lead SPX at30/60seconds on available Nov2 RTH sample?",
+  "lags_seconds": [
+    -60,
+    -30,
+    0,
+    30,
+    60
+  ],
+  "positive_lag": "ES current return vs later SPX return",
+  "primary": "descriptive correlations at every prespecified lag; no optimize-and-pick-best",
+  "direction_check": "sign ES current vs SPX next30s, compare SPX current momentum at identical nonzero times",
+  "sample": "Nov2 consumed diagnostic only; one session not independent holdout",
+  "not_a_trade_test": "no target/stop change or claimed hit-rate for original detector; no model fitting or alerts",
+  "audit": "aggregate pairs of30s bars to1min and compare native1min SPX; missing halves rejected",
+  "status": "RESEARCH_ONLY_NOT_READY"
+}
