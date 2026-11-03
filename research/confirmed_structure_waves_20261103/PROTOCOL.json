@@ -1,0 +1,7 @@
+{
+  "rule": "strict close pivot2left2right, recognized only at center+2; long higher-low with intervening confirmed high then close above high, short mirrored; one active wave until frozen last structural pivot broken on close; consumed structure cannot retrigger, fresh structure may",
+  "evaluation": "same wave extension2prior20ATR on subsequent closes before structure break/session, no five-minute cap or1ATR stop; retrospective10point reference for coverage only",
+  "sample": "12 consumed Oct15..30 sessions earlier7/later5, exploratory",
+  "optimization": "one fixed rule, no parameter scan",
+  "status": "NOT_READY"
+}
