@@ -1,0 +1,19 @@
+{
+  "hypothesis": "ACCEL v4 on SPX with ES rvol>=1.5 AND ES close on matching side of ES session VWAP AND VWAP current vs5min ago slope matching signal",
+  "VWAP": "HLC3 times minute volume cumulative from NYSE09:30 Eastern; bar proxy not tick VWAP; require every minute since open",
+  "reference": "ES previous20 minute median volume only; no forward fill",
+  "comparisons": [
+    "ACCEL baseline",
+    "ACCEL plus fixed RVOL1.5",
+    "ACCEL plus RVOL1.5 plus VWAP alignment"
+  ],
+  "split": "Oct15-23 development,Oct26-30 consumed later comparison",
+  "new_ES_source": "FirstRate free continuous ES sample, contract-adjustment flavor not explicitly identified; compare overlap with IBKR Dec2026",
+  "price_source": "FirstRate SPX cash sample; no CFD mixing",
+  "evaluation": "unchanged2prior20SMA TR target before1ATR stop in5contiguous minutes; close and nextopen",
+  "cooldown": "600seconds shared after filters; common finite feature universe",
+  "optimization": "single hypothesis; no parameter scan or later tuning",
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "Nov2": "not evaluated here",
+  "Nov3": "not loaded"
+}
