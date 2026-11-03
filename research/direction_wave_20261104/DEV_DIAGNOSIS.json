@@ -1,0 +1,88 @@
+{
+  "role": "MOTIVATION_ONLY_NOT_THE_LOCKED_TEST",
+  "train_sessions": [
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20"
+  ],
+  "validation_sessions": [
+    "2026-10-21",
+    "2026-10-22"
+  ],
+  "train_rows": 123,
+  "threshold_from_train_event_scores_labels_unused": 0.920182058412167,
+  "validation_selective_signals": 7,
+  "validation_scored": 6,
+  "validation_hits": 1,
+  "validation_failures": 5,
+  "failures_that_opposed_return30": 5,
+  "hits_that_agreed_with_return30": 1,
+  "hypothesis_chosen_before_locked_scoring": "H1_return30_continuation_veto",
+  "rejected_prior_rule_not_repeated": "EMA20 slope versus channel-20 midpoint plus three-bar retest",
+  "rows": [
+    {
+      "index": 312,
+      "decision_Riyadh": "2026-10-21 17:45:00+03:00",
+      "side": 1,
+      "scorable": true,
+      "signed_points": 11.950000000000728,
+      "return30": 2.3939253419893243,
+      "continuation": true
+    },
+    {
+      "index": 324,
+      "decision_Riyadh": "2026-10-21 18:45:00+03:00",
+      "side": -1,
+      "scorable": true,
+      "signed_points": -0.020000000000436557,
+      "return30": 6.2823547377261395,
+      "continuation": false
+    },
+    {
+      "index": 335,
+      "decision_Riyadh": "2026-10-21 19:40:00+03:00",
+      "side": -1,
+      "scorable": true,
+      "signed_points": -1.9599999999991269,
+      "return30": 11.81695497484987,
+      "continuation": false
+    },
+    {
+      "index": 346,
+      "decision_Riyadh": "2026-10-21 20:35:00+03:00",
+      "side": -1,
+      "scorable": true,
+      "signed_points": -1.3400000000001455,
+      "return30": 6.291090995712138,
+      "continuation": false
+    },
+    {
+      "index": 373,
+      "decision_Riyadh": "2026-10-21 22:50:00+03:00",
+      "side": 1,
+      "scorable": false,
+      "signed_points": null,
+      "return30": -0.9862919217172629,
+      "continuation": false
+    },
+    {
+      "index": 386,
+      "decision_Riyadh": "2026-10-22 17:25:00+03:00",
+      "side": 1,
+      "scorable": true,
+      "signed_points": -16.159999999999854,
+      "return30": -8.987110339153421,
+      "continuation": false
+    },
+    {
+      "index": 397,
+      "decision_Riyadh": "2026-10-22 18:20:00+03:00",
+      "side": 1,
+      "scorable": true,
+      "signed_points": -3.5599999999994907,
+      "return30": -9.302884615384698,
+      "continuation": false
+    }
+  ]
+}

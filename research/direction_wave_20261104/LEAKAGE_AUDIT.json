@@ -1,0 +1,39 @@
+{
+  "prefix_features_unchanged_when_future_removed": true,
+  "es_volume_revision_does_not_change_earlier_rows": true,
+  "frozen_sha256": "fb281774690ab5848d26c16f6583cfb632a80bcdc12ea486160a0a3f97850f6b",
+  "frozen_sha_matches_recipe": true,
+  "walkforward_selective_rows": 14,
+  "walkforward_scored": 12,
+  "walkforward_hits": 10,
+  "distinct_fold_models": 5,
+  "availability_is_scheduled_bar_end_not_capture": true,
+  "stable_archive_uses_caller_asof": "research/frozen_forward_20261103/stable_archive.py rows() treats asof as knowledge time. archive_v2 defaults --asof to processing now. A late process can store a bar that was still forming at capture. The new watcher refuses that.",
+  "scheduled_github_cron": "35 21 * * 1-5 UTC, once after the winter cash close, not on each five-minute close",
+  "forward_observation_delays": [
+    {
+      "decision_Riyadh": "2026-11-03 19:40:00+03:00",
+      "result": "CORRECT_ENDPOINT",
+      "observation": "RESEARCH_OBSERVED",
+      "seconds_from_bar_end_to_recorded_observation": 154.909112
+    },
+    {
+      "decision_Riyadh": "2026-11-03 21:00:00+03:00",
+      "result": "INCORRECT_ENDPOINT",
+      "observation": "RESEARCH_BACKFILL",
+      "seconds_from_bar_end_to_recorded_observation": 585.0
+    },
+    {
+      "decision_Riyadh": "2026-11-03 22:55:00+03:00",
+      "result": "CORRECT_ENDPOINT",
+      "observation": "RESEARCH_BACKFILL",
+      "seconds_from_bar_end_to_recorded_observation": 451.0
+    }
+  ],
+  "sample_rows": 1000,
+  "first_session": "2026-10-15",
+  "last_session": "2026-11-02",
+  "locked_index": 400,
+  "locked_boundary_Riyadh": "2026-10-22 18:35:00+03:00",
+  "price_feature_count": 46
+}

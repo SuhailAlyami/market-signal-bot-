@@ -1,0 +1,61 @@
+{
+  "status": "NOT_READY",
+  "leakage_frozen_sha_ok": true,
+  "decision": {
+    "shadow_research_candidate": false,
+    "seventy_percent_claim_supported": false,
+    "trading_ready": false,
+    "frozen_weights_changed": false,
+    "rate": 1.0,
+    "before_rate": 0.8333333333333334,
+    "wilson95": [
+      0.5101091635454027,
+      1.0
+    ],
+    "removed_hits": 6,
+    "removed_misses": 2,
+    "minimum_scored": 8,
+    "max_removed_hits": 2,
+    "status": "NOT_READY",
+    "hypothesis": "H1_return30_continuation_veto",
+    "comparison": "subset veto on the original selective log; cooldown of removed signals stays consumed; no regenerated signals and no new threshold",
+    "before": {
+      "signals": 12,
+      "hits": 10,
+      "rate": 0.8333333333333334,
+      "wilson95": [
+        0.5519691377470266,
+        0.9530348578161463
+      ],
+      "mean_signed_points": 8.58083333333328,
+      "median_adverse_points": 4.589999999999691,
+      "worst_adverse_points": 11.260000000000218
+    },
+    "after_continuation_veto": {
+      "signals": 4,
+      "hits": 4,
+      "rate": 1.0,
+      "wilson95": [
+        0.5101091635454027,
+        1.0
+      ],
+      "mean_signed_points": 10.154999999999745,
+      "median_adverse_points": 1.1050000000000182,
+      "worst_adverse_points": 5.449999999999818
+    },
+    "always_up_same_timestamps": {
+      "hits": 9,
+      "scored": 12,
+      "rate": 0.75
+    },
+    "costs": "No bid/ask, commission, or option premium in this archive. adverse_points is the worst index move against the signal across the next six closed five-minute bars. It is not an option loss and not a recommended stop.",
+    "multiplicity": "Fourteen earlier policies already used this log. This is one additional pre-registered filter, not a fresh independent sample.",
+    "forward_nov3_not_used": true
+  },
+  "forward": {
+    "correct": 2,
+    "incorrect": 1,
+    "research_backfill": 2,
+    "used_for_adoption": false
+  }
+}
