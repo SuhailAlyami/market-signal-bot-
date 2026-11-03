@@ -1,0 +1,10 @@
+{
+  "protocol": "expanding walkforward fixed first300rows fit,next100calibration,next100evaluation; advance100 and expand fit; final short block retained",
+  "purge": "training endpoint strictly before calibration index, same segment; intraday target same NYSE session",
+  "model": "same C=.1 LogisticRegression StandardScaler, no search",
+  "features": "same46price+patterns or49withESvolume; common finite49mask for intraday comparisons, daily price only",
+  "threshold": "90th percentile calibration event score, labels unused; compare all/selective without selecting best",
+  "cooldown": "10trading bars per variant/policy persists between test folds",
+  "sample": "same existing histories, chronologically out-of-fit but not pristine independent evidence after earlier research",
+  "status": "NOT_READY"
+}
