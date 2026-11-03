@@ -1,0 +1,16 @@
+{
+  "hypothesis": "ACCEL v4 original on SPX with ES Dec2026 volume>=1.5 prior20 median; no other ES price/direction filter",
+  "price_source": "IBKR SPX IND CBOE416904",
+  "volume_source": "IBKR ES FUT CME515416632 expiry20261218; not SPX volume",
+  "synchronization": "exact same bar-start UTC; standard1min; no forward fill; restrict ES reference to SPX regular-session timestamps available in archive",
+  "reference": "previous20 volumes only, reset every non60secondstep; median must be positive",
+  "lag_sensitivity": "separate lag1 ES rvol, threshold unchanged",
+  "common_baseline": "all comparisons require finite rvol AND lag1; filter applied before shared600sec cooldown",
+  "evaluation": "2prior20ATR before1ATR in5contiguousminutes; close primary nextopen secondary; ambiguous fails",
+  "periods": [
+    "Oct29-30 available native overlap, consumed",
+    "Nov2 diagnostic consumed"
+  ],
+  "optimization": "single fixed threshold; no tuning based on results",
+  "status": "RESEARCH_ONLY_NOT_READY"
+}
