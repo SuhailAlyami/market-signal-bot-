@@ -1,0 +1,7 @@
+{
+  "policy": "v2_first_observed_closed_bars_with_revision_ledger",
+  "asof_utc": "2026-11-03 18:45:21+00:00",
+  "snapshot_sha256": "f369b54dc9f568c30a085e91a6324e704681dd8d563db81632b721556b7a7dad",
+  "revision_count": 0,
+  "revisions": []
+}
