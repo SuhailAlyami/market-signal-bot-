@@ -1,0 +1,23 @@
+{
+  "policy": "v2_first_observed_closed_bars_with_revision_ledger",
+  "asof_Riyadh": "2026-11-03 21:09:45+03:00",
+  "previous_checkpoint": "20261103T172915477313Z",
+  "SPX": {
+    "old_bars": 1035,
+    "incoming_closed_bars": 1000,
+    "newly_preserved_bars": 8,
+    "forming_bars_excluded": 1,
+    "archive_bars": 1043,
+    "revision_policy": "v2_first_observed_closed_bars_with_revision_ledger",
+    "revisions_logged": 0
+  },
+  "ES": {
+    "old_bars": 1035,
+    "incoming_closed_bars": 1000,
+    "newly_preserved_bars": 8,
+    "forming_bars_excluded": 1,
+    "archive_bars": 1043,
+    "revision_policy": "v2_first_observed_closed_bars_with_revision_ledger",
+    "revisions_logged": 2
+  }
+}
