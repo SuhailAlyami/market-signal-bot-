@@ -1,0 +1,38 @@
+{
+  "status": "EXPLORATORY_NOT_READY",
+  "rows": [
+    {
+      "policy": "original",
+      "signals": 12,
+      "hits": 10,
+      "direction_rate": 0.8333333333333334,
+      "retained_fraction": 1.0,
+      "mean_signed_points": 8.58083333333328,
+      "discarded_correct": 0,
+      "discarded_incorrect": 0
+    },
+    {
+      "policy": "trend",
+      "signals": 3,
+      "hits": 2,
+      "direction_rate": 0.6666666666666666,
+      "retained_fraction": 0.25,
+      "mean_signed_points": 10.219999999999951,
+      "discarded_correct": 8,
+      "discarded_incorrect": 1
+    },
+    {
+      "policy": "trend_retest",
+      "signals": 3,
+      "hits": 2,
+      "direction_rate": 0.6666666666666666,
+      "retained_fraction": 0.25,
+      "mean_signed_points": 10.219999999999951,
+      "discarded_correct": 8,
+      "discarded_incorrect": 1
+    }
+  ],
+  "prefix_checks": 12,
+  "frozen_candidate_changed": false,
+  "forward_data_used": false
+}
