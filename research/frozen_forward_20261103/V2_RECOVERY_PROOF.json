@@ -1,0 +1,13 @@
+{
+  "conflict_replay": {
+    "old_bars": 1000,
+    "incoming_closed_bars": 1000,
+    "newly_preserved_bars": 7,
+    "forming_bars_excluded": 1,
+    "archive_bars": 1007,
+    "revision_policy": "v2_first_observed_closed_bars_with_revision_ledger",
+    "revisions_logged": 121
+  },
+  "old_bar_values_preserved": true,
+  "note": "Historical 18:08 capture tested in isolation; not used as a new signal test."
+}

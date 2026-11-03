@@ -16,7 +16,7 @@ def raw(path):
  audit={'raw_rows':len(d),'excluded_OHLC_inconsistent':int((~good).sum()),'excluded_times':d.ts[~good].astype(str).tolist(),'volume_zero_rows':int((d.volume==0).sum()),'note':'No repair or future imputation; excluded bars create expected-grid gaps and reset features.'};(P/(path.stem+'_DATA_AUDIT.json')).write_text(json.dumps(audit,indent=2));return d.loc[good].reset_index(drop=True)
 
 def prepare(sp,es,minutes):
- cal=xc.get_calendar('XNYS',start='2022-01-01',end='2026-12-31');sch=cal.schedule.loc['2022-11-01':'2026-11-03'];slots=[];ends=[];days=[]
+ cal=xc.get_calendar('XNYS',start='2022-01-01',end='2026-12-31');sch=cal.schedule.loc['2022-11-01':'2026-12-31'];slots=[];ends=[];days=[]
  for day,r in sch.iterrows():
   starts=[r.open] if minutes is None else pd.date_range(r.open,r.close-pd.Timedelta(minutes=minutes),freq=f'{minutes}min')
   for t in starts:slots.append(t);ends.append(r.close if minutes is None else t+pd.Timedelta(minutes=minutes));days.append(str(day.date()))
