@@ -1,0 +1,23 @@
+{
+  "SPX": {
+    "old_bars": 1000,
+    "incoming_closed_bars": 1000,
+    "newly_preserved_bars": 0,
+    "forming_bars_excluded": 0,
+    "archive_bars": 1000,
+    "revision_policy": "reject_and_preserve_existing"
+  },
+  "ES": {
+    "old_bars": 1000,
+    "incoming_closed_bars": 1000,
+    "newly_preserved_bars": 0,
+    "forming_bars_excluded": 0,
+    "archive_bars": 1000,
+    "revision_policy": "reject_and_preserve_existing"
+  },
+  "asof_Riyadh": "2026-11-03 15:25:25.322503+03:00",
+  "input_archive_sha256": {
+    "SPX_archive.json": "e469696b36f992c4f26981e30e7d1a399b73ecc306236bfd1f29d3e0234262fe",
+    "ES_archive.json": "6dbb5734b970c69e445d07e6448c0835447786a741fbcc24141d338951a350d3"
+  }
+}
