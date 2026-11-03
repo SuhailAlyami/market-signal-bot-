@@ -1,0 +1,89 @@
+{
+  "rows": [
+    {
+      "variant": "residual_only",
+      "entry": "close",
+      "n": 15,
+      "actual_hits": 4,
+      "random_same_time_expected_hits": 2.5,
+      "SPX_momentum_hits": 3,
+      "ES_momentum_hits": 4,
+      "actual_outcomes": {
+        "TIMEOUT": 6,
+        "STOP": 5,
+        "TARGET": 4
+      }
+    },
+    {
+      "variant": "residual_only",
+      "entry": "next_open",
+      "n": 15,
+      "actual_hits": 3,
+      "random_same_time_expected_hits": 2.5,
+      "SPX_momentum_hits": 2,
+      "ES_momentum_hits": 3,
+      "actual_outcomes": {
+        "STOP": 7,
+        "TARGET": 3,
+        "TIMEOUT": 5
+      }
+    },
+    {
+      "variant": "residual_volume",
+      "entry": "close",
+      "n": 4,
+      "actual_hits": 2,
+      "random_same_time_expected_hits": 1.0,
+      "SPX_momentum_hits": 2,
+      "ES_momentum_hits": 2,
+      "actual_outcomes": {
+        "TARGET": 2,
+        "TIMEOUT": 2
+      }
+    },
+    {
+      "variant": "residual_volume",
+      "entry": "next_open",
+      "n": 4,
+      "actual_hits": 2,
+      "random_same_time_expected_hits": 1.0,
+      "SPX_momentum_hits": 2,
+      "ES_momentum_hits": 2,
+      "actual_outcomes": {
+        "TARGET": 2,
+        "TIMEOUT": 2
+      }
+    },
+    {
+      "variant": "residual_volume_lag30s",
+      "entry": "close",
+      "n": 4,
+      "actual_hits": 1,
+      "random_same_time_expected_hits": 0.5,
+      "SPX_momentum_hits": 1,
+      "ES_momentum_hits": 1,
+      "actual_outcomes": {
+        "TARGET": 1,
+        "STOP": 1,
+        "TIMEOUT": 2
+      }
+    },
+    {
+      "variant": "residual_volume_lag30s",
+      "entry": "next_open",
+      "n": 4,
+      "actual_hits": 1,
+      "random_same_time_expected_hits": 0.5,
+      "SPX_momentum_hits": 1,
+      "ES_momentum_hits": 1,
+      "actual_outcomes": {
+        "TARGET": 1,
+        "STOP": 1,
+        "TIMEOUT": 2
+      }
+    }
+  ],
+  "interpretation": "Descriptive controls only. Same consumed day, overlapping variants, tiny samples; no significance or out-of-sample claim. Momentum zero return assigned long in this control. No parameter changes.",
+  "data_access": "TWO_DAYS THIRTY_SECS rejected for both instruments: more than allowed 1000 points; connector has no end-date parameter.",
+  "status": "NOT_READY"
+}
