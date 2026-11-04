@@ -1,0 +1,38 @@
+name: Suhail one-time Telegram test
+on:
+  push:
+    branches: [feat/capitalcom-cfd-research-20261029]
+    paths: ['.github/workflows/suhail-telegram-one-time-test.yml']
+permissions: {}
+jobs:
+  test:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Send one test and verify API acceptance
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from urllib.request import Request, urlopen
+          from urllib.error import HTTPError
+          token, chat = os.environ['BOT_TOKEN'], os.environ['CHAT_ID']
+          if not token or not chat:
+              raise SystemExit('Telegram repository secrets unavailable')
+          data = json.dumps({'chat_id': chat, 'text': '✅ سهيل هنتر | رسالة اختبار تيليجرام من GitHub Actions.'}).encode()
+          try:
+              request = Request('https://api.telegram.org/bot' + token + '/sendMessage', data=data,
+                                headers={'Content-Type': 'application/json'})
+              with urlopen(request, timeout=15) as response:
+                  result = json.load(response)
+          except HTTPError as exc:
+              raise SystemExit(f'Telegram rejected request: HTTP {exc.code}') from None
+          except Exception:
+              raise SystemExit('Telegram delivery uncertain. No automatic retry.') from None
+          if not result.get('ok') or not result.get('result', {}).get('message_id'):
+              raise SystemExit('Telegram acceptance not confirmed')
+          print('Telegram accepted the test message')
+          PY
