@@ -1,12 +1,12 @@
 name: Suhail one-time Telegram test
 on:
-  push:
-    branches: [feat/capitalcom-cfd-research-20261029]
+  pull_request:
+    types: [synchronize]
     paths: ['.github/workflows/suhail-telegram-one-time-test.yml']
 permissions: {}
 jobs:
   test:
-    if: github.run_attempt == 1
+    if: github.run_attempt == 1 && github.head_ref == 'feat/capitalcom-cfd-research-20261029' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
