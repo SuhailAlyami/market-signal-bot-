@@ -1,0 +1,25 @@
+name: Suhail Telegram configuration check
+on:
+  pull_request:
+    types: [synchronize]
+    paths: ['.github/workflows/suhail-telegram-configuration-check.yml']
+permissions: {}
+jobs:
+  check:
+    if: github.head_ref == 'feat/capitalcom-cfd-research-20261029' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check existing bindings without sending
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_SECOND_BOT_TOKEN: ${{ secrets.TELEGRAM_SECOND_BOT_TOKEN }}
+          TELEGRAM_SECOND_CHAT_ID: ${{ secrets.TELEGRAM_SECOND_CHAT_ID }}
+        run: |
+          python3 - <<'PY'
+          import os
+          for name in ["TELEGRAM_TOKEN","TELEGRAM_BOT_TOKEN","TELEGRAM_CHAT_ID","TELEGRAM_SECOND_BOT_TOKEN","TELEGRAM_SECOND_CHAT_ID"]:
+              print('BINDING ' + name + ' ' + ('present' if os.environ.get(name) else 'missing'))
+          PY
