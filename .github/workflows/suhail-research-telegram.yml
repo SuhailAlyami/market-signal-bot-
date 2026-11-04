@@ -1,0 +1,83 @@
+name: Suhail research Telegram
+on:
+  push:
+    branches: [feat/capitalcom-cfd-research-20261029]
+    paths: ['research/frozen_forward_20261103/telegram-outbox/*.json']
+permissions:
+  contents: write
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Send newly queued research alerts
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GH_TOKEN: ${{ github.token }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          python3 - <<'PY'
+          import base64, json, math, os, re, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from urllib.error import HTTPError
+          from urllib.request import Request, urlopen
+          from zoneinfo import ZoneInfo
+
+          root = 'research/frozen_forward_20261103'
+          paths = subprocess.check_output([
+              'git', 'diff', '--name-only', '--diff-filter=A', os.environ['BEFORE'], 'HEAD',
+              '--', root + '/telegram-outbox/'
+          ], text=True).splitlines()
+
+          def request(url, data, headers, method='POST'):
+              with urlopen(Request(url, json.dumps(data).encode(), headers, method=method), timeout=10) as response:
+                  return json.load(response)
+
+          for name in paths:
+              match = re.fullmatch(root + r'/telegram-outbox/([a-f0-9]{64})\.json', name)
+              if not match:
+                  continue
+              event = json.loads(Path(name).read_text())
+              closed = datetime.fromisoformat(event['closed_at'])
+              age = (datetime.now(timezone.utc) - closed).total_seconds()
+              side, price, momentum = event['side'], event['price'], event['return30']
+              if (event['provenance'] != 'RESEARCH_ONLY' or event['filter'] != 'grok_return30'
+                  or side not in (-1, 1) or not math.isfinite(price) or price <= 0
+                  or not math.isfinite(momentum) or side * momentum <= 0 or not 0 <= age <= 180):
+                  continue
+              if not os.environ['BOT_TOKEN'] or not os.environ['CHAT_ID']:
+                  raise SystemExit('Telegram repository secrets unavailable')
+              # Reserve before sending. A timeout is ambiguous and must not trigger a retry.
+              receipt = f"{root}/telegram-receipts/{match[1]}.json"
+              url = f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/contents/{receipt}"
+              headers = {'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Content-Type': 'application/json'}
+              try:
+                  request(url, {'message': 'Reserve research Telegram delivery',
+                                'branch': os.environ['GITHUB_REF_NAME'],
+                                'content': base64.b64encode(b'{"status":"reserved"}\n').decode()}, headers, 'PUT')
+              except HTTPError as exc:
+                  if exc.code == 422:
+                      print('Reservation rejected. Delivery skipped.')
+                      continue
+                  raise SystemExit(f'GitHub reservation failed: HTTP {exc.code}') from None
+              if (datetime.now(timezone.utc) - closed).total_seconds() > 180:
+                  continue
+              local = closed.astimezone(ZoneInfo('Asia/Riyadh')).strftime('%Y-%m-%d %H:%M:%S')
+              direction = 'صعود' if side == 1 else 'هبوط'
+              message = f'SPX | {direction} | {price:.2f}\n{local} الرياض | IBKR Last\nتجريبي غير معتمد للتداول'
+              try:
+                  result = request('https://api.telegram.org/bot' + os.environ['BOT_TOKEN'] + '/sendMessage',
+                                   {'chat_id': os.environ['CHAT_ID'], 'text': message},
+                                   {'Content-Type': 'application/json'})
+                  if not result.get('ok'):
+                      raise ValueError()
+              except Exception:
+                  raise SystemExit('Telegram delivery uncertain. No automatic retry.') from None
+              print('Telegram accepted research alert')
+          PY
