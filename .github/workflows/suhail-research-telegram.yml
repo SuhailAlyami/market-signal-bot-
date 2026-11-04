@@ -16,8 +16,8 @@ jobs:
           persist-credentials: false
       - name: Send newly queued research alerts
         env:
-          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BOT_TOKEN: ${{ secrets.TELEGRAM_SECOND_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_SECOND_CHAT_ID }}
           GH_TOKEN: ${{ github.token }}
           BEFORE: ${{ github.event.before }}
         run: |
@@ -52,7 +52,7 @@ jobs:
                   or not math.isfinite(momentum) or side * momentum <= 0 or not 0 <= age <= 180):
                   continue
               if not os.environ['BOT_TOKEN'] or not os.environ['CHAT_ID']:
-                  raise SystemExit('Telegram repository secrets unavailable')
+                  raise SystemExit('Second Telegram bot secrets unavailable')
               # Reserve before sending. A timeout is ambiguous and must not trigger a retry.
               receipt = f"{root}/telegram-receipts/{match[1]}.json"
               url = f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/contents/{receipt}"
