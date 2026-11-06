@@ -3,7 +3,7 @@
 Model, inputs, threshold and signal cooldown remain unchanged. This is an
 explicit data-vintage policy change; the original strict runner is retained.
 """
-import argparse, hashlib, json, os, shutil, tempfile
+import argparse, hashlib, json, math, os, shutil, tempfile
 from pathlib import Path
 import pandas as pd
 from stable_archive import rows, merge_archive, FIELDS
@@ -14,6 +14,43 @@ POLICY = 'v2_first_observed_closed_bars_with_revision_ledger'
 
 def digest(p):
     return hashlib.sha256(p.read_bytes()).hexdigest()
+
+def delivery_readiness(spx, es, asof):
+    """Audit source latency independently of model events and historical scoring."""
+    now = pd.Timestamp(asof)
+    feeds = {}
+    reasons = []
+    closed_times = []
+    for symbol, path in [('SPX', spx), ('ES', es)]:
+        snapshot = json.loads(Path(path).read_text())
+        closed, _ = rows(snapshot, now)
+        times = set(closed)
+        closed_times.append(times)
+        latest = pd.Timestamp(max(times)) + pd.Timedelta(minutes=5) if times else None
+        age = (now - latest).total_seconds() if latest is not None else None
+        delay = snapshot.get('delayed')
+        valid_delay = (type(delay) in (int, float) and math.isfinite(delay) and delay >= 0)
+        feeds[symbol] = {
+            'source': snapshot.get('source'),
+            'declared_delay_seconds': delay if valid_delay else None,
+            'last_closed_Riyadh': str(latest.tz_convert('Asia/Riyadh')) if latest is not None else None,
+            'closed_bar_age_seconds': age,
+        }
+        if not valid_delay:
+            reasons.append(symbol + '_PROVIDER_DELAY_UNKNOWN')
+        elif delay > 180:
+            reasons.append(symbol + '_PROVIDER_DELAY_EXCEEDS_180_SECONDS')
+        if age is None or not 0 <= age <= 180:
+            reasons.append(symbol + '_CLOSED_BAR_OUTSIDE_180_SECONDS')
+    common = closed_times[0] & closed_times[1]
+    latest_common = pd.Timestamp(max(common)) + pd.Timedelta(minutes=5) if common else None
+    common_age = (now - latest_common).total_seconds() if latest_common is not None else None
+    if common_age is None or not 0 <= common_age <= 180:
+        reasons.append('COMMON_CLOSED_BAR_OUTSIDE_180_SECONDS')
+    return {'provenance': 'RESEARCH_ONLY', 'maximum_age_seconds': 180,
+            'eligible_for_fresh_signal_check': not reasons, 'reasons': reasons,
+            'feeds': feeds,
+            'latest_common_close_Riyadh': str(latest_common.tz_convert('Asia/Riyadh')) if latest_common is not None else None}
 
 def merge_first(snapshot, archive, asof, ledger):
     incoming = json.loads(Path(snapshot).read_text())
@@ -78,6 +115,9 @@ def run(spx, es, asof, root=None, evaluator=replay):
         stage = Path(tempfile.mkdtemp(prefix='.stage_', dir=root / 'checkpoints'))
         for name in ['SPX_archive.json', 'ES_archive.json', 'ARCHIVE_STATE.json']:
             shutil.copyfile(seed / name, stage / name)
+        for name in ['GROK_SHADOW.json', 'OUTCOME_NOTIFICATIONS.json']:
+            if (seed / name).exists():
+                shutil.copyfile(seed / name, stage / name)
         audit = {'policy': POLICY, 'asof_Riyadh': str(asof.tz_convert('Asia/Riyadh')),
                  'previous_checkpoint': prior.name if prior else 'original_v1_seed'}
         for sym, source in [('SPX', spx), ('ES', es)]:
@@ -87,6 +127,7 @@ def run(spx, es, asof, root=None, evaluator=replay):
                                      asof, stage / (sym + '_REVISIONS.json'))
         report = evaluator(stage / 'SPX_archive.json', stage / 'ES_archive.json',
                            asof, stage / 'ARCHIVE_STATE.json', stage / 'ARCHIVE_RESULT.json')
+        audit['delivery_readiness'] = delivery_readiness(spx, es, asof)
         (stage / 'ARCHIVE_AUDIT.json').write_text(json.dumps(audit, indent=2))
         m = {'policy': POLICY, 'sha256': {p.name: digest(p) for p in stage.iterdir() if p.is_file()}}
         (stage / 'MANIFEST.json').write_text(json.dumps(m, indent=2))

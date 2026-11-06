@@ -70,4 +70,45 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(new),2)
         self.assertEqual(old.slot.iloc[0],new.slot.iloc[0])
 
+    def test_delayed_provider_blocks_fresh_delivery_without_blocking_archive(self):
+        with tempfile.TemporaryDirectory() as t:
+            p=Path(t);seed,sp,es=self.setup_files(p)
+            for path,delay in [(sp,900),(es,600)]:
+                data=json.loads(path.read_text());data['delayed']=delay;data['source']='Last'
+                path.write_text(json.dumps(data))
+            with patch.object(v,'P',seed):
+                result=v.run(sp,es,'2026-11-03T14:41Z',p/'v2',self.fake)
+            quality=result['archive']['delivery_readiness']
+            self.assertFalse(quality['eligible_for_fresh_signal_check'])
+            self.assertIn('SPX_PROVIDER_DELAY_EXCEEDS_180_SECONDS',quality['reasons'])
+            self.assertEqual(quality['feeds']['SPX']['closed_bar_age_seconds'],60)
+            self.assertTrue((v.previous(p/'v2')/'ARCHIVE_RESULT.json').exists())
+
+    def test_fresh_common_closed_bar_and_actual_age(self):
+        with tempfile.TemporaryDirectory() as t:
+            p=Path(t);seed,sp,es=self.setup_files(p)
+            for path in [sp,es]:
+                data=json.loads(path.read_text());data['delayed']=0
+                path.write_text(json.dumps(data))
+            self.assertTrue(v.delivery_readiness(sp,es,'2026-11-03T14:41Z')['eligible_for_fresh_signal_check'])
+            self.assertFalse(v.delivery_readiness(sp,es,'2026-11-03T14:44Z')['eligible_for_fresh_signal_check'])
+            self.snap(es,['2026-11-03T14:30Z','2026-11-03T14:40Z'])
+            quality=v.delivery_readiness(sp,es,'2026-11-03T14:41Z')
+            self.assertEqual(quality['feeds']['ES']['last_closed_Riyadh'],'2026-11-03 17:35:00+03:00')
+            self.assertIn('COMMON_CLOSED_BAR_OUTSIDE_180_SECONDS',quality['reasons'])
+
+    def test_shadow_and_notification_ledger_survive_normal_resume(self):
+        with tempfile.TemporaryDirectory() as t:
+            p=Path(t);seed,sp,es=self.setup_files(p)
+            saved={'GROK_SHADOW.json':b'{"events":[]}',
+                   'OUTCOME_NOTIFICATIONS.json':b'{"reported_in_chat":["existing"]}'}
+            for name,content in saved.items():(seed/name).write_bytes(content)
+            with patch.object(v,'P',seed):
+                v.run(sp,es,'2026-11-03T15:00Z',p/'v2',self.fake)
+                v.run(sp,es,'2026-11-03T15:01Z',p/'v2',self.fake)
+            cp=v.previous(p/'v2');manifest=json.loads((cp/'MANIFEST.json').read_text())
+            for name,content in saved.items():
+                self.assertEqual((cp/name).read_bytes(),content)
+                self.assertEqual(manifest['sha256'][name],v.digest(cp/name))
+
 if __name__=='__main__':unittest.main()
