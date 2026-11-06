@@ -1,0 +1,92 @@
+{
+  "events": [
+    {
+      "decision_utc": "2026-11-04 14:35:00+00:00",
+      "decision_Riyadh": "2026-11-04 17:35:00+03:00",
+      "slot": 78066,
+      "side": -1,
+      "reference_price": 7650.12,
+      "observed_at_utc": "2026-11-04 15:41:35.945380+00:00",
+      "observation": "RESEARCH_BACKFILL",
+      "provenance": "RESEARCH_ONLY",
+      "result": "INCORRECT_ENDPOINT",
+      "signed_points": -53.789999999999964,
+      "evaluation_Riyadh": "2026-11-04 18:05:00+03:00",
+      "return30": 10.371195248700817,
+      "accepted": false
+    },
+    {
+      "decision_utc": "2026-11-04 17:00:00+00:00",
+      "decision_Riyadh": "2026-11-04 20:00:00+03:00",
+      "slot": 78095,
+      "side": -1,
+      "reference_price": 7710.23,
+      "observed_at_utc": "2026-11-06 15:41:41.676147+00:00",
+      "observation": "RESEARCH_BACKFILL",
+      "provenance": "RESEARCH_ONLY",
+      "result": "CORRECT_ENDPOINT",
+      "signed_points": 2.2799999999997453,
+      "evaluation_Riyadh": "2026-11-04 20:30:00+03:00",
+      "return30": 10.817518805605554,
+      "accepted": false
+    },
+    {
+      "decision_utc": "2026-11-04 19:15:00+00:00",
+      "decision_Riyadh": "2026-11-04 22:15:00+03:00",
+      "slot": 78122,
+      "side": -1,
+      "reference_price": 7706.53,
+      "observed_at_utc": "2026-11-06 15:41:41.676147+00:00",
+      "observation": "RESEARCH_BACKFILL",
+      "provenance": "RESEARCH_ONLY",
+      "result": "CORRECT_ENDPOINT",
+      "signed_points": 2.719999999999345,
+      "evaluation_Riyadh": "2026-11-04 22:45:00+03:00",
+      "return30": 1.9183045014038713,
+      "accepted": false
+    },
+    {
+      "decision_utc": "2026-11-04 20:55:00+00:00",
+      "decision_Riyadh": "2026-11-04 23:55:00+03:00",
+      "slot": 78142,
+      "side": 1,
+      "reference_price": 7686.8,
+      "observed_at_utc": "2026-11-06 15:41:41.676147+00:00",
+      "observation": "RESEARCH_BACKFILL",
+      "provenance": "RESEARCH_ONLY",
+      "result": "UNSCORABLE_SESSION_OR_GAP",
+      "return30": -3.519263944795792,
+      "accepted": false
+    },
+    {
+      "decision_utc": "2026-11-06 15:35:00+00:00",
+      "decision_Riyadh": "2026-11-06 18:35:00+03:00",
+      "slot": 78234,
+      "side": 1,
+      "reference_price": 7396.96,
+      "observed_at_utc": "2026-11-06 17:02:47.579957+00:00",
+      "observation": "RESEARCH_BACKFILL",
+      "provenance": "RESEARCH_ONLY",
+      "result": "CORRECT_ENDPOINT",
+      "signed_points": 19.600000000000364,
+      "evaluation_Riyadh": "2026-11-06 19:05:00+03:00",
+      "return30": 0.463246452437357,
+      "accepted": true
+    },
+    {
+      "decision_utc": "2026-11-06 16:40:00+00:00",
+      "decision_Riyadh": "2026-11-06 19:40:00+03:00",
+      "slot": 78247,
+      "side": -1,
+      "reference_price": 7430.06,
+      "observed_at_utc": "2026-11-06 17:02:47.579957+00:00",
+      "observation": "RESEARCH_BACKFILL",
+      "provenance": "RESEARCH_ONLY",
+      "result": "CORRECT_ENDPOINT",
+      "return30": 4.028971193415635,
+      "accepted": false,
+      "signed_points": 16.980000000000473,
+      "evaluation_Riyadh": "2026-11-06 20:10:00+03:00"
+    }
+  ]
+}
