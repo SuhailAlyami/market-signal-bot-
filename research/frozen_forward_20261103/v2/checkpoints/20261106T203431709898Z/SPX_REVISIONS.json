@@ -1,0 +1,98 @@
+{
+  "policy": "v2_first_observed_closed_bars_with_revision_ledger",
+  "asof_utc": "2026-11-06 20:34:31.709898+00:00",
+  "snapshot_sha256": "793d41fa291ce4845d62a97d474168c16bb55c216080497a5ddbb2585b877908",
+  "revision_count": 6,
+  "revisions": [
+    {
+      "bar_start_utc": "2026-11-04 15:20:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7685.89,
+          "incoming": 7686.7
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 15:25:00+00:00",
+      "changes": {
+        "high": {
+          "first": 7432.38,
+          "incoming": 7434.43
+        },
+        "low": {
+          "first": 7422.93,
+          "incoming": 7409.98
+        },
+        "close": {
+          "first": 7432.38,
+          "incoming": 7411.37
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 16:45:00+00:00",
+      "changes": {
+        "high": {
+          "first": 7422.36,
+          "incoming": 7423.75
+        },
+        "low": {
+          "first": 7416.88,
+          "incoming": 7416.64
+        },
+        "close": {
+          "first": 7421.21,
+          "incoming": 7420.06
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 17:20:00+00:00",
+      "changes": {
+        "high": {
+          "first": 7417.25,
+          "incoming": 7421.81
+        },
+        "low": {
+          "first": 7416.11,
+          "incoming": 7407.55
+        },
+        "close": {
+          "first": 7416.29,
+          "incoming": 7416.96
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 18:15:00+00:00",
+      "changes": {
+        "low": {
+          "first": 7387.05,
+          "incoming": 7385.61
+        },
+        "close": {
+          "first": 7387.56,
+          "incoming": 7390.68
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 19:35:00+00:00",
+      "changes": {
+        "high": {
+          "first": 7400.01,
+          "incoming": 7401.05
+        },
+        "low": {
+          "first": 7397.75,
+          "incoming": 7397.73
+        },
+        "close": {
+          "first": 7398.24,
+          "incoming": 7400.31
+        }
+      }
+    }
+  ]
+}
