@@ -1,0 +1,50 @@
+{
+  "policy": "v2_first_observed_closed_bars_with_revision_ledger",
+  "asof_Riyadh": "2026-11-06 22:50:53.979165+03:00",
+  "previous_checkpoint": "20261106T183244344299Z",
+  "SPX": {
+    "old_bars": 1280,
+    "incoming_closed_bars": 998,
+    "newly_preserved_bars": 16,
+    "forming_bars_excluded": 0,
+    "archive_bars": 1296,
+    "revision_policy": "v2_first_observed_closed_bars_with_revision_ledger",
+    "revisions_logged": 5
+  },
+  "ES": {
+    "old_bars": 1317,
+    "incoming_closed_bars": 999,
+    "newly_preserved_bars": 16,
+    "forming_bars_excluded": 0,
+    "archive_bars": 1333,
+    "revision_policy": "v2_first_observed_closed_bars_with_revision_ledger",
+    "revisions_logged": 95
+  },
+  "delivery_readiness": {
+    "provenance": "RESEARCH_ONLY",
+    "maximum_age_seconds": 180,
+    "eligible_for_fresh_signal_check": false,
+    "reasons": [
+      "SPX_PROVIDER_DELAY_EXCEEDS_180_SECONDS",
+      "SPX_CLOSED_BAR_OUTSIDE_180_SECONDS",
+      "ES_PROVIDER_DELAY_EXCEEDS_180_SECONDS",
+      "ES_CLOSED_BAR_OUTSIDE_180_SECONDS",
+      "COMMON_CLOSED_BAR_OUTSIDE_180_SECONDS"
+    ],
+    "feeds": {
+      "SPX": {
+        "source": "Last",
+        "declared_delay_seconds": 900,
+        "last_closed_Riyadh": "2026-11-06 22:40:00+03:00",
+        "closed_bar_age_seconds": 653.979165
+      },
+      "ES": {
+        "source": "Last",
+        "declared_delay_seconds": 600,
+        "last_closed_Riyadh": "2026-11-06 22:45:00+03:00",
+        "closed_bar_age_seconds": 353.979165
+      }
+    },
+    "latest_common_close_Riyadh": "2026-11-06 22:40:00+03:00"
+  }
+}
