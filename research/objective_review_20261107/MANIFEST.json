@@ -1,0 +1,13 @@
+{
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "source_raw_sha256": "7d263ec61a6e582b17a69097d6d14643b94e5645f3c8dd02590a520b07cd8a1b",
+  "files": {
+    "objective_review.py": "19f5da59887323b4ccec0dcfe232f35a5184ecf6f362f07d428f48e6709f003a",
+    "test_objective_review.py": "2ed775017199e0f77e23eb8ab4003af1e977919026bb59a0fd60dab4a14dcb68",
+    "objective_protocol.json": "af1aac202ab7e4c1f842261228b57ac4ac91eeed96cd81b92d58ef4ac59c8818",
+    "objective_results.json": "1c53baf1ea9aaa1c4bd8dd2a056ce643c1bb9324a88d9b09ed8ad17b6619e397",
+    "opening_validation_raw.json.gz": "ac3d9d9723b352be6a8419e71bf3751c049f1da9dc397cd1fbef8c46814d7cfd",
+    "README_AR.md": "99e9856ac93b37ef0e4c0c55d0a58d5d31cf0fc6fb737b4bf515bc0d8cc390f2",
+    "requirements.txt": "e48cc39feb3fa58f52a27c98fce93f0a766b1b4c9ac3da09a878ed192daaf567"
+  }
+}
