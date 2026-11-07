@@ -1,0 +1,13 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY_EXPLORATORY",
+  "hypothesis": "Reduce agreement latency by using first CLOSED 5m breakout/reclaim of the first 30m opening range instead of first CLOSED 15m events. Single change: level-detector confirmation timeframe. Opening-range duration, first-event-only rule, wave detector, vote lifetime15m, global cooldown30m, ATR6, stop1R target2R horizon30m unchanged.",
+  "five_minute_levels": "Freeze high/low of first six 5m bars. From index6 onward: first close outside range emits breakout; first close strictly inside after prior close outside, with current low/high beyond corresponding edge, emits reclaim. Separate first events for the two methods. No substitutions after event failure. R=max(5, previous six 5m true ranges excluding decision).",
+  "comparison": "Recompute unchanged 15m consensus as control and compare daily net points with absent/censored trades contributing zero, paired by session; compare same hindsight reference legs, consumed share and lag. Not matched event pairs because votes and first-event sides can change.",
+  "data": "Same 116 complete sessions previously consumed, no new holdout; raw input hash7d263ec61a6e582b17a69097d6d14643b94e5645f3c8dd02590a520b07cd8a1b. Prior split2026-09-14, resolution confounded with time. Regular XNYS only.",
+  "latency_minutes": [0,15,60],
+  "cost_points_round_trip": [0.5,1,2],
+  "bootstrap": "1000 paired session resamples of fast-minus-control net points at cost1, seed714, descriptive95% interval. Include zero-activity sessions.",
+  "screen": "Do not replace control on consumed data. Improvement can qualify for UNUSED_PROSPECTIVE_TEST_ONLY if zero-delay cost1 net positive in both blocks, recent paired improvement95% lower bound>0, and early reference-match counts no lower in either block. Otherwise REJECT_CHANGE_KEEP_CONTROL_RESEARCH_ONLY. Latency15/60 sensitivity reported separately, never treated as source repair.",
+  "coverage": "Same retrospective 10-point reversal legs >=20points, one-to-one same-side matches after leg start before75% consumed; early <=25%. Descriptive, not prediction before onset. No changed success labels.",
+  "preservation": "No modification of original detectors, frozen weights/threshold/state, main, alert routes, schedules, subscriptions or orders. No live-feed or option-PnL claim. No parameter adjustment after results."
+}

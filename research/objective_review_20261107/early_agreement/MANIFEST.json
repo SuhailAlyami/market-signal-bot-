@@ -1,0 +1,21 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY",
+  "files": {
+    "protocol.json": "3220ae21f0eb3e2e325a5e3f011c039111b9acaa4d46f6cb07e2c424e8194267",
+    "run_early.py": "71610d7aa6270a6cee3ad836d92e32f79360072f958bb8f866dc29175f3b05ea",
+    "test_early.py": "e8c12b7778e8eb4b52247dfc8f8eb2db25c634e74b88b638106f33520fe1d97f",
+    "README_AR.md": "790708f87f9a1818c00a99a95b9dbc009804b3aebd0bc0e74458173b2e7c4846",
+    "results.json.gz": "882023e4740be5137300b8977fa867842e5d17465f8b9619d04f1aa49de2e78d",
+    "summary.json": "2a9cd3f03b2dff7abb63a755568ac3ed1b97200ac95de2aca200881b447309a5"
+  },
+  "dependencies": {
+    "objective_review.py": "19f5da59887323b4ccec0dcfe232f35a5184ecf6f362f07d428f48e6709f003a",
+    "opening_validation_raw.json.gz": "ac3d9d9723b352be6a8419e71bf3751c049f1da9dc397cd1fbef8c46814d7cfd",
+    "requirements.txt": "e48cc39feb3fa58f52a27c98fce93f0a766b1b4c9ac3da09a878ed192daaf567",
+    "wave_capture/run.py": "c0c3c535c14859c8b527ec9add71ed03d1414b04af8be31f509b5f4d82e71405",
+    "ensemble_audit/audit.py": "7c1afc1ca527120759a0db48a8ff7e1d06e4d4d53d2e454e68745fe997f015db",
+    "ensemble_audit/results.json.gz": "d5bd2a5d1d572b19dc4df67a61c9f14cfe5347ef3a2c187351575e9e0ccd2fe0"
+  },
+  "uncompressed_results_sha256": "39aa0a17461e0cc133b3888b05b5f91276fdf58151741b467f54322101673b4c",
+  "decision": "REJECT_CHANGE_KEEP_CONTROL_RESEARCH_ONLY"
+}

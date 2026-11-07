@@ -1,0 +1,12 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY_EXPLORATORY",
+  "hypothesis": "Single exit change to unchanged15m consensus: after a completed5m close reaches +1R from actual assumed entry, raise stop to entry for subsequent raw bars. Initial stop1R, target2R, horizon30m, decision times, supports, risk units and latency scenarios unchanged. Entry stop is not cost-adjusted and can gap below break-even.",
+  "causality": "Only arm after the5m close is observed, never on intrabar favorable touch. New stop applies starting next raw bar, not retroactively. Monitor initial and armed stop on each raw bar with conservative stop/target ambiguity and adverse gap fill.5m arm grid is uniform across1m/5m source sessions. No favorable-bar sequencing assumption.",
+  "control": "Exact unchanged consensus from ensemble_audit; entry events and scored population identical for each latency. Compare lower-bound net points paired by session and event. Retain all winners converted to break-even losses after cost as well as rescued stops. No model fitting.",
+  "data": "Previously consumed116 regular XNYS sessions; no new holdout. Split2026-09-14 remains descriptive and raw resolution confounded with time. Source not independently verified, RESEARCH_ONLY.",
+  "latency_minutes": [0,15,60],
+  "cost_points_round_trip": [0.5,1,2],
+  "bootstrap": "1000 paired session bootstrap of protected-minus-control net points at cost1; seed715. Include zero-event days, descriptive95% interval.",
+  "screen": "No adoption from consumed data. Qualifies only for unused prospective testing if zero-latency net positive in both blocks, recent paired improvement95% lower bound>0, and recent delay15 net no worse than control. Otherwise REJECT_EXIT_CHANGE_KEEP_CONTROL_RESEARCH_ONLY. Do not tune stop activation, target, horizon or labels after results.",
+  "preserve": "Frozen weights/threshold/state and all existing source modules untouched. No live alerts, schedules, main changes, deployments, paid services or orders. Point simulation does not prove option P&L."
+}
