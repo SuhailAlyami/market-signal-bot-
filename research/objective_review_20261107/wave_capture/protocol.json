@@ -1,0 +1,16 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY_EXPLORATORY",
+  "data": "../opening_validation_raw.json.gz; all sessions previously consumed; no new holdout",
+  "candidate": "Volatility-scaled directional change on closed 5m prices. Start after 6 complete bars. Reversal requires max(5 points, prior 6-bar mean true range), frozen when the running closing-price extreme updates. Signal direction switches only on threshold crossing. Update state on every bar; emit at most once per 30m, suppressing changes inside cooldown without re-emitting later.",
+  "true_range": "Within-session high-low and gaps to prior close; decision bar excluded from ATR. No cross-session warmup or imputation.",
+  "execution": "Next available raw bar open at/after decision+latency. Stop 1R from actual assumed fill, target 2R, R=max(5, prior ATR6 at decision), hold 30m from fill. Complete same-session horizon required. Gap stops fill at worse opening; ambiguous bars report bounds. Index-point simulation only.",
+  "latency_minutes": [0,15,60],
+  "cost_points_round_trip": [0.5,1,2],
+  "reference_legs": "Retrospective 10-point directional-change segmentation of ALL 5m closing prices. Keep legs >=20 points. Append terminal unfinished leg explicitly flagged. Pivot timestamps belong to bar CLOSE, not bar start. Reference never feeds detection.",
+  "coverage": "One-to-one chronological match: first still-unmatched same-side candidate in [leg start,leg end) and before 75% of leg closing-price displacement is consumed. Early subset <=25% consumed. Report time lag and consumed points. Do not match signals from before the retrospective start. Coverage is descriptive hindsight alignment, not advance prediction.",
+  "baselines": "Always up and reversed direction at candidate times, same R/latency/rules. Additionally 1000 within-session direction permutations preserving counts; cache both-direction outcomes. Compare net points at cost 1, include all draws, seed 711.",
+  "uncertainty": "1000 paired session bootstraps candidate minus mean randomized baseline, 95% descriptive interval; seed 712. Both time blocks before/on-after 2026-09-14 previously used; granularity confounded with split.",
+  "decision": "No adoption on consumed data. Candidate advances only to unused prospective testing if zero-latency net at cost 1 is positive in both blocks AND paired candidate-minus-random 95% lower bound is positive. Otherwise suspend this parameterization. No tuning after results.",
+  "source_provenance": "Inherited archived SPX dataset without independently verified contract/source stamps; never LIVE_VERIFIED. Regular XNYS session only.",
+  "frozen_system": "No changes to frozen weights, threshold, state, alert routes, schedules, main or deployments. New rule remains offline."
+}
