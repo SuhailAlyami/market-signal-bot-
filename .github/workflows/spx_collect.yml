@@ -1,0 +1,36 @@
+name: spx-collect
+# Research data collection only: no alerts, no orders. Scheduled runs start only once this file is on the default branch.
+on:
+  schedule:
+    - cron: '45 21 * * 1-5'   # after 16:00 New York in both EST and EDT
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: spx-collect
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install exchange_calendars==4.13.2
+      - name: Restore previously collected data (first read stays canonical)
+        run: |
+          if git ls-remote --exit-code --heads origin data/spx-collection >/dev/null; then
+            git fetch origin data/spx-collection
+            git checkout origin/data/spx-collection -- research/spx_collection/data || true
+          fi
+      - run: python research/spx_collection/collect_yahoo_spx.py
+      - name: Publish data to data/spx-collection
+        run: |
+          git config user.name "spx-collect"; git config user.email "actions@users.noreply.github.com"
+          git checkout -B data/spx-collection
+          git add research/spx_collection/data
+          git diff --cached --quiet || git commit -m "Collect SPX 1m snapshot $(date -u +%Y%m%dT%H%MZ)"
+          git push origin data/spx-collection

@@ -1,0 +1,95 @@
+{
+ "note": "provenance comparison only",
+ "vs_consumed_1m_input": {
+  "2026-10-29": {
+   "bars_compared": 390,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 390,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  },
+  "2026-10-30": {
+   "bars_compared": 390,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 390,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  },
+  "2026-11-02": {
+   "bars_compared": 390,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 390,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  },
+  "2026-11-03": {
+   "bars_compared": 390,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 390,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  },
+  "2026-11-04": {
+   "bars_compared": 390,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 390,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  }
+ },
+ "vs_archive_5m": {
+  "2026-10-29": {
+   "bars_compared": 78,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 78,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  },
+  "2026-10-30": {
+   "bars_compared": 78,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 78,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  },
+  "2026-11-02": {
+   "bars_compared": 78,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 78,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  },
+  "2026-11-03": {
+   "bars_compared": 78,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 78,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  },
+  "2026-11-04": {
+   "bars_compared": 78,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 78,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0002
+  },
+  "2026-11-05": {
+   "bars_compared": 78,
+   "only_a": 0,
+   "only_b": 0,
+   "close_equal_0.01": 78,
+   "max_abs_close_diff": 0.0002,
+   "median_abs_close_diff": 0.0001
+  }
+ }
+}

@@ -23,6 +23,13 @@ Last updated: 2026-11-08 (branch `claude/kind-ramanujan-icu95e`, based on open P
   Only one complete unconsumed session (2026-11-05) is available in-repo; 2026-11-06 is incomplete (70/78 bars).
 - Network from cloud sessions: Yahoo is blocked by the proxy; no new data was fetched.
 
+## Data acquisition status (2026-11-08)
+
+- Collector `research/spx_collection/collect_yahoo_spx.py` works from this environment (Yahoo `query1/2.finance.yahoo.com` allowed; 7 tests pass). Pulled 7 complete 1m sessions 2026-10-29..11-06 with request/receipt times. Unused: 2026-11-05, 2026-11-06 (do not tune). Classification DELAYED_RESEARCH_ONLY; no per-bar receipt times exist.
+- Yahoo serves only the last 7 trading days of 1m: pull at least weekly. `.github/workflows/spx_collect.yml` (daily 21:45 UTC) runs only after it reaches the default branch; untested on GitHub.
+- Validation size (see opening_seed/FAILURE_ANALYSIS.md): 20 sessions gives only +/-8 pp on the early-match rate; ~55 sessions for +/-5 pp; >=70 to confirm a gain of the in-sample size.
+- Random-timing baseline: "early" matches of both detectors are not clearly better than random timing; "matched before 75%" is.
+
 ## Missing for a real out-of-sample test
 
 1. Complete regular-session SPX 1m (or 5m) OHLC for **unused** sessions after 2026-11-05 (>= 20 sessions recommended),

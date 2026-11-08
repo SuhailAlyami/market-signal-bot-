@@ -6,9 +6,12 @@
     "protocol.json": "03c5f0ce0a9d42b00ebd2117e6f02b4654694b6fcb90fa332eece3c02dde408e",
     "run_seed.py": "5ecb19cb360eb3c8649ed6c25ec831e4154a5a747a387a939ba750cd7b51f90d",
     "test_seed.py": "c7a1eceda441db752b18730ae01f43145f0f4957a1ad05f0e92db75b0c4d820c",
-    "README_AR.md": "27894beb91fe95cd07dddad532e2e51ee788200723d5b4199ae92f6a7ee76f82",
+    "failure_baseline.py": "a22884bd48dd699f751ca9561b5cd398e7c5f5ba4b1e3e245019f639a9a3c61a",
+    "README_AR.md": "8e2434818bfb4d649f14587d549ee0a67e34836d6f477b434c86d42c513df398",
+    "FAILURE_ANALYSIS.md": "2a5c975cf7ea2371ad6bdb2cb3e04cfdbee0cbc544f61e3f8d3089b64ce4f94f",
     "results.json.gz": "79ddc7eec054fb1589d474ff1b2a1abad8430b617b45158a9e8c4b3eb7fea46c",
-    "summary.json": "8a2cf47b680b79dc61b8b6b92f9c85c4f117290c2c87143ca576add902831dea"
+    "summary.json": "8a2cf47b680b79dc61b8b6b92f9c85c4f117290c2c87143ca576add902831dea",
+    "failure_baseline.json": "ea27a40306f26dc8feb863982362dda8bb7e2244f94c22ad0f1ef127d92e81a7"
   },
   "dependencies": {
     "objective_review.py": "19f5da59887323b4ccec0dcfe232f35a5184ecf6f362f07d428f48e6709f003a",
