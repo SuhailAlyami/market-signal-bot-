@@ -97,3 +97,36 @@ class CollectorTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class VerifyTests(unittest.TestCase):
+    def store(self, days, **kw):
+        bars, _ = c.parse(response(days, **kw))
+        s, _ = c.build_sessions(bars)
+        return s
+
+    def test_contiguous_store_passes(self):
+        r = c.verify(self.store(['2026-11-04', '2026-11-05', '2026-11-06']))
+        self.assertEqual((r['ok'], r['complete_sessions']), (True, 3))
+
+    def test_missing_calendar_session_is_flagged(self):
+        r = c.verify(self.store(['2026-11-04', '2026-11-06']))  # 11-05 missing
+        self.assertFalse(r['ok'])
+        self.assertEqual(r['problems'], [{'day': '2026-11-05', 'problem': 'session_missing_from_store'}])
+
+    def test_tampered_grid_and_ohlc_are_flagged(self):
+        st = self.store(['2026-11-05', '2026-11-06'])
+        lines = st['2026-11-05']['csv'].splitlines()
+        del lines[50]
+        st['2026-11-05']['csv'] = '\n'.join(lines)+'\n'
+        parts = st['2026-11-06']['csv'].splitlines()
+        t, o, h, lo, cl = parts[10].split(',')
+        parts[10] = f'{t},{o},{float(h)-5},{lo},{cl}'
+        st['2026-11-06']['csv'] = '\n'.join(parts)+'\n'
+        r = c.verify(st)
+        self.assertEqual({p['problem'] for p in r['problems']}, {'grid_mismatch', 'invalid_ohlc'})
+
+    def test_weekend_and_holiday_gaps_are_not_false_alarms(self):
+        # 2026-11-06 (Fri) -> 2026-11-09 (Mon): no calendar session in between
+        r = c.verify(self.store(['2026-11-06', '2026-11-09']))
+        self.assertTrue(r['ok'])

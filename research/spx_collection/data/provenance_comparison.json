@@ -90,6 +90,24 @@
    "close_equal_0.01": 78,
    "max_abs_close_diff": 0.0002,
    "median_abs_close_diff": 0.0001
+  },
+  "2026-11-06": {
+   "bars_compared": 70,
+   "only_a": 8,
+   "only_b": 0,
+   "close_equal_0.01": 69,
+   "max_abs_close_diff": 1.15,
+   "median_abs_close_diff": 0.0002,
+   "archive_partial_day": true,
+   "archive_last_bar": "15:15",
+   "compare_excluding_archive_last_bar": {
+    "bars_compared": 69,
+    "only_a": 9,
+    "only_b": 0,
+    "close_equal_0.01": 69,
+    "max_abs_close_diff": 0.0002,
+    "median_abs_close_diff": 0.0001
+   }
   }
  }
 }

@@ -24,15 +24,16 @@ Legs starting after minute 40 are unchanged (25 vs 25 older, 10 vs 10 recent). T
 Per block, recent: control early 16 vs random 14.6 (191/500 >=); seeded early 16 vs 17.8 (360/500 >=).
 Reading: both detectors identify legs after confirmation better than random timing (matched), but **their "early" matches are not distinguishable from random timing** in the recent block and only marginal for seeded overall. The early window (first 25% of a >=20-point leg) is wide, so the early metric is weak evidence by itself; lead time versus movement onset is still unproven.
 
-## Validation size from event counts (control early-match rate p = 13.2%, 3.15 legs/session, session-clustered)
-| Target | Sessions |
-|---|---:|
-| 95% half-width of early rate +/-10 pp | 14 |
-| +/-7.5 pp | 24 |
-| +/-5 pp | 54 |
-| At 20 sessions (~63 legs): half-width | +/-8.2 pp |
-| 80% power for seeded gain of 0.138 early/session (paired sd 0.415) | 71 |
-| same, if the true gain is half that | 284 |
+## Validation size (corrected 2026-11-08; `sizing_clustered.py` -> `sizing_clustered.json`)
+Earlier version used a linearized ratio formula and called the result "+/-5 pp at 55 sessions" without checking dependence. Re-derived with session-level and 5-session block bootstrap (4000 draws, seed 1101) on the 116 consumed sessions (365 legs, control early rate 13.2%).
+Dependence found: session design effect 0.96 and lag-1 autocorrelation of session residuals -0.011, i.e. no detectable clustering or serial dependence in this sample (itself an estimate from 116 sessions; legs inside a session come from one retrospective segmentation).
 
-20 sessions is therefore a first look at rate precision (+/-8 pp), not enough to confirm a change of the observed size; plan for ~55 sessions for precision and >=70 for the paired comparison.
-The effect size comes from the sample that selected the change (winner's curse; recent-block gain was 0), so these are lower bounds on the work needed.
+| Sessions | 95% half-width, early RATE (session / block bootstrap) | half-width, seeded-minus-control RATE DIFFERENCE |
+|---:|---|---|
+| 20 | +/-8.2 / 7.8 pp | +/-6.2 pp |
+| 30 | 6.8 / 6.6 | 5.0 |
+| 54 | 4.9 / 4.9 | 3.6 |
+| 80 | 4.1 / 3.9 | 3.0 |
+| 116 | 3.4 / 3.2 | 2.4 |
+
+Corrections: (1) the "+/-5 pp at ~54 sessions" holds only for the level of the early rate at p near 13%, under the sample's observed (weak) dependence; it is not the size needed to confirm an improvement. (2) The observed in-sample paired difference was +4.4 pp (selected sample; recent block 0), so a +/-3.6 pp interval at 54 sessions would only barely exclude zero if that effect were real; the earlier 71-session figure for 80% power stands, and a halved true effect needs far more. (3) Early matches were not distinguishable from random timing, so a rate interval alone is weak evidence; the excess over random has wider uncertainty (not computed here). Treat session counts as collection targets, not proof.

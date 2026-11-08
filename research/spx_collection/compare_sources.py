@@ -51,6 +51,12 @@ if __name__ == '__main__':
         y = rows(s['csv'])
         if day in consumed and consumed[day]['step'] == 1:
             report['vs_consumed_1m_input'][day] = compare(y, {k: v for k, v in rows(consumed[day]['csv']).items() if k < '16:00'})
-        if day in a5 and len(a5[day]) == 78:
-            report['vs_archive_5m'][day] = compare(agg5(y), a5[day])
+        if day in a5:
+            r = compare(agg5(y), a5[day])
+            if len(a5[day]) < 78:  # intraday capture: the archive's last bar may have been forming at capture time
+                last = max(a5[day])
+                r['archive_partial_day'] = True
+                r['archive_last_bar'] = last
+                r['compare_excluding_archive_last_bar'] = compare(agg5(y), {k: v for k, v in a5[day].items() if k != last})
+            report['vs_archive_5m'][day] = r
     json.dump(report, sys.stdout, indent=1)

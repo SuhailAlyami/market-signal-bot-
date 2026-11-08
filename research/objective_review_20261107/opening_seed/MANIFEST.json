@@ -8,10 +8,12 @@
     "test_seed.py": "c7a1eceda441db752b18730ae01f43145f0f4957a1ad05f0e92db75b0c4d820c",
     "failure_baseline.py": "a22884bd48dd699f751ca9561b5cd398e7c5f5ba4b1e3e245019f639a9a3c61a",
     "README_AR.md": "8e2434818bfb4d649f14587d549ee0a67e34836d6f477b434c86d42c513df398",
-    "FAILURE_ANALYSIS.md": "2a5c975cf7ea2371ad6bdb2cb3e04cfdbee0cbc544f61e3f8d3089b64ce4f94f",
+    "FAILURE_ANALYSIS.md": "274b0f5cbc8ae8117afc17ae1ab2d37ab644c2a20d125e3c4a66012abb3f7a61",
     "results.json.gz": "79ddc7eec054fb1589d474ff1b2a1abad8430b617b45158a9e8c4b3eb7fea46c",
     "summary.json": "8a2cf47b680b79dc61b8b6b92f9c85c4f117290c2c87143ca576add902831dea",
-    "failure_baseline.json": "ea27a40306f26dc8feb863982362dda8bb7e2244f94c22ad0f1ef127d92e81a7"
+    "failure_baseline.json": "ea27a40306f26dc8feb863982362dda8bb7e2244f94c22ad0f1ef127d92e81a7",
+    "sizing_clustered.py": "1de563c29c2832df7bc8b615f12fe97b9899791f095ff8d85591d5a21f5305d6",
+    "sizing_clustered.json": "4353b464a4653e5708d09f0066d18274dbcada572f99febfce8b9a64867c4494"
   },
   "dependencies": {
     "objective_review.py": "19f5da59887323b4ccec0dcfe232f35a5184ecf6f362f07d428f48e6709f003a",

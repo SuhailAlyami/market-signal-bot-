@@ -114,6 +114,40 @@ def merge(store, sessions):
     return added, revised
 
 
+def verify(store, first=None, last=None):
+    """Independent coverage audit of a stored session file against the XNYS calendar (no market-hours dependence).
+
+    Every calendar session between the first and last stored day must be present with the exact regular grid
+    (including early closes), strictly increasing minute stamps, valid OHLC, and nothing outside the grid.
+    """
+    days = sorted(store)
+    if not days:
+        return {'ok': False, 'problems': ['empty_store'], 'complete_sessions': 0}
+    first, last = first or days[0], last or days[-1]
+    problems, complete = [], []
+    for ts in CAL.sessions_in_range(first, last):
+        day = str(ts.date())
+        if day not in store:
+            problems.append({'day': day, 'problem': 'session_missing_from_store'})
+            continue
+        opening = CAL.session_open(day).to_pydatetime().astimezone(NY)
+        closing = CAL.session_close(day).to_pydatetime().astimezone(NY)
+        expected = [(opening+timedelta(minutes=i)).strftime('%H:%M') for i in range(int((closing-opening).total_seconds()//60))]
+        rows = [r.split(',') for r in store[day]['csv'].strip().splitlines()[1:]]
+        got = [r[0] for r in rows]
+        # CSV columns are time,open,high,low,close: unpack explicitly for the OHLC check
+        bad = [t for t, o, h, lo, c in rows if not (float(lo) > 0 and float(lo) <= min(float(o), float(c)) <= max(float(o), float(c)) <= float(h))]
+        if got != expected:
+            problems.append({'day': day, 'problem': 'grid_mismatch', 'rows': len(got), 'expected': len(expected)})
+        elif bad:
+            problems.append({'day': day, 'problem': 'invalid_ohlc', 'first': bad[0]})
+        else:
+            complete.append(day)
+    extra = [d for d in days if d < first or d > last]
+    return {'ok': not problems, 'range': [first, last], 'complete_sessions': len(complete), 'complete_days': complete,
+            'problems': problems, 'outside_range': extra}
+
+
 def run(body, fetch_meta, outdir):
     bars, pmeta = parse(body)
     received = datetime.fromisoformat(fetch_meta['received_at'])
@@ -146,7 +180,12 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('--out', type=Path, default=HERE/'data')
     p.add_argument('--host', default=HOSTS[0], choices=HOSTS)
+    p.add_argument('--verify', action='store_true', help='audit the stored sessions only; no network')
     a = p.parse_args()
+    if a.verify:
+        report = verify(json.loads((a.out/'sessions.json').read_text()))
+        print(json.dumps(report, indent=1))
+        sys.exit(0 if report['ok'] else 3)
     try:
         body, meta = fetch(a.host)
         snap = run(body, meta, a.out)
