@@ -1,0 +1,12 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY_EXPLORATORY",
+  "registered": "2026-11-08, committed and pushed before any threshold_scale result was computed",
+  "diagnosis": "Control median lag is 15 min after leg start and its early (<=25% consumed) matches are not distinguishable from random timing (48 vs random mean 42.9; recent 16 vs 14.6). The opening-seed change failed in the recent block. Lag is driven by the reversal confirmation distance R = max(5, ATR6).",
+  "single_change": "Confirmation distance R = max(5, 0.67 * ATR6) instead of max(5, ATR6). One fixed value chosen before running; no search over k. Everything else identical to wave_capture.detect (closed bars, frozen threshold at extreme update, 30m cooldown, control control seed none).",
+  "data": "Same 116 CONSUMED sessions (in-sample; not out-of-sample). Sessions 2026-11-05 and 2026-11-06 are NOT touched. Blocks older (<2026-09-14, 5m raw) and recent (>=2026-09-14, 1m raw) as before; resolution confounded with time.",
+  "arms": ["control(k=1.0, must reproduce wave_capture exactly)", "scaled(k=0.67)"],
+  "baseline": "Random decision times, same signal count per session, 30m spacing, random side, 500 draws, seed 901 (failure_baseline.random_signals). Primary metric is EXCESS early matches = actual - random mean, per block.",
+  "decision_rule": "QUALIFIES_FOR_UNUSED_SESSION_TEST_ONLY iff in BOTH blocks: (a) scaled early_excess > 0 AND scaled early matches >= control early matches; (b) scaled unmatched signals per session <= control + 1.0; (c) scaled matched_before75pct >= control. Otherwise REJECT_CHANGE_KEEP_CONTROL. Execution net points reported, not decisive.",
+  "no_tuning": "k is not revisited after results. A failure is retained.",
+  "reviewer": "No independent reviewer: single-parameter variant of the already reviewed engine; equivalence at k=1 is unit-tested."
+}
