@@ -1,0 +1,21 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY",
+  "decision": "REJECT_CHANGE_KEEP_CONTROL",
+  "protocol_commit": "a81bf97",
+  "files": {
+    "protocol.json": "03c5f0ce0a9d42b00ebd2117e6f02b4654694b6fcb90fa332eece3c02dde408e",
+    "run_seed.py": "5ecb19cb360eb3c8649ed6c25ec831e4154a5a747a387a939ba750cd7b51f90d",
+    "test_seed.py": "c7a1eceda441db752b18730ae01f43145f0f4957a1ad05f0e92db75b0c4d820c",
+    "README_AR.md": "27894beb91fe95cd07dddad532e2e51ee788200723d5b4199ae92f6a7ee76f82",
+    "results.json.gz": "79ddc7eec054fb1589d474ff1b2a1abad8430b617b45158a9e8c4b3eb7fea46c",
+    "summary.json": "8a2cf47b680b79dc61b8b6b92f9c85c4f117290c2c87143ca576add902831dea"
+  },
+  "dependencies": {
+    "objective_review.py": "19f5da59887323b4ccec0dcfe232f35a5184ecf6f362f07d428f48e6709f003a",
+    "opening_validation_raw.json.gz": "ac3d9d9723b352be6a8419e71bf3751c049f1da9dc397cd1fbef8c46814d7cfd",
+    "requirements.txt": "e48cc39feb3fa58f52a27c98fce93f0a766b1b4c9ac3da09a878ed192daaf567",
+    "wave_capture/run.py": "c0c3c535c14859c8b527ec9add71ed03d1414b04af8be31f509b5f4d82e71405"
+  },
+  "forward_archive": "research/frozen_forward_20261103/v2/checkpoints/20261106T203431709898Z/SPX_raw.json",
+  "uncompressed_results_sha256": "125c91303321e408e0f0c1fa7cbe8dd4fa00724662e44fa8b63940a6ee00185a"
+}

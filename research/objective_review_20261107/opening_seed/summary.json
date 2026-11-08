@@ -1,0 +1,1475 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY",
+  "decision": "REJECT_CHANGE_KEEP_CONTROL",
+  "input_sha256": "7d263ec61a6e582b17a69097d6d14643b94e5645f3c8dd02590a520b07cd8a1b",
+  "protocol_sha256": "03c5f0ce0a9d42b00ebd2117e6f02b4654694b6fcb90fa332eece3c02dde408e",
+  "excluded_sessions": [
+    {
+      "day": "2026-08-14",
+      "reason": "incomplete_or_unordered_regular_grid"
+    }
+  ],
+  "days_without_seed_fallback_to_control": [
+    "2026-05-19",
+    "2026-08-17",
+    "2026-09-14"
+  ],
+  "checks": {
+    "older": {
+      "early_improved": true,
+      "matched75_not_lower": true,
+      "unmatched_per_session_increase_le_0p5": true
+    },
+    "recent": {
+      "early_improved": false,
+      "matched75_not_lower": true,
+      "unmatched_per_session_increase_le_0p5": false
+    },
+    "bootstrap_lower_gt_0": true
+  },
+  "paired_early": {
+    "seeded_minus_control_early_matches": 16,
+    "paired_session_bootstrap_95": [
+      8,
+      25
+    ],
+    "sessions_better": 19,
+    "sessions_worse": 3
+  },
+  "report": {
+    "control": {
+      "older": {
+        "sessions": 78,
+        "coverage": {
+          "legs": 253,
+          "terminal_legs": 33,
+          "matched_before75pct": 135,
+          "missed": 118,
+          "early_before25pct": 32,
+          "signals": 453,
+          "signals_not_matched_to_reference": 318,
+          "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+          "legs_ended_before_first_possible_signal": 12,
+          "median_lag_minutes_matched": 15,
+          "median_consumed_points_matched": 12.89,
+          "unmatched_signals_per_session": 4.077,
+          "opening40m_legs": 74,
+          "opening40m_early": 1,
+          "opening40m_matched": 27,
+          "legs_ended_before_index2": 0,
+          "pre_onset_same_side_within15m": 7
+        },
+        "execution": {
+          "0": {
+            "events": 453,
+            "scored": 401,
+            "censored": 52,
+            "positive_after_cost1": 170,
+            "direction30_correct": 203,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 181,
+              "stop_gap": 2,
+              "target": 67,
+              "time": 151
+            },
+            "gross_lower_before_cost": 241.583,
+            "net_lower": {
+              "0.5": 41.083,
+              "1": -159.417,
+              "2": -560.417
+            },
+            "net_upper_cost1": -159.417,
+            "median_full_window_mfe": 5.99,
+            "median_full_window_mae": 5.78
+          },
+          "15": {
+            "events": 453,
+            "scored": 386,
+            "censored": 67,
+            "positive_after_cost1": 143,
+            "direction30_correct": 177,
+            "ambiguous": 1,
+            "exit_counts": {
+              "ambiguous": 1,
+              "stop": 169,
+              "stop_gap": 1,
+              "target": 54,
+              "time": 161
+            },
+            "gross_lower_before_cost": 130.205,
+            "net_lower": {
+              "0.5": -62.795,
+              "1": -255.795,
+              "2": -641.795
+            },
+            "net_upper_cost1": -239.0,
+            "median_full_window_mfe": 5.48,
+            "median_full_window_mae": 5.825
+          },
+          "60": {
+            "events": 453,
+            "scored": 324,
+            "censored": 129,
+            "positive_after_cost1": 133,
+            "direction30_correct": 160,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 126,
+              "stop_gap": 1,
+              "target": 35,
+              "time": 162
+            },
+            "gross_lower_before_cost": 138.527,
+            "net_lower": {
+              "0.5": -23.473,
+              "1": -185.473,
+              "2": -509.473
+            },
+            "net_upper_cost1": -185.473,
+            "median_full_window_mfe": 5.545,
+            "median_full_window_mae": 5.11
+          }
+        }
+      },
+      "recent": {
+        "sessions": 38,
+        "coverage": {
+          "legs": 112,
+          "terminal_legs": 19,
+          "matched_before75pct": 64,
+          "missed": 48,
+          "early_before25pct": 16,
+          "signals": 215,
+          "signals_not_matched_to_reference": 151,
+          "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+          "legs_ended_before_first_possible_signal": 4,
+          "median_lag_minutes_matched": 15.0,
+          "median_consumed_points_matched": 11.495,
+          "unmatched_signals_per_session": 3.974,
+          "opening40m_legs": 32,
+          "opening40m_early": 4,
+          "opening40m_matched": 16,
+          "legs_ended_before_index2": 0,
+          "pre_onset_same_side_within15m": 4
+        },
+        "execution": {
+          "0": {
+            "events": 215,
+            "scored": 191,
+            "censored": 24,
+            "positive_after_cost1": 68,
+            "direction30_correct": 90,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 97,
+              "stop_gap": 1,
+              "target": 28,
+              "target_gap_capped": 1,
+              "time": 64
+            },
+            "gross_lower_before_cost": -89.755,
+            "net_lower": {
+              "0.5": -185.255,
+              "1": -280.755,
+              "2": -471.755
+            },
+            "net_upper_cost1": -280.755,
+            "median_full_window_mfe": 5.18,
+            "median_full_window_mae": 6.26
+          },
+          "15": {
+            "events": 215,
+            "scored": 178,
+            "censored": 37,
+            "positive_after_cost1": 65,
+            "direction30_correct": 77,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 93,
+              "target": 27,
+              "time": 58
+            },
+            "gross_lower_before_cost": -58.523,
+            "net_lower": {
+              "0.5": -147.523,
+              "1": -236.523,
+              "2": -414.523
+            },
+            "net_upper_cost1": -236.523,
+            "median_full_window_mfe": 4.925,
+            "median_full_window_mae": 5.76
+          },
+          "60": {
+            "events": 215,
+            "scored": 157,
+            "censored": 58,
+            "positive_after_cost1": 55,
+            "direction30_correct": 65,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 70,
+              "stop_gap": 1,
+              "target": 21,
+              "time": 65
+            },
+            "gross_lower_before_cost": -69.123,
+            "net_lower": {
+              "0.5": -147.623,
+              "1": -226.123,
+              "2": -383.123
+            },
+            "net_upper_cost1": -226.123,
+            "median_full_window_mfe": 4.03,
+            "median_full_window_mae": 5.92
+          }
+        }
+      },
+      "all": {
+        "sessions": 116,
+        "coverage": {
+          "legs": 365,
+          "terminal_legs": 52,
+          "matched_before75pct": 199,
+          "missed": 166,
+          "early_before25pct": 48,
+          "signals": 668,
+          "signals_not_matched_to_reference": 469,
+          "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+          "legs_ended_before_first_possible_signal": 16,
+          "median_lag_minutes_matched": 15,
+          "median_consumed_points_matched": 12.29,
+          "unmatched_signals_per_session": 4.043,
+          "opening40m_legs": 106,
+          "opening40m_early": 5,
+          "opening40m_matched": 43,
+          "legs_ended_before_index2": 0,
+          "pre_onset_same_side_within15m": 11
+        },
+        "execution": {
+          "0": {
+            "events": 668,
+            "scored": 592,
+            "censored": 76,
+            "positive_after_cost1": 238,
+            "direction30_correct": 293,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 278,
+              "stop_gap": 3,
+              "target": 95,
+              "target_gap_capped": 1,
+              "time": 215
+            },
+            "gross_lower_before_cost": 151.828,
+            "net_lower": {
+              "0.5": -144.172,
+              "1": -440.172,
+              "2": -1032.172
+            },
+            "net_upper_cost1": -440.172,
+            "median_full_window_mfe": 5.53,
+            "median_full_window_mae": 5.91
+          },
+          "15": {
+            "events": 668,
+            "scored": 564,
+            "censored": 104,
+            "positive_after_cost1": 208,
+            "direction30_correct": 254,
+            "ambiguous": 1,
+            "exit_counts": {
+              "ambiguous": 1,
+              "stop": 262,
+              "stop_gap": 1,
+              "target": 81,
+              "time": 219
+            },
+            "gross_lower_before_cost": 71.682,
+            "net_lower": {
+              "0.5": -210.318,
+              "1": -492.318,
+              "2": -1056.318
+            },
+            "net_upper_cost1": -475.523,
+            "median_full_window_mfe": 5.335,
+            "median_full_window_mae": 5.8
+          },
+          "60": {
+            "events": 668,
+            "scored": 481,
+            "censored": 187,
+            "positive_after_cost1": 188,
+            "direction30_correct": 225,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 196,
+              "stop_gap": 2,
+              "target": 56,
+              "time": 227
+            },
+            "gross_lower_before_cost": 69.403,
+            "net_lower": {
+              "0.5": -171.097,
+              "1": -411.597,
+              "2": -892.597
+            },
+            "net_upper_cost1": -411.597,
+            "median_full_window_mfe": 5.07,
+            "median_full_window_mae": 5.22
+          }
+        }
+      }
+    },
+    "seeded": {
+      "older": {
+        "sessions": 78,
+        "coverage": {
+          "legs": 253,
+          "terminal_legs": 33,
+          "matched_before75pct": 160,
+          "missed": 93,
+          "early_before25pct": 48,
+          "signals": 506,
+          "signals_not_matched_to_reference": 346,
+          "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+          "legs_ended_before_first_possible_signal": 12,
+          "median_lag_minutes_matched": 15.0,
+          "median_consumed_points_matched": 11.945,
+          "unmatched_signals_per_session": 4.436,
+          "opening40m_legs": 74,
+          "opening40m_early": 15,
+          "opening40m_matched": 48,
+          "legs_ended_before_index2": 0,
+          "pre_onset_same_side_within15m": 11
+        },
+        "execution": {
+          "0": {
+            "events": 506,
+            "scored": 454,
+            "censored": 52,
+            "positive_after_cost1": 197,
+            "direction30_correct": 235,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 206,
+              "stop_gap": 2,
+              "target": 82,
+              "time": 164
+            },
+            "gross_lower_before_cost": 398.875,
+            "net_lower": {
+              "0.5": 171.875,
+              "1": -55.125,
+              "2": -509.125
+            },
+            "net_upper_cost1": -55.125,
+            "median_full_window_mfe": 6.255,
+            "median_full_window_mae": 5.96
+          },
+          "15": {
+            "events": 506,
+            "scored": 439,
+            "censored": 67,
+            "positive_after_cost1": 165,
+            "direction30_correct": 209,
+            "ambiguous": 1,
+            "exit_counts": {
+              "ambiguous": 1,
+              "stop": 196,
+              "target": 64,
+              "time": 178
+            },
+            "gross_lower_before_cost": 64.068,
+            "net_lower": {
+              "0.5": -155.432,
+              "1": -374.932,
+              "2": -813.932
+            },
+            "net_upper_cost1": -358.137,
+            "median_full_window_mfe": 6.03,
+            "median_full_window_mae": 6.22
+          },
+          "60": {
+            "events": 506,
+            "scored": 377,
+            "censored": 129,
+            "positive_after_cost1": 160,
+            "direction30_correct": 193,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 158,
+              "stop_gap": 1,
+              "target": 43,
+              "time": 175
+            },
+            "gross_lower_before_cost": 9.743,
+            "net_lower": {
+              "0.5": -178.757,
+              "1": -367.257,
+              "2": -744.257
+            },
+            "net_upper_cost1": -367.257,
+            "median_full_window_mfe": 6.09,
+            "median_full_window_mae": 5.53
+          }
+        }
+      },
+      "recent": {
+        "sessions": 38,
+        "coverage": {
+          "legs": 112,
+          "terminal_legs": 19,
+          "matched_before75pct": 64,
+          "missed": 48,
+          "early_before25pct": 16,
+          "signals": 237,
+          "signals_not_matched_to_reference": 173,
+          "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+          "legs_ended_before_first_possible_signal": 4,
+          "median_lag_minutes_matched": 15.0,
+          "median_consumed_points_matched": 10.74,
+          "unmatched_signals_per_session": 4.553,
+          "opening40m_legs": 32,
+          "opening40m_early": 2,
+          "opening40m_matched": 14,
+          "legs_ended_before_index2": 0,
+          "pre_onset_same_side_within15m": 5
+        },
+        "execution": {
+          "0": {
+            "events": 237,
+            "scored": 213,
+            "censored": 24,
+            "positive_after_cost1": 70,
+            "direction30_correct": 92,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 113,
+              "stop_gap": 1,
+              "target": 33,
+              "target_gap_capped": 2,
+              "time": 64
+            },
+            "gross_lower_before_cost": -158.305,
+            "net_lower": {
+              "0.5": -264.805,
+              "1": -371.305,
+              "2": -584.305
+            },
+            "net_upper_cost1": -371.305,
+            "median_full_window_mfe": 5.11,
+            "median_full_window_mae": 6.76
+          },
+          "15": {
+            "events": 237,
+            "scored": 200,
+            "censored": 37,
+            "positive_after_cost1": 72,
+            "direction30_correct": 83,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 107,
+              "target": 32,
+              "time": 61
+            },
+            "gross_lower_before_cost": -128.13,
+            "net_lower": {
+              "0.5": -228.13,
+              "1": -328.13,
+              "2": -528.13
+            },
+            "net_upper_cost1": -328.13,
+            "median_full_window_mfe": 4.81,
+            "median_full_window_mae": 6.68
+          },
+          "60": {
+            "events": 237,
+            "scored": 179,
+            "censored": 58,
+            "positive_after_cost1": 65,
+            "direction30_correct": 79,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 80,
+              "stop_gap": 1,
+              "target": 31,
+              "time": 67
+            },
+            "gross_lower_before_cost": 24.653,
+            "net_lower": {
+              "0.5": -64.847,
+              "1": -154.347,
+              "2": -333.347
+            },
+            "net_upper_cost1": -154.347,
+            "median_full_window_mfe": 4.27,
+            "median_full_window_mae": 5.58
+          }
+        }
+      },
+      "all": {
+        "sessions": 116,
+        "coverage": {
+          "legs": 365,
+          "terminal_legs": 52,
+          "matched_before75pct": 224,
+          "missed": 141,
+          "early_before25pct": 64,
+          "signals": 743,
+          "signals_not_matched_to_reference": 519,
+          "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+          "legs_ended_before_first_possible_signal": 16,
+          "median_lag_minutes_matched": 15.0,
+          "median_consumed_points_matched": 11.46,
+          "unmatched_signals_per_session": 4.474,
+          "opening40m_legs": 106,
+          "opening40m_early": 17,
+          "opening40m_matched": 62,
+          "legs_ended_before_index2": 0,
+          "pre_onset_same_side_within15m": 16
+        },
+        "execution": {
+          "0": {
+            "events": 743,
+            "scored": 667,
+            "censored": 76,
+            "positive_after_cost1": 267,
+            "direction30_correct": 327,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 319,
+              "stop_gap": 3,
+              "target": 115,
+              "target_gap_capped": 2,
+              "time": 228
+            },
+            "gross_lower_before_cost": 240.57,
+            "net_lower": {
+              "0.5": -92.93,
+              "1": -426.43,
+              "2": -1093.43
+            },
+            "net_upper_cost1": -426.43,
+            "median_full_window_mfe": 5.8,
+            "median_full_window_mae": 6.29
+          },
+          "15": {
+            "events": 743,
+            "scored": 639,
+            "censored": 104,
+            "positive_after_cost1": 237,
+            "direction30_correct": 292,
+            "ambiguous": 1,
+            "exit_counts": {
+              "ambiguous": 1,
+              "stop": 303,
+              "target": 96,
+              "time": 239
+            },
+            "gross_lower_before_cost": -64.062,
+            "net_lower": {
+              "0.5": -383.562,
+              "1": -703.062,
+              "2": -1342.062
+            },
+            "net_upper_cost1": -686.267,
+            "median_full_window_mfe": 5.76,
+            "median_full_window_mae": 6.27
+          },
+          "60": {
+            "events": 743,
+            "scored": 556,
+            "censored": 187,
+            "positive_after_cost1": 225,
+            "direction30_correct": 272,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 238,
+              "stop_gap": 2,
+              "target": 74,
+              "time": 242
+            },
+            "gross_lower_before_cost": 34.397,
+            "net_lower": {
+              "0.5": -243.603,
+              "1": -521.603,
+              "2": -1077.603
+            },
+            "net_upper_cost1": -521.603,
+            "median_full_window_mfe": 5.44,
+            "median_full_window_mae": 5.555
+          }
+        }
+      }
+    }
+  },
+  "forward": {
+    "source_meta": {
+      "source": "Last",
+      "delayed": 900,
+      "chart_start": "2026-10-21T14:10:00Z",
+      "chart_end": "2026-11-06T20:19:00Z",
+      "expires": "2026-11-06T21:34:27Z"
+    },
+    "classification": "DELAYED_RESEARCH_ONLY (provider-declared delayed=900s; after-close replay, not a live receipt log)",
+    "new_complete_sessions": [
+      "2026-11-05"
+    ],
+    "excluded": [
+      {
+        "day": "2026-10-21",
+        "reason": "incomplete_regular_grid_in_archive",
+        "present": 70,
+        "expected": 78
+      },
+      {
+        "day": "2026-11-06",
+        "reason": "incomplete_regular_grid_in_archive",
+        "present": 70,
+        "expected": 78
+      }
+    ],
+    "consistency_with_116_input_on_overlap": {
+      "2026-10-22": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-10-23": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-10-26": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-10-27": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-10-28": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-10-29": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-10-30": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-11-02": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-11-03": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      },
+      "2026-11-04": {
+        "aligned": true,
+        "bars": 78,
+        "max_abs_close_diff": 0.0,
+        "bars_close_diff_gt_0p05": 0
+      }
+    },
+    "report": {
+      "control": {
+        "sessions": 1,
+        "coverage": {
+          "legs": 14,
+          "terminal_legs": 1,
+          "matched_before75pct": 4,
+          "missed": 10,
+          "early_before25pct": 0,
+          "signals": 6,
+          "signals_not_matched_to_reference": 2,
+          "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+          "legs_ended_before_first_possible_signal": 0,
+          "median_lag_minutes_matched": 15.0,
+          "median_consumed_points_matched": 32.06,
+          "unmatched_signals_per_session": 2.0,
+          "opening40m_legs": 1,
+          "opening40m_early": 0,
+          "opening40m_matched": 1,
+          "legs_ended_before_index2": 0,
+          "pre_onset_same_side_within15m": 2
+        },
+        "execution": {
+          "0": {
+            "events": 6,
+            "scored": 6,
+            "censored": 0,
+            "positive_after_cost1": 2,
+            "direction30_correct": 4,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 3,
+              "target": 1,
+              "time": 2
+            },
+            "gross_lower_before_cost": -5.325,
+            "net_lower": {
+              "0.5": -8.325,
+              "1": -11.325,
+              "2": -17.325
+            },
+            "net_upper_cost1": -11.325,
+            "median_full_window_mfe": 23.825,
+            "median_full_window_mae": 21.615
+          },
+          "15": {
+            "events": 6,
+            "scored": 6,
+            "censored": 0,
+            "positive_after_cost1": 4,
+            "direction30_correct": 4,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 1,
+              "target": 2,
+              "time": 3
+            },
+            "gross_lower_before_cost": 70.928,
+            "net_lower": {
+              "0.5": 67.928,
+              "1": 64.928,
+              "2": 58.928
+            },
+            "net_upper_cost1": 64.928,
+            "median_full_window_mfe": 25.135,
+            "median_full_window_mae": 4.31
+          },
+          "60": {
+            "events": 6,
+            "scored": 5,
+            "censored": 1,
+            "positive_after_cost1": 1,
+            "direction30_correct": 2,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 3,
+              "target": 1,
+              "time": 1
+            },
+            "gross_lower_before_cost": -35.313,
+            "net_lower": {
+              "0.5": -37.813,
+              "1": -40.313,
+              "2": -45.313
+            },
+            "net_upper_cost1": -40.313,
+            "median_full_window_mfe": 21.33,
+            "median_full_window_mae": 23.16
+          }
+        }
+      },
+      "seeded": {
+        "sessions": 1,
+        "coverage": {
+          "legs": 14,
+          "terminal_legs": 1,
+          "matched_before75pct": 4,
+          "missed": 10,
+          "early_before25pct": 1,
+          "signals": 6,
+          "signals_not_matched_to_reference": 2,
+          "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+          "legs_ended_before_first_possible_signal": 0,
+          "median_lag_minutes_matched": 10.0,
+          "median_consumed_points_matched": 23.98,
+          "unmatched_signals_per_session": 2.0,
+          "opening40m_legs": 1,
+          "opening40m_early": 1,
+          "opening40m_matched": 1,
+          "legs_ended_before_index2": 0,
+          "pre_onset_same_side_within15m": 2
+        },
+        "execution": {
+          "0": {
+            "events": 6,
+            "scored": 6,
+            "censored": 0,
+            "positive_after_cost1": 2,
+            "direction30_correct": 4,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 3,
+              "target": 1,
+              "time": 2
+            },
+            "gross_lower_before_cost": -20.882,
+            "net_lower": {
+              "0.5": -23.882,
+              "1": -26.882,
+              "2": -32.882
+            },
+            "net_upper_cost1": -26.882,
+            "median_full_window_mfe": 23.825,
+            "median_full_window_mae": 21.615
+          },
+          "15": {
+            "events": 6,
+            "scored": 6,
+            "censored": 0,
+            "positive_after_cost1": 4,
+            "direction30_correct": 4,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 1,
+              "target": 2,
+              "time": 3
+            },
+            "gross_lower_before_cost": 55.372,
+            "net_lower": {
+              "0.5": 52.372,
+              "1": 49.372,
+              "2": 43.372
+            },
+            "net_upper_cost1": 49.372,
+            "median_full_window_mfe": 25.135,
+            "median_full_window_mae": 4.995
+          },
+          "60": {
+            "events": 6,
+            "scored": 5,
+            "censored": 1,
+            "positive_after_cost1": 2,
+            "direction30_correct": 2,
+            "ambiguous": 0,
+            "exit_counts": {
+              "stop": 2,
+              "target": 2,
+              "time": 1
+            },
+            "gross_lower_before_cost": 13.51,
+            "net_lower": {
+              "0.5": 11.01,
+              "1": 8.51,
+              "2": 3.51
+            },
+            "net_upper_cost1": 8.51,
+            "median_full_window_mfe": 32.44,
+            "median_full_window_mae": 9.5
+          }
+        }
+      }
+    },
+    "signals": {
+      "control": [
+        {
+          "status": "SCORED",
+          "side": -1,
+          "entry": 7510.35,
+          "stop": 7531.81,
+          "risk": 21.460000000000036,
+          "entry_Riyadh": "2026-11-05T18:20:00+03:00",
+          "gross_low": 42.92000000000007,
+          "gross_high": 42.92000000000007,
+          "exit": "target",
+          "window_mfe": 70.34000000000015,
+          "window_mae": 6.6899999999996,
+          "direction30_correct": true,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 9,
+          "decision_Riyadh": "2026-11-05T18:20:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": 1,
+          "entry": 7441.2,
+          "stop": 7412.611666666667,
+          "risk": 28.58833333333314,
+          "entry_Riyadh": "2026-11-05T19:00:00+03:00",
+          "gross_low": -28.58833333333314,
+          "gross_high": -28.58833333333314,
+          "exit": "stop",
+          "window_mfe": 41.23999999999978,
+          "window_mae": 29.090000000000146,
+          "direction30_correct": true,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 17,
+          "decision_Riyadh": "2026-11-05T19:00:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": -1,
+          "entry": 7446.99,
+          "stop": 7469.389999999999,
+          "risk": 22.399999999999636,
+          "entry_Riyadh": "2026-11-05T19:45:00+03:00",
+          "gross_low": 13.6899999999996,
+          "gross_high": 13.6899999999996,
+          "exit": "time",
+          "window_mfe": 27.219999999999345,
+          "window_mae": 8.86999999999989,
+          "direction30_correct": true,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 26,
+          "decision_Riyadh": "2026-11-05T19:45:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": 1,
+          "entry": 7389.3,
+          "stop": 7373.6016666666665,
+          "risk": 15.698333333333721,
+          "entry_Riyadh": "2026-11-05T21:10:00+03:00",
+          "gross_low": -2.4600000000000364,
+          "gross_high": -2.4600000000000364,
+          "exit": "time",
+          "window_mfe": 18.349999999999454,
+          "window_mae": 14.590000000000146,
+          "direction30_correct": false,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 43,
+          "decision_Riyadh": "2026-11-05T21:10:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": 1,
+          "entry": 7402.51,
+          "stop": 7387.368333333334,
+          "risk": 15.141666666666424,
+          "entry_Riyadh": "2026-11-05T22:15:00+03:00",
+          "gross_low": -15.141666666666424,
+          "gross_high": -15.141666666666424,
+          "exit": "stop",
+          "window_mfe": 9.729999999999563,
+          "window_mae": 28.640000000000327,
+          "direction30_correct": true,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 56,
+          "decision_Riyadh": "2026-11-05T22:15:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": 1,
+          "entry": 7410.66,
+          "stop": 7394.914999999999,
+          "risk": 15.7450000000008,
+          "entry_Riyadh": "2026-11-05T22:45:00+03:00",
+          "gross_low": -15.7450000000008,
+          "gross_high": -15.7450000000008,
+          "exit": "stop",
+          "window_mfe": 20.43000000000029,
+          "window_mae": 41.13000000000011,
+          "direction30_correct": false,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 62,
+          "decision_Riyadh": "2026-11-05T22:45:00+03:00"
+        }
+      ],
+      "seeded": [
+        {
+          "status": "SCORED",
+          "side": -1,
+          "entry": 7628.62,
+          "stop": 7642.301666666666,
+          "risk": 13.681666666666388,
+          "entry_Riyadh": "2026-11-05T17:40:00+03:00",
+          "gross_low": 27.363333333332776,
+          "gross_high": 27.363333333332776,
+          "exit": "target",
+          "window_mfe": 93.53999999999996,
+          "window_mae": 0.3000000000001819,
+          "direction30_correct": true,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 1,
+          "decision_Riyadh": "2026-11-05T17:40:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": 1,
+          "entry": 7441.2,
+          "stop": 7412.611666666667,
+          "risk": 28.58833333333314,
+          "entry_Riyadh": "2026-11-05T19:00:00+03:00",
+          "gross_low": -28.58833333333314,
+          "gross_high": -28.58833333333314,
+          "exit": "stop",
+          "window_mfe": 41.23999999999978,
+          "window_mae": 29.090000000000146,
+          "direction30_correct": true,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 17,
+          "decision_Riyadh": "2026-11-05T19:00:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": -1,
+          "entry": 7446.99,
+          "stop": 7469.389999999999,
+          "risk": 22.399999999999636,
+          "entry_Riyadh": "2026-11-05T19:45:00+03:00",
+          "gross_low": 13.6899999999996,
+          "gross_high": 13.6899999999996,
+          "exit": "time",
+          "window_mfe": 27.219999999999345,
+          "window_mae": 8.86999999999989,
+          "direction30_correct": true,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 26,
+          "decision_Riyadh": "2026-11-05T19:45:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": 1,
+          "entry": 7389.3,
+          "stop": 7373.6016666666665,
+          "risk": 15.698333333333721,
+          "entry_Riyadh": "2026-11-05T21:10:00+03:00",
+          "gross_low": -2.4600000000000364,
+          "gross_high": -2.4600000000000364,
+          "exit": "time",
+          "window_mfe": 18.349999999999454,
+          "window_mae": 14.590000000000146,
+          "direction30_correct": false,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 43,
+          "decision_Riyadh": "2026-11-05T21:10:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": 1,
+          "entry": 7402.51,
+          "stop": 7387.368333333334,
+          "risk": 15.141666666666424,
+          "entry_Riyadh": "2026-11-05T22:15:00+03:00",
+          "gross_low": -15.141666666666424,
+          "gross_high": -15.141666666666424,
+          "exit": "stop",
+          "window_mfe": 9.729999999999563,
+          "window_mae": 28.640000000000327,
+          "direction30_correct": true,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 56,
+          "decision_Riyadh": "2026-11-05T22:15:00+03:00"
+        },
+        {
+          "status": "SCORED",
+          "side": 1,
+          "entry": 7410.66,
+          "stop": 7394.914999999999,
+          "risk": 15.7450000000008,
+          "entry_Riyadh": "2026-11-05T22:45:00+03:00",
+          "gross_low": -15.7450000000008,
+          "gross_high": -15.7450000000008,
+          "exit": "stop",
+          "window_mfe": 20.43000000000029,
+          "window_mae": 41.13000000000011,
+          "direction30_correct": false,
+          "day": "2026-11-05",
+          "delay": 0,
+          "index": 62,
+          "decision_Riyadh": "2026-11-05T22:45:00+03:00"
+        }
+      ]
+    },
+    "legs": {
+      "control": [
+        {
+          "start": 0,
+          "end": 16,
+          "side": -1,
+          "terminal": false,
+          "points": 231.40999999999985,
+          "start_Riyadh": "2026-11-05T17:35:00+03:00",
+          "end_Riyadh": "2026-11-05T18:55:00+03:00",
+          "matched": true,
+          "early": false,
+          "signal_index": 9,
+          "consumed_points": 135.23999999999978,
+          "consumed_fraction": 0.584417268052374,
+          "lag_minutes": 45,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 16,
+          "end": 17,
+          "side": 1,
+          "terminal": false,
+          "points": 26.399999999999636,
+          "start_Riyadh": "2026-11-05T18:55:00+03:00",
+          "end_Riyadh": "2026-11-05T19:00:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "side": -1,
+          "terminal": false,
+          "points": 22.359999999999673,
+          "start_Riyadh": "2026-11-05T19:00:00+03:00",
+          "end_Riyadh": "2026-11-05T19:05:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 18,
+          "end": 23,
+          "side": 1,
+          "terminal": false,
+          "points": 61.93000000000029,
+          "start_Riyadh": "2026-11-05T19:05:00+03:00",
+          "end_Riyadh": "2026-11-05T19:30:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 23,
+          "end": 30,
+          "side": -1,
+          "terminal": false,
+          "points": 57.530000000000655,
+          "start_Riyadh": "2026-11-05T19:30:00+03:00",
+          "end_Riyadh": "2026-11-05T20:05:00+03:00",
+          "matched": true,
+          "early": false,
+          "signal_index": 26,
+          "consumed_points": 32.910000000000764,
+          "consumed_fraction": 0.5720493655484163,
+          "lag_minutes": 15,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 33,
+          "end": 42,
+          "side": -1,
+          "terminal": false,
+          "points": 62.789999999999964,
+          "start_Riyadh": "2026-11-05T20:20:00+03:00",
+          "end_Riyadh": "2026-11-05T21:05:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "side": 1,
+          "terminal": false,
+          "points": 28.970000000000255,
+          "start_Riyadh": "2026-11-05T21:05:00+03:00",
+          "end_Riyadh": "2026-11-05T21:15:00+03:00",
+          "matched": true,
+          "early": false,
+          "signal_index": 43,
+          "consumed_points": 14.770000000000437,
+          "consumed_fraction": 0.5098377632033244,
+          "lag_minutes": 5,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 44,
+          "end": 46,
+          "side": -1,
+          "terminal": false,
+          "points": 23.26000000000022,
+          "start_Riyadh": "2026-11-05T21:15:00+03:00",
+          "end_Riyadh": "2026-11-05T21:25:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 53,
+          "end": 54,
+          "side": -1,
+          "terminal": false,
+          "points": 22.409999999999854,
+          "start_Riyadh": "2026-11-05T22:00:00+03:00",
+          "end_Riyadh": "2026-11-05T22:05:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 54,
+          "end": 56,
+          "side": 1,
+          "terminal": false,
+          "points": 33.67000000000007,
+          "start_Riyadh": "2026-11-05T22:05:00+03:00",
+          "end_Riyadh": "2026-11-05T22:15:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 56,
+          "end": 59,
+          "side": -1,
+          "terminal": false,
+          "points": 24.75,
+          "start_Riyadh": "2026-11-05T22:15:00+03:00",
+          "end_Riyadh": "2026-11-05T22:30:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 59,
+          "end": 64,
+          "side": 1,
+          "terminal": false,
+          "points": 44.89000000000033,
+          "start_Riyadh": "2026-11-05T22:30:00+03:00",
+          "end_Riyadh": "2026-11-05T22:55:00+03:00",
+          "matched": true,
+          "early": false,
+          "signal_index": 62,
+          "consumed_points": 31.210000000000036,
+          "consumed_fraction": 0.6952550679438585,
+          "lag_minutes": 15,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 64,
+          "end": 74,
+          "side": -1,
+          "terminal": false,
+          "points": 56.14000000000033,
+          "start_Riyadh": "2026-11-05T22:55:00+03:00",
+          "end_Riyadh": "2026-11-05T23:45:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 76,
+          "end": 77,
+          "side": -1,
+          "terminal": true,
+          "points": 25.100000000000364,
+          "start_Riyadh": "2026-11-05T23:55:00+03:00",
+          "end_Riyadh": "2026-11-06T00:00:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        }
+      ],
+      "seeded": [
+        {
+          "start": 0,
+          "end": 16,
+          "side": -1,
+          "terminal": false,
+          "points": 231.40999999999985,
+          "start_Riyadh": "2026-11-05T17:35:00+03:00",
+          "end_Riyadh": "2026-11-05T18:55:00+03:00",
+          "matched": true,
+          "early": true,
+          "signal_index": 1,
+          "consumed_points": 16.75,
+          "consumed_fraction": 0.0723823516701958,
+          "lag_minutes": 5,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 16,
+          "end": 17,
+          "side": 1,
+          "terminal": false,
+          "points": 26.399999999999636,
+          "start_Riyadh": "2026-11-05T18:55:00+03:00",
+          "end_Riyadh": "2026-11-05T19:00:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "side": -1,
+          "terminal": false,
+          "points": 22.359999999999673,
+          "start_Riyadh": "2026-11-05T19:00:00+03:00",
+          "end_Riyadh": "2026-11-05T19:05:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 18,
+          "end": 23,
+          "side": 1,
+          "terminal": false,
+          "points": 61.93000000000029,
+          "start_Riyadh": "2026-11-05T19:05:00+03:00",
+          "end_Riyadh": "2026-11-05T19:30:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 23,
+          "end": 30,
+          "side": -1,
+          "terminal": false,
+          "points": 57.530000000000655,
+          "start_Riyadh": "2026-11-05T19:30:00+03:00",
+          "end_Riyadh": "2026-11-05T20:05:00+03:00",
+          "matched": true,
+          "early": false,
+          "signal_index": 26,
+          "consumed_points": 32.910000000000764,
+          "consumed_fraction": 0.5720493655484163,
+          "lag_minutes": 15,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 33,
+          "end": 42,
+          "side": -1,
+          "terminal": false,
+          "points": 62.789999999999964,
+          "start_Riyadh": "2026-11-05T20:20:00+03:00",
+          "end_Riyadh": "2026-11-05T21:05:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "side": 1,
+          "terminal": false,
+          "points": 28.970000000000255,
+          "start_Riyadh": "2026-11-05T21:05:00+03:00",
+          "end_Riyadh": "2026-11-05T21:15:00+03:00",
+          "matched": true,
+          "early": false,
+          "signal_index": 43,
+          "consumed_points": 14.770000000000437,
+          "consumed_fraction": 0.5098377632033244,
+          "lag_minutes": 5,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 44,
+          "end": 46,
+          "side": -1,
+          "terminal": false,
+          "points": 23.26000000000022,
+          "start_Riyadh": "2026-11-05T21:15:00+03:00",
+          "end_Riyadh": "2026-11-05T21:25:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 53,
+          "end": 54,
+          "side": -1,
+          "terminal": false,
+          "points": 22.409999999999854,
+          "start_Riyadh": "2026-11-05T22:00:00+03:00",
+          "end_Riyadh": "2026-11-05T22:05:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 54,
+          "end": 56,
+          "side": 1,
+          "terminal": false,
+          "points": 33.67000000000007,
+          "start_Riyadh": "2026-11-05T22:05:00+03:00",
+          "end_Riyadh": "2026-11-05T22:15:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 56,
+          "end": 59,
+          "side": -1,
+          "terminal": false,
+          "points": 24.75,
+          "start_Riyadh": "2026-11-05T22:15:00+03:00",
+          "end_Riyadh": "2026-11-05T22:30:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 59,
+          "end": 64,
+          "side": 1,
+          "terminal": false,
+          "points": 44.89000000000033,
+          "start_Riyadh": "2026-11-05T22:30:00+03:00",
+          "end_Riyadh": "2026-11-05T22:55:00+03:00",
+          "matched": true,
+          "early": false,
+          "signal_index": 62,
+          "consumed_points": 31.210000000000036,
+          "consumed_fraction": 0.6952550679438585,
+          "lag_minutes": 15,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 64,
+          "end": 74,
+          "side": -1,
+          "terminal": false,
+          "points": 56.14000000000033,
+          "start_Riyadh": "2026-11-05T22:55:00+03:00",
+          "end_Riyadh": "2026-11-05T23:45:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        },
+        {
+          "start": 76,
+          "end": 77,
+          "side": -1,
+          "terminal": true,
+          "points": 25.100000000000364,
+          "start_Riyadh": "2026-11-05T23:55:00+03:00",
+          "end_Riyadh": "2026-11-06T00:00:00+03:00",
+          "matched": false,
+          "early": false,
+          "day": "2026-11-05"
+        }
+      ]
+    },
+    "note": "Descriptive only; too few sessions for any conclusion; never used for the decision."
+  }
+}

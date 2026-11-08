@@ -1,5 +1,45 @@
 # RESUME.md — Suhail Hunter
 
+**Status: NOT_READY / RESEARCH_ONLY.** Alerts OFF. No real trading. Next-session direction/high/low forecasting is a separate experiment.
+
+Last updated: 2026-11-08 (branch `claude/kind-ramanujan-icu95e`, based on open PR #51 head `446add9`).
+
+## Current state (2026-11-08) — read this first
+
+- `main` (`6ff3eb5`, 2026-10-29) is NOT the latest research. Newest work lives in open, unmerged PRs:
+  #51 `feat/capitalcom-cfd-research-20261029` (updated 2026-11-07, includes the 2026-11-07 objective review),
+  #53 draft `feat/spx-direction-wave-20261104`, #46, #45. This branch stacks on #51.
+- Latest detection test: `research/objective_review_20261107/` (wave_capture, ensemble_audit, early_agreement,
+  profit_protection). **Reproduced byte-identical on 2026-11-08** (sha256 of all results/summaries match; all their tests pass).
+- New experiment this cycle: `research/objective_review_20261107/opening_seed/` — single change (seed ATR6 at the open from
+  the prior session's last six 5m true ranges), preregistered in commit `a81bf97` before results.
+  Result: **REJECT_CHANGE_KEEP_CONTROL**. Early (<=25%) reference matches 32->48 in the older block but 16->16 in the recent block;
+  unmatched signals/session +0.579 in the recent block (limit 0.5). Net points at cost 1 remain negative in all scenarios.
+- Independent review findings on the 2026-11-07 round (documented, files not altered): `end < 7` undercounts
+  "ended before first possible signal" (20 not 16); session 2026-09-11 silently absent from the 116-session input;
+  early-close handling untested on data; no leakage found.
+- Data: the 116 sessions (2026-05-19..2026-11-04) are **consumed**. The frozen-forward archive matches them with zero
+  close difference on 2026-10-22..11-04 and declares `delayed=900` -> classify as DELAYED / RESEARCH_ONLY.
+  Only one complete unconsumed session (2026-11-05) is available in-repo; 2026-11-06 is incomplete (70/78 bars).
+- Network from cloud sessions: Yahoo is blocked by the proxy; no new data was fetched.
+
+## Missing for a real out-of-sample test
+
+1. Complete regular-session SPX 1m (or 5m) OHLC for **unused** sessions after 2026-11-05 (>= 20 sessions recommended),
+   same schema as `opening_validation_raw.json` (`day`, `step`, `csv` with `time,open,high,low,close`, NY wall clock).
+2. Per bar: provider market timestamp **and** receipt timestamp, plus source/contract identity, to measure data age.
+3. For any option claim: verified live SPXW chain with bid/ask, receipt time and entitlement status. None exists now.
+
+## Next step
+
+Do not retune on the 116 consumed sessions. Collect unused sessions, freeze the control wave detector (and, if desired,
+opening_seed as a separately labeled challenger) and evaluate both on them with the same preregistered rule.
+
+---
+
+## Historical notes (2026-10-24, kept for reference; superseded where they conflict with the section above)
+
+
 **Status: NOT READY** (ready for *connection/health verification only*; not ready for live early-detection use)
 
 Last examined: 2026-10-24  
