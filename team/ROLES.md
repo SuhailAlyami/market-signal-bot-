@@ -1,9 +1,11 @@
-# Roles (used per cycle; agents are spawned only with a concrete task)
+# Roles (coordinator = main session; specialists only for concrete tasks with defined outputs)
 
-| Role | Who | Responsibility |
+| Role | Output | Default |
 |---|---|---|
-| Lead / engineer | main Claude session | Reproduce latest test, diagnose, preregister one change, implement, run, document, PR |
-| Independent reviewer | read-only subagent | Audit leakage, timezones, execution sim, metric code, and that README numbers match summary.json |
-| Owner | Suhail | Logins, paid services, secrets, merge decisions |
+| Research/data | data validation, protocol.json, metrics scripts | coordinator, or one worker |
+| Engineering | code + tests + replay scripts | one worker, cheapest adequate model |
+| Independent validation | read-only audit: leakage, timezones, execution sim, README-vs-summary check | one reviewer, stronger model for hard reasoning |
+| Delivery/documentation | README, RESUME.md, PR, Arabic owner report | coordinator |
 
-Reviewers never edit the repo; their findings are copied into the experiment README with file:line evidence.
+Rules: no idle or duplicate agents; pass only relevant files and concise context; agents return summaries plus evidence paths;
+reviewers never edit the repo; reuse verified results when code and inputs are unchanged.

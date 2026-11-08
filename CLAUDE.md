@@ -18,4 +18,4 @@ Read `AGENTS.md` (governing mission) and `RESUME.md` (current state; check its d
 - Research deps: `research/objective_review_20261107/requirements.txt` (exchange_calendars). App tests: `python -m unittest discover -s tests` after installing requirements*.txt.
 - Work on a feature branch; open PRs, do not merge to main without the owner.
 
-See `team/` for roles and delivery rules.
+Language: English internally, concise Arabic to the owner. See `team/` (ROLES, OPERATING_POLICY, DELIVERY_RULES).
