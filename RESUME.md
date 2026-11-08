@@ -34,7 +34,9 @@ Last updated: 2026-11-08 (branch `claude/kind-ramanujan-icu95e`, based on open P
 
 - Deferred, not started: multi-provider router, external skills search, further team infrastructure.
 - Experiment 2 `objective_review_20261107/threshold_scale/` (R = max(5, 0.67*ATR6)): REJECT by preregistered rule (older matched<=75% 134 vs 135). Early matches 48->65 overall (+17.4 over random vs +4.8 for control) but net execution points worse (-714.8 vs -440.2). Not rescued.
-- Scheduled collector (daily 22:37 UTC, first fire 2026-11-09) has no repo source attached; unverified.
+- Scheduled collector DISABLED after two fired test runs failed: (1) plain clone -> `fatal: could not read Username for 'https://github.com': terminal prompts disabled`; (2) `mcp__claude-code-remote__add_repo` not available in the routine session. Routine sessions have no repo source/credentials and the routine tool cannot attach one. Fresh-clone collection from an interactive session works (commit c26e456, raw hashes and `--verify` OK).
+  Smallest fix: merge `.github/workflows/spx_collect.yml` to main (uses GITHUB_TOKEN), or recreate the routine in the claude.ai routines UI with this repo as its source. Until then collect manually; Yahoo keeps 7 trading days of 1m, so 2026-11-09 is lost if not pulled by 2026-11-17 after the close.
+- `threshold_scale` is frozen at commit 91880b0 (a tag push was refused by the remote). Do not reconsider it with sessions after 2026-11-04.
 
 ## Missing for a real out-of-sample test
 
