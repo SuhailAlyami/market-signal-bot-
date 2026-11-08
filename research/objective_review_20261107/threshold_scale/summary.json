@@ -1,0 +1,101 @@
+{
+ "k": 0.67,
+ "scope": "CONSUMED 116 sessions, in-sample",
+ "older": {
+  "sessions": 78,
+  "control": {
+   "signals": 453,
+   "legs": 253,
+   "early": 32,
+   "matched75": 135,
+   "unmatched_per_session": 4.077,
+   "median_lag_min": 15,
+   "random_early_mean": 27.67,
+   "early_excess_over_random": 4.33,
+   "net_cost1_zero_delay": -159.42,
+   "scored": 401
+  },
+  "scaled": {
+   "signals": 508,
+   "legs": 253,
+   "early": 42,
+   "matched75": 134,
+   "unmatched_per_session": 4.795,
+   "median_lag_min": 15.0,
+   "random_early_mean": 31.96,
+   "early_excess_over_random": 10.04,
+   "net_cost1_zero_delay": -461.53,
+   "scored": 453
+  }
+ },
+ "recent": {
+  "sessions": 38,
+  "control": {
+   "signals": 215,
+   "legs": 112,
+   "early": 16,
+   "matched75": 64,
+   "unmatched_per_session": 3.974,
+   "median_lag_min": 15.0,
+   "random_early_mean": 15.06,
+   "early_excess_over_random": 0.94,
+   "net_cost1_zero_delay": -280.76,
+   "scored": 191
+  },
+  "scaled": {
+   "signals": 237,
+   "legs": 112,
+   "early": 23,
+   "matched75": 65,
+   "unmatched_per_session": 4.526,
+   "median_lag_min": 15,
+   "random_early_mean": 16.28,
+   "early_excess_over_random": 6.72,
+   "net_cost1_zero_delay": -253.3,
+   "scored": 212
+  }
+ },
+ "all": {
+  "sessions": 116,
+  "control": {
+   "signals": 668,
+   "legs": 365,
+   "early": 48,
+   "matched75": 199,
+   "unmatched_per_session": 4.043,
+   "median_lag_min": 15,
+   "random_early_mean": 43.2,
+   "early_excess_over_random": 4.8,
+   "net_cost1_zero_delay": -440.17,
+   "scored": 592
+  },
+  "scaled": {
+   "signals": 745,
+   "legs": 365,
+   "early": 65,
+   "matched75": 199,
+   "unmatched_per_session": 4.707,
+   "median_lag_min": 15,
+   "random_early_mean": 47.65,
+   "early_excess_over_random": 17.35,
+   "net_cost1_zero_delay": -714.83,
+   "scored": 665
+  }
+ },
+ "checks": {
+  "older": {
+   "early_excess_positive": true,
+   "early_ge_control": true,
+   "unmatched_le_control_plus_1": true,
+   "matched75_ge_control": false
+  },
+  "recent": {
+   "early_excess_positive": true,
+   "early_ge_control": true,
+   "unmatched_le_control_plus_1": true,
+   "matched75_ge_control": true
+  }
+ },
+ "decision": "REJECT_CHANGE_KEEP_CONTROL",
+ "protocol_sha256": "b520e864156fee96bf597c28358ab4d148ccbd82be226558c64c018e57366762"
+}

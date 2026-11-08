@@ -30,6 +30,12 @@ Last updated: 2026-11-08 (branch `claude/kind-ramanujan-icu95e`, based on open P
 - Validation size (see opening_seed/FAILURE_ANALYSIS.md): 20 sessions gives only +/-8 pp on the early-match rate; ~55 sessions for +/-5 pp; >=70 to confirm a gain of the in-sample size.
 - Random-timing baseline: "early" matches of both detectors are not clearly better than random timing; "matched before 75%" is.
 
+## Checkpoint (2026-11-08, owner priority: SPX detector research)
+
+- Deferred, not started: multi-provider router, external skills search, further team infrastructure.
+- Experiment 2 `objective_review_20261107/threshold_scale/` (R = max(5, 0.67*ATR6)): REJECT by preregistered rule (older matched<=75% 134 vs 135). Early matches 48->65 overall (+17.4 over random vs +4.8 for control) but net execution points worse (-714.8 vs -440.2). Not rescued.
+- Scheduled collector (daily 22:37 UTC, first fire 2026-11-09) has no repo source attached; unverified.
+
 ## Missing for a real out-of-sample test
 
 1. Complete regular-session SPX 1m (or 5m) OHLC for **unused** sessions after 2026-11-05 (>= 20 sessions recommended),

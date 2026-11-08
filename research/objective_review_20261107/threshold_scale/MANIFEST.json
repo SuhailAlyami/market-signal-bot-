@@ -1,0 +1,15 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY",
+  "decision": "REJECT_CHANGE_KEEP_CONTROL",
+  "protocol_commit": "ff10de8",
+  "files": {
+    "protocol.json": "b520e864156fee96bf597c28358ab4d148ccbd82be226558c64c018e57366762",
+    "run_scale.py": "e7f84f32d3b9c47c538d43d5457339386df13cd6ec157e0a67610fe924250955",
+    "test_scale.py": "2fee270e9db58b346bdcb412e69ecb922c53b83767e4fce73b2f624f13d90b37",
+    "README.md": "baa7448ebff9ccfda90e6f9c2235e063a124f0fc078144dfba11fc6cf92eeff2",
+    "summary.json": "333dd97a28714dde3cbdce0269ce3db02d057229351884fb2ab68eae5d8df0c0"
+  },
+  "dependencies": {
+    "opening_validation_raw.json.gz": "ac3d9d9723b352be6a8419e71bf3751c049f1da9dc397cd1fbef8c46814d7cfd"
+  }
+}
