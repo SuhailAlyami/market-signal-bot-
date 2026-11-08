@@ -11,5 +11,7 @@
   },
   "dependencies": {
     "opening_validation_raw.json.gz": "ac3d9d9723b352be6a8419e71bf3751c049f1da9dc397cd1fbef8c46814d7cfd"
-  }
+  },
+  "frozen_at_commit": "91880b055f1430332427c675ef1f3116b6ec3d29",
+  "freeze_note": "Rejected variant retained unchanged for audit. A git tag push was refused by the remote (hung up, 3 tries); the commit hash is the freeze reference. Do not rerun or reconsider on sessions after 2026-11-04."
 }
