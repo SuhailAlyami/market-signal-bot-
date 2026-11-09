@@ -1,0 +1,35 @@
+# Data provider comparison (SPX / SPXW 0DTE / ES) - read 2026-11-09
+
+## Evidence quality warning (read first)
+- WebFetch could NOT resolve any provider host (databento.com, polygon.io, thetadata.net, docs.alpaca.markets, interactivebrokers.com): "outside allowed network domains". No official page was opened directly.
+- All facts below come from WebSearch result summaries (which quote official pages) on 2026-11-09. Treat every number as UNVERIFIED-until-opened. Where nothing was found: "not found". No prices were estimated.
+- Re-run after allowing the hosts above; label for our pipeline: all RESEARCH_ONLY until verified on the official page + a live latency test.
+
+## Per-provider table
+| Provider | SPX index RT | SPXW quotes RT / trades | ES RT | Historical | Timestamps | API | Licensing / fees | Price (source, read 2026-11-09) |
+|---|---|---|---|---|---|---|---|---|
+| Interactive Brokers | Yes via "Cboe Streaming Market Indexes" sub (search summary) | OPRA L1 (top of book) quotes; trades not confirmed | Yes via CME Real-Time L1 sub | Limited via TWS API (depth/granularity: not found) | not found | TWS API (socket) | Non-pro vs pro declared; non-pro defined as unregistered individual | Cboe Streaming Market Indexes USD 3.50 (non-pro and pro); CME L1 USD 1.25 non-pro; OPRA L1 USD 1.50 non-pro (pro USD 20.00 on one page; pages disagree). Waived if commission threshold met. https://www.interactivebrokers.com/en/pricing/market-data-pricing.php (via search summary, not opened) |
+| Databento | SPX cash index: not found | OPRA.PILLAR live: yes (quotes+trades, per docs); needs plan | CME Globex MDP3: yes (price: not found) | Historical usage-based credits; OPRA history to ~2013 per dataset page (not verified) | Per-message ts_event/ts_recv (known Databento design; not re-verified today) | Python/C++/raw TCP live; historical REST/batch | OPRA Personal (non-pro) USD 1.25 per device/month pass-through; questionnaire determines status; live OPRA usage-based pricing discontinued 2025-06-03; Standard/Plus/Unlimited plan required | Plan prices: not found. https://databento.com/docs/portal/live-data ; https://databento.com/blog/introducing-new-opra-pricing-plans |
+| Polygon.io / Massive | Real-time SPX needs paid Indices tier (Massive KB) | Options plan covers SPX options; real-time vs delayed by tier | Futures: not found | not found | SIP/participant timestamps: not found | REST + WebSocket | Individual vs business: not found | Official: not found. Third-party only (unverified, conflicting): Indices ~USD 49, Options real-time from ~USD 199. https://massive.com/knowledge-base/article/does-massive-support-options-data-for-index-contracts |
+| Alpaca | Spot SPX/VIX NOT in market-data offering (Broker API docs) | OPRA feed incl. SPX/SPXW chain; OPRA needs Algo Trader Plus + signed OPRA agreement; free tier = indicative (not real OPRA, not for trading decisions) | not found | Options history exists; depth not found | not found | REST + WebSocket | Account/eligibility for Saudi residents: not found | Plan price: not found. https://docs.alpaca.markets/us/docs/index-options |
+| Tradier | Some index data delayed 15 min (docs) | Real-time only for Tradier Brokerage account holders; SPXW stream not confirmed | not found | Intraday/historical exist; depth not found | not found | REST + HTTP/WebSocket stream | US-focused; non-US account eligibility: not found | not found. https://docs.tradier.com/docs/market-data |
+| ThetaData | Index data exists (SPX 1s price reports per docs); RT tier gating unclear | Options tiers: Value (RT, 1-min snapshots), Standard (tick trade/quote), Pro (full tick stream) | No (options/stocks/index focus; futures not found) | Standard tick back to 2016-01-01, Pro 2012-06-01 (docs conflict with older 1-min-only version) | not found | REST (local terminal) + WebSocket | Non-pro vs pro; pro/commercial must use pro terms | Value USD 40, Standard USD 80 (thetadata.net/pricing via search); Pro USD 160 is third-party only. https://docs.thetadata.us/Articles/Getting-Started/Subscriptions.html |
+| Cboe DataShop / LiveVol | ^SPX 1-min interval product; index bid/ask needs Cboe Global Indices license (from USD 1,000/month per pages) | Option Quote Intervals (NBBO + size, 1-min or N-min); intraday files delayed 15 min => historical only | No | Interval + trade files (depth/years: not found) | Snapshot-time based; per-message: not found | Files/API (Smart Markets API exists) | Index licensing as above | DataShop price: not found. https://datashop.cboe.com/options-intervals |
+| Schwab Trader API | Index quotes via streamer (QuantConnect says index + index options served) | Option streaming limits/entitlements: not found | not found | Price history endpoint; depth not found | not found | REST + WebSocket streamer | Non-US resident eligibility: not found | not found; developer.schwab.com |
+| Tastytrade API | SPX quotes streamed via dxFeed DXLink (community example, unofficial) | Via dxFeed; SPXW not confirmed | not found | Not offered as bulk history (not found) | dxFeed event times; details not found | REST + WebSocket (DXLink) | Must be a registered tastytrade customer; non-US eligibility: not found | not found. https://developer.tastytrade.com/docs/guides/stream-market-data/ |
+| dxFeed (direct retail) | not found | OPRA offered (Overcharts) ; retail price not found | CME via resellers: Bookmap page cites USD 29/exchange, USD 79 CME bundle (dated, unverified) | not found | dxFeed event timestamps (not verified) | WebSocket/Java APIs | Retail vs pro | Entry plan "from USD 19/month" on choose.dxfeed.com (coverage unclear). https://dxfeed.com/market-data/futures/cme/ |
+
+Cboe published index fees seen (datashop SIP fees page via search): non-pro real-time USD 14.95, delayed USD 4.85 - applicability to our use: not found.
+
+## Terms relevant to personal alerts
+- Redistribution/automated-alert clauses: not found for any provider (terms pages not read). Must read each provider's agreement before any alert is enabled. Alerts remain OFF per project rules.
+- Non-pro status is self-declared via questionnaire (Databento, IBKR); a bot used only for own decisions fits "personal", but not verified for Saudi residents.
+
+## Tentative ranking (conditional on verification)
+1. Interactive Brokers (data only): lowest transparent non-pro fees (total about USD 6.25/month from listed figures) giving SPX + SPXW L1 + ES; weak for bulk history and per-message timestamps. Need to confirm account opening for Saudi residents and that Cboe indexes + OPRA L1 stream 0DTE.
+2. Databento: best for measurable timestamps (ts_event/ts_recv) and historical OPRA/CME; SPX cash index availability not found, plan price not found.
+3. ThetaData: transparent monthly tiers, deep tick history for SPXW; no ES, RT index gating unclear.
+4. Polygon/Massive: capability fits but official prices not found.
+5. Cboe DataShop: historical-only, cost opaque.
+6. Alpaca / Tradier / Schwab / Tastytrade / dxFeed: account-residency or SPX-spot gaps; not found.
+Practical combo to test: IBKR for live SPX/SPXW/ES + Databento or ThetaData for history; measure receipt latency ourselves.
