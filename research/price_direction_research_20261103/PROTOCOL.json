@@ -1,0 +1,11 @@
+{
+  "hypothesis": "Retrain direction logistic on six price features; remove session_sin/cos only from direction; frozen timing model, threshold and cooldown unchanged",
+  "motivation": "posthoc Nov2 failed UP signals flipped by clock contributions",
+  "training": "Oct15..23 only; excludes Nov2",
+  "comparison": "Oct26..30 consumed exploratory data; fixed original timing signals",
+  "Nov2": "diagnostic development only; no independent validation claim",
+  "future_holdout": "Nov3 onward not loaded",
+  "model": "StandardScaler LogisticRegression C1 maxiter1000 random_state42, no tuning",
+  "target": "2prior20ATR before1ATR in5contiguous minutes, close and nextopen",
+  "status": "NOT_READY_RESEARCH_ONLY"
+}

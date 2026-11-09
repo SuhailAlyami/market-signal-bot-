@@ -1,0 +1,41 @@
+{
+  "summary": [
+    {
+      "entry": "close",
+      "scored": 12,
+      "endpoint_hits": 10,
+      "median_max_adverse_points": 4.589999999999691,
+      "max_adverse_points": 11.260000000000218,
+      "median_max_adverse_ATR": 0.619833130247312,
+      "positive_endpoints_with_at_least1ATR_adverse_anytime": 3,
+      "barrier_outcomes": {
+        "TIMEOUT": 5,
+        "STOP": 5,
+        "TARGET": 2
+      }
+    },
+    {
+      "entry": "next_open",
+      "scored": 12,
+      "endpoint_hits": 10,
+      "median_max_adverse_points": 4.570000000000164,
+      "max_adverse_points": 11.220000000000255,
+      "median_max_adverse_ATR": 0.6163474300044379,
+      "positive_endpoints_with_at_least1ATR_adverse_anytime": 3,
+      "barrier_outcomes": {
+        "TIMEOUT": 5,
+        "STOP": 4,
+        "TARGET": 2,
+        "AMBIGUOUS": 1
+      }
+    }
+  ],
+  "signals": 14,
+  "incomplete_horizon_excluded": 2,
+  "excluded_times": [
+    "2026-10-23 20:00:00+00:00",
+    "2026-10-27 19:45:00+00:00"
+  ],
+  "status": "NOT_READY",
+  "warning": "Additional risk diagnostic, not a redefinition or invalidation of endpoint metric.5min intrabar ordering unresolved conservatively. No options profit calculated."
+}

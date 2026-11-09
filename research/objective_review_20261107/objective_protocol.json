@@ -1,0 +1,21 @@
+{
+  "status": "EXPLORATORY_RESEARCH_ONLY_NOT_READY",
+  "input": "opening_validation_raw.json from Suhail_improvement_round.zip",
+  "input_library_id": "libfile_f4e15ff00ae48191b53465d039a0e9b2",
+  "data_previously_consumed": true,
+  "models": {
+    "reclaim_30m": "First 15m close back inside the first 30m range following a close outside; stop 0.5 points beyond reclaim candle, target 2R, 30m holding period.",
+    "breakout_90m": "First 15m close outside the first 30m range; stop 0.5 points beyond opposite opening-range edge, target 2R, 90m holding period.",
+    "opening_bias": "At 10:00 NY, first 30m change predicts remaining-session close relative to 10:00 close; compare always-up at the same times."
+  },
+  "entry": "First raw-bar open at or after the decision plus declared scenario latency; no new candidate after a missed first event.",
+  "latency_minutes": [0, 15, 60],
+  "round_trip_cost_points": [0.5, 1.0, 2.0],
+  "intrabar_ambiguity": "Report lower and upper bounds when both target and stop hit in one raw bar; lower bound governs decisions.",
+  "gaps": "Stop gap exits at opening price; favorable gap target exits capped at target. No filling missing bars.",
+  "session": "Actual XNYS regular session including early closes and DST; missing complete grids excluded with reason.",
+  "splits": "Before 2026-09-14 versus on/after 2026-09-14, both exploratory and previously used.",
+  "screen": "A candidate remains research-only. Suspend this parameterization if net lower bound at 1 point cost is nonpositive in either time block under the zero-delay scenario. Positive survivors require unused prospective data, implementable instruments and timely source verification.",
+  "selection": "No parameter search, threshold tuning, combination of methods or changes to frozen model.",
+  "bootstrap": "1000 session resamples, deterministic seed 711, 95% interval for total lower-bound points at cost 1; descriptive on consumed data."
+}

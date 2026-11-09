@@ -1,0 +1,17 @@
+{
+  "hypotheses": [
+    "union of all three existing wave detectors",
+    "agreement of two DIFFERENT families at a new event, no active opposing family"
+  ],
+  "families": {
+    "level": "range",
+    "confirmed": "structure",
+    "early": "structure"
+  },
+  "availability": "current event plus active states known by current close; never select historical winners",
+  "dedup": "same-time same-side once; conflicting new events discarded; shared10min cooldown reset segment",
+  "target": "fixed30min endpoint direction, flat failure; exclude incomplete same-segment horizon explicitly",
+  "sample": "consumed12 sessions, earlier7/later5 exploratory, not untouched holdout",
+  "optimization": "no best-model selection or parameter tuning",
+  "status": "NOT_READY"
+}

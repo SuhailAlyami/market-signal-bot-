@@ -1,0 +1,42 @@
+{
+  "rows": [
+    {
+      "period": "earlier",
+      "entry": "close",
+      "signals": 42,
+      "scored": 42,
+      "hits": 13,
+      "precision": 0.30952380952380953,
+      "same_time_direction_shuffle_expected": 0.23809523809523808
+    },
+    {
+      "period": "earlier",
+      "entry": "next_open",
+      "signals": 42,
+      "scored": 42,
+      "hits": 13,
+      "precision": 0.30952380952380953,
+      "same_time_direction_shuffle_expected": 0.23809523809523808
+    },
+    {
+      "period": "later",
+      "entry": "close",
+      "signals": 32,
+      "scored": 32,
+      "hits": 6,
+      "precision": 0.1875,
+      "same_time_direction_shuffle_expected": 0.123046875
+    },
+    {
+      "period": "later",
+      "entry": "next_open",
+      "signals": 32,
+      "scored": 32,
+      "hits": 6,
+      "precision": 0.1875,
+      "same_time_direction_shuffle_expected": 0.123046875
+    }
+  ],
+  "prefix_checks": 3,
+  "status": "NOT_READY"
+}

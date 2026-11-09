@@ -1,0 +1,181 @@
+{
+  "status": "EXPLORATORY_NOT_HOLDOUT",
+  "split_events": 44,
+  "filters": {
+    "unchanged": {
+      "train": {
+        "retained": 44,
+        "wins": 8,
+        "losses": 34,
+        "other": 2,
+        "conservative_precision": 0.18181818181818182,
+        "retained_original_wins": 8,
+        "removed_original_wins": 0
+      },
+      "validation": {
+        "retained": 23,
+        "wins": 13,
+        "losses": 9,
+        "other": 1,
+        "conservative_precision": 0.5652173913043478,
+        "retained_original_wins": 13,
+        "removed_original_wins": 0
+      },
+      "all": {
+        "retained": 67,
+        "wins": 21,
+        "losses": 43,
+        "other": 3,
+        "conservative_precision": 0.31343283582089554,
+        "retained_original_wins": 21,
+        "removed_original_wins": 0
+      }
+    },
+    "prior_trend_aligned": {
+      "train": {
+        "retained": 26,
+        "wins": 4,
+        "losses": 22,
+        "other": 0,
+        "conservative_precision": 0.15384615384615385,
+        "retained_original_wins": 4,
+        "removed_original_wins": 4
+      },
+      "validation": {
+        "retained": 12,
+        "wins": 6,
+        "losses": 6,
+        "other": 0,
+        "conservative_precision": 0.5,
+        "retained_original_wins": 6,
+        "removed_original_wins": 7
+      },
+      "all": {
+        "retained": 38,
+        "wins": 10,
+        "losses": 28,
+        "other": 0,
+        "conservative_precision": 0.2631578947368421,
+        "retained_original_wins": 10,
+        "removed_original_wins": 11
+      }
+    },
+    "prior_trend_opposed": {
+      "train": {
+        "retained": 18,
+        "wins": 4,
+        "losses": 12,
+        "other": 2,
+        "conservative_precision": 0.2222222222222222,
+        "retained_original_wins": 4,
+        "removed_original_wins": 4
+      },
+      "validation": {
+        "retained": 11,
+        "wins": 7,
+        "losses": 3,
+        "other": 1,
+        "conservative_precision": 0.6363636363636364,
+        "retained_original_wins": 7,
+        "removed_original_wins": 6
+      },
+      "all": {
+        "retained": 29,
+        "wins": 11,
+        "losses": 15,
+        "other": 3,
+        "conservative_precision": 0.3793103448275862,
+        "retained_original_wins": 11,
+        "removed_original_wins": 10
+      }
+    },
+    "range_max_2atr": {
+      "train": {
+        "retained": 38,
+        "wins": 8,
+        "losses": 29,
+        "other": 1,
+        "conservative_precision": 0.21052631578947367,
+        "retained_original_wins": 8,
+        "removed_original_wins": 0
+      },
+      "validation": {
+        "retained": 18,
+        "wins": 11,
+        "losses": 6,
+        "other": 1,
+        "conservative_precision": 0.6111111111111112,
+        "retained_original_wins": 11,
+        "removed_original_wins": 2
+      },
+      "all": {
+        "retained": 56,
+        "wins": 19,
+        "losses": 35,
+        "other": 2,
+        "conservative_precision": 0.3392857142857143,
+        "retained_original_wins": 19,
+        "removed_original_wins": 2
+      }
+    },
+    "body_min_80pct": {
+      "train": {
+        "retained": 29,
+        "wins": 5,
+        "losses": 23,
+        "other": 1,
+        "conservative_precision": 0.1724137931034483,
+        "retained_original_wins": 5,
+        "removed_original_wins": 3
+      },
+      "validation": {
+        "retained": 15,
+        "wins": 9,
+        "losses": 5,
+        "other": 1,
+        "conservative_precision": 0.6,
+        "retained_original_wins": 9,
+        "removed_original_wins": 4
+      },
+      "all": {
+        "retained": 44,
+        "wins": 14,
+        "losses": 28,
+        "other": 2,
+        "conservative_precision": 0.3181818181818182,
+        "retained_original_wins": 14,
+        "removed_original_wins": 7
+      }
+    },
+    "extension_max_2atr": {
+      "train": {
+        "retained": 28,
+        "wins": 6,
+        "losses": 20,
+        "other": 2,
+        "conservative_precision": 0.21428571428571427,
+        "retained_original_wins": 6,
+        "removed_original_wins": 2
+      },
+      "validation": {
+        "retained": 20,
+        "wins": 13,
+        "losses": 6,
+        "other": 1,
+        "conservative_precision": 0.65,
+        "retained_original_wins": 13,
+        "removed_original_wins": 0
+      },
+      "all": {
+        "retained": 48,
+        "wins": 19,
+        "losses": 26,
+        "other": 3,
+        "conservative_precision": 0.3958333333333333,
+        "retained_original_wins": 19,
+        "removed_original_wins": 2
+      }
+    }
+  },
+  "limits": "Posthoc feature study on already inspected sample. Filtering original event stream does not replay state; not production performance or explosion recall."
+}

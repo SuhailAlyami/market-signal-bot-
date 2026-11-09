@@ -1,0 +1,24 @@
+{
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "source": "IBKR Last; IND 416904 CBOE",
+  "retrieval_asof_utc": "2026-11-02T15:36:03Z",
+  "latest_received_bar_start_utc": "2026-11-02T15:36:00Z",
+  "forming_bars_excluded": 1,
+  "today_closed_bars": 66,
+  "feature_eligible_today": 6,
+  "last_closed_bar_start_Riyadh": "2026-11-02 18:35:00+03:00",
+  "last_closed_decision_Riyadh": "2026-11-02 18:36:00+03:00",
+  "last_closed_close": 7650.05,
+  "timing_threshold": 0.549072459613172,
+  "scores_min": 0.2428132733392372,
+  "scores_max": 0.41211337453316915,
+  "new_signals": 0,
+  "no_training_performed": true,
+  "model_sha256": "f14128d2cb868a8004ebb78a595217c62d1b32915356f4368e0772493fa3e3c8",
+  "limitations": [
+    "Source metadata Last does not independently establish marketDataType=1 or last-trade freshness",
+    "Not a live trade recommendation",
+    "Different provider from training sample",
+    "Only six post-warmup decisions; no accuracy estimate"
+  ]
+}

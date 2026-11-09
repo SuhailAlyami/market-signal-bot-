@@ -1,0 +1,112 @@
+{
+  "status": "BLOCKED_CLOSED_ES_BAR_REVISIONS",
+  "checked_at_Riyadh": "2026-11-03T18:10:03.336607+03:00",
+  "source": "IBKR Last historical 5m",
+  "model_sha256": "fb281774690ab5848d26c16f6583cfb632a80bcdc12ea486160a0a3f97850f6b",
+  "old_archive_revised_rows": 121,
+  "changed_field_counts": {
+    "close": 24,
+    "open": 31,
+    "volume": 119
+  },
+  "examples": [
+    {
+      "time": "2026-10-19T13:30:00Z",
+      "changed": {
+        "close": {
+          "archived": 7742.75,
+          "new": 7743
+        }
+      }
+    },
+    {
+      "time": "2026-10-19T13:35:00Z",
+      "changed": {
+        "open": {
+          "archived": 7743,
+          "new": 7742.75
+        },
+        "volume": {
+          "archived": 33890,
+          "new": 33889
+        }
+      }
+    },
+    {
+      "time": "2026-10-19T13:45:00Z",
+      "changed": {
+        "close": {
+          "archived": 7737.25,
+          "new": 7737
+        },
+        "volume": {
+          "archived": 27124,
+          "new": 27126
+        }
+      }
+    },
+    {
+      "time": "2026-10-19T13:50:00Z",
+      "changed": {
+        "open": {
+          "archived": 7737,
+          "new": 7737.25
+        },
+        "volume": {
+          "archived": 24190,
+          "new": 24188
+        }
+      }
+    },
+    {
+      "time": "2026-10-19T14:00:00Z",
+      "changed": {
+        "volume": {
+          "archived": 27627,
+          "new": 27633
+        }
+      }
+    },
+    {
+      "time": "2026-10-19T14:05:00Z",
+      "changed": {
+        "open": {
+          "archived": 7732,
+          "new": 7731.75
+        },
+        "volume": {
+          "archived": 23368,
+          "new": 23362
+        }
+      }
+    },
+    {
+      "time": "2026-10-19T14:20:00Z",
+      "changed": {
+        "volume": {
+          "archived": 22967,
+          "new": 22968
+        }
+      }
+    },
+    {
+      "time": "2026-10-19T14:25:00Z",
+      "changed": {
+        "open": {
+          "archived": 7756.75,
+          "new": 7756.5
+        },
+        "volume": {
+          "archived": 18698,
+          "new": 18697
+        }
+      }
+    }
+  ],
+  "decision": "No replay prediction run; existing ARCHIVE_STATE and committed archives preserved. New snapshots quarantined. Do not reinterpret as no signal.",
+  "captured_files": [
+    "SPX_capture_20261103T1508Z.json",
+    "ES_capture_20261103T1508Z.json"
+  ],
+  "resume_requirement": "Explicit versioned resolution of provider history revisions, preserving frozen model and original evidence. No silent archive replacement."
+}

@@ -1,0 +1,15 @@
+{
+  "hypothesis": "ES original ACCEL v4 with own rvol>=1.5 prior20median can trigger SPX direction only when SPX ACCEL is zero at decision",
+  "primary": "same closed minute observed for both ES and SPX; full1minute lag sensitivity separate",
+  "lag_sensitivity": "previous ES ACCEL/rvol, current SPX ACCEL zero; shift within contiguous segment only",
+  "baseline": "SPX original ACCEL with same available feature universe and cooldown",
+  "source": "FirstRate synchronized cash SPX and continuous ES, 12 audited RTH sessions",
+  "timing": "minute starts localized US Eastern->UTC; decision plus1minute; no forward fill",
+  "cooldown_seconds": 600,
+  "target": "SPX 2prior20ATR before1ATR in5contiguousminutes, close and nextopen; ambiguous fail",
+  "split": "Oct15-23 development,Oct26-30 consumed later comparison",
+  "optimization": "none; one fixed rule plus timing sensitivity; no threshold search",
+  "Nov2_and_Nov3": "not loaded",
+  "diagnostics": "subsequent SPX ACCEL confirmation is posthoc only; never used to choose signal",
+  "status": "RESEARCH_ONLY_NOT_READY"
+}

@@ -1,0 +1,10 @@
+{
+  "status": "EXPLORATORY_NOT_READY",
+  "hypothesis": "Veto existing event if level trend disagrees; stricter variant also requires EMA20 touch in last3 closed bars and recovery on signal side.",
+  "rules_attempted": 2,
+  "parameters": "EMA20, slope5 bars, prior20 channel midpoint, touch window3 bars; fixed before computation, no grid search",
+  "selection_data": "Previously consumed archival 5m data only; Nov3 forward checkpoint excluded.",
+  "comparison": "Same 12 scored price-selective walkforward events, from5 DIFFERENT models. Veto-only; original cooldown still applies even to rejected events. Not a full rerun with regenerated events.",
+  "outcome": "signed SPX close change after30min; no options PnL or 70percent adoption claim",
+  "future": "No automatic replacement of frozen candidate. Fresh prospective comparison required."
+}

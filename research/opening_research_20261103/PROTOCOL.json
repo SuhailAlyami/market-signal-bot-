@@ -1,0 +1,24 @@
+{
+  "model": "Separate first-hour two-stage logistic, same C1/maxiter1000/seed42; no class balance",
+  "fit": "15..23 Oct2026",
+  "exploratory_later": "26..30 Oct2026 consumed data",
+  "Nov2": "not fit, not used for threshold, not evaluated for this candidate; motivates hypothesis only",
+  "future": "Nov3 onwards not opened",
+  "features": [
+    "return1",
+    "return5",
+    "return15",
+    "range",
+    "body",
+    "session_sin",
+    "session_cos"
+  ],
+  "decision_window": "21 <= contiguous segment position <60 AND wall-clock first60 minutes of regular session; no ATR60 feature",
+  "threshold": "90th percentile timing training score; fixed, no threshold grid",
+  "cooldown_seconds": 600,
+  "timing_label": "touch2ATR either direction ignoring stop in next5 contiguous minutes",
+  "direction_label": "long vs short only where exactly one2ATR-before1ATR succeeds",
+  "evaluation": "2 prior20SMA TR target before1ATR stop in5min; close primary nextopen secondary; unchanged",
+  "acceptance": "no live adoption from consumed5day test; below30scored signals inconclusive; below70precision fails objective regardless",
+  "status": "RESEARCH_ONLY_NOT_READY"
+}

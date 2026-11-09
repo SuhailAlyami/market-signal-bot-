@@ -1,0 +1,20 @@
+{
+  "status": "CONSUMED_NUMERICAL_REPRODUCTION_ONLY_NOT_READY",
+  "frozen_model_hash_verified": true,
+  "last_fold_start": 900,
+  "signals_expected": 1,
+  "signals_reproduced": 1,
+  "exact_decision_direction_match": true,
+  "past_score_unchanged_when_future_removed": true,
+  "frozen_latest_weights_own_out_of_fit_sample": {
+    "scored": 1,
+    "hits": 1
+  },
+  "whole_walkforward_procedure_sample": {
+    "scored": 12,
+    "hits": 10,
+    "different_fold_models": 5
+  },
+  "model_and_threshold_unchanged": true,
+  "new_forward_evidence_added": 0
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "period": "development",
+    "ES_impulses_with_rvol": 78,
+    "same_minute_SPX_matching_ACCEL": 72,
+    "same_minute_SPX_no_ACCEL": 6,
+    "lag_accepted_signals": 51,
+    "lag_signals_with_SPX_ALREADY_matching_previous_minute": 47,
+    "warning": "one-minute coincidence does not establish sub-minute leadership; lagged confirmation is not early if SPX already fired"
+  },
+  {
+    "period": "later_consumed",
+    "ES_impulses_with_rvol": 48,
+    "same_minute_SPX_matching_ACCEL": 46,
+    "same_minute_SPX_no_ACCEL": 2,
+    "lag_accepted_signals": 29,
+    "lag_signals_with_SPX_ALREADY_matching_previous_minute": 27,
+    "warning": "one-minute coincidence does not establish sub-minute leadership; lagged confirmation is not early if SPX already fired"
+  }
+]

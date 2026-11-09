@@ -1,0 +1,16 @@
+{
+  "policy": "v2_first_observed_closed_bars_with_revision_ledger",
+  "sha256": {
+    "ARCHIVE_STATE.json": "9bc76917793376fd9a658b98018f937c49e25c05caedd44a14c794b9fc488d0f",
+    "ES_raw.json": "86a7cac84d61d47480aaeb9b5c4ea83c2f4bd30501955ff23d2da4fca0fe649b",
+    "ES_REVISIONS.json": "cbaa804e0430bc2f69e7939c13ba15a3e1de2591368044a07f22869171562118",
+    "ARCHIVE_RESULT.json": "97e9db6795585b24554f7a191d6ad193937c32d470df16c15608bbf7eb9e05da",
+    "ARCHIVE_AUDIT.json": "27c7f4a5b5a96b6555444a7ad00485e8fb6cfafb86eb99f86a946d55edf29b5d",
+    "OUTCOME_NOTIFICATIONS.json": "595ee6619ed59bc38b773af090aad91205673e93348e2c4e5c6d6660ae56cdac",
+    "SPX_raw.json": "018cb6f8f132be10fc1dd3dc328b06d026e42850c4af1051949e89da125258a9",
+    "ES_archive.json": "a2123c5020b882b37dd5931aa67ebba688c344451ae61ffce2b8ec76225961ed",
+    "SPX_REVISIONS.json": "4399c97118dcb927b0f942549fa01e85b1de73fe7efde2fe24cb6d33805138c9",
+    "GROK_SHADOW.json": "057076b6026d8d1910660b5567c2af3748ab266dd865db840e4afa89f6d410a9",
+    "SPX_archive.json": "2937ed75959207d80276836e4cd31fc07126449a9b46c53b1e09fcc5280e8254"
+  }
+}

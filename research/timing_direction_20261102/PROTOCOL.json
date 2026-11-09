@@ -1,0 +1,27 @@
+{
+  "fit": "2026-10-15..2026-10-23",
+  "later": "2026-10-26..2026-10-30",
+  "timing_label": "either direction reaches 2 prior20ATR within 5 contiguous minutes, ignoring stop",
+  "direction_training": "only rows where exactly one direction satisfies 2ATR-before-1ATR success; target long versus short",
+  "models": "two StandardScaler + LogisticRegression(C=1,max_iter=1000,random_state=42); no class balancing",
+  "threshold": "90th percentile timing training scores, fixed beforehand; no test ranking",
+  "cooldown_seconds": 600,
+  "features": [
+    "return1",
+    "return5",
+    "return15",
+    "range",
+    "body",
+    "atr_ratio",
+    "session_sin",
+    "session_cos"
+  ],
+  "evaluation": "unchanged close/nextopen 2ATR before1ATR in5minutes; timing success reported separately",
+  "limitations": [
+    "all dates previously used; exploratory only",
+    "small12-session sample",
+    "timing and direction are different tasks",
+    "model scores not calibrated confidence"
+  ],
+  "status": "RESEARCH_ONLY / NOT_READY"
+}

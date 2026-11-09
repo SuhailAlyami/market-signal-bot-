@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-02",
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "closed_rows": 390,
+  "first_bar_start_Riyadh": "2026-11-02 17:30:00+03:00",
+  "last_bar_end_Riyadh": "2026-11-03 00:00:00+03:00",
+  "high": 7662.23,
+  "low": 7539.38,
+  "high_minus_low_points": 122.84999999999945,
+  "close": 7542.33,
+  "frozen_model_result": [
+    {
+      "entry": "close",
+      "signals": 13,
+      "scored": 13,
+      "hits": 5,
+      "precision": 0.38461538461538464,
+      "matched_direction_base": 0.47337278106508873,
+      "same_times_momentum_hits": 4,
+      "same_times_momentum_precision": 0.3076923076923077
+    },
+    {
+      "entry": "next_open",
+      "signals": 13,
+      "scored": 13,
+      "hits": 4,
+      "precision": 0.3076923076923077,
+      "matched_direction_base": 0.4142011834319526,
+      "same_times_momentum_hits": 3,
+      "same_times_momentum_precision": 0.23076923076923078
+    }
+  ],
+  "first_hour_uncovered_by_design": true,
+  "live_alert_success_claimed": false,
+  "limitations": [
+    "one session only",
+    "most signals backfilled rather than delivered at original time",
+    "model trained on different vendor",
+    "Nov2 may now be development only; preserve frozen outcome"
+  ]
+}

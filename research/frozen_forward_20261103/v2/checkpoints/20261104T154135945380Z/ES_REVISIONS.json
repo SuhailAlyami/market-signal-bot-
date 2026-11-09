@@ -1,0 +1,30 @@
+{
+  "policy": "v2_first_observed_closed_bars_with_revision_ledger",
+  "asof_utc": "2026-11-04 15:41:35.945380+00:00",
+  "snapshot_sha256": "35438347885a792c119f7f7d160293a03fc0a22f14b767bcffcbb86a1d4de1f3",
+  "revision_count": 2,
+  "revisions": [
+    {
+      "bar_start_utc": "2026-11-03 16:10:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 12728,
+          "incoming": 12727.0
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 16:15:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7615,
+          "incoming": 7614.75
+        },
+        "volume": {
+          "first": 13841,
+          "incoming": 13842.0
+        }
+      }
+    }
+  ]
+}

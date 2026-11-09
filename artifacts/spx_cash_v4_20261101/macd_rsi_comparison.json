@@ -1,0 +1,897 @@
+{
+  "status": "EXPLORATORY_NOT_EARLY_PRECISION",
+  "cut_bar": 666,
+  "models": {
+    "macd_cross": {
+      "development": {
+        "counts": {
+          "target": 10,
+          "stop": 18,
+          "ambiguous": 1
+        },
+        "N": 29,
+        "conservative_target_share": 0.3448275862068966,
+        "events": [
+          {
+            "decision": 1793207040000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793208840000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793210460000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793211840000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793213160000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793214240000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793215200000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793217480000,
+            "direction": -1,
+            "result": "ambiguous"
+          },
+          {
+            "decision": 1793283060000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284080000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284920000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793285940000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793287260000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793288220000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793289480000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793290200000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793290920000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793291580000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793292540000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793293620000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793294820000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793295420000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793296740000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793298420000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793299260000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793301120000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793302680000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793303460000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793369040000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "stop": 7,
+          "target": 10
+        },
+        "N": 17,
+        "conservative_target_share": 0.5882352941176471,
+        "events": [
+          {
+            "decision": 1793370600000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793371980000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793373840000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793375400000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793376180000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793376960000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793378760000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793379660000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793380500000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793381580000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793382480000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793383620000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793385480000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793386320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793387880000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793388600000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793389320000,
+            "direction": -1,
+            "result": "stop"
+          }
+        ]
+      }
+    },
+    "macd_trend": {
+      "development": {
+        "counts": {
+          "stop": 10,
+          "target": 3
+        },
+        "N": 13,
+        "conservative_target_share": 0.23076923076923078,
+        "events": [
+          {
+            "decision": 1793207100000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793214240000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793283540000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284320000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793287740000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793291580000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793292540000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793293620000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793295360000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793298420000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793299320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793301660000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793303460000,
+            "direction": 1,
+            "result": "stop"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 6,
+          "stop": 4
+        },
+        "N": 10,
+        "conservative_target_share": 0.6,
+        "events": [
+          {
+            "decision": 1793374260000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793376180000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793378760000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793380200000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793381580000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793382480000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793384100000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793386320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793388360000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793389020000,
+            "direction": 1,
+            "result": "stop"
+          }
+        ]
+      }
+    },
+    "macd_trend_body": {
+      "development": {
+        "counts": {
+          "stop": 8,
+          "target": 1
+        },
+        "N": 9,
+        "conservative_target_share": 0.1111111111111111,
+        "events": [
+          {
+            "decision": 1793207100000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793214240000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793291580000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793292540000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793293620000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793295360000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793299320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793301660000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793303460000,
+            "direction": 1,
+            "result": "stop"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 3,
+          "stop": 1
+        },
+        "N": 4,
+        "conservative_target_share": 0.75,
+        "events": [
+          {
+            "decision": 1793374260000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793378760000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793388360000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793389380000,
+            "direction": 1,
+            "result": "target"
+          }
+        ]
+      }
+    },
+    "break_retest": {
+      "development": {
+        "counts": {
+          "target": 4,
+          "stop": 7
+        },
+        "N": 11,
+        "conservative_target_share": 0.36363636363636365,
+        "events": [
+          {
+            "decision": 1793210820000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793214720000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793216100000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793216820000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793282580000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284980000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793286660000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793298480000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793299920000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793303700000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793369520000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 4,
+          "stop": 5
+        },
+        "N": 9,
+        "conservative_target_share": 0.4444444444444444,
+        "events": [
+          {
+            "decision": 1793371020000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793372760000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793373660000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793381520000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793382540000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793385240000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793386380000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793387400000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793389980000,
+            "direction": 1,
+            "result": "target"
+          }
+        ]
+      }
+    },
+    "retest_macd": {
+      "development": {
+        "counts": {
+          "target": 3,
+          "stop": 5
+        },
+        "N": 8,
+        "conservative_target_share": 0.375,
+        "events": [
+          {
+            "decision": 1793210820000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793214720000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793216820000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793282580000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793286660000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793298480000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793303700000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793369520000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "stop": 3,
+          "target": 2
+        },
+        "N": 5,
+        "conservative_target_share": 0.4,
+        "events": [
+          {
+            "decision": 1793373660000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793382540000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793385240000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793386380000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793389980000,
+            "direction": 1,
+            "result": "target"
+          }
+        ]
+      }
+    },
+    "macd_trend_rsi": {
+      "development": {
+        "counts": {
+          "stop": 9,
+          "target": 3
+        },
+        "N": 12,
+        "conservative_target_share": 0.25,
+        "events": [
+          {
+            "decision": 1793207100000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793214240000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793283540000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793284320000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793287740000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793291580000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793292540000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793293620000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793295360000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793298420000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793299320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793301660000,
+            "direction": 1,
+            "result": "stop"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "target": 6,
+          "stop": 4
+        },
+        "N": 10,
+        "conservative_target_share": 0.6,
+        "events": [
+          {
+            "decision": 1793374260000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793376180000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793378760000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793380200000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793381580000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793382480000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793384100000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793386320000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793388360000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793389020000,
+            "direction": 1,
+            "result": "stop"
+          }
+        ]
+      }
+    },
+    "retest_macd_rsi": {
+      "development": {
+        "counts": {
+          "target": 3,
+          "stop": 5
+        },
+        "N": 8,
+        "conservative_target_share": 0.375,
+        "events": [
+          {
+            "decision": 1793210820000,
+            "direction": -1,
+            "result": "target"
+          },
+          {
+            "decision": 1793214720000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793216820000,
+            "direction": 1,
+            "result": "target"
+          },
+          {
+            "decision": 1793282580000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793286660000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793298480000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793303700000,
+            "direction": 1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793369520000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      },
+      "later_inspected": {
+        "counts": {
+          "stop": 1,
+          "target": 1
+        },
+        "N": 2,
+        "conservative_target_share": 0.5,
+        "events": [
+          {
+            "decision": 1793373660000,
+            "direction": -1,
+            "result": "stop"
+          },
+          {
+            "decision": 1793382540000,
+            "direction": -1,
+            "result": "target"
+          }
+        ]
+      }
+    }
+  },
+  "limits": "Fixed diagnostic 1ATR target/.75ATR adverse/10m, next-open reference. No costs. All dates inspected, no blind holdout. Two bars confirmation delay for divergences. EMA/RSI reset at gaps. No parameter search."
+}

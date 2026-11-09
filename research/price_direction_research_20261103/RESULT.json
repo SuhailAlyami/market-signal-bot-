@@ -1,0 +1,34 @@
+{
+  "fit_rows": 895,
+  "timing_model_changed": false,
+  "timing_threshold_changed": false,
+  "signal_times_changed": false,
+  "export_prediction_check": true,
+  "results": [
+    {
+      "entry": "close",
+      "n": 44,
+      "original_hits": 12,
+      "price_only_hits": 8,
+      "original_precision": 0.2727272727272727,
+      "price_only_precision": 0.18181818181818182,
+      "changed_directions": 10,
+      "changes_failure_to_success": 0,
+      "changes_success_to_failure": 4,
+      "new_direction_matched_base": 0.16735537190082644
+    },
+    {
+      "entry": "next_open",
+      "n": 44,
+      "original_hits": 12,
+      "price_only_hits": 8,
+      "original_precision": 0.2727272727272727,
+      "price_only_precision": 0.18181818181818182,
+      "changed_directions": 10,
+      "changes_failure_to_success": 0,
+      "changes_success_to_failure": 4,
+      "new_direction_matched_base": 0.16322314049586775
+    }
+  ],
+  "status": "NOT_READY"
+}

@@ -1,0 +1,10 @@
+{
+  "tests_passed": 8,
+  "reference_signals": 45,
+  "scored": 44,
+  "hits": 12,
+  "failures": 32,
+  "unscorable_gap": 1,
+  "model_sha256": "f14128d2cb868a8004ebb78a595217c62d1b32915356f4368e0772493fa3e3c8",
+  "status": "NOT_READY; no new market evaluation"
+}

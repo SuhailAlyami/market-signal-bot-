@@ -1,0 +1,85 @@
+{
+  "prefix_checks": 3,
+  "rows": [
+    {
+      "period": "development",
+      "entry": "close",
+      "signals": 10,
+      "scored": 10,
+      "hits": 2,
+      "precision": 0.2,
+      "same_times_random_direction": 0.24,
+      "outcomes": {
+        "target": 2,
+        "stop": 4,
+        "ambiguous": 0,
+        "timeout": 4
+      },
+      "posthoc_diagnostic_only": {
+        "either_direction_could_succeed": 4,
+        "either_direction_target_touched_ignoring_stop": 4,
+        "warning": "future-based explanatory upper bound; never a live feature"
+      }
+    },
+    {
+      "period": "development",
+      "entry": "next_open",
+      "signals": 10,
+      "scored": 10,
+      "hits": 2,
+      "precision": 0.2,
+      "same_times_random_direction": 0.24,
+      "outcomes": {
+        "target": 2,
+        "stop": 4,
+        "ambiguous": 0,
+        "timeout": 4
+      },
+      "posthoc_diagnostic_only": {
+        "either_direction_could_succeed": 4,
+        "either_direction_target_touched_ignoring_stop": 4,
+        "warning": "future-based explanatory upper bound; never a live feature"
+      }
+    },
+    {
+      "period": "later",
+      "entry": "close",
+      "signals": 7,
+      "scored": 7,
+      "hits": 0,
+      "precision": 0.0,
+      "same_times_random_direction": 0.0,
+      "outcomes": {
+        "target": 0,
+        "stop": 3,
+        "ambiguous": 0,
+        "timeout": 4
+      },
+      "posthoc_diagnostic_only": {
+        "either_direction_could_succeed": 0,
+        "either_direction_target_touched_ignoring_stop": 0,
+        "warning": "future-based explanatory upper bound; never a live feature"
+      }
+    },
+    {
+      "period": "later",
+      "entry": "next_open",
+      "signals": 7,
+      "scored": 7,
+      "hits": 0,
+      "precision": 0.0,
+      "same_times_random_direction": 0.0,
+      "outcomes": {
+        "target": 0,
+        "stop": 3,
+        "ambiguous": 0,
+        "timeout": 4
+      },
+      "posthoc_diagnostic_only": {
+        "either_direction_could_succeed": 0,
+        "either_direction_target_touched_ignoring_stop": 0,
+        "warning": "future-based explanatory upper bound; never a live feature"
+      }
+    }
+  ]
+}

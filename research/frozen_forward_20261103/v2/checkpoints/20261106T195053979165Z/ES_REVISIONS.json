@@ -1,0 +1,1067 @@
+{
+  "policy": "v2_first_observed_closed_bars_with_revision_ledger",
+  "asof_utc": "2026-11-06 19:50:53.979165+00:00",
+  "snapshot_sha256": "1de5dc8105c6c5db9d4bea3656d5d26a84885055f680f05bad1c4715e670895a",
+  "revision_count": 95,
+  "revisions": [
+    {
+      "bar_start_utc": "2026-10-22 19:55:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 115790,
+          "incoming": 115825
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-22 20:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 36602,
+          "incoming": 36567
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 13:30:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7661,
+          "incoming": 7661.25
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 13:35:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7661.75,
+          "incoming": 7662
+        },
+        "volume": {
+          "first": 38557,
+          "incoming": 38556
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 14:30:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 28462,
+          "incoming": 28465
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 14:35:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7658.5,
+          "incoming": 7658.25
+        },
+        "volume": {
+          "first": 23489,
+          "incoming": 23486
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 15:00:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7686,
+          "incoming": 7686.25
+        },
+        "volume": {
+          "first": 20544,
+          "incoming": 20555
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 15:05:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 18184,
+          "incoming": 18173
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 15:30:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7695.25,
+          "incoming": 7695.5
+        },
+        "volume": {
+          "first": 19663,
+          "incoming": 19666
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 15:35:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7695.5,
+          "incoming": 7695.25
+        },
+        "volume": {
+          "first": 18599,
+          "incoming": 18596
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-23 20:55:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7672.75,
+          "incoming": 7672.5
+        },
+        "volume": {
+          "first": 2033,
+          "incoming": 2034
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 13:30:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7683.25,
+          "incoming": 7683.5
+        },
+        "volume": {
+          "first": 37151,
+          "incoming": 37149
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 13:45:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7691.75,
+          "incoming": 7691.5
+        },
+        "volume": {
+          "first": 24614,
+          "incoming": 24616
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 13:50:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 20171,
+          "incoming": 20169
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 13:55:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7689.25,
+          "incoming": 7689
+        },
+        "volume": {
+          "first": 23192,
+          "incoming": 23194
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 14:00:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7689,
+          "incoming": 7689.25
+        },
+        "volume": {
+          "first": 23461,
+          "incoming": 23459
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 17:10:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 11727,
+          "incoming": 11728
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 17:15:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 10468,
+          "incoming": 10467
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 19:55:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 90399,
+          "incoming": 90422
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-26 20:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 20661,
+          "incoming": 20638
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-27 13:30:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 32892,
+          "incoming": 32899
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-27 13:35:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7736.25,
+          "incoming": 7736
+        },
+        "volume": {
+          "first": 19683,
+          "incoming": 19675
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 15:55:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7773.5,
+          "incoming": 7773.75
+        },
+        "volume": {
+          "first": 6827,
+          "incoming": 6832
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 16:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 7785,
+          "incoming": 7780
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 17:40:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7769.25,
+          "incoming": 7769.5
+        },
+        "volume": {
+          "first": 5054,
+          "incoming": 5059
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 17:45:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 6049,
+          "incoming": 6044
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 18:40:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 36182,
+          "incoming": 36183
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 18:45:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7781.5,
+          "incoming": 7781.75
+        },
+        "volume": {
+          "first": 38247,
+          "incoming": 38246
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 19:10:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7767.5,
+          "incoming": 7767.75
+        },
+        "volume": {
+          "first": 24736,
+          "incoming": 24737
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 19:15:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7767.75,
+          "incoming": 7767.5
+        },
+        "close": {
+          "first": 7770.5,
+          "incoming": 7770.25
+        },
+        "volume": {
+          "first": 19630,
+          "incoming": 19635
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 19:20:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7770.25,
+          "incoming": 7770.5
+        },
+        "volume": {
+          "first": 19688,
+          "incoming": 19682
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 19:55:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7784.25,
+          "incoming": 7784.5
+        },
+        "volume": {
+          "first": 81416,
+          "incoming": 81565
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-28 20:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 50592,
+          "incoming": 50443
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-29 13:30:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7747.25,
+          "incoming": 7747.5
+        },
+        "volume": {
+          "first": 56929,
+          "incoming": 56927
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-29 14:05:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 27029,
+          "incoming": 27034
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-29 14:10:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7747.5,
+          "incoming": 7747.25
+        },
+        "volume": {
+          "first": 31117,
+          "incoming": 31112
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-29 19:05:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 9428,
+          "incoming": 9430
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-29 19:10:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 13137,
+          "incoming": 13135
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-29 20:15:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 8601,
+          "incoming": 8606
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-29 20:20:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 6029,
+          "incoming": 6024
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 13:30:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 51411,
+          "incoming": 51403
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 13:35:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 36459,
+          "incoming": 36458
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 14:20:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7630.75,
+          "incoming": 7631
+        },
+        "volume": {
+          "first": 31766,
+          "incoming": 31767
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 14:25:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7631,
+          "incoming": 7630.75
+        },
+        "close": {
+          "first": 7636,
+          "incoming": 7636.25
+        },
+        "volume": {
+          "first": 30966,
+          "incoming": 30993
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 14:30:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7636.25,
+          "incoming": 7636
+        },
+        "volume": {
+          "first": 25799,
+          "incoming": 25771
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 14:40:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 30583,
+          "incoming": 30584
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 14:45:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 27501,
+          "incoming": 27500
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 16:45:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 36292,
+          "incoming": 36300
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 16:50:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 27035,
+          "incoming": 27027
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 17:55:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 15841,
+          "incoming": 15846
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 18:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 18377,
+          "incoming": 18372
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 18:10:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7585.75,
+          "incoming": 7586
+        },
+        "volume": {
+          "first": 17988,
+          "incoming": 17989
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 18:15:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7586,
+          "incoming": 7585.75
+        },
+        "volume": {
+          "first": 23081,
+          "incoming": 23080
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 19:50:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 69107,
+          "incoming": 69109
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 19:55:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7614.75,
+          "incoming": 7615
+        },
+        "volume": {
+          "first": 151967,
+          "incoming": 151978
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 20:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 49902,
+          "incoming": 50039
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-10-30 20:55:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 2413,
+          "incoming": 2414
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 14:30:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7649,
+          "incoming": 7649.25
+        },
+        "volume": {
+          "first": 40345,
+          "incoming": 40344
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 14:40:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 21182,
+          "incoming": 21183
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 14:45:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7653.25,
+          "incoming": 7653
+        },
+        "volume": {
+          "first": 22511,
+          "incoming": 22510
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 16:05:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7664.25,
+          "incoming": 7664
+        },
+        "volume": {
+          "first": 13580,
+          "incoming": 13582
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 16:10:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 18519,
+          "incoming": 18517
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 19:35:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 16825,
+          "incoming": 16826
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 19:40:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 15577,
+          "incoming": 15576
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 19:50:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 25414,
+          "incoming": 25416
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 19:55:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7596.75,
+          "incoming": 7597
+        },
+        "volume": {
+          "first": 24796,
+          "incoming": 24794
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 20:55:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 98916,
+          "incoming": 99136
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 21:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 25694,
+          "incoming": 25474
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 21:45:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 1226,
+          "incoming": 1229
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-02 21:50:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 1249,
+          "incoming": 1246
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 14:30:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 37294,
+          "incoming": 37293
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 14:35:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7590,
+          "incoming": 7590.25
+        },
+        "volume": {
+          "first": 24722,
+          "incoming": 24724
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 14:40:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 20582,
+          "incoming": 20580
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 15:30:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7596.25,
+          "incoming": 7596
+        },
+        "volume": {
+          "first": 16429,
+          "incoming": 16439
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 15:35:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 12494,
+          "incoming": 12484
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 16:55:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7606.25,
+          "incoming": 7606.5
+        },
+        "volume": {
+          "first": 9375,
+          "incoming": 9414
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 17:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 10948,
+          "incoming": 10909
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 18:05:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 10002,
+          "incoming": 10003
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 18:10:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7618.5,
+          "incoming": 7618.25
+        },
+        "volume": {
+          "first": 10240,
+          "incoming": 10247
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 18:15:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 9182,
+          "incoming": 9174
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 20:45:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7599.0,
+          "incoming": 7598.75
+        },
+        "volume": {
+          "first": 13365.0,
+          "incoming": 13374
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 20:50:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7598.75,
+          "incoming": 7599
+        },
+        "volume": {
+          "first": 23305.0,
+          "incoming": 23296
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 20:55:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7596.5,
+          "incoming": 7596.25
+        },
+        "volume": {
+          "first": 73987.0,
+          "incoming": 73990
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-03 21:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 20243.0,
+          "incoming": 20240
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-04 14:30:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7683.25,
+          "incoming": 7683
+        },
+        "volume": {
+          "first": 56566.0,
+          "incoming": 56565
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-04 15:25:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7717.75,
+          "incoming": 7719
+        },
+        "volume": {
+          "first": 26824.0,
+          "incoming": 29026
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 15:30:00+00:00",
+      "changes": {
+        "low": {
+          "first": 7428.75,
+          "incoming": 7420
+        },
+        "close": {
+          "first": 7429.25,
+          "incoming": 7421.75
+        },
+        "volume": {
+          "first": 4878,
+          "incoming": 25181
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 16:50:00+00:00",
+      "changes": {
+        "high": {
+          "first": 7451.25,
+          "incoming": 7455.5
+        },
+        "close": {
+          "first": 7450.5,
+          "incoming": 7453.5
+        },
+        "volume": {
+          "first": 4873,
+          "incoming": 10110
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 17:25:00+00:00",
+      "changes": {
+        "high": {
+          "first": 7440.25,
+          "incoming": 7444.75
+        },
+        "close": {
+          "first": 7439.75,
+          "incoming": 7441
+        },
+        "volume": {
+          "first": 1209,
+          "incoming": 9211
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 17:40:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 16440,
+          "incoming": 16442
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 17:45:00+00:00",
+      "changes": {
+        "open": {
+          "first": 7418.75,
+          "incoming": 7418.5
+        },
+        "close": {
+          "first": 7409,
+          "incoming": 7408.75
+        },
+        "volume": {
+          "first": 13199,
+          "incoming": 13206
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 17:50:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 15414,
+          "incoming": 15405
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 17:55:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 11844,
+          "incoming": 11845
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 18:00:00+00:00",
+      "changes": {
+        "volume": {
+          "first": 12267,
+          "incoming": 12266
+        }
+      }
+    },
+    {
+      "bar_start_utc": "2026-11-06 18:20:00+00:00",
+      "changes": {
+        "high": {
+          "first": 7414.75,
+          "incoming": 7416.5
+        },
+        "close": {
+          "first": 7410,
+          "incoming": 7413.75
+        },
+        "volume": {
+          "first": 3721,
+          "incoming": 8921
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "date": {
+    "2026-10-28": {
+      "stop": 12,
+      "target": 2,
+      "ambiguous": 1,
+      "gap": 1
+    },
+    "2026-10-29": {
+      "stop": 22,
+      "target": 6
+    },
+    "2026-10-30": {
+      "target": 13,
+      "stop": 9,
+      "ambiguous": 1
+    }
+  },
+  "direction": {
+    "-1": {
+      "stop": 27,
+      "target": 10,
+      "ambiguous": 1
+    },
+    "1": {
+      "stop": 16,
+      "target": 11,
+      "gap": 1,
+      "ambiguous": 1
+    }
+  },
+  "range_atr": {
+    "1.2-2": {
+      "stop": 35,
+      "target": 19,
+      "ambiguous": 2
+    },
+    ">2": {
+      "stop": 8,
+      "gap": 1,
+      "target": 2
+    }
+  },
+  "prior_trend": {
+    "opposed": {
+      "stop": 15,
+      "target": 11,
+      "ambiguous": 2,
+      "gap": 1
+    },
+    "aligned": {
+      "stop": 28,
+      "target": 10
+    }
+  }
+}

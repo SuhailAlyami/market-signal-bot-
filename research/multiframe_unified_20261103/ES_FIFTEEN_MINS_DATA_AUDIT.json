@@ -1,0 +1,7 @@
+{
+  "raw_rows": 1000,
+  "excluded_OHLC_inconsistent": 0,
+  "excluded_times": [],
+  "volume_zero_rows": 0,
+  "note": "No repair or future imputation; excluded bars create expected-grid gaps and reset features."
+}

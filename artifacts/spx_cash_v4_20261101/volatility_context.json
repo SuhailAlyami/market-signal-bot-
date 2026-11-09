@@ -1,0 +1,26 @@
+{
+  "2026-10-28": {
+    "status": "RESEARCH_ONLY",
+    "rv20_annual_decimal": 0.10121653322962308,
+    "last_daily_bar": "2026-10-27T13:30:00Z",
+    "iv_contract_decimal": null,
+    "iv_status": "MISSING_POINT_IN_TIME_CONTRACT_IV",
+    "option_buy_eligible": false
+  },
+  "2026-10-29": {
+    "status": "RESEARCH_ONLY",
+    "rv20_annual_decimal": 0.10097695831217565,
+    "last_daily_bar": "2026-10-28T13:30:00Z",
+    "iv_contract_decimal": null,
+    "iv_status": "MISSING_POINT_IN_TIME_CONTRACT_IV",
+    "option_buy_eligible": false
+  },
+  "2026-10-30": {
+    "status": "RESEARCH_ONLY",
+    "rv20_annual_decimal": 0.1016492526766584,
+    "last_daily_bar": "2026-10-29T13:30:00Z",
+    "iv_contract_decimal": null,
+    "iv_status": "MISSING_POINT_IN_TIME_CONTRACT_IV",
+    "option_buy_eligible": false
+  }
+}

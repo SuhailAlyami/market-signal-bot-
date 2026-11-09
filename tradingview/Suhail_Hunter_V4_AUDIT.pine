@@ -1,0 +1,257 @@
+//@version=6
+indicator("Suhail Hunter v4 | all-event AUDIT", overlay=true, max_labels_count=100)
+if syminfo.tickerid != "CAPITALCOM:SPX500" or not chart.is_standard or not timeframe.isminutes or timeframe.multiplier != 1
+    runtime.error("Use standard 1-minute CAPITALCOM:SPX500. RESEARCH_ONLY, not cash SPX.")
+// Research candidates; historical results do not establish live edge.
+selectedModel = input.string("RANGE_READY", "Research model", options=["RANGE_READY","FAILED_BREAK"])
+enablePaperWatch = input.bool(true, "Show confirmed paper WATCH")
+enableResearchAlerts = input.bool(false, "Enable research alert calls (requires account support)")
+feedDeclaration = input.string("UNVERIFIED", "Feed declaration (manual, not independent verification)", options=["UNVERIFIED","DELAYED","REALTIME_USER_DECLARED"])
+showEvaluation = input.bool(false, "Show historical path diagnostic (not trading P&L)")
+START = input.time(timestamp("2026-10-20T00:00:00+03:00"), "Diagnostic start")
+END = input.time(timestamp("2026-10-28T00:00:00+03:00"), "Diagnostic end, exclusive")
+// V2 adjudication: the known bar Open precedes any later High/Low touches.
+f_path(sign, entry, scale, o, h, l) =>
+    target = entry+sign*scale
+    stop = entry-sign*0.75*scale
+    opensTarget = sign == 1 ? o >= target : o <= target
+    opensStop = sign == 1 ? o <= stop : o >= stop
+    touchesTarget = sign == 1 ? h >= target : l <= target
+    touchesStop = sign == 1 ? l <= stop : h >= stop
+    opensTarget ? 1 : opensStop ? -1 : touchesTarget and touchesStop ? 2 : touchesTarget ? 1 : touchesStop ? -1 : 0
+priorATR = ta.sma(ta.tr(true)[1],20)
+h5 = ta.highest(high[1],5)
+l5 = ta.lowest(low[1],5)
+width3 = ta.highest(high[1],3)-ta.lowest(low[1],3)
+barRange = high-low
+ohlcOK = open > 0 and low > 0 and high >= math.max(open,close) and low <= math.min(open,close)
+valid = ta.sma(ohlcOK ? 1.0 : 0.0,31) == 1 and ta.sma(time-time[1] == 60000 ? 1.0 : 0.0,30) == 1 and priorATR > 0 and h5 > l5
+inside = close <= h5 and close >= l5
+readyUp = valid and width3 <= 1.5*priorATR and barRange <= priorATR and inside and h5-close <= 0.25*priorATR and close > open and close > close[1]
+readyDown = valid and width3 <= 1.5*priorATR and barRange <= priorATR and inside and close-l5 <= 0.25*priorATR and close < open and close < close[1]
+sweepUp = high > h5
+sweepDown = low < l5
+closeFraction = barRange > 0 ? (close-low)/barRange : 0.5
+failUp = valid and barRange <= 2*priorATR and sweepDown and not sweepUp and inside and close > open and closeFraction >= 0.60
+failDown = valid and barRange <= 2*priorATR and sweepUp and not sweepDown and inside and close < open and closeFraction <= 0.40
+m1 = readyUp and not readyDown ? 1 : readyDown and not readyUp ? -1 : 0
+m2 = failUp and not failDown ? 1 : failDown and not failUp ? -1 : 0
+// Independent acceleration channel: first close through prior three-bar edge.
+// This detects an observed impulse at close, not a prediction before it.
+h3 = ta.highest(high[1],3)
+l3 = ta.lowest(low[1],3)
+bodyFraction = barRange > 0 ? math.abs(close-open)/barRange : 0.0
+accelUp = valid and barRange >= 1.2*priorATR and bodyFraction >= 0.6 and closeFraction >= 0.8 and close > h3 and close[1] <= h3 and close > open
+accelDown = valid and barRange >= 1.2*priorATR and bodyFraction >= 0.6 and closeFraction <= 0.2 and close < l3 and close[1] >= l3 and close < open
+var int accelSide = 0
+var int accelStarted = na
+var int accelDecision = na
+var int accelLastBar = na
+var float accelInvalid = na
+accelFired = false
+accelEnded = false
+if barstate.isconfirmed
+    accelTerminated = false
+    accelDirection = accelUp ? 1 : accelDown ? -1 : 0
+    accelFlip = valid and accelSide != 0 and accelDirection == -accelSide and time-accelLastBar == 60000 and accelSide*(close-accelInvalid) <= 0
+    if accelSide != 0
+        accelGap = not na(accelLastBar) and time-accelLastBar != 60000
+        accelCross = accelSide*(close-accelInvalid) <= 0
+        if not valid or accelGap or accelCross or time_close-accelStarted >= 600000
+            accelSide := 0
+            accelEnded := true
+            accelTerminated := true
+    accelCooled = na(accelDecision) or time_close-accelDecision >= 180000
+    if enablePaperWatch and valid and accelDirection != 0 and accelSide == 0 and (not accelTerminated or accelFlip) and (accelCooled or accelFlip)
+        accelSide := accelDirection
+        accelStarted := time_close
+        accelDecision := time_close
+        accelInvalid := accelDirection == 1 ? low : high
+        accelFired := true
+        accelCaption = "ACCEL "+(accelSide == 1 ? "UP" : "DOWN")+" | CFD\nKSA "+str.format_time(time_close,"MM-dd HH:mm","Asia/Riyadh")+"\nInvalid close "+str.tostring(accelInvalid,format.mintick)+" | RESEARCH_ONLY"
+        label.new(bar_index,accelSide == 1 ? low : high,accelCaption,style=accelSide == 1 ? label.style_label_up : label.style_label_down,color=accelSide == 1 ? color.blue : color.orange,textcolor=color.white,size=size.small)
+    accelLastBar := time
+plot(accelSide != 0 ? accelInvalid : na,"Acceleration invalidation (CFD)",color=color.orange,style=plot.style_linebr)
+plotshape(accelEnded,title="Acceleration ended",text="A-END",style=shape.xcross,location=location.bottom,color=color.orange,size=size.tiny)
+if enableResearchAlerts and feedDeclaration != "DELAYED" and barstate.isrealtime and barstate.isconfirmed and (accelFired or accelEnded)
+    alert("RESEARCH_ONLY | "+syminfo.tickerid+" | ACCEL "+(accelFired ? (accelSide == 1 ? "UP" : "DOWN") : "END")+" | "+feedDeclaration+" | KSA "+str.format_time(time_close,"yyyy-MM-dd HH:mm","Asia/Riyadh"),alert.freq_all)
+
+baseline = valid ? (close > open ? 1 : close < open ? -1 : 0) : 0
+var directions = array.new_int(3,0)
+var expected = array.new_int(3,0)
+var steps = array.new_int(3,0)
+var entries = array.new_float(3,na)
+var scales = array.new_float(3,na)
+var lastDecision = array.new_int(3,0)
+var signals = array.new_int(3,0)
+var targets = array.new_int(3,0)
+var stops = array.new_int(3,0)
+var timeouts = array.new_int(3,0)
+var ambiguous = array.new_int(3,0)
+var gaps = array.new_int(3,0)
+var timeoutPoints = array.new_float(3,0)
+var int loadedFrom = time
+var int loadedTo = time
+firedM1 = false
+firedM2 = false
+if barstate.isconfirmed
+    loadedTo := time_close
+    for model = 0 to 2
+        wasPending = array.get(directions,model) != 0
+        if wasPending
+            sign = array.get(directions,model)
+            if time != array.get(expected,model) or not ohlcOK
+                array.set(gaps,model,array.get(gaps,model)+1)
+                array.set(directions,model,0)
+            else
+                if array.get(steps,model) == 0
+                    array.set(entries,model,open)
+                entry = array.get(entries,model)
+                scale = array.get(scales,model)
+                outcome = f_path(sign,entry,scale,open,high,low)
+                count = array.get(steps,model)+1
+                array.set(steps,model,count)
+                array.set(expected,model,time+60000)
+                if outcome == 2
+                    array.set(ambiguous,model,array.get(ambiguous,model)+1)
+                    array.set(directions,model,0)
+                else if outcome == 1
+                    array.set(targets,model,array.get(targets,model)+1)
+                    array.set(directions,model,0)
+                else if outcome == -1
+                    array.set(stops,model,array.get(stops,model)+1)
+                    array.set(directions,model,0)
+                else if count >= 10
+                    array.set(timeouts,model,array.get(timeouts,model)+1)
+                    array.set(timeoutPoints,model,array.get(timeoutPoints,model)+sign*(close-entry))
+                    array.set(directions,model,0)
+        direction = model == 0 ? m1 : model == 1 ? m2 : baseline
+        if not wasPending and valid and direction != 0 and time_close >= START and time_close < END and time_close-array.get(lastDecision,model) >= 600000
+            array.set(directions,model,direction)
+            array.set(expected,model,time_close)
+            array.set(steps,model,0)
+            array.set(entries,model,na)
+            array.set(scales,model,priorATR)
+            array.set(lastDecision,model,time_close)
+            array.set(signals,model,array.get(signals,model)+1)
+            firedM1 := firedM1 or model == 0
+            firedM2 := firedM2 or model == 1
+// Watch display is separated from historical outcome scoring.
+var table summary = table.new(position.bottom_right,9,5)
+if barstate.islast and showEvaluation
+    for col = 0 to 8
+        header = col == 0 ? "PATH_V2" : col == 1 ? "N" : col == 2 ? "Target" : col == 3 ? "Stop" : col == 4 ? "Timeout" : col == 5 ? "Both" : col == 6 ? "Gap/input" : col == 7 ? "Pending" : "Timeout avg"
+        table.cell(summary,col,0,header,text_color=color.white,bgcolor=color.black)
+    for model = 0 to 2
+        name = model == 0 ? "RANGE_READY" : model == 1 ? "FAILED_BREAK" : "BODY_BASELINE"
+        table.cell(summary,0,model+1,name,text_color=color.white,bgcolor=color.black)
+        for col = 1 to 7
+            value = col == 1 ? array.get(signals,model) : col == 2 ? array.get(targets,model) : col == 3 ? array.get(stops,model) : col == 4 ? array.get(timeouts,model) : col == 5 ? array.get(ambiguous,model) : col == 6 ? array.get(gaps,model) : array.get(directions,model) != 0 ? 1 : 0
+            table.cell(summary,col,model+1,str.tostring(value),text_color=color.white,bgcolor=color.black)
+        avgTimeout = array.get(timeouts,model) > 0 ? array.get(timeoutPoints,model)/array.get(timeouts,model) : na
+        table.cell(summary,8,model+1,str.tostring(avgTimeout,"#.##"),text_color=color.white,bgcolor=color.black)
+    table.cell(summary,0,4,"NOT_READY",text_color=color.white,bgcolor=color.black)
+    table.cell(summary,1,4,"CFD path",text_color=color.white,bgcolor=color.black)
+    table.cell(summary,2,4,"No P&L",text_color=color.white,bgcolor=color.black)
+    table.cell(summary,3,4,str.format_time(loadedFrom,"MM-dd HH:mm","Asia/Riyadh"),text_color=color.white,bgcolor=color.black)
+    table.cell(summary,4,4,str.format_time(loadedTo,"MM-dd HH:mm","Asia/Riyadh"),text_color=color.white,bgcolor=color.black)
+
+// Confirmed-bar paper lifecycle. No orders, premiums, fills or confidence claim.
+var int paperSide = 0
+var int paperStarted = na
+var int lastPaperDecision = na
+var int lastPaperBar = na
+var float paperInvalidation = na
+watchUp = false
+watchDown = false
+paperEnded = false
+if barstate.isconfirmed
+    terminated = false
+    if paperSide != 0
+        gap = not na(lastPaperBar) and time-lastPaperBar != 60000
+        expired = time_close-paperStarted >= 600000
+        crossed = paperSide*(close-paperInvalidation) <= 0
+        if not valid or gap or expired or crossed
+            paperSide := 0
+            paperEnded := true
+            terminated := true
+    direction = selectedModel == "RANGE_READY" ? m1 : m2
+    cooled = na(lastPaperDecision) or time_close-lastPaperDecision >= 600000
+    if enablePaperWatch and valid and paperSide == 0 and not terminated and cooled and direction != 0
+        paperSide := direction
+        paperStarted := time_close
+        lastPaperDecision := time_close
+        paperInvalidation := direction == 1 ? low : high
+        watchUp := direction == 1
+        watchDown := direction == -1
+        paperCaption = "WATCH "+(direction == 1 ? "UP" : "DOWN")+" | CFD\nKSA "+str.format_time(time_close,"MM-dd HH:mm","Asia/Riyadh")+"\nInvalid "+str.tostring(paperInvalidation,format.mintick)+" | RESEARCH_ONLY"
+        label.new(bar_index,direction == 1 ? low : high,paperCaption,style=direction == 1 ? label.style_label_up : label.style_label_down,color=direction == 1 ? color.teal : color.maroon,textcolor=color.white,size=size.small)
+    lastPaperBar := time
+plot(paperSide != 0 ? paperInvalidation : na,"Paper invalidation (CFD)",color=color.red,style=plot.style_linebr)
+plotshape(paperEnded,title="Paper scenario ended",text="END",style=shape.xcross,location=location.top,color=color.gray,size=size.tiny)
+if enableResearchAlerts and feedDeclaration != "DELAYED" and barstate.isrealtime and barstate.isconfirmed and (watchUp or watchDown or paperEnded)
+    stateText = watchUp ? "WATCH UP" : watchDown ? "WATCH DOWN" : "END"
+    alert("RESEARCH_ONLY | "+syminfo.tickerid+" | "+selectedModel+" | "+stateText+" | "+feedDeclaration+" | KSA "+str.format_time(time_close,"yyyy-MM-dd HH:mm","Asia/Riyadh")+" | CFD levels only; no option advice",alert.freq_once_per_bar_close)
+var table status = table.new(position.top_right,1,5)
+if barstate.islast
+    table.cell(status,0,0,"سهيل هنتر v3 | بحثي / ورقي",text_color=color.white,bgcolor=color.black)
+    table.cell(status,0,1,syminfo.tickerid+" | "+feedDeclaration,text_color=color.white,bgcolor=color.black)
+    table.cell(status,0,2,selectedModel+" | "+(paperSide == 1 ? "WATCH UP" : paperSide == -1 ? "WATCH DOWN" : "WAIT"),text_color=color.white,bgcolor=color.black)
+    table.cell(status,0,3,"KSA bar "+str.format_time(time,"MM-dd HH:mm","Asia/Riyadh")+" | NOT_READY",text_color=color.white,bgcolor=color.black)
+
+if barstate.islast
+    table.cell(status,0,4,"ACCEL | "+(accelSide == 1 ? "UP" : accelSide == -1 ? "DOWN" : "WAIT"),text_color=color.white,bgcolor=color.black)
+
+// Frozen all-event audit. No thresholds optimized here.
+var auditDirs = array.new_int()
+var auditSteps = array.new_int()
+var auditExpected = array.new_int()
+var auditEntries = array.new_float()
+var auditScales = array.new_float()
+var auditCounts = array.new_int(6,0)
+var int auditFirst = na
+var int auditLast = na
+if barstate.isconfirmed
+    if array.size(auditDirs) > 0
+        for i = array.size(auditDirs)-1 to 0
+            done = false
+            slot = -1
+            if time != array.get(auditExpected,i) or not ohlcOK
+                slot := 4
+                done := true
+            else
+                if array.get(auditSteps,i) == 0
+                    array.set(auditEntries,i,open)
+                result = f_path(array.get(auditDirs,i),array.get(auditEntries,i),array.get(auditScales,i),open,high,low)
+                count = array.get(auditSteps,i)+1
+                array.set(auditSteps,i,count)
+                array.set(auditExpected,i,time_close)
+                if result != 0
+                    slot := result == 1 ? 1 : result == -1 ? 2 : 3
+                    done := true
+                else if count >= 10
+                    slot := 5
+                    done := true
+            if done
+                array.set(auditCounts,slot,array.get(auditCounts,slot)+1)
+                array.remove(auditDirs,i)
+                array.remove(auditSteps,i)
+                array.remove(auditExpected,i)
+                array.remove(auditEntries,i)
+                array.remove(auditScales,i)
+    if accelFired and time_close >= timestamp("2026-10-29T00:00:00+03:00")
+        array.set(auditCounts,0,array.get(auditCounts,0)+1)
+        array.push(auditDirs,accelSide)
+        array.push(auditSteps,0)
+        array.push(auditExpected,time_close)
+        array.push(auditEntries,na)
+        array.push(auditScales,priorATR)
+        auditFirst := na(auditFirst) ? time_close : auditFirst
+        auditLast := time_close
+var table audit = table.new(position.bottom_center,8,2)
+if barstate.islast
+    for col = 0 to 7
+        head = col == 0 ? "ACCEL N" : col == 1 ? "Target" : col == 2 ? "Stop" : col == 3 ? "Both" : col == 4 ? "Gap" : col == 5 ? "Timeout" : col == 6 ? "Pending" : "KSA first / last"
+        table.cell(audit,col,0,head,text_color=color.white,bgcolor=color.black)
+        val = col < 6 ? str.tostring(array.get(auditCounts,col)) : col == 6 ? str.tostring(array.size(auditDirs)) : str.format_time(auditFirst,"MM-dd HH:mm","Asia/Riyadh")+" / "+str.format_time(auditLast,"HH:mm","Asia/Riyadh")
+        table.cell(audit,col,1,val,text_color=color.white,bgcolor=color.black)

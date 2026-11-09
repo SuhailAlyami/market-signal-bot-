@@ -1,0 +1,40 @@
+{
+  "status": "NOT_READY",
+  "original_frozen_sha256": "fb281774690ab5848d26c16f6583cfb632a80bcdc12ea486160a0a3f97850f6b",
+  "original_unchanged": true,
+  "threshold_requested": 0.7,
+  "policies_tested": 14,
+  "policies_observed_ge70": [
+    {
+      "frame": "FIVE_MINS",
+      "variant": "price",
+      "policy": "selective",
+      "signals": 14,
+      "scored": 12,
+      "hits": 10,
+      "rate": 0.8333333333333334,
+      "mean_signed_points": 8.58083333333328,
+      "folds_with_signals": 5
+    },
+    {
+      "frame": "FIVE_MINS",
+      "variant": "price_volume",
+      "policy": "selective",
+      "signals": 16,
+      "scored": 10,
+      "hits": 7,
+      "rate": 0.7,
+      "mean_signed_points": 1.9840000000000146,
+      "folds_with_signals": 6
+    }
+  ],
+  "adoption": "Retain only as research candidates; observed rate alone does not establish stable70percent, sample sufficiency, or options profitability.",
+  "limitations": [
+    "Previously consumed data; not a pristine independent test.",
+    "Each walkforward row combines different fold models, not one frozen weight set.",
+    "Multiple policies compared; do not select best without multiplicity and future evaluation."
+  ],
+  "no_optimization_needed_to_cross_observed_threshold": true,
+  "no_new_parameters_searched": true,
+  "no_live_alert_changes": true
+}

@@ -1,0 +1,13 @@
+{
+  "raw_ES_rows": 1000,
+  "matched_ES_SPX_rows": 820,
+  "common_finite_rvol_rows": 757,
+  "ES_positive_volume_rows": 820,
+  "dates": {
+    "2026-10-29": 40,
+    "2026-10-30": 390,
+    "2026-11-02": 390
+  },
+  "source_contract": "ES Dec2026 CME515416632",
+  "assumption": "shared timestamps denote same minute start; no inference of trade side or IV; historical research only"
+}

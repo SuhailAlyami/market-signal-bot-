@@ -1,0 +1,62 @@
+{
+  "rows": [
+    {
+      "model": "confirmed",
+      "period": "earlier",
+      "n": 19,
+      "direction_hits": 13,
+      "direction_rate": 0.6842105263157895,
+      "endpoint_at_least1ATR_hits": 9,
+      "same_time_random_direction_expected": 0.4792243767313019,
+      "flat": 0,
+      "mean_signed_points": 2.4336842105262564,
+      "median_signed_points": 2.949999999999818
+    },
+    {
+      "model": "confirmed",
+      "period": "later",
+      "n": 26,
+      "direction_hits": 12,
+      "direction_rate": 0.46153846153846156,
+      "endpoint_at_least1ATR_hits": 9,
+      "same_time_random_direction_expected": 0.5355029585798816,
+      "flat": 0,
+      "mean_signed_points": -2.6688461538462365,
+      "median_signed_points": -1.8049999999998363
+    },
+    {
+      "model": "confirmed",
+      "excluded_incomplete_horizon_all_dates": 1
+    },
+    {
+      "model": "early",
+      "period": "earlier",
+      "n": 20,
+      "direction_hits": 13,
+      "direction_rate": 0.65,
+      "endpoint_at_least1ATR_hits": 9,
+      "same_time_random_direction_expected": 0.5,
+      "flat": 0,
+      "mean_signed_points": 1.8244999999999891,
+      "median_signed_points": 2.8049999999998363
+    },
+    {
+      "model": "early",
+      "period": "later",
+      "n": 37,
+      "direction_hits": 18,
+      "direction_rate": 0.4864864864864865,
+      "endpoint_at_least1ATR_hits": 11,
+      "same_time_random_direction_expected": 0.5040175310445583,
+      "flat": 0,
+      "mean_signed_points": -1.3494594594595164,
+      "median_signed_points": -0.8999999999996362
+    },
+    {
+      "model": "early",
+      "excluded_incomplete_horizon_all_dates": 3
+    }
+  ],
+  "status": "NOT_READY",
+  "warning": "30-minute endpoint audit chosen posthoc on consumed data. Positive endpoint does not imply safe path or options profit; no cost or trade exit execution."
+}

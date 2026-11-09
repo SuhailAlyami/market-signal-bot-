@@ -1,0 +1,9 @@
+{
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "frozen_utc": "2026-11-02T08:05:38.581936+00:00",
+  "rule": "Original ACCELv4 raw1m SPX signals. Require exact-timestamp VIX1Dclose and six contiguous VIX1Dminute bars. Keep long only if current VIX1Dclose < close5barsago; keep short for >. Zerochange abstains. No threshold search.",
+  "baseline": "Same ACCELraw past-only VIX1D availability universe without directionfilter. Filter before global600sec cooldown, same cooldown baseline.",
+  "target": "Originalopenfix:2priorSMA20ATRbefore1ATRadverse,next5contiguousSPXminutes;closeprimary,nextopenrobustness.",
+  "scope": "SPXOct28-30, priorconsumeddata. VIX1DhistoricalLast, notcurrentIVofaspecificcontract. Independentholdoutnotavailable.",
+  "latency_stress": "Additional descriptive filter using VIX1D completed one minute earlier instead of simultaneous close; no measuredlatencyclaim; same6barcontinuity."
+}

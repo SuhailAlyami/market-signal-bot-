@@ -1,0 +1,49 @@
+{
+  "status": "DESCRIPTIVE_RESEARCH_ONLY_NOT_READY",
+  "ES_RTH_rows": 780,
+  "SPX_RTH_rows": 1000,
+  "matched_rows": 780,
+  "matched_dates": {
+    "2026-11-02": 780
+  },
+  "matched_gap_count": 0,
+  "lag_correlations": [
+    {
+      "ES_lead_seconds": -60,
+      "n_pairs": 777,
+      "return_correlation": 0.0037904633271876546
+    },
+    {
+      "ES_lead_seconds": -30,
+      "n_pairs": 778,
+      "return_correlation": 0.013101057676873331
+    },
+    {
+      "ES_lead_seconds": 0,
+      "n_pairs": 779,
+      "return_correlation": 0.9501919490082702
+    },
+    {
+      "ES_lead_seconds": 30,
+      "n_pairs": 778,
+      "return_correlation": 0.1039953980049185
+    },
+    {
+      "ES_lead_seconds": 60,
+      "n_pairs": 777,
+      "return_correlation": -0.021102915505202338
+    }
+  ],
+  "next30second_direction_diagnostic": {
+    "n_same_nonzero_pairs": 719,
+    "ES_sign_agreement": 0.5493741307371349,
+    "SPX_momentum_agreement": 0.5312934631432545,
+    "majority_direction_baseline_posthoc": 0.541029207232267,
+    "warning": "all returns, no selection; one consumed session; not2ATR-before1ATR accuracy or options PnL"
+  },
+  "SPX_1minute_reconstruction": {
+    "matching_minutes": 390,
+    "max_abs_OHLC_difference": 0.0,
+    "all_four_prices_exact_fraction": 1.0
+  }
+}

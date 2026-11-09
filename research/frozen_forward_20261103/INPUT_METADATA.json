@@ -1,0 +1,19 @@
+{
+  "SPX": {
+    "contract_id": 416904,
+    "exchange": "CBOE",
+    "security_type": "IND"
+  },
+  "ES": {
+    "contract_id": 515416632,
+    "exchange": "CME",
+    "security_type": "FUT"
+  },
+  "outside_rth": false,
+  "step": "FIVE_MINS",
+  "provenance": "RESEARCH_ONLY historical Last",
+  "input_sha256": {
+    "SPX_latest_raw.json": "90d912cdd9b9ba74bd8230c0953aa04145cbefb91713edebd93c7e8b0ec3864a",
+    "ES_latest_raw.json": "d444c6de2bfb619a2fc73915de2d3054ceb0c475edbd5a20f905c451f681885e"
+  }
+}

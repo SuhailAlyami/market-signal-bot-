@@ -1,0 +1,29 @@
+{
+  "summary": [
+    {
+      "period": "earlier",
+      "reference_legs": 76,
+      "new_matching_signal_legs": 15,
+      "already_active_legs": 24,
+      "legs_with_neither_new_signal_nor_existing_direction": 37,
+      "same_direction_locked_at_start_without_any_new_signal": 0,
+      "median_delay_matched_minutes": 14.0,
+      "median_moved_before_signal_points": 21.26000000000022,
+      "median_remaining_to_extreme_points": 7.369999999999891
+    },
+    {
+      "period": "later",
+      "reference_legs": 55,
+      "new_matching_signal_legs": 12,
+      "already_active_legs": 12,
+      "legs_with_neither_new_signal_nor_existing_direction": 32,
+      "same_direction_locked_at_start_without_any_new_signal": 4,
+      "median_delay_matched_minutes": 15.5,
+      "median_moved_before_signal_points": 19.169999999999618,
+      "median_remaining_to_extreme_points": 11.209999999999582
+    }
+  ],
+  "threshold_points": 10,
+  "warning": "Posthoc 10-point close-based directional-change legs, not live labels or signal precision. Active and newly signaled counts can overlap. Incomplete last legs retained and marked. Lock attribution is conservative descriptive, not a causal counterfactual.",
+  "status": "NOT_READY"
+}

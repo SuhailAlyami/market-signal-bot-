@@ -1,0 +1,11 @@
+{
+  "purpose": "Predict 2ATR excursion in either direction over next5minutes ignoring stops, NOT directional signal precision",
+  "fit": "Oct15..21 five days",
+  "calibration": "Oct22..23 features only",
+  "test": "Oct26..30 consumed exploratory five days",
+  "threshold": "fixed90th percentile calibration scores, no sweep",
+  "model": "same fixed HGB60 leaf7 depth3 minleaf50 l210 lr.05 seed42",
+  "cooldown": 600,
+  "comparison": "price7 versus price7+ESvolume3, common eligible bars",
+  "status": "NOT_READY"
+}

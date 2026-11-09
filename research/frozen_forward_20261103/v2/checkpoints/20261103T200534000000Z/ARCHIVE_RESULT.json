@@ -1,0 +1,14 @@
+{
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "asof_Riyadh": "2026-11-03 23:05:34+03:00",
+  "last_closed_SPX_Riyadh": "2026-11-03 23:05:00+03:00",
+  "new_forward_bars": 67,
+  "new_bars_with_complete_features": 67,
+  "new_signals_recorded": 0,
+  "total_forward_signals": 3,
+  "frozen_model_verified": true,
+  "model_feature_count": 46,
+  "ES_used_for_shared_eligibility_only": true,
+  "notifications_enabled": false,
+  "continuous_monitoring": false
+}

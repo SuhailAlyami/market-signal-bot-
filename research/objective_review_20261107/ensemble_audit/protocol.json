@@ -1,0 +1,15 @@
+{
+  "status": "EXPLORATORY_NOT_READY_RESEARCH_ONLY",
+  "purpose": "Test complementarity before combining detectors; same previously consumed 116 sessions and same 365 hindsight reference legs. No new holdout.",
+  "constituents": ["reclaim_30m:first closed 15m return into first 30m range", "breakout_90m:first closed 15m break of first 30m range", "wave:unchanged volatility-scaled reversal detector"],
+  "standardized_execution": "ALL detectors use the wave_capture engine: next raw open, R=max(5, prior six 5m true ranges), stop 1R target 2R 30m maximum holding, same-session complete horizon, gap/ambiguity conservative handling. This does NOT replace prior reports with their different original stops/horizons.",
+  "coverage": "Unchanged 10-point reversal legs of >=20 points on 5m closes, one-to-one matching after retrospective start and before 75% consumed; early <=25%. Also compute raw union of leg identities matched by individual detectors as a non-tradable hindsight ceiling, not a live ensemble.",
+  "union_runtime": "At each exact close group all constituent events simultaneously. If both sides occur at that instant, emit nothing. Otherwise emit that side, with global 30m cooldown. Skipped signals do not move cooldown. No priorities or lookahead.",
+  "consensus_runtime": "At each close update last event of every method simultaneously. Keep votes aged <=15m. Emit only if >=2 distinct methods support one side AND at least one current event has that side. Global 30m cooldown. An old vote cannot be recycled by an opposite new event. No choice based on outcomes.",
+  "latency_minutes": [0,15,60],
+  "cost_points_round_trip": [0.5,1,2],
+  "baselines": "Always-up and opposite direction at the same event times, R and latency; summary reports zero latency. Descriptive 1000 paired session bootstrap of zero-delay candidate-minus-always-up net points at cost1, seed713. No p-values or independent-significance claim.",
+  "split": "Before and on/after 2026-09-14; both previously consumed, raw resolution changes with split.",
+  "screen": "Combined rule remains NOT_READY. It can qualify only for an unused prospective test if cost1 lower-bound net >0 in both time blocks AND recent paired candidate-minus-always-up bootstrap lower bound >0. A small sample is reported, not hidden. No parameter changes after outcomes.",
+  "preservation": "No frozen model, threshold, state, alerts, workflows, main, subscriptions, orders, or deployments are changed. This is offline index-point simulation, not option P&L or live signals."
+}

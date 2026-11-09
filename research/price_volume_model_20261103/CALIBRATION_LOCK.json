@@ -1,0 +1,37 @@
+{
+  "fold": {
+    "fit_rows": 1820,
+    "cal_rows": 738,
+    "later_rows": 1845,
+    "sklearn": "1.8.0"
+  },
+  "models": {
+    "price_only": {
+      "threshold": 0.34187280586816987,
+      "features": [
+        "return1_ATR",
+        "return5_ATR",
+        "return15_ATR",
+        "range_ATR",
+        "body_ATR",
+        "close_position",
+        "efficiency5"
+      ]
+    },
+    "price_ES_volume": {
+      "threshold": 0.3861785264089495,
+      "features": [
+        "return1_ATR",
+        "return5_ATR",
+        "return15_ATR",
+        "range_ATR",
+        "body_ATR",
+        "close_position",
+        "efficiency5",
+        "log1p_rvol",
+        "log1p_rvol_lag1",
+        "volume5_prior20mean_ratio"
+      ]
+    }
+  }
+}

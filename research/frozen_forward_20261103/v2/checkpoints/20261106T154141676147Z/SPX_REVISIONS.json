@@ -1,0 +1,17 @@
+{
+  "policy": "v2_first_observed_closed_bars_with_revision_ledger",
+  "asof_utc": "2026-11-06 15:41:41.676147+00:00",
+  "snapshot_sha256": "4cf5a6b400db40591fe39db56a39d339e194b18110e80c8649046347c16fc0aa",
+  "revision_count": 1,
+  "revisions": [
+    {
+      "bar_start_utc": "2026-11-04 15:20:00+00:00",
+      "changes": {
+        "close": {
+          "first": 7685.89,
+          "incoming": 7686.7
+        }
+      }
+    }
+  ]
+}

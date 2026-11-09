@@ -1,0 +1,21 @@
+{
+  "hypothesis": "prior10 mean TR <= .75 prior60 mean TR; 5-bar efficiency >= .7; close outside previous10-bar extremes in 5-bar return direction; decision range <=1.2 prior20ATR",
+  "cooldown_seconds": 600,
+  "development": "2026-10-15..2026-10-23",
+  "later": "2026-10-26..2026-10-30",
+  "optimization": "none; no alternate thresholds",
+  "target": 2,
+  "stop": 1,
+  "ATR": "SMA true range prior20 excluding decision",
+  "horizon": 5,
+  "entry": [
+    "close",
+    "next_open"
+  ],
+  "limitations": [
+    "all sample dates previously consumed; exploratory temporal split only",
+    "source-native SPX index not CFD",
+    "no options PnL evaluated"
+  ],
+  "status": "RESEARCH_ONLY / NOT_READY"
+}

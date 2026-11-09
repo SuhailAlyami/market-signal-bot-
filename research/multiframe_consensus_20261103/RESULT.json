@@ -1,0 +1,37 @@
+{
+  "rows": [
+    {
+      "rule": "5m_only",
+      "signals": 22,
+      "scored": 20,
+      "excluded_horizon": 2,
+      "hits": 12,
+      "rate": 0.6,
+      "mean_signed_points": 4.032000000000016,
+      "random_direction_same_times": 0.5050000000000001
+    },
+    {
+      "rule": "agree_intraday",
+      "signals": 11,
+      "scored": 10,
+      "excluded_horizon": 1,
+      "hits": 4,
+      "rate": 0.4,
+      "mean_signed_points": -6.453999999999996,
+      "random_direction_same_times": 0.42000000000000004
+    },
+    {
+      "rule": "agree_intraday_daily",
+      "signals": 0,
+      "scored": 0,
+      "excluded_horizon": 0,
+      "hits": 0,
+      "rate": null,
+      "mean_signed_points": null,
+      "random_direction_same_times": null
+    }
+  ],
+  "eligible_primary_events": 125,
+  "primary_events_with_valid_daily": 0,
+  "status": "NOT_READY"
+}

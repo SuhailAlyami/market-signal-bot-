@@ -1,0 +1,509 @@
+[
+  {
+    "decision_Riyadh": "2026-11-02 18:44:00+03:00",
+    "side": 1,
+    "close_result": "FAILURE",
+    "close": 7653.7,
+    "timing_explanation": {
+      "logit": 0.3139452611189717,
+      "score_uncalibrated": 0.5778479613516866,
+      "price_plus_intercept": 0.4739172874230474,
+      "clock_contribution": -0.15997202630407564,
+      "terms": {
+        "return1": 0.4759881874178055,
+        "return5": 0.2927567910013136,
+        "return15": 0.27032556884037245,
+        "range": 0.08689235436047307,
+        "body": -0.5451887857863874,
+        "atr_ratio": 0.24659408850642503,
+        "session_sin": -0.24688348740945218,
+        "session_cos": 0.08691146110537654
+      }
+    },
+    "direction_explanation": {
+      "logit": 0.3175079539206661,
+      "score_uncalibrated": 0.5787168016563587,
+      "price_plus_intercept": -0.12268553125730647,
+      "clock_contribution": 0.4401934851779725,
+      "terms": {
+        "return1": -0.29657362073864896,
+        "return5": 0.09370875277343582,
+        "return15": -0.10526053837162566,
+        "range": -0.008658509848656617,
+        "body": 0.298121160293652,
+        "atr_ratio": -0.018834846250508658,
+        "session_sin": 0.21290753016121527,
+        "session_cos": 0.22728595501675725
+      }
+    },
+    "clock_flips_direction_vs_price_only": true
+  },
+  {
+    "decision_Riyadh": "2026-11-02 18:57:00+03:00",
+    "side": -1,
+    "close_result": "SUCCESS",
+    "close": 7636.98,
+    "timing_explanation": {
+      "logit": 0.505971981650954,
+      "score_uncalibrated": 0.6238617392750939,
+      "price_plus_intercept": 0.7118660362171729,
+      "clock_contribution": -0.20589405456621893,
+      "terms": {
+        "return1": -0.8997077873344556,
+        "return5": -0.3017834808495074,
+        "return15": 0.6161583111213179,
+        "range": 0.3758465125576717,
+        "body": 1.0072973655063842,
+        "atr_ratio": 0.2675060321327171,
+        "session_sin": -0.2615891301766962,
+        "session_cos": 0.0556950756104773
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.12916192426327996,
+      "score_uncalibrated": 0.4677543354794435,
+      "price_plus_intercept": -0.4975620125142258,
+      "clock_contribution": 0.36840008825094583,
+      "terms": {
+        "return1": 0.5308517101781925,
+        "return5": -0.09457481112618443,
+        "return15": -0.26429929364081495,
+        "range": -0.043413457513762375,
+        "body": -0.5203184225830884,
+        "atr_ratio": -0.020619808713613883,
+        "session_sin": 0.22478992252617874,
+        "session_cos": 0.14361016572476712
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 20:31:00+03:00",
+    "side": -1,
+    "close_result": "FAILURE",
+    "close": 7609.83,
+    "timing_explanation": {
+      "logit": 0.47080052057321464,
+      "score_uncalibrated": 0.6155732113653709,
+      "price_plus_intercept": 0.6737799562916218,
+      "clock_contribution": -0.20297943571840693,
+      "terms": {
+        "return1": -1.0893755579918178,
+        "return5": -0.4017531953822292,
+        "return15": 0.614174031012237,
+        "range": 0.50638560925393,
+        "body": 1.1966342332335311,
+        "atr_ratio": 0.2011657530829257,
+        "session_sin": -0.07867050762063242,
+        "session_cos": -0.12430892809777451
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.7859876234744195,
+      "score_uncalibrated": 0.31303085309024503,
+      "price_plus_intercept": -0.5240842892174518,
+      "clock_contribution": -0.2619033342569678,
+      "terms": {
+        "return1": 0.6449291813496036,
+        "return5": -0.12623398549237677,
+        "return15": -0.2633867790056412,
+        "range": -0.059114492938324124,
+        "body": -0.6201330244181882,
+        "atr_ratio": -0.014957259597570762,
+        "session_sin": 0.07698877717868181,
+        "session_cos": -0.3388921114356496
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 20:45:00+03:00",
+    "side": -1,
+    "close_result": "SUCCESS",
+    "close": 7600.14,
+    "timing_explanation": {
+      "logit": 0.22992685238369803,
+      "score_uncalibrated": 0.5572298073468304,
+      "price_plus_intercept": 0.3825054117129534,
+      "clock_contribution": -0.15257855932925526,
+      "terms": {
+        "return1": -0.5770298274712506,
+        "return5": -0.2719863202102565,
+        "return15": 0.6706286207862987,
+        "range": 0.1698964606206445,
+        "body": 0.6963181294223295,
+        "atr_ratio": 0.0481292654821428,
+        "session_sin": -0.023761820807043272,
+        "session_cos": -0.12881673852221198
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.8181678200540755,
+      "score_uncalibrated": 0.3061527191888375,
+      "price_plus_intercept": -0.4998141722911984,
+      "clock_contribution": -0.31835364776287717,
+      "terms": {
+        "return1": 0.33677400506063243,
+        "return5": -0.08513841822754598,
+        "return15": -0.289348657651607,
+        "range": -0.018642112047218447,
+        "body": -0.3563764021972565,
+        "atr_ratio": -0.0018946581132485217,
+        "session_sin": 0.03262168821217658,
+        "session_cos": -0.35097533597505376
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 21:28:00+03:00",
+    "side": -1,
+    "close_result": "SUCCESS",
+    "close": 7608.57,
+    "timing_explanation": {
+      "logit": 0.279263704283522,
+      "score_uncalibrated": 0.5693657019991042,
+      "price_plus_intercept": 0.23952500713192082,
+      "clock_contribution": 0.03973869715160118,
+      "terms": {
+        "return1": -0.5191349467361673,
+        "return5": -0.060928162366902884,
+        "return15": 0.22374669929713015,
+        "range": 0.10521044591414686,
+        "body": 0.6027535546873936,
+        "atr_ratio": 0.24132833325327552,
+        "session_sin": 0.13424309958193784,
+        "session_cos": -0.09450440243033666
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.575722289660351,
+      "score_uncalibrated": 0.35991748758611214,
+      "price_plus_intercept": -0.22167267409936767,
+      "clock_contribution": -0.3540496155609834,
+      "terms": {
+        "return1": 0.3019525825008666,
+        "return5": -0.018298905363047794,
+        "return15": -0.08384022580912902,
+        "range": -0.010861780835461611,
+        "body": -0.3070510336879567,
+        "atr_ratio": -0.01838538178968476,
+        "session_sin": -0.09504879102989063,
+        "session_cos": -0.2590008245310928
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 21:38:00+03:00",
+    "side": -1,
+    "close_result": "FAILURE",
+    "close": 7604.19,
+    "timing_explanation": {
+      "logit": 0.4129929243501429,
+      "score_uncalibrated": 0.6018053083698456,
+      "price_plus_intercept": 0.32725646794439367,
+      "clock_contribution": 0.08573645640574928,
+      "terms": {
+        "return1": -0.07981981153649878,
+        "return5": -0.0023575674580649645,
+        "return15": 0.27712271984809855,
+        "range": -0.008602982640639516,
+        "body": 0.07710068561051973,
+        "atr_ratio": 0.41726434103793364,
+        "session_sin": 0.16301522145948974,
+        "session_cos": -0.07727876505374046
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.5472391935230368,
+      "score_uncalibrated": 0.3665051740759924,
+      "price_plus_intercept": -0.21611471645355837,
+      "clock_contribution": -0.33112447706947845,
+      "terms": {
+        "return1": 0.037722347194099295,
+        "return5": 0.00024967893188456754,
+        "return15": -0.10838635702175016,
+        "range": 0.0028275177636204706,
+        "body": -0.029937376637300412,
+        "atr_ratio": -0.03340259756915779,
+        "session_sin": -0.11829712139754663,
+        "session_cos": -0.21282735567193184
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 21:49:00+03:00",
+    "side": -1,
+    "close_result": "FAILURE",
+    "close": 7597.89,
+    "timing_explanation": {
+      "logit": 0.21923773372826205,
+      "score_uncalibrated": 0.5545909480678585,
+      "price_plus_intercept": 0.08529780601231973,
+      "clock_contribution": 0.13393992771594238,
+      "terms": {
+        "return1": 0.023144311194035715,
+        "return5": 0.0722267256189675,
+        "return15": 0.27244678206487477,
+        "range": -0.07844860411510905,
+        "body": -0.030204800342977654,
+        "atr_ratio": 0.17958430850948356,
+        "session_sin": 0.18917075497977862,
+        "session_cos": -0.05523082726383624
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.46017441055684016,
+      "score_uncalibrated": 0.38694444964429414,
+      "price_plus_intercept": -0.16701553448531237,
+      "clock_contribution": -0.29315887607152774,
+      "terms": {
+        "return1": -0.02420639642835474,
+        "return5": 0.023869603731530502,
+        "return15": -0.10623602469677915,
+        "range": 0.011228438290693575,
+        "body": 0.026631924860838638,
+        "atr_ratio": -0.01311515112828686,
+        "session_sin": -0.139431206913026,
+        "session_cos": -0.15372766915850175
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 22:06:00+03:00",
+    "side": -1,
+    "close_result": "FAILURE",
+    "close": 7586.01,
+    "timing_explanation": {
+      "logit": 0.4752341595284796,
+      "score_uncalibrated": 0.6166218611910896,
+      "price_plus_intercept": 0.2751091767091608,
+      "clock_contribution": 0.2001249828193189,
+      "terms": {
+        "return1": -0.8139436752678838,
+        "return5": -0.24061633396149373,
+        "return15": 0.554688721684472,
+        "range": 0.18556827652737953,
+        "body": 0.8945220543575203,
+        "atr_ratio": 0.04834105028612167,
+        "session_sin": 0.21648914910744557,
+        "session_cos": -0.016364166288126668
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.6115104625993454,
+      "score_uncalibrated": 0.3517147180230188,
+      "price_plus_intercept": -0.4004603096072744,
+      "clock_contribution": -0.21105015299207092,
+      "terms": {
+        "return1": 0.47926807534183163,
+        "return5": -0.07520393087648368,
+        "return15": -0.23603115764401494,
+        "range": -0.02052709319804872,
+        "body": -0.4608655388722663,
+        "atr_ratio": -0.001912735243338098,
+        "session_sin": -0.16150490222464453,
+        "session_cos": -0.04954525076742637
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 22:19:00+03:00",
+    "side": -1,
+    "close_result": "SUCCESS",
+    "close": 7581.55,
+    "timing_explanation": {
+      "logit": 0.23341403514565917,
+      "score_uncalibrated": 0.5580900090961671,
+      "price_plus_intercept": -0.007843681365384825,
+      "clock_contribution": 0.2412577165110439,
+      "terms": {
+        "return1": -0.700589096392708,
+        "return5": -0.17838562052152945,
+        "return15": 0.3073345335778322,
+        "range": 0.17349293705731822,
+        "body": 0.7761598121444283,
+        "atr_ratio": -0.032405330313770936,
+        "session_sin": 0.2255555052984884,
+        "session_cos": 0.015702211212555512
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.39685846535766056,
+      "score_uncalibrated": 0.4020673608021975,
+      "price_plus_intercept": -0.2644367530681067,
+      "clock_contribution": -0.13242171228955396,
+      "terms": {
+        "return1": 0.41108989378276883,
+        "return5": -0.055496232230575225,
+        "return15": -0.12227992076678765,
+        "range": -0.01907469052650123,
+        "body": -0.3984673370818206,
+        "atr_ratio": 0.004979462869763461,
+        "session_sin": -0.1688306616822623,
+        "session_cos": 0.03640894939270832
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 22:29:00+03:00",
+    "side": -1,
+    "close_result": "SUCCESS",
+    "close": 7576.39,
+    "timing_explanation": {
+      "logit": 0.20724737969707052,
+      "score_uncalibrated": 0.5516271884078947,
+      "price_plus_intercept": -0.05876825372693706,
+      "clock_contribution": 0.2660156334240076,
+      "terms": {
+        "return1": 0.2507108456631044,
+        "return5": 0.15879091612757226,
+        "return15": 0.2795854990477535,
+        "range": 0.12002300388490038,
+        "body": -0.13515549405667368,
+        "atr_ratio": -0.37927210747663886,
+        "session_sin": 0.2252365998346633,
+        "session_cos": 0.04077903358934426
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.2655441837890986,
+      "score_uncalibrated": 0.43400131672935927,
+      "price_plus_intercept": -0.20059878981696294,
+      "clock_contribution": -0.0649453939721357,
+      "terms": {
+        "return1": -0.16107843686779594,
+        "return5": 0.05128341414391474,
+        "return15": -0.10951891993592842,
+        "range": -0.012643411805134485,
+        "body": 0.08195982708665597,
+        "atr_ratio": 0.03458666667627955,
+        "session_sin": -0.1685729810144753,
+        "session_cos": 0.1036275870423396
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 23:24:00+03:00",
+    "side": 1,
+    "close_result": "FAILURE",
+    "close": 7576.01,
+    "timing_explanation": {
+      "logit": 0.2317987089042456,
+      "score_uncalibrated": 0.5576915910734362,
+      "price_plus_intercept": -0.0424523649659555,
+      "clock_contribution": 0.2742510738702011,
+      "terms": {
+        "return1": 0.6175034214465019,
+        "return5": 0.06197636940296015,
+        "return15": 0.08430407037647128,
+        "range": 0.2930780696444221,
+        "body": -0.7350338282553193,
+        "atr_ratio": -0.010829550664036697,
+        "session_sin": 0.11831008158225897,
+        "session_cos": 0.1559409922879421
+      }
+    },
+    "direction_explanation": {
+      "logit": 0.23206058301807322,
+      "score_uncalibrated": 0.5577561870248458,
+      "price_plus_intercept": -0.09808496287887129,
+      "clock_contribution": 0.33014554589694456,
+      "terms": {
+        "return1": -0.38168929418317926,
+        "return5": 0.020623442468841895,
+        "return15": -0.01971448112475439,
+        "range": -0.03345820052864185,
+        "body": 0.39820366166740395,
+        "atr_ratio": 0.003137837936412688,
+        "session_sin": -0.08217466002951615,
+        "session_cos": 0.41232020592646074
+      }
+    },
+    "clock_flips_direction_vs_price_only": true
+  },
+  {
+    "decision_Riyadh": "2026-11-02 23:36:00+03:00",
+    "side": -1,
+    "close_result": "FAILURE",
+    "close": 7552.01,
+    "timing_explanation": {
+      "logit": 0.5065537150136579,
+      "score_uncalibrated": 0.6239982379801257,
+      "price_plus_intercept": 0.2595819167168183,
+      "clock_contribution": 0.24697179829683957,
+      "terms": {
+        "return1": -0.4061263073914206,
+        "return5": -0.1677945324915564,
+        "return15": 0.6023223296975547,
+        "range": 0.1411355667463957,
+        "body": 0.4915761547363564,
+        "atr_ratio": -0.04808037766355657,
+        "session_sin": 0.07662522006733824,
+        "session_cos": 0.17034657822950133
+      }
+    },
+    "direction_explanation": {
+      "logit": -0.01614817842830024,
+      "score_uncalibrated": 0.49596304311685024,
+      "price_plus_intercept": -0.41859004969979186,
+      "clock_contribution": 0.40244187127149156,
+      "terms": {
+        "return1": 0.2339824695381331,
+        "return5": -0.05214216540907941,
+        "return15": -0.2579365147753734,
+        "range": -0.015182797366863492,
+        "body": -0.2484405367341015,
+        "atr_ratio": 0.006317424162447257,
+        "session_sin": -0.048492631434156844,
+        "session_cos": 0.4509345027056484
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  },
+  {
+    "decision_Riyadh": "2026-11-02 23:47:00+03:00",
+    "side": 1,
+    "close_result": "FAILURE",
+    "close": 7559.54,
+    "timing_explanation": {
+      "logit": 0.2724234422432219,
+      "score_uncalibrated": 0.5676877594910659,
+      "price_plus_intercept": 0.058336981844484714,
+      "clock_contribution": 0.2140864603987372,
+      "terms": {
+        "return1": 1.0597006782539897,
+        "return5": 0.34211835942818136,
+        "return15": -0.13408540150751216,
+        "range": 0.43754732466625745,
+        "body": -1.2443606299551906,
+        "atr_ratio": -0.04913243212428592,
+        "session_sin": 0.03521746157842838,
+        "session_cos": 0.17886899882030882
+      }
+    },
+    "direction_explanation": {
+      "logit": 0.5382441624726194,
+      "score_uncalibrated": 0.6314038707273817,
+      "price_plus_intercept": 0.07949974468820098,
+      "clock_contribution": 0.45874441778441855,
+      "terms": {
+        "return1": -0.6476530087388933,
+        "return5": 0.10934095207618992,
+        "return15": 0.0807166970894491,
+        "range": -0.050834733293655995,
+        "body": 0.6667105432161177,
+        "atr_ratio": 0.006407223453947991,
+        "session_sin": -0.015034506474476347,
+        "session_cos": 0.4737789242588949
+      }
+    },
+    "clock_flips_direction_vs_price_only": false
+  }
+]

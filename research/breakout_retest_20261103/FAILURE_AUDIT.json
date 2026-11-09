@@ -1,0 +1,62 @@
+{
+  "summary": [
+    {
+      "period": "earlier",
+      "entry": "close",
+      "n": 42,
+      "outcomes": {
+        "TARGET": 13,
+        "STOP": 21,
+        "TIMEOUT": 8,
+        "AMBIGUOUS": 0
+      },
+      "direction_target_touch_ignoring_stop": 13,
+      "either_direction_2ATR_ignoring_stop": 20,
+      "failed_then_target_after_stop_or_ambiguity": 0
+    },
+    {
+      "period": "earlier",
+      "entry": "next_open",
+      "n": 42,
+      "outcomes": {
+        "TARGET": 13,
+        "STOP": 21,
+        "TIMEOUT": 8,
+        "AMBIGUOUS": 0
+      },
+      "direction_target_touch_ignoring_stop": 13,
+      "either_direction_2ATR_ignoring_stop": 20,
+      "failed_then_target_after_stop_or_ambiguity": 0
+    },
+    {
+      "period": "later",
+      "entry": "close",
+      "n": 32,
+      "outcomes": {
+        "TARGET": 6,
+        "STOP": 9,
+        "TIMEOUT": 17,
+        "AMBIGUOUS": 0
+      },
+      "direction_target_touch_ignoring_stop": 6,
+      "either_direction_2ATR_ignoring_stop": 8,
+      "failed_then_target_after_stop_or_ambiguity": 0
+    },
+    {
+      "period": "later",
+      "entry": "next_open",
+      "n": 32,
+      "outcomes": {
+        "TARGET": 6,
+        "STOP": 8,
+        "TIMEOUT": 18,
+        "AMBIGUOUS": 0
+      },
+      "direction_target_touch_ignoring_stop": 6,
+      "either_direction_2ATR_ignoring_stop": 8,
+      "failed_then_target_after_stop_or_ambiguity": 0
+    }
+  ],
+  "limits": "Post-hoc diagnostic on consumed data. Ignoring stops is not a tradable result, not precision, and is not used to redefine success. No parameter tuning.",
+  "status": "NOT_READY"
+}

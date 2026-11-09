@@ -1,0 +1,8 @@
+{
+  "status": "RESEARCH_ONLY_NOT_READY",
+  "frozen_utc": "2026-11-02T08:01:01.310850+00:00",
+  "rule": "Require exact current/previous1min SPX/CALL/PUT timestamps, positive lasttradeclose and volume for both contracts in both minutes; long if callclose rises and putclose falls vs previous minute, short for mirror; else abstain. No size thresholds, no training, shared600sec cooldown.",
+  "comparison": "same accepted timestamps with underlying sign(close[t]-close[t-5]); flat baseline abstains and is counted separately. Count-preserving random-direction benchmark same bars.",
+  "target": "Original openfix priorSMA20ATR 2ATR before1ATR adverse next5contiguousminutes; close primary, nextopen descriptive.",
+  "scope": "SPXW7580expiryNov02quotes overlapping SPXOct30only, selectedretrospectively. Not0DTEhistorically. NoIV/GEX/quotes/fills/liveverified."
+}

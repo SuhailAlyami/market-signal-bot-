@@ -1,0 +1,41 @@
+{
+  "feature_count": 49,
+  "previous_models": 18,
+  "fit_rows": 1499,
+  "calibration_event_rows": 335,
+  "later_event_rows": 832,
+  "prefix_checks": 4,
+  "rows": [
+    {
+      "model": "majority18",
+      "signals": 150,
+      "scored": 137,
+      "excluded_horizon": 13,
+      "hits": 68,
+      "rate": 0.49635036496350365,
+      "mean_signed_points": 0.21693430656941132,
+      "random_direction_same_times": 0.4968831583994886
+    },
+    {
+      "model": "learned_all",
+      "signals": 150,
+      "scored": 137,
+      "excluded_horizon": 13,
+      "hits": 72,
+      "rate": 0.5255474452554745,
+      "mean_signed_points": 1.1170802919708291,
+      "random_direction_same_times": 0.5079652618679737
+    },
+    {
+      "model": "learned_selective",
+      "signals": 60,
+      "scored": 54,
+      "excluded_horizon": 6,
+      "hits": 24,
+      "rate": 0.4444444444444444,
+      "mean_signed_points": 0.11685185185185926,
+      "random_direction_same_times": 0.5109739368998629
+    }
+  ],
+  "status": "NOT_READY"
+}

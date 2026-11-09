@@ -1,0 +1,625 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY",
+  "decision": "REJECT_CHANGE_KEEP_CONTROL_RESEARCH_ONLY",
+  "input_sha256": "7d263ec61a6e582b17a69097d6d14643b94e5645f3c8dd02590a520b07cd8a1b",
+  "protocol_sha256": "3220ae21f0eb3e2e325a5e3f011c039111b9acaa4d46f6cb07e2c424e8194267",
+  "excluded_sessions": [
+    {
+      "day": "2026-08-14",
+      "reason": "incomplete_or_unordered_regular_grid"
+    }
+  ],
+  "report": {
+    "older": {
+      "sessions": 78,
+      "variants": {
+        "control15": {
+          "coverage": {
+            "legs": 253,
+            "terminal_legs": 33,
+            "matched_before75pct": 31,
+            "missed": 222,
+            "early_before25pct": 1,
+            "signals": 63,
+            "signals_not_matched_to_reference": 32,
+            "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+            "legs_ended_before_first_possible_signal": 12,
+            "median_lag_minutes_matched": 30,
+            "median_consumed_points_matched": 19.99
+          },
+          "execution": {
+            "0": {
+              "events": 63,
+              "scored": 62,
+              "censored": 1,
+              "positive_after_cost1": 31,
+              "direction30_correct": 36,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 27,
+                "target": 13,
+                "time": 22
+              },
+              "gross_lower_before_cost": 135.782,
+              "net_lower": {
+                "0.5": 104.782,
+                "1": 73.782,
+                "2": 11.782
+              },
+              "net_upper_cost1": 73.782,
+              "median_full_window_mfe": 7.68,
+              "median_full_window_mae": 6.105
+            },
+            "15": {
+              "events": 63,
+              "scored": 62,
+              "censored": 1,
+              "positive_after_cost1": 24,
+              "direction30_correct": 32,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 26,
+                "target": 9,
+                "time": 27
+              },
+              "gross_lower_before_cost": 5.832,
+              "net_lower": {
+                "0.5": -25.168,
+                "1": -56.168,
+                "2": -118.168
+              },
+              "net_upper_cost1": -56.168,
+              "median_full_window_mfe": 7.525,
+              "median_full_window_mae": 6.425
+            },
+            "60": {
+              "events": 63,
+              "scored": 62,
+              "censored": 1,
+              "positive_after_cost1": 28,
+              "direction30_correct": 34,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 17,
+                "target": 6,
+                "time": 39
+              },
+              "gross_lower_before_cost": 117.092,
+              "net_lower": {
+                "0.5": 86.092,
+                "1": 55.092,
+                "2": -6.908
+              },
+              "net_upper_cost1": 55.092,
+              "median_full_window_mfe": 5.865,
+              "median_full_window_mae": 4.39
+            }
+          }
+        },
+        "fast5": {
+          "coverage": {
+            "legs": 253,
+            "terminal_legs": 33,
+            "matched_before75pct": 28,
+            "missed": 225,
+            "early_before25pct": 2,
+            "signals": 60,
+            "signals_not_matched_to_reference": 32,
+            "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+            "legs_ended_before_first_possible_signal": 12,
+            "median_lag_minutes_matched": 25.0,
+            "median_consumed_points_matched": 18.46
+          },
+          "execution": {
+            "0": {
+              "events": 60,
+              "scored": 59,
+              "censored": 1,
+              "positive_after_cost1": 26,
+              "direction30_correct": 31,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 30,
+                "target": 9,
+                "time": 20
+              },
+              "gross_lower_before_cost": -9.158,
+              "net_lower": {
+                "0.5": -38.658,
+                "1": -68.158,
+                "2": -127.158
+              },
+              "net_upper_cost1": -68.158,
+              "median_full_window_mfe": 7.63,
+              "median_full_window_mae": 8.49
+            },
+            "15": {
+              "events": 60,
+              "scored": 59,
+              "censored": 1,
+              "positive_after_cost1": 27,
+              "direction30_correct": 30,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 22,
+                "target": 12,
+                "time": 25
+              },
+              "gross_lower_before_cost": 74.775,
+              "net_lower": {
+                "0.5": 45.275,
+                "1": 15.775,
+                "2": -43.225
+              },
+              "net_upper_cost1": 15.775,
+              "median_full_window_mfe": 7.91,
+              "median_full_window_mae": 8.09
+            },
+            "60": {
+              "events": 60,
+              "scored": 59,
+              "censored": 1,
+              "positive_after_cost1": 28,
+              "direction30_correct": 31,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 16,
+                "stop_gap": 1,
+                "target": 8,
+                "time": 34
+              },
+              "gross_lower_before_cost": 46.41,
+              "net_lower": {
+                "0.5": 16.91,
+                "1": -12.59,
+                "2": -71.59
+              },
+              "net_upper_cost1": -12.59,
+              "median_full_window_mfe": 6.43,
+              "median_full_window_mae": 5.27
+            }
+          }
+        }
+      },
+      "paired_comparison": {
+        "0": {
+          "fast_minus_control_cost1": -141.94,
+          "paired_session_bootstrap95": [
+            -282.958,
+            -21.293
+          ]
+        },
+        "15": {
+          "fast_minus_control_cost1": 71.943,
+          "paired_session_bootstrap95": [
+            -73.66,
+            195.72
+          ]
+        },
+        "60": {
+          "fast_minus_control_cost1": -67.682,
+          "paired_session_bootstrap95": [
+            -206.995,
+            50.917
+          ]
+        }
+      },
+      "common_leg_timing": {
+        "common_matched_legs": 21,
+        "median_fast_minus_control_lag_minutes": 0,
+        "earlier": 7,
+        "later": 0,
+        "same": 14,
+        "gained_matched_legs": 7,
+        "lost_matched_legs": 10
+      }
+    },
+    "recent": {
+      "sessions": 38,
+      "variants": {
+        "control15": {
+          "coverage": {
+            "legs": 112,
+            "terminal_legs": 19,
+            "matched_before75pct": 13,
+            "missed": 99,
+            "early_before25pct": 2,
+            "signals": 28,
+            "signals_not_matched_to_reference": 15,
+            "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+            "legs_ended_before_first_possible_signal": 4,
+            "median_lag_minutes_matched": 35,
+            "median_consumed_points_matched": 19.55
+          },
+          "execution": {
+            "0": {
+              "events": 28,
+              "scored": 28,
+              "censored": 0,
+              "positive_after_cost1": 15,
+              "direction30_correct": 19,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 11,
+                "target": 10,
+                "time": 7
+              },
+              "gross_lower_before_cost": 83.205,
+              "net_lower": {
+                "0.5": 69.205,
+                "1": 55.205,
+                "2": 27.205
+              },
+              "net_upper_cost1": 55.205,
+              "median_full_window_mfe": 10.3,
+              "median_full_window_mae": 4.665
+            },
+            "15": {
+              "events": 28,
+              "scored": 28,
+              "censored": 0,
+              "positive_after_cost1": 10,
+              "direction30_correct": 11,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 13,
+                "target": 5,
+                "time": 10
+              },
+              "gross_lower_before_cost": 6.512,
+              "net_lower": {
+                "0.5": -7.488,
+                "1": -21.488,
+                "2": -49.488
+              },
+              "net_upper_cost1": -21.488,
+              "median_full_window_mfe": 4.645,
+              "median_full_window_mae": 5.215
+            },
+            "60": {
+              "events": 28,
+              "scored": 28,
+              "censored": 0,
+              "positive_after_cost1": 11,
+              "direction30_correct": 12,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 11,
+                "target": 2,
+                "time": 15
+              },
+              "gross_lower_before_cost": -18.127,
+              "net_lower": {
+                "0.5": -32.127,
+                "1": -46.127,
+                "2": -74.127
+              },
+              "net_upper_cost1": -46.127,
+              "median_full_window_mfe": 4.48,
+              "median_full_window_mae": 5.96
+            }
+          }
+        },
+        "fast5": {
+          "coverage": {
+            "legs": 112,
+            "terminal_legs": 19,
+            "matched_before75pct": 14,
+            "missed": 98,
+            "early_before25pct": 4,
+            "signals": 31,
+            "signals_not_matched_to_reference": 17,
+            "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+            "legs_ended_before_first_possible_signal": 4,
+            "median_lag_minutes_matched": 27.5,
+            "median_consumed_points_matched": 18.96
+          },
+          "execution": {
+            "0": {
+              "events": 31,
+              "scored": 31,
+              "censored": 0,
+              "positive_after_cost1": 14,
+              "direction30_correct": 19,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 15,
+                "target": 8,
+                "time": 8
+              },
+              "gross_lower_before_cost": 45.34,
+              "net_lower": {
+                "0.5": 29.84,
+                "1": 14.34,
+                "2": -16.66
+              },
+              "net_upper_cost1": 14.34,
+              "median_full_window_mfe": 10.8,
+              "median_full_window_mae": 5.58
+            },
+            "15": {
+              "events": 31,
+              "scored": 31,
+              "censored": 0,
+              "positive_after_cost1": 12,
+              "direction30_correct": 13,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 15,
+                "target": 7,
+                "time": 9
+              },
+              "gross_lower_before_cost": 28.712,
+              "net_lower": {
+                "0.5": 13.212,
+                "1": -2.288,
+                "2": -33.288
+              },
+              "net_upper_cost1": -2.288,
+              "median_full_window_mfe": 3.74,
+              "median_full_window_mae": 5.4
+            },
+            "60": {
+              "events": 31,
+              "scored": 31,
+              "censored": 0,
+              "positive_after_cost1": 12,
+              "direction30_correct": 14,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 13,
+                "target": 3,
+                "time": 15
+              },
+              "gross_lower_before_cost": -5.007,
+              "net_lower": {
+                "0.5": -20.507,
+                "1": -36.007,
+                "2": -67.007
+              },
+              "net_upper_cost1": -36.007,
+              "median_full_window_mfe": 5.19,
+              "median_full_window_mae": 6.37
+            }
+          }
+        }
+      },
+      "paired_comparison": {
+        "0": {
+          "fast_minus_control_cost1": -40.865,
+          "paired_session_bootstrap95": [
+            -119.447,
+            43.892
+          ]
+        },
+        "15": {
+          "fast_minus_control_cost1": 19.2,
+          "paired_session_bootstrap95": [
+            -54.623,
+            99.36
+          ]
+        },
+        "60": {
+          "fast_minus_control_cost1": 10.12,
+          "paired_session_bootstrap95": [
+            -40.655,
+            59.447
+          ]
+        }
+      },
+      "common_leg_timing": {
+        "common_matched_legs": 11,
+        "median_fast_minus_control_lag_minutes": 0,
+        "earlier": 4,
+        "later": 0,
+        "same": 7,
+        "gained_matched_legs": 3,
+        "lost_matched_legs": 2
+      }
+    },
+    "all": {
+      "sessions": 116,
+      "variants": {
+        "control15": {
+          "coverage": {
+            "legs": 365,
+            "terminal_legs": 52,
+            "matched_before75pct": 44,
+            "missed": 321,
+            "early_before25pct": 3,
+            "signals": 91,
+            "signals_not_matched_to_reference": 47,
+            "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+            "legs_ended_before_first_possible_signal": 16,
+            "median_lag_minutes_matched": 30.0,
+            "median_consumed_points_matched": 19.8
+          },
+          "execution": {
+            "0": {
+              "events": 91,
+              "scored": 90,
+              "censored": 1,
+              "positive_after_cost1": 46,
+              "direction30_correct": 55,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 38,
+                "target": 23,
+                "time": 29
+              },
+              "gross_lower_before_cost": 218.987,
+              "net_lower": {
+                "0.5": 173.987,
+                "1": 128.987,
+                "2": 38.987
+              },
+              "net_upper_cost1": 128.987,
+              "median_full_window_mfe": 7.885,
+              "median_full_window_mae": 5.72
+            },
+            "15": {
+              "events": 91,
+              "scored": 90,
+              "censored": 1,
+              "positive_after_cost1": 34,
+              "direction30_correct": 43,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 39,
+                "target": 14,
+                "time": 37
+              },
+              "gross_lower_before_cost": 12.343,
+              "net_lower": {
+                "0.5": -32.657,
+                "1": -77.657,
+                "2": -167.657
+              },
+              "net_upper_cost1": -77.657,
+              "median_full_window_mfe": 6.31,
+              "median_full_window_mae": 6.085
+            },
+            "60": {
+              "events": 91,
+              "scored": 90,
+              "censored": 1,
+              "positive_after_cost1": 39,
+              "direction30_correct": 46,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 28,
+                "target": 8,
+                "time": 54
+              },
+              "gross_lower_before_cost": 98.965,
+              "net_lower": {
+                "0.5": 53.965,
+                "1": 8.965,
+                "2": -81.035
+              },
+              "net_upper_cost1": 8.965,
+              "median_full_window_mfe": 5.385,
+              "median_full_window_mae": 4.93
+            }
+          }
+        },
+        "fast5": {
+          "coverage": {
+            "legs": 365,
+            "terminal_legs": 52,
+            "matched_before75pct": 42,
+            "missed": 323,
+            "early_before25pct": 6,
+            "signals": 91,
+            "signals_not_matched_to_reference": 49,
+            "unmatched_signals_per_session_note": "Divide by group sessions; reference mismatch is not automatically a losing trade",
+            "legs_ended_before_first_possible_signal": 16,
+            "median_lag_minutes_matched": 25.0,
+            "median_consumed_points_matched": 18.69
+          },
+          "execution": {
+            "0": {
+              "events": 91,
+              "scored": 90,
+              "censored": 1,
+              "positive_after_cost1": 40,
+              "direction30_correct": 50,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 45,
+                "target": 17,
+                "time": 28
+              },
+              "gross_lower_before_cost": 36.182,
+              "net_lower": {
+                "0.5": -8.818,
+                "1": -53.818,
+                "2": -143.818
+              },
+              "net_upper_cost1": -53.818,
+              "median_full_window_mfe": 8.26,
+              "median_full_window_mae": 7.39
+            },
+            "15": {
+              "events": 91,
+              "scored": 90,
+              "censored": 1,
+              "positive_after_cost1": 39,
+              "direction30_correct": 43,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 37,
+                "target": 19,
+                "time": 34
+              },
+              "gross_lower_before_cost": 103.487,
+              "net_lower": {
+                "0.5": 58.487,
+                "1": 13.487,
+                "2": -76.513
+              },
+              "net_upper_cost1": 13.487,
+              "median_full_window_mfe": 7.49,
+              "median_full_window_mae": 7.6
+            },
+            "60": {
+              "events": 91,
+              "scored": 90,
+              "censored": 1,
+              "positive_after_cost1": 40,
+              "direction30_correct": 45,
+              "ambiguous": 0,
+              "exit_counts": {
+                "stop": 29,
+                "stop_gap": 1,
+                "target": 11,
+                "time": 49
+              },
+              "gross_lower_before_cost": 41.403,
+              "net_lower": {
+                "0.5": -3.597,
+                "1": -48.597,
+                "2": -138.597
+              },
+              "net_upper_cost1": -48.597,
+              "median_full_window_mfe": 6.21,
+              "median_full_window_mae": 5.745
+            }
+          }
+        }
+      },
+      "paired_comparison": {
+        "0": {
+          "fast_minus_control_cost1": -182.805,
+          "paired_session_bootstrap95": [
+            -350.798,
+            -16.39
+          ]
+        },
+        "15": {
+          "fast_minus_control_cost1": 91.143,
+          "paired_session_bootstrap95": [
+            -64.732,
+            244.757
+          ]
+        },
+        "60": {
+          "fast_minus_control_cost1": -57.562,
+          "paired_session_bootstrap95": [
+            -202.887,
+            74.798
+          ]
+        }
+      },
+      "common_leg_timing": {
+        "common_matched_legs": 32,
+        "median_fast_minus_control_lag_minutes": 0.0,
+        "earlier": 11,
+        "later": 0,
+        "same": 21,
+        "gained_matched_legs": 10,
+        "lost_matched_legs": 12
+      }
+    }
+  }
+}

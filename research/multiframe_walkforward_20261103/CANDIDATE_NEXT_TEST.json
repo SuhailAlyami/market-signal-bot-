@@ -1,0 +1,13 @@
+{
+  "status": "FROZEN_RESEARCH_CANDIDATE_NOT_READY",
+  "chosen_posthoc_among_14_policies": true,
+  "frame": "FIVE_MINS",
+  "variant": "price",
+  "policy": "selective",
+  "model_file": "models/FIVE_MINS_price_900.json",
+  "sha256": "fb281774690ab5848d26c16f6583cfb632a80bcdc12ea486160a0a3f97850f6b",
+  "future_evaluation_start_session": "2026-11-03",
+  "outcome": "30minute same-session endpoint direction",
+  "no_refit_or_threshold_tuning_before_next_evaluation": true,
+  "no_monitoring_or_alerts_activated": true
+}

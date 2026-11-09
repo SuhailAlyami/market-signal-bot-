@@ -1,0 +1,159 @@
+{
+  "rows": [
+    {
+      "frame": "FIVE_MINS",
+      "variant": "price",
+      "policy": "all_events",
+      "signals": 55,
+      "scored": 52,
+      "hits": 26,
+      "rate": 0.5,
+      "mean_signed_points": 0.9144230769230455,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "FIVE_MINS",
+      "variant": "price",
+      "policy": "selective",
+      "signals": 14,
+      "scored": 12,
+      "hits": 10,
+      "rate": 0.8333333333333334,
+      "mean_signed_points": 8.58083333333328,
+      "folds_with_signals": 5
+    },
+    {
+      "frame": "FIVE_MINS",
+      "variant": "price_volume",
+      "policy": "all_events",
+      "signals": 55,
+      "scored": 52,
+      "hits": 23,
+      "rate": 0.4423076923076923,
+      "mean_signed_points": -0.25634615384616993,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "FIVE_MINS",
+      "variant": "price_volume",
+      "policy": "selective",
+      "signals": 16,
+      "scored": 10,
+      "hits": 7,
+      "rate": 0.7,
+      "mean_signed_points": 1.9840000000000146,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "FIFTEEN_MINS",
+      "variant": "price",
+      "policy": "all_events",
+      "signals": 54,
+      "scored": 50,
+      "hits": 25,
+      "rate": 0.5,
+      "mean_signed_points": -0.665199999999968,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "FIFTEEN_MINS",
+      "variant": "price",
+      "policy": "selective",
+      "signals": 21,
+      "scored": 19,
+      "hits": 11,
+      "rate": 0.5789473684210527,
+      "mean_signed_points": -0.3952631578947483,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "FIFTEEN_MINS",
+      "variant": "price_volume",
+      "policy": "all_events",
+      "signals": 54,
+      "scored": 50,
+      "hits": 25,
+      "rate": 0.5,
+      "mean_signed_points": -0.665199999999968,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "FIFTEEN_MINS",
+      "variant": "price_volume",
+      "policy": "selective",
+      "signals": 18,
+      "scored": 15,
+      "hits": 10,
+      "rate": 0.6666666666666666,
+      "mean_signed_points": 1.1773333333333236,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "THIRTY_MINS",
+      "variant": "price",
+      "policy": "all_events",
+      "signals": 53,
+      "scored": 45,
+      "hits": 25,
+      "rate": 0.5555555555555556,
+      "mean_signed_points": 2.604666666666647,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "THIRTY_MINS",
+      "variant": "price",
+      "policy": "selective",
+      "signals": 17,
+      "scored": 15,
+      "hits": 6,
+      "rate": 0.4,
+      "mean_signed_points": -0.4779999999999442,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "THIRTY_MINS",
+      "variant": "price_volume",
+      "policy": "all_events",
+      "signals": 53,
+      "scored": 45,
+      "hits": 27,
+      "rate": 0.6,
+      "mean_signed_points": 3.0344444444444685,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "THIRTY_MINS",
+      "variant": "price_volume",
+      "policy": "selective",
+      "signals": 18,
+      "scored": 16,
+      "hits": 6,
+      "rate": 0.375,
+      "mean_signed_points": -1.0299999999999159,
+      "folds_with_signals": 6
+    },
+    {
+      "frame": "ONE_DAY",
+      "variant": "price",
+      "policy": "all_events",
+      "signals": 27,
+      "scored": 27,
+      "hits": 12,
+      "rate": 0.4444444444444444,
+      "mean_signed_points": -5.972592592592567,
+      "folds_with_signals": 4
+    },
+    {
+      "frame": "ONE_DAY",
+      "variant": "price",
+      "policy": "selective",
+      "signals": 13,
+      "scored": 13,
+      "hits": 7,
+      "rate": 0.5384615384615384,
+      "mean_signed_points": 13.358461538461528,
+      "folds_with_signals": 4
+    }
+  ],
+  "status": "NOT_READY"
+}

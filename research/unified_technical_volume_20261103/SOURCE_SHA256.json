@@ -1,0 +1,9 @@
+{
+  "source/compare_macd.py": "4d50593c155e20053c2eafe5897a6f96dfb0f0ca6881d0b2f431b063efe8dda9",
+  "source/cfd_path_scoring_v2.py": "e030729b32694cc0532eb0045e936110e5aadb25987d95be21638a37177d9dfd",
+  "source/cfd_causal_reference.py": "1965cccdd2fbc4176173d7a2e5d1f6f54c5c4f50095318eeb6da9718ca210d9c",
+  "source/cfd_acceleration_v4.py": "efcf7ef7f5395490175e1ee70440c53a73da2d5410155e457b94e5cdae22c18c",
+  "source/compare_head_shoulders.py": "023acc0732ec80b071436f31f94250e159ce8e50f12db3ddcc309dc33e808a03",
+  "source/compare_models.py": "ccde341279092e50cd86a8e45242c3ab0d53555fa9206e5580d9ff991ed6e517",
+  "source/cfd_v4_event_audit.py": "71462a7ae1f41cc9b0d7781417257eedeb258a31de3b0bc88dd1d0073b0c9687"
+}

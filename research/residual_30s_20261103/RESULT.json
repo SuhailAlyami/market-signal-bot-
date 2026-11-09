@@ -1,0 +1,102 @@
+{
+  "rows": [
+    {
+      "variant": "residual_only",
+      "entry": "close",
+      "signals": 15,
+      "scored": 15,
+      "hits": 4,
+      "precision": 0.26666666666666666,
+      "outcomes": {
+        "TARGET": 4,
+        "STOP": 5,
+        "TIMEOUT": 6,
+        "AMBIGUOUS": 0,
+        "UNSCORABLE_END": 0,
+        "UNSCORABLE_GAP": 0
+      }
+    },
+    {
+      "variant": "residual_only",
+      "entry": "next_open",
+      "signals": 15,
+      "scored": 15,
+      "hits": 3,
+      "precision": 0.2,
+      "outcomes": {
+        "TARGET": 3,
+        "STOP": 7,
+        "TIMEOUT": 5,
+        "AMBIGUOUS": 0,
+        "UNSCORABLE_END": 0,
+        "UNSCORABLE_GAP": 0
+      }
+    },
+    {
+      "variant": "residual_volume",
+      "entry": "close",
+      "signals": 4,
+      "scored": 4,
+      "hits": 2,
+      "precision": 0.5,
+      "outcomes": {
+        "TARGET": 2,
+        "STOP": 0,
+        "TIMEOUT": 2,
+        "AMBIGUOUS": 0,
+        "UNSCORABLE_END": 0,
+        "UNSCORABLE_GAP": 0
+      }
+    },
+    {
+      "variant": "residual_volume",
+      "entry": "next_open",
+      "signals": 4,
+      "scored": 4,
+      "hits": 2,
+      "precision": 0.5,
+      "outcomes": {
+        "TARGET": 2,
+        "STOP": 0,
+        "TIMEOUT": 2,
+        "AMBIGUOUS": 0,
+        "UNSCORABLE_END": 0,
+        "UNSCORABLE_GAP": 0
+      }
+    },
+    {
+      "variant": "residual_volume_lag30s",
+      "entry": "close",
+      "signals": 4,
+      "scored": 4,
+      "hits": 1,
+      "precision": 0.25,
+      "outcomes": {
+        "TARGET": 1,
+        "STOP": 1,
+        "TIMEOUT": 2,
+        "AMBIGUOUS": 0,
+        "UNSCORABLE_END": 0,
+        "UNSCORABLE_GAP": 0
+      }
+    },
+    {
+      "variant": "residual_volume_lag30s",
+      "entry": "next_open",
+      "signals": 4,
+      "scored": 4,
+      "hits": 1,
+      "precision": 0.25,
+      "outcomes": {
+        "TARGET": 1,
+        "STOP": 1,
+        "TIMEOUT": 2,
+        "AMBIGUOUS": 0,
+        "UNSCORABLE_END": 0,
+        "UNSCORABLE_GAP": 0
+      }
+    }
+  ],
+  "prefix_checks": 3,
+  "status": "NOT_READY"
+}

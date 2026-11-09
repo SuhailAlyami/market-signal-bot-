@@ -1,0 +1,13 @@
+{
+  "identity": {
+    "model_sha256": "fb281774690ab5848d26c16f6583cfb632a80bcdc12ea486160a0a3f97850f6b",
+    "start_session": "2026-11-03",
+    "SPX_contract": 416904,
+    "ES_eligibility_contract": 515416632,
+    "step_minutes": 5,
+    "cooldown_trading_bars": 10
+  },
+  "signals": [],
+  "last_slot": null,
+  "status": "NOT_READY"
+}

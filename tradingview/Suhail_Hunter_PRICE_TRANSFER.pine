@@ -1,0 +1,106 @@
+//@version=6
+indicator("Suhail Hunter | Price-only research v1", overlay=true, max_labels_count=100)
+if syminfo.tickerid != "CAPITALCOM:SPX500" or not chart.is_standard or not timeframe.isminutes or timeframe.multiplier != 1
+    runtime.error("Use standard 1-minute CAPITALCOM:SPX500. RESEARCH_ONLY, not cash SPX.")
+const int START = timestamp("2026-10-29T00:00:00+03:00")
+const int END = timestamp("2026-10-29T10:45:00+03:00")
+priorATR = ta.sma(ta.tr(true)[1],20)
+h5 = ta.highest(high[1],5)
+l5 = ta.lowest(low[1],5)
+width3 = ta.highest(high[1],3)-ta.lowest(low[1],3)
+barRange = high-low
+ohlcOK = open > 0 and low > 0 and high >= math.max(open,close) and low <= math.min(open,close)
+valid = ta.sma(ohlcOK ? 1.0 : 0.0,31) == 1 and ta.sma(time-time[1] == 60000 ? 1.0 : 0.0,30) == 1 and priorATR > 0 and h5 > l5
+inside = close <= h5 and close >= l5
+readyUp = valid and width3 <= 1.5*priorATR and barRange <= priorATR and inside and h5-close <= 0.25*priorATR and close > open and close > close[1]
+readyDown = valid and width3 <= 1.5*priorATR and barRange <= priorATR and inside and close-l5 <= 0.25*priorATR and close < open and close < close[1]
+sweepUp = high > h5
+sweepDown = low < l5
+closeFraction = barRange > 0 ? (close-low)/barRange : 0.5
+failUp = valid and barRange <= 2*priorATR and sweepDown and not sweepUp and inside and close > open and closeFraction >= 0.60
+failDown = valid and barRange <= 2*priorATR and sweepUp and not sweepDown and inside and close < open and closeFraction <= 0.40
+m1 = readyUp and not readyDown ? 1 : readyDown and not readyUp ? -1 : 0
+m2 = failUp and not failDown ? 1 : failDown and not failUp ? -1 : 0
+baseline = valid ? (close > open ? 1 : close < open ? -1 : 0) : 0
+var directions = array.new_int(3,0)
+var expected = array.new_int(3,0)
+var steps = array.new_int(3,0)
+var entries = array.new_float(3,na)
+var scales = array.new_float(3,na)
+var lastDecision = array.new_int(3,0)
+var signals = array.new_int(3,0)
+var targets = array.new_int(3,0)
+var stops = array.new_int(3,0)
+var timeouts = array.new_int(3,0)
+var ambiguous = array.new_int(3,0)
+var gaps = array.new_int(3,0)
+var timeoutPoints = array.new_float(3,0)
+var int loadedFrom = time
+var int loadedTo = time
+firedM1 = false
+firedM2 = false
+if barstate.isconfirmed
+    loadedTo := time_close
+    for model = 0 to 2
+        wasPending = array.get(directions,model) != 0
+        if wasPending
+            sign = array.get(directions,model)
+            if time != array.get(expected,model) or not ohlcOK
+                array.set(gaps,model,array.get(gaps,model)+1)
+                array.set(directions,model,0)
+            else
+                if array.get(steps,model) == 0
+                    array.set(entries,model,open)
+                entry = array.get(entries,model)
+                scale = array.get(scales,model)
+                targetPrice = entry+sign*scale
+                stopPrice = entry-sign*0.75*scale
+                targetHit = sign == 1 ? high >= targetPrice : low <= targetPrice
+                stopHit = sign == 1 ? low <= stopPrice : high >= stopPrice
+                count = array.get(steps,model)+1
+                array.set(steps,model,count)
+                array.set(expected,model,time+60000)
+                if targetHit and stopHit
+                    array.set(ambiguous,model,array.get(ambiguous,model)+1)
+                    array.set(directions,model,0)
+                else if targetHit
+                    array.set(targets,model,array.get(targets,model)+1)
+                    array.set(directions,model,0)
+                else if stopHit
+                    array.set(stops,model,array.get(stops,model)+1)
+                    array.set(directions,model,0)
+                else if count >= 10
+                    array.set(timeouts,model,array.get(timeouts,model)+1)
+                    array.set(timeoutPoints,model,array.get(timeoutPoints,model)+sign*(close-entry))
+                    array.set(directions,model,0)
+        direction = model == 0 ? m1 : model == 1 ? m2 : baseline
+        if not wasPending and valid and direction != 0 and time_close >= START and time_close < END and time_close-array.get(lastDecision,model) >= 600000
+            array.set(directions,model,direction)
+            array.set(expected,model,time_close)
+            array.set(steps,model,0)
+            array.set(entries,model,na)
+            array.set(scales,model,priorATR)
+            array.set(lastDecision,model,time_close)
+            array.set(signals,model,array.get(signals,model)+1)
+            firedM1 := firedM1 or model == 0
+            firedM2 := firedM2 or model == 1
+plotshape(firedM1,title="Range readiness research",text="RANGE",style=shape.circle,location=location.belowbar,color=color.aqua,size=size.tiny)
+plotshape(firedM2,title="Failed break research",text="FAILED",style=shape.circle,location=location.abovebar,color=color.orange,size=size.tiny)
+var table summary = table.new(position.bottom_right,9,5)
+if barstate.islast
+    for col = 0 to 8
+        header = col == 0 ? "OCT29 PART" : col == 1 ? "N" : col == 2 ? "Target" : col == 3 ? "Stop" : col == 4 ? "Timeout" : col == 5 ? "Both" : col == 6 ? "Gap/input" : col == 7 ? "Pending" : "Timeout avg"
+        table.cell(summary,col,0,header,text_color=color.white,bgcolor=color.black)
+    for model = 0 to 2
+        name = model == 0 ? "RANGE_READY" : model == 1 ? "FAILED_BREAK" : "BODY_BASELINE"
+        table.cell(summary,0,model+1,name,text_color=color.white,bgcolor=color.black)
+        for col = 1 to 7
+            value = col == 1 ? array.get(signals,model) : col == 2 ? array.get(targets,model) : col == 3 ? array.get(stops,model) : col == 4 ? array.get(timeouts,model) : col == 5 ? array.get(ambiguous,model) : col == 6 ? array.get(gaps,model) : array.get(directions,model) != 0 ? 1 : 0
+            table.cell(summary,col,model+1,str.tostring(value),text_color=color.white,bgcolor=color.black)
+        avgTimeout = array.get(timeouts,model) > 0 ? array.get(timeoutPoints,model)/array.get(timeouts,model) : na
+        table.cell(summary,8,model+1,str.tostring(avgTimeout,"#.##"),text_color=color.white,bgcolor=color.black)
+    table.cell(summary,0,4,"NOT_READY",text_color=color.white,bgcolor=color.black)
+    table.cell(summary,1,4,"CFD path",text_color=color.white,bgcolor=color.black)
+    table.cell(summary,2,4,"No P&L",text_color=color.white,bgcolor=color.black)
+    table.cell(summary,3,4,str.format_time(loadedFrom,"MM-dd HH:mm","Asia/Riyadh"),text_color=color.white,bgcolor=color.black)
+    table.cell(summary,4,4,str.format_time(loadedTo,"MM-dd HH:mm","Asia/Riyadh"),text_color=color.white,bgcolor=color.black)

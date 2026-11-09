@@ -1,0 +1,15 @@
+{
+  "purpose": "Frozen multi-timeframe agreement; no fitting or threshold tuning",
+  "primary": "5min price+patterns+ESvolume event direction",
+  "comparisons": [
+    "primary alone",
+    "5m15m30m same direction",
+    "5m15m30m plus daily same direction"
+  ],
+  "availability": "last completed bar whose available timestamp <= primary decision; invalid latest features produce direction0, no carry of older valid score",
+  "daily": "previous available daily close prediction is context for5min, not same target; daily volume remains blocked",
+  "period": "Oct29..Nov2 common primary evaluation3sessions; consumed exploratory only",
+  "target": "SPX30minute endpoint same session6primary bars",
+  "cooldown": "10primary trading bars after filtering; event sets differ",
+  "status": "NOT_READY"
+}

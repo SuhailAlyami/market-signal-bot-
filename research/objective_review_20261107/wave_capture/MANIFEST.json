@@ -1,0 +1,18 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY",
+  "decision": "SUSPEND_PARAMETERIZATION",
+  "files": {
+    "protocol.json": "04c7b5290ef426b394e7d4b712a4741087b5a55d81de5bb7f21eea9523786ab7",
+    "run.py": "c0c3c535c14859c8b527ec9add71ed03d1414b04af8be31f509b5f4d82e71405",
+    "test_wave_capture.py": "f0d5fe3c9adf55d2623a8ab4668265ad4242b052bc5d18695d28fd2c3ff14855",
+    "README_AR.md": "77b5ed9e78ab3ceb9aaa557aa73bcb27b846590bc9488e4202ce63ee69e237a7",
+    "results.json.gz": "d92d57ad7b877e9b4a65a26fe33413be9bbdba8ebc2b0e5a1f3285fd989725ab",
+    "summary.json": "b5f782b29978a8958eb11e4692f95988458a448ce1c8762a8f3df4f085e86520"
+  },
+  "dependencies": {
+    "objective_review.py": "19f5da59887323b4ccec0dcfe232f35a5184ecf6f362f07d428f48e6709f003a",
+    "opening_validation_raw.json.gz": "ac3d9d9723b352be6a8419e71bf3751c049f1da9dc397cd1fbef8c46814d7cfd",
+    "requirements.txt": "e48cc39feb3fa58f52a27c98fce93f0a766b1b4c9ac3da09a878ed192daaf567"
+  },
+  "uncompressed_results_sha256": "b6e1305e5e28111524eac57ae6b43bf2dcc367d925f4b682c5396780b49453cd"
+}

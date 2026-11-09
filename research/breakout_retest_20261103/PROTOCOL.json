@@ -1,0 +1,11 @@
+{
+  "rule": "close breaks previous20 highs/lows by0.1 priorATR; within next1..5 bars retest level +/-0.2 breakoutATR, directional body and close beyond level; cancel close through opposite edge, gap or expiry; decision at retest close",
+  "target": 2,
+  "stop": 1,
+  "horizon_minutes": 5,
+  "ATR": "prior20 SMA true range",
+  "cooldown_seconds": 600,
+  "parameters": "fixed before run, no tuning",
+  "sample": "12 consumed Oct15..30 sessions, earlier7/later5 descriptive only",
+  "status": "NOT_READY"
+}

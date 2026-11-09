@@ -1,0 +1,8 @@
+{
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "sklearn": "1.8.0",
+  "exchange_calendars": "4.13.2",
+  "input_archive_sha256": "a8003826e036301752a3ee774e5b87015956473a297b04bb4bbb86fd6bc91971"
+}
