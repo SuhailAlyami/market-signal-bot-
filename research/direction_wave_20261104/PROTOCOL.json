@@ -1,0 +1,13 @@
+{
+  "frozen_model": "research/multiframe_walkforward_20261103/models/FIVE_MINS_price_900.json",
+  "frozen_sha256": "fb281774690ab5848d26c16f6583cfb632a80bcdc12ea486160a0a3f97850f6b",
+  "frozen_weights_and_threshold_immutable": true,
+  "development_index_exclusive_end": 400,
+  "locked_events": "original FIVE_MINS price selective signals_derived rows, all expected at index >= 400",
+  "hypothesis": "Keep a selective signal only when sign(return30) equals the signal side. return30 is the causal 30-minute return already in the frozen feature list. This is not the rejected EMA20-versus-channel-midpoint retest.",
+  "veto_consumes_original_cooldown": true,
+  "no_regenerated_signals": true,
+  "no_threshold_search": true,
+  "adoption": "shadow only if scored>=8, rate>=0.70, rate improves, removed correct signals < removed incorrect signals, and removed correct signals <= 2. A 70 percent claim also needs the Wilson 95 percent lower bound >= 0.70. trading_ready stays false.",
+  "forward_ledger_excluded_from_adoption": "2026-11-03"
+}
