@@ -19,6 +19,22 @@ Protocol committed in fc4f002 before results. 57 development sessions (2026-08-1
 
 Decision by the pre-registered rule: REJECT as a tradable rule. Finding: breadth agreement separates signals (C1), the first feature in this repository to do so with an interval excluding zero, but the edge is about the size of a 1-point cost and weaker in the second half. Not independent validation.
 
-Pre-registered next test (frozen now, before any holdout data is read): run `run.py` unchanged (this commit) on complete sessions >= 2026-11-05 once >= 40 exist; the only claim tested is C1 (high minus rest mean gross > 0, same bootstrap). Power note: the development interval half-width is ~1.5 pt at 57 sessions; at 20 sessions it would be ~2.6 pt, too wide to confirm +1.8, hence 40+. No alerts until a holdout test passes.
+Pre-registered next test: SUPERSEDED by the audit below (sample target corrected before any holdout data was read).
 
-Latency observation (not verification): at 2026-11-09 19:44 UTC, Yahoo's own regularMarketTime for ^GSPC was 1.5 s old at receipt (0.9-5.2 s for the ten stocks). This is the provider's timestamp, not an exchange-verified time.
+Timestamp observation: at 2026-11-09 19:44 UTC, Yahoo's meta.regularMarketTime for ^GSPC was 1.5 s old at receipt (0.9-5.2 s for the stocks). regularMarketTime is Yahoo's stamp of its last regular-market quote update; it is NOT a bar boundary and NOT a verified delivery latency.
+
+## Validity audit (2026-11-09, `audit.py` -> `audit.json`; development dates only, rule unchanged)
+| Check | Finding | Verdict |
+|---|---|---|
+| Timestamp meaning | 390/390 5m bars equal the 1m bars [t, t+5m): chart timestamps are bar STARTS (0 matches as bar ends). | pass |
+| Closed-bar availability | Feature uses stock closes at the decision-bar close and 15 min earlier; no partial bar; same instant as the SPX decision. Real delivery delay unmeasured. | pass (assumption) |
+| Entry after availability | Entry = open of the next 5m bar. One bar later: high +0.71 vs rest -0.08 (diff +0.79, was +1.80). | pass, but effect halves |
+| Missing stocks | 57/57 sessions complete for all 11 symbols, 0 nulls, 0 signals dropped; 2-37 zero-volume bars per stock with moving prices (volume field gaps, not stale prices). | pass |
+| Stock selection | List fixed before results but chosen with today's knowledge of the largest caps (membership look-ahead); no alternative universe tested. | limitation |
+| Confounding with SPX's own 15-min move | corr(agreement, aligned SPX move) = 0.56; high-minus-rest stays positive in all three momentum terciles (+1.60, +1.18, +0.80; small cells). | partly independent |
+| Session-clustered uncertainty | Session bootstrap [+0.21, +3.34]; 5-session block bootstrap [-0.12, +3.50] includes 0. | weak |
+| Prior multiple testing | One-sided bootstrap p = 0.013; 36 preregistered protocols in research/; Bonferroni bound p = 0.48. | weak |
+
+Verdict: no implementation defect found; statistical evidence is weak. The rule stays REJECTED as a trading rule and the feature is retained only as a frozen candidate for the forward test.
+
+Forward-test target (event based, set before any holdout read): sd of gross per trade 8.2 (high) / 6.5 (rest), 2.12 high and 3.04 rest events per session, variance design effect 0.80. For 80% power at two-sided 5%: 190 high-agreement events (~90 sessions) if the true difference is the observed +1.8 pt; 757 events (~357 sessions) if it is half (planning case, given selection). Evaluate `run.py` unchanged once >= 190 high-agreement events exist in sessions >= 2026-11-05; pass requires both session- and 5-session block-bootstrap lower bounds > 0. No interim looks, no alerts before that.
