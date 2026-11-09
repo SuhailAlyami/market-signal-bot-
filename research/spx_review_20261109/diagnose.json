@@ -1,0 +1,105 @@
+{
+ "scope": "wave_capture control, 116 consumed sessions; descriptive",
+ "legs": {
+  "n": 365,
+  "duration_min": {
+   "p25": 30,
+   "median": 55,
+   "p75": 105
+  },
+  "share_duration_le_15": 0.093,
+  "share_duration_le_30": 0.293,
+  "share_duration_le_45": 0.433,
+  "median_points": 31.1,
+  "share_legs_shorter_than_median_lag_plus_0min": 0.093,
+  "share_legs_shorter_than_median_lag_plus_5min": 0.145,
+  "share_legs_shorter_than_median_lag_plus_15min": 0.293
+ },
+ "matched_legs": {
+  "n": 199,
+  "median_lag_min": 15,
+  "consumed_fraction_quartiles": [
+   0.253,
+   0.373,
+   0.536
+  ],
+  "share_consumed_le_25": 0.241,
+  "share_consumed_25_50": 0.467,
+  "share_consumed_50_75": 0.291,
+  "median_remaining_points_after_signal": 18.8
+ },
+ "leg_starts": {
+  "first40m": {
+   "n": 106,
+   "share": 0.29
+  },
+  "40m-90m": {
+   "n": 76,
+   "share": 0.208
+  },
+  "after90m": {
+   "n": 183,
+   "share": 0.501
+  },
+  "session_time_share": {
+   "first40m": 0.103,
+   "40m-90m": 0.128,
+   "after90m": 0.769
+  }
+ },
+ "execution_delay0": {
+  "trades": 592,
+  "mean_gross_points": 0.256,
+  "mean_gross_points_session_bootstrap95": [
+   -0.53,
+   1.109
+  ],
+  "mean_gross_in_R": 0.0088,
+  "median_R_points": 5.54,
+  "cost_1pt_as_share_of_median_R": 0.18,
+  "exit_counts": {
+   "time": 215,
+   "stop": 278,
+   "target": 95,
+   "stop_gap": 3,
+   "target_gap_capped": 1
+  },
+  "target_share_of_stop_or_target": 0.253,
+  "breakeven_target_share_for_1R_stop_2R_target_zero_cost": 0.333,
+  "direction30_correct": 0.495,
+  "median_window_mfe_over_R": 0.876,
+  "median_window_mae_over_R": 0.951
+ },
+ "by_R_tercile": {
+  "low_R": {
+   "n": 197,
+   "R_range": [
+    5.0,
+    5.0
+   ],
+   "mean_gross_points": -0.236,
+   "mean_gross_in_R": -0.0472,
+   "net_cost1_points": -243.5
+  },
+  "mid_R": {
+   "n": 197,
+   "R_range": [
+    5.0,
+    6.8
+   ],
+   "mean_gross_points": 0.106,
+   "mean_gross_in_R": 0.024,
+   "net_cost1_points": -176.1
+  },
+  "high_R": {
+   "n": 198,
+   "R_range": [
+    6.8,
+    23.4
+   ],
+   "mean_gross_points": 0.896,
+   "mean_gross_in_R": 0.0493,
+   "net_cost1_points": -20.6
+  }
+ }
+}

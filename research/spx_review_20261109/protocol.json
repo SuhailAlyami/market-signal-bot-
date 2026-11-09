@@ -1,0 +1,19 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY_DEVELOPMENT_SCREEN",
+  "registered": "2026-11-09, committed and pushed before state_gate.py was run",
+  "diagnosis_evidence": "diagnose.json (existing wave_capture outputs): mean gross +0.256 pt/trade (session-bootstrap 95% [-0.53, +1.11]) vs 1 pt cost; 50% of signals have R at the 5-point floor (median R 5.54); gross in R by rank tercile of R: -0.047 / +0.024 / +0.049 (low tercile all floor-bound).",
+  "hypothesis": "State dependence: confirmed-reversal signals carry non-negative expected gross only when decision-time realized volatility exceeds the protocol's own 5-point floor (ATR6 > 5.0, so R > 5.0). When R sits at the floor the 5-point stop is inside normal bar noise and the 1-point cost is >=20% of risk; those signals are noise-dominated. This is the only materially new element: gating by volatility state rather than changing detector, labels or parameters.",
+  "gate": "signal.r > 5.0 (R = max(5, ATR6) known at decision). No fitted threshold: 5.0 is the existing floor. No other gate, no variants.",
+  "baselines": ["ungated control (all trades, same engine)", "within-session random direction permutation of the gated signals (1000 draws, seed 1301)", "no-signal = 0"],
+  "data": "Same 116 CONSUMED sessions, delay 0, cost 0.5/1/2 reported, blocks older (<2026-09-14) / recent. Sessions 2026-11-05, 2026-11-06 and all newly collected sessions are NOT read.",
+  "criteria_all_required": {
+    "C1": "gated mean gross points > 0 in BOTH blocks",
+    "C2": "gated minus floor-bound mean gross in R, session-cluster bootstrap (2000 draws, seed 1302) 95% lower bound > 0",
+    "C3": "gated candidate minus permutation-baseline net (cost 1), session bootstrap (seed 1303) 95% lower bound > 0",
+    "C4": "gated pooled net at cost 1 > 0"
+  },
+  "outcome_rule": "All of C1-C4 pass -> ADVANCE_TO_FROZEN_PROSPECTIVE_TEST_ONLY (not adoption; needs >=55 unused sessions). Otherwise STOP_THIS_HYPOTHESIS. Either way status stays NOT_READY, alerts OFF.",
+  "expected_power_note": "Pre-test power estimate: difference of ~0.08 R with per-trade sd ~1 R over ~200 vs ~390 trades gives se ~0.09 R, so C2 is expected to be inconclusive; the screen exists to confirm or refute that, not to promise an edge.",
+  "budget": "One script, one run, one gate, 1000 permutations, <3 minutes CPU. No re-runs after seeing results; no second gate; no parameter search.",
+  "status_of_evidence": "Development screen on consumed data = research finding, NOT independent validation."
+}
