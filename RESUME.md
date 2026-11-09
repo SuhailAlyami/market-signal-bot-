@@ -4,6 +4,16 @@
 
 Last updated: 2026-11-08 (branch `claude/kind-ramanujan-icu95e`, based on open PR #51 head `446add9`).
 
+## Resume point (2026-11-09 21:00 UTC) — read this first
+
+- Status NOT_READY / RESEARCH_ONLY; alerts OFF. PR #54 (this branch) stays unmerged. PR #55 and PR #56 are merged into main (418d121).
+- Detector decision: price-only wave/reversal family STOPPED (`research/spx_review_20261109`). Only candidate kept: constituent-breadth agreement, REJECTED as a trading rule, FROZEN for one forward test (`research/breadth_20261109`, `forward_protocol.json` on main).
+- Collection on main (`.github/workflows/spx_collect.yml`, daily 21:45 UTC = 00:45 Riyadh Tue-Sat): SPX 1m (root of `data/spx-collection`) + 5m bars for ^GSPC and NVDA, MSFT, AAPL, AMZN, GOOGL, META, AVGO, TSLA, BRK-B, JPM (`breadth5m/`).
+- Backfill run https://github.com/SuhailAlyami/market-signal-bot-/actions/runs/42697651406 (breadth_range=60d, all steps green) -> data commit 9a0ec60: 11/11 symbols, 59 synchronized sessions 2026-08-17..2026-11-06, no missing (day, symbol), 11 raw snapshots with matching sha256; SPX 1m first reads unchanged. 2026-11-09 was still open at fetch time and excluded as incomplete; the next scheduled 5d run should add it.
+- Untouched forward sessions so far: 2026-11-05, 2026-11-06 (synchronized). Forward test NOT run and NOT evaluated.
+- Next: let the schedule run. Run `python research/breadth_20261109/run.py --forward <breadth5m/bars5m.json>` only to count events; it scores nothing before 190 high-agreement events (conditional; ~757 if the true effect is half). Acceptance needs C1-C5 all (incl. C2 net at cost 1 > 0, C4 vs random direction, C5 block bootstrap). Passing would still mean NOT_READY until receipt latency is verified.
+- Watch: a red `spx-collect` run (any missing symbol/day is reported, never filled). Yahoo 5m keeps ~60 days, 1m ~7 trading days.
+
 ## Current state (2026-11-08) — read this first
 
 - `main` (`6ff3eb5`, 2026-10-29) is NOT the latest research. Newest work lives in open, unmerged PRs:
