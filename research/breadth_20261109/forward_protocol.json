@@ -1,0 +1,18 @@
+{
+  "status": "PREREGISTERED_FORWARD_TEST_NOT_RUN",
+  "registered": "2026-11-09, before any session >= 2026-11-05 was evaluated",
+  "frozen_logic": "breadth_core.py (moved verbatim from run.py at commit fc4f002/3aa1af7; development output byte-identical, see test_forward.py)",
+  "input": "Collector store breadth5m/bars5m.json on branch data/spx-collection: Yahoo 5m bars for ^GSPC and the ten protocol stocks, first complete read per (symbol, day) canonical. Only days with all 11 symbols complete are used; others are excluded with reason. DELAYED_RESEARCH_ONLY.",
+  "sessions": "All synchronized sessions >= 2026-11-05.",
+  "minimum_high_agreement_events": 190,
+  "minimum_rationale": "Conditional estimate from development data (audit.json): 190 high-agreement events give 80% power at two-sided 5% only if the true high-minus-rest difference is +1.8 pt; if it is half, about 757 are needed. Single look: the run counts events without outcomes and refuses to score before the minimum.",
+  "acceptance_all_required": {
+    "C1": "high minus rest mean gross, session bootstrap (2000, seed 1401) 95% lower bound > 0",
+    "C2": "high-group net at cost 1 > 0",
+    "C3": "high-group mean gross > 0 in both halves (split at the median forward date)",
+    "C4": "high group beats within-session random direction (1000 permutations seed 1402, bootstrap seed 1403), 95% lower bound > 0",
+    "C5": "high minus rest, 5-session block bootstrap (4000, seed 1501) 95% lower bound > 0 (added from the audit; stricter, never replaces C1-C4)"
+  },
+  "outcome": "All C1-C5 pass -> FORWARD_PASS_STILL_NOT_READY (then latency/receipt-time verification before any alert). Any fail -> FORWARD_FAIL; the rule is not retuned.",
+  "alerts": "OFF in all outcomes of this test."
+}

@@ -7,18 +7,18 @@ from pathlib import Path
 import collect_yahoo_spx as c
 
 
-def response(days, drop=(), null=()):
+def response(days, drop=(), null=(), step=1, base=100.0):
     """Synthetic Yahoo body; days are full regular sessions built from NY wall-clock times."""
     ts, o, h, lo, cl, v = [], [], [], [], [], []
     for day in days:
         opening = c.CAL.session_open(day).to_pydatetime().astimezone(c.NY)
         closing = c.CAL.session_close(day).to_pydatetime().astimezone(c.NY)
         n = int((closing-opening).total_seconds()//60)
-        for i in range(n):
+        for i in range(0, n, step):
             at = opening+timedelta(minutes=i)
             if (day, i) in drop:
                 continue
-            p = 100.0+i*.01
+            p = base+i*.01
             ts.append(int(at.timestamp())); v.append(0 if i == 5 else 10)
             bad = (day, i) in null
             o.append(None if bad else p); h.append(p+.5); lo.append(p-.5); cl.append(p+.1)
@@ -166,3 +166,70 @@ class DedupeAndStatusTests(unittest.TestCase):
         self.assertEqual((e['state'], e['early_close'], e['close_riyadh']), ('OPEN', True, '21:00'))
         summer = c.market_status(datetime(2026, 7, 15, 15, tzinfo=timezone.utc))  # EDT: 20:00 UTC close
         self.assertEqual((summer['open_riyadh'], summer['close_riyadh']), ('16:30', '23:00'))
+
+
+class BreadthCollectionTests(unittest.TestCase):
+    DAYS = ['2026-11-05', '2026-11-06']  # synthetic bodies only; no real data for these dates is read
+
+    def fetched(self, drop=None, fail=None, days=None):
+        out = []
+        for k, sym in enumerate(c.BREADTH_SYMBOLS):
+            if sym == fail:
+                out.append((sym, None, {'failed_at': AFTER.isoformat(), 'error': 'URLError(timeout)'}))
+                continue
+            d = drop.get(sym, ()) if drop else ()
+            out.append((sym, response(days or self.DAYS, drop=d, step=5, base=100.0+k), meta(AFTER)))
+        return out
+
+    def test_universe_matches_frozen_protocol_order(self):
+        self.assertEqual(c.BREADTH_SYMBOLS, ['^GSPC', 'NVDA', 'MSFT', 'AAPL', 'AMZN', 'GOOGL', 'META', 'AVGO', 'TSLA', 'BRK-B', 'JPM'])
+
+    def test_all_symbols_stored_synchronized_with_provenance(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = c.run_breadth(self.fetched(), Path(d))
+            self.assertEqual((r['failures'], r['coverage']['ok'], r['coverage']['synchronized_days']), ([], True, self.DAYS))
+            store = json.loads((Path(d)/'breadth5m/bars5m.json').read_text())
+            self.assertEqual(sorted(store), sorted(c.BREADTH_SYMBOLS))
+            rows = store['NVDA']['2026-11-05']['csv'].splitlines()
+            self.assertEqual((len(rows)-1, rows[1][:5], rows[-1][:5], store['NVDA']['2026-11-05']['step']), (78, '09:30', '15:55', 5))
+            snaps = [json.loads(x) for x in (Path(d)/'breadth5m/snapshots.jsonl').read_text().splitlines()]
+            self.assertEqual(len(snaps), 11)
+            self.assertTrue(all({'requested_at', 'received_at', 'raw_sha256', 'symbol'} <= set(x) for x in snaps))
+            self.assertEqual(len(list((Path(d)/'breadth5m/raw').iterdir())), 11)
+            self.assertFalse((Path(d)/'sessions.json').exists())  # SPX 1m store untouched by breadth collection
+
+    def test_missing_bar_breaks_synchronization_and_is_not_filled(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = c.run_breadth(self.fetched(drop={'JPM': {('2026-11-06', 50)}}), Path(d))
+            cov = r['coverage']
+            self.assertFalse(cov['ok'])
+            self.assertEqual(cov['synchronized_days'], ['2026-11-05'])
+            self.assertEqual(cov['missing'], [{'day': '2026-11-06', 'symbols': ['JPM']}])
+            self.assertEqual(r['per_symbol']['JPM']['incomplete'][0]['reason'], 'incomplete_regular_grid')
+
+    def test_fetch_failure_recorded_and_reported(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = c.run_breadth(self.fetched(fail='TSLA'), Path(d))
+            self.assertEqual(r['failures'], ['TSLA'])
+            self.assertFalse(r['coverage']['ok'])
+            snaps = [json.loads(x) for x in (Path(d)/'breadth5m/snapshots.jsonl').read_text().splitlines()]
+            self.assertEqual([x['status'] for x in snaps if x['symbol'] == 'TSLA'], ['FETCH_FAILED'])
+
+    def test_rerun_dedupes_and_keeps_first_read(self):
+        with tempfile.TemporaryDirectory() as d:
+            c.run_breadth(self.fetched(), Path(d))
+            first = (Path(d)/'breadth5m/bars5m.json').read_text()
+            r = c.run_breadth(self.fetched(), Path(d))
+            self.assertTrue(all(v == 'DUPLICATE_PAYLOAD_SKIPPED' for v in r['per_symbol'].values()))
+            self.assertEqual(first, (Path(d)/'breadth5m/bars5m.json').read_text())
+            self.assertEqual(len(list((Path(d)/'breadth5m/raw').iterdir())), 11)
+
+    def test_forming_5m_bar_excluded(self):
+        bars, _ = c.parse(response(['2026-11-05'], step=5))
+        at_last = bars[-1]['at'].astimezone(timezone.utc)
+        self.assertEqual(len(c.completed_only(bars, at_last+timedelta(minutes=4), minutes=5)), len(bars)-1)
+        self.assertEqual(len(c.completed_only(bars, at_last+timedelta(minutes=5), minutes=5)), len(bars))
+
+    def test_url_encodes_symbols(self):
+        self.assertIn('/chart/%5EGSPC?', 'https://h/v8/finance/chart/' + c.urllib.parse.quote('^GSPC', safe='') + '?')
+        self.assertEqual(c.urllib.parse.quote('BRK-B', safe=''), 'BRK-B')
