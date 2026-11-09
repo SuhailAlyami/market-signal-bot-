@@ -116,6 +116,7 @@ jobs:
           test "$(git ls-remote origin "refs/heads/${DATA_BRANCH}" | cut -f1)" = "$(git rev-parse HEAD)"
           echo "Remote ${DATA_BRANCH} = $(git rev-parse --short HEAD)" | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Audit stored sessions against the XNYS calendar
+        shell: bash   # bash -eo pipefail: a failed audit must not be masked by tee
         run: python research/spx_collection/collect_yahoo_spx.py --out data-repo --verify | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Audit breadth synchronization (all 11 symbols per session)
         shell: bash
