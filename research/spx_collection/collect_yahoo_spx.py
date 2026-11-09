@@ -12,7 +12,9 @@ import json
 import math
 import sys
 import time
+import urllib.parse
 import urllib.request
+from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -25,6 +27,8 @@ RIYADH = ZoneInfo('Asia/Riyadh')
 CONSUMED_THROUGH = '2026-11-04'  # sessions up to here were used in earlier research
 HOSTS = ('query1.finance.yahoo.com', 'query2.finance.yahoo.com')
 SYMBOL = '^GSPC'
+# Fixed universe of the frozen breadth screen (research/breadth_20261109/protocol.json). Order and members must not change.
+BREADTH_SYMBOLS = ['^GSPC', 'NVDA', 'MSFT', 'AAPL', 'AMZN', 'GOOGL', 'META', 'AVGO', 'TSLA', 'BRK-B', 'JPM']
 HERE = Path(__file__).resolve().parent
 
 
@@ -50,8 +54,8 @@ def market_status(now):
             'open_riyadh': opening.astimezone(RIYADH).strftime('%H:%M'), 'close_riyadh': closing.astimezone(RIYADH).strftime('%H:%M')}
 
 
-def fetch(host=HOSTS[0], interval='1m', rng='7d', timeout=20):
-    url = f'https://{host}/v8/finance/chart/%5EGSPC?interval={interval}&range={rng}'
+def fetch(host=HOSTS[0], interval='1m', rng='7d', timeout=20, symbol=SYMBOL):
+    url = f'https://{host}/v8/finance/chart/{urllib.parse.quote(symbol, safe="")}?interval={interval}&range={rng}'
     requested = utcnow()
     t0 = time.monotonic()
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (research collector)'})
@@ -88,13 +92,13 @@ def parse(body):
                   'instrument_type': meta.get('instrumentType'), 'dropped_invalid_bars': dropped}
 
 
-def completed_only(bars, received_at):
+def completed_only(bars, received_at, minutes=1):
     """Drop a bar whose one-minute interval had not finished at receipt: it may still be forming."""
-    return [b for b in bars if b['at'] + timedelta(minutes=1) <= received_at]
+    return [b for b in bars if b['at'] + timedelta(minutes=minutes) <= received_at]
 
 
-def build_sessions(bars):
-    """Complete regular-grid sessions only (09:30..close-1m). Incomplete days are reported, never filled."""
+def build_sessions(bars, step=1):
+    """Complete regular-grid sessions only (09:30..close-step). Incomplete days are reported, never filled."""
     by_day = {}
     for b in bars:
         by_day.setdefault(b['at'].date().isoformat(), {})[b['at']] = b
@@ -105,7 +109,7 @@ def build_sessions(bars):
             continue
         opening = CAL.session_open(day).to_pydatetime().astimezone(NY)
         closing = CAL.session_close(day).to_pydatetime().astimezone(NY)
-        grid = [opening+timedelta(minutes=i) for i in range(int((closing-opening).total_seconds()//60))]
+        grid = [opening+timedelta(minutes=i) for i in range(0, int((closing-opening).total_seconds()//60), step)]
         missing = [g for g in grid if g not in got]
         if missing:
             incomplete.append({'day': day, 'reason': 'incomplete_regular_grid', 'present': len(grid)-len(missing),
@@ -113,7 +117,7 @@ def build_sessions(bars):
             continue
         rows = ['time,open,high,low,close'] + [
             f"{g.strftime('%H:%M')},{got[g]['open']},{got[g]['high']},{got[g]['low']},{got[g]['close']}" for g in grid]
-        sessions[day] = {'day': day, 'step': 1, 'csv': '\n'.join(rows)+'\n',
+        sessions[day] = {'day': day, 'step': step, 'csv': '\n'.join(rows)+'\n',
                          'zero_volume_bars': sum(not got[g]['volume'] for g in grid),
                          'consumed_in_prior_research': day <= CONSUMED_THROUGH}
     return sessions, incomplete
@@ -151,7 +155,8 @@ def verify(store, first=None, last=None):
             continue
         opening = CAL.session_open(day).to_pydatetime().astimezone(NY)
         closing = CAL.session_close(day).to_pydatetime().astimezone(NY)
-        expected = [(opening+timedelta(minutes=i)).strftime('%H:%M') for i in range(int((closing-opening).total_seconds()//60))]
+        step = store[day].get('step', 1)
+        expected = [(opening+timedelta(minutes=i)).strftime('%H:%M') for i in range(0, int((closing-opening).total_seconds()//60), step)]
         rows = [r.split(',') for r in store[day]['csv'].strip().splitlines()[1:]]
         got = [r[0] for r in rows]
         # CSV columns are time,open,high,low,close: unpack explicitly for the OHLC check
@@ -217,12 +222,103 @@ def run(body, fetch_meta, outdir):
     return snap
 
 
+def run_breadth(fetched, outdir):
+    """Store 5m bars for BREADTH_SYMBOLS under outdir/breadth5m. `fetched` is a list of (symbol, body, meta) or
+    (symbol, None, {'error': ...}). Per (symbol, day) the first complete read is canonical; raw files are exclusive;
+    an identical payload for a symbol is skipped. Days lacking any symbol are reported, never filled."""
+    bdir = outdir/'breadth5m'
+    (bdir/'raw').mkdir(parents=True, exist_ok=True)
+    spath, snaps = bdir/'bars5m.json', bdir/'snapshots.jsonl'
+    store = json.loads(spath.read_text()) if spath.exists() else {}
+    seen = defaultdict(set)
+    if snaps.exists():
+        for line in snaps.read_text().splitlines():
+            rec = json.loads(line)
+            if rec.get('raw_sha256'):
+                seen[rec['symbol']].add(rec['raw_sha256'])
+    lines, failures, per_symbol = [], [], {}
+    for symbol, body, meta in fetched:
+        if body is None:
+            failures.append(symbol)
+            lines.append(dict(meta, symbol=symbol, status='FETCH_FAILED'))
+            continue
+        digest = hashlib.sha256(body).hexdigest()
+        if digest in seen[symbol]:
+            per_symbol[symbol] = 'DUPLICATE_PAYLOAD_SKIPPED'
+            continue
+        try:
+            bars, pmeta = parse(body)
+        except ValueError as e:
+            failures.append(symbol)
+            lines.append(dict(meta, symbol=symbol, status='PROVIDER_ERROR', error=repr(e)))
+            continue
+        received = datetime.fromisoformat(meta['received_at'])
+        done = completed_only(bars, received, minutes=5)
+        sessions, incomplete = build_sessions(done, step=5)
+        stamp = received.strftime('%Y%m%dT%H%M%SZ')
+        write_new(bdir/'raw'/f"{stamp}_{symbol.replace('^', '')}_5m.json.gz", gzip.compress(body, mtime=0))
+        added, revised = merge(store.setdefault(symbol, {}), sessions)
+        last = done[-1]['at'] if done else None
+        per_symbol[symbol] = {'added': added, 'revised_not_applied': revised, 'incomplete': incomplete}
+        lines.append(dict(meta, symbol=symbol, status='SNAPSHOT_STORED', provider=pmeta, raw_sha256=digest,
+                          interval='5m', completed_bars=len(done), last_completed_bar_start_ny=last.isoformat() if last else None,
+                          sessions_added=added, sessions_revised_not_applied=revised, incomplete_days=incomplete,
+                          market_state_at_receipt=market_status(received), classification='DELAYED_RESEARCH_ONLY'))
+    spath.write_text(json.dumps(store, indent=1, sort_keys=True)+'\n')
+    with snaps.open('a') as f:
+        for rec in lines:
+            f.write(json.dumps(rec, sort_keys=True)+'\n')
+    return {'failures': failures, 'per_symbol': per_symbol, 'coverage': verify_breadth(store)}
+
+
+def verify_breadth(store):
+    """Per-symbol calendar audit plus synchronization: a day is usable only if every symbol has its complete grid."""
+    days = sorted({d for s in store.values() for d in s})
+    if not days:
+        return {'ok': False, 'problems': ['empty_store'], 'synchronized_days': []}
+    sync, missing, problems = [], [], {}
+    for symbol in BREADTH_SYMBOLS:
+        rep_ = verify(store.get(symbol, {}), days[0], days[-1]) if store.get(symbol) else {'ok': False, 'problems': ['no_data']}
+        if not rep_['ok']:
+            problems[symbol] = rep_['problems']
+    for ts in CAL.sessions_in_range(days[0], days[-1]):
+        d = str(ts.date())
+        lack = [s for s in BREADTH_SYMBOLS if d not in store.get(s, {})]
+        (missing.append({'day': d, 'symbols': lack}) if lack else sync.append(d))
+    return {'ok': not problems and not missing, 'range': [days[0], days[-1]], 'synchronized_days': sync,
+            'missing': missing, 'per_symbol_problems': problems}
+
+
+def collect_breadth(host, rng, pause=1.0):
+    fetched = []
+    for symbol in BREADTH_SYMBOLS:
+        try:
+            body, meta = fetch(host, '5m', rng, symbol=symbol)
+            fetched.append((symbol, body, meta))
+        except Exception as e:  # recorded per symbol; the run exits nonzero
+            fetched.append((symbol, None, {'failed_at': utcnow().isoformat(), 'error': repr(e)}))
+        time.sleep(pause)
+    return fetched
+
+
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('--out', type=Path, default=HERE/'data', help='data directory (sessions.json, snapshots.jsonl, raw/)')
     p.add_argument('--host', default=HOSTS[0], choices=HOSTS)
     p.add_argument('--verify', action='store_true', help='audit the stored sessions only; no network')
+    p.add_argument('--breadth', action='store_true', help='collect 5m bars for SPX and the ten breadth stocks')
+    p.add_argument('--breadth-range', default='5d', choices=('5d', '1mo', '60d'))
+    p.add_argument('--verify-breadth', action='store_true', help='audit breadth5m/bars5m.json only; no network')
     a = p.parse_args()
+    if a.verify_breadth:
+        report = verify_breadth(json.loads((a.out/'breadth5m'/'bars5m.json').read_text()))
+        print(json.dumps(report, indent=1))
+        sys.exit(0 if report['ok'] else 3)
+    if a.breadth:
+        res = run_breadth(collect_breadth(a.host, a.breadth_range), a.out)
+        print(json.dumps({'failures': res['failures'], 'synchronized_days': res['coverage']['synchronized_days'],
+                          'missing': res['coverage'].get('missing'), 'per_symbol': res['per_symbol']}, indent=1))
+        sys.exit(2 if res['failures'] else 0)
     if a.verify:
         report = verify(json.loads((a.out/'sessions.json').read_text()))
         print(json.dumps(report, indent=1))

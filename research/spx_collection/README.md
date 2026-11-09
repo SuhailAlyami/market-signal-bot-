@@ -10,6 +10,9 @@ No alerts, orders, secrets or paid services. Data class: **DELAYED_RESEARCH_ONLY
 
 An identical provider payload (same sha256) is skipped (`DUPLICATE_PAYLOAD_SKIPPED`); provider/network errors exit non-zero and are recorded. `--verify` audits stored sessions against the calendar with no network. `market_status()` classifies a timestamp as PRE_OPEN / OPEN / POST_CLOSE, or NO_SESSION with reason WEEKEND or HOLIDAY, with Asia/Riyadh times.
 
+## Breadth 5m collection (`--breadth`)
+Fetches `interval=5m` for `^GSPC` and the frozen breadth universe (NVDA, MSFT, AAPL, AMZN, GOOGL, META, AVGO, TSLA, BRK-B, JPM), 1 s apart, default `range=5d`. Stored under `breadth5m/`: one exclusive raw file per symbol and snapshot, one `snapshots.jsonl` line per symbol (request/receipt times, raw sha256, provider meta, status incl. FETCH_FAILED), and `bars5m.json` {symbol: {day: session}} with complete 78-bar (or early-close) grids only, first read canonical. `--verify-breadth` lists synchronized days (all 11 complete) and every missing (day, symbols); it never fills gaps. The SPX 1m store at the data root is untouched.
+
 ## Workflow `.github/workflows/spx_collect.yml`
 - `pull_request` (paths above only): runs the tests (`contents: read`). `schedule` / `workflow_dispatch`: tests, then collect.
 - Schedule `45 21 * * 1-5` UTC = **00:45 Asia/Riyadh (Tue–Sat)**: 45 min after the NYSE close in winter (21:00 UTC = 00:00 Riyadh), 1 h 45 min in summer. Best effort; GitHub may delay it. Yahoo keeps 7 trading days, so a missed run is recoverable for about a week.

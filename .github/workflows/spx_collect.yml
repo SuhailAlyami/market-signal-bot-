@@ -7,6 +7,8 @@ on:
   pull_request:
     paths:
       - 'research/spx_collection/**'
+      - 'research/breadth_20261109/**'
+      - 'research/objective_review_20261107/**'
       - '.github/workflows/spx_collect.yml'
   schedule:
     - cron: '45 21 * * 1-5'
@@ -16,6 +18,12 @@ on:
         description: 'Existing branch that stores collected data (must start with data/)'
         required: false
         default: 'data/spx-collection'
+      breadth_range:
+        description: 'Yahoo range for the 5m breadth fetch (5d daily; 60d only for a one-time backfill)'
+        required: false
+        default: '5d'
+        type: choice
+        options: ['5d', '1mo', '60d']
 permissions: {}
 concurrency:
   # One writer at a time for all data runs; PR test runs only serialize per ref.
@@ -39,6 +47,9 @@ jobs:
       - run: pip install -r research/spx_collection/requirements.txt
       - run: python -m unittest test_collect -v
         working-directory: research/spx_collection
+      - name: Frozen breadth screen input separation (development fixture + synthetic only)
+        run: python -m unittest test_forward -v
+        working-directory: research/breadth_20261109
 
   collect:
     if: github.event_name != 'pull_request'
@@ -80,6 +91,15 @@ jobs:
         run: |
           python research/spx_collection/collect_yahoo_spx.py --out data-repo | tee collect.out
           { echo '### SPX collection'; echo '```json'; cat collect.out; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Fetch, validate, store 5m bars for SPX and the ten breadth stocks
+        id: breadth
+        continue-on-error: true
+        shell: bash
+        env:
+          BREADTH_RANGE: ${{ inputs.breadth_range || '5d' }}
+        run: |
+          python research/spx_collection/collect_yahoo_spx.py --out data-repo --breadth --breadth-range "$BREADTH_RANGE" | tee breadth.out
+          { echo '### Breadth 5m collection'; echo '```json'; cat breadth.out; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - name: Persist to the data branch (fast-forward only, no force)
         shell: bash
         working-directory: data-repo
@@ -96,4 +116,14 @@ jobs:
           test "$(git ls-remote origin "refs/heads/${DATA_BRANCH}" | cut -f1)" = "$(git rev-parse HEAD)"
           echo "Remote ${DATA_BRANCH} = $(git rev-parse --short HEAD)" | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Audit stored sessions against the XNYS calendar
+        shell: bash   # bash -eo pipefail: a failed audit must not be masked by tee
         run: python research/spx_collection/collect_yahoo_spx.py --out data-repo --verify | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Audit breadth synchronization (all 11 symbols per session)
+        shell: bash
+        run: |
+          python research/spx_collection/collect_yahoo_spx.py --out data-repo --verify-breadth | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Fail visibly if any breadth symbol fetch failed
+        if: steps.breadth.outcome == 'failure'
+        run: |
+          echo "Breadth collection had failures; data that was fetched is stored, missing symbols are listed above."
+          exit 1
