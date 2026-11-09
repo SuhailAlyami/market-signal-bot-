@@ -1,0 +1,23 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY_DEVELOPMENT",
+  "registered": "2026-11-09 before any outcome was computed; committed and pushed first",
+  "hypothesis": "Index explosions that are carried by broad participation of the largest constituents persist; those driven by one or two names mean-revert. Breadth agreement among the ten largest US stocks at the decision time therefore adds DIRECTIONAL information to an SPX expansion signal. This information source (constituent breadth) has not been tested in this repository.",
+  "universe": ["NVDA","MSFT","AAPL","AMZN","GOOGL","META","AVGO","TSLA","BRK-B","JPM"],
+  "universe_note": "Fixed before results; equal weight; no weights or substitutions.",
+  "data": "Yahoo chart API 5m, range 60d, fetched 2026-11-09 (raw/PROVENANCE.json with request/receipt times and sha256). Class DELAYED_RESEARCH_ONLY. Regular XNYS sessions only, complete grids only, no filling.",
+  "split": {"development": "complete sessions <= 2026-11-04 in the 60d window (SPX outcomes on these dates were consumed by earlier research; breadth is new)",
+            "holdout_locked": "sessions >= 2026-11-05 are NOT evaluated in this round; frozen code will be run on them once >= 20 complete new sessions exist"},
+  "base_signals": "Unchanged wave_capture.detect on SPX 5m (control from earlier rounds).",
+  "feature": "agreement = number of the 10 names whose 15-minute return ending at the decision bar close (close[t]/close[t-3]-1) has the same sign as the signal side. Requires all 11 bars present at t and t-3; otherwise the signal is excluded with reason.",
+  "groups": {"high": "agreement >= 8", "rest": "agreement <= 7"},
+  "outcomes": "Unchanged score() engine: next 5m open entry, stop 1R, target 2R, 30m horizon, R=max(5, ATR6), delay 0; costs 0.5/1/2. Also direction after 30m.",
+  "criteria_all_required_for_ADVANCE": {
+    "C1": "high minus rest mean gross points per trade, session-cluster bootstrap (2000, seed 1401) 95% lower bound > 0",
+    "C2": "high-group net at cost 1 > 0",
+    "C3": "high-group mean gross > 0 in both halves of the development period (split at the median development date)",
+    "C4": "high group beats within-session random direction at the same times (1000 permutations, seed 1402; bootstrap seed 1403) with 95% lower bound > 0"
+  },
+  "outcome_rule": "All pass -> ADVANCE_TO_LOCKED_HOLDOUT (still NOT_READY, alerts OFF). Otherwise REJECT. No threshold changes after results.",
+  "budget": "One run. No other universe, threshold, window or base detector.",
+  "evidence_label": "Development result on dates whose SPX outcomes were previously consumed = research finding, not independent validation."
+}
