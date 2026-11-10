@@ -20,6 +20,11 @@ Self-review is not independent review. One agent per file set at a time.
 
 **Decision on new experiments:** none started. Reasons: 36+ preregistered protocols already used the same consumed data (multiplicity); the decisive evidence for the only surviving candidate must come from forward data; the binding blocker is unproven automatic collection. Starting another development test would add cost without independent evidence.
 
+## Phase 2026-11-10 (Claude): TradingView CAPITALCOM:SPX500 feasibility — documented, nothing changed
+- PR #58 `research/tradingview-parity-20261110` (2712ae4): difference record, read-only `feed_probe.pine` (uncompiled here), 27 outcome-free reference signals on consumed dates.
+- Finding: existing CAPITALCOM Pine is a different older rule; frozen rule needs session masking, confirmed-bar evaluation and 10 stock feeds; CFD results can never count toward the forward test; no automatic chart-to-GitHub link without a webhook; prior free account could not save scripts or create technical alerts.
+- Next (owner, manual): step 1 of the plan (probe table) during the NY session. No Pine port of the detector before review.
+
 ## Branches / PRs
 | Item | State |
 |---|---|
