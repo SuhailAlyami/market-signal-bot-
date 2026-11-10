@@ -23,7 +23,8 @@ Self-review is not independent review. One agent per file set at a time.
 ## Phase 2026-11-10 (Claude): TradingView CAPITALCOM:SPX500 feasibility — documented, nothing changed
 - PR #58 `research/tradingview-parity-20261110` (2712ae4): difference record, read-only `feed_probe.pine` (uncompiled here), 27 outcome-free reference signals on consumed dates.
 - Finding: existing CAPITALCOM Pine is a different older rule; frozen rule needs session masking, confirmed-bar evaluation and 10 stock feeds; CFD results can never count toward the forward test; no automatic chart-to-GitHub link without a webhook; prior free account could not save scripts or create technical alerts.
-- Next (owner, manual): step 1 of the plan (probe table) during the NY session. No Pine port of the detector before review.
+- 2026-11-10 (Claude): execution attempt BLOCKED, not run. From this environment: tradingview.com and scanner.tradingview.com unreachable (proxy, no response); no browser/computer-use tool and no attached computer (list_computer_folders empty); Pine Editor needs a signed-in TradingView account, which the agent does not have; no Pine compiler. feed_probe.pine was therefore NOT compiled or run and no probe result exists. Owner asked not to convert this into manual steps.
+- Resume condition: an agent session with a signed-in TradingView browser (e.g. owner's computer attached) can run step 1 of the plan; until then the TradingView path stays unverified. No Pine port of the detector before review. PR #58 not merged.
 
 ## Branches / PRs
 | Item | State |
