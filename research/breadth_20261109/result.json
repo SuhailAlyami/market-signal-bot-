@@ -1,0 +1,93 @@
+{
+ "scope": "development sessions only (< 2026-11-05); SPX outcomes previously consumed; breadth feature new",
+ "protocol_sha256": "c886f76100764fd408ecb3736a72ace0a74449d4f019c402f03cccf0cc342f32",
+ "sessions": 57,
+ "first_day": "2026-08-17",
+ "last_day": "2026-11-04",
+ "excluded_sessions": [],
+ "signals_dropped_missing_constituent_bars": 0,
+ "agreement_histogram": {
+  "0": 0,
+  "1": 1,
+  "2": 5,
+  "3": 6,
+  "4": 15,
+  "5": 36,
+  "6": 51,
+  "7": 59,
+  "8": 66,
+  "9": 39,
+  "10": 16
+ },
+ "all": {
+  "n": 294,
+  "mean_gross": -0.078,
+  "dir30_correct": 0.5,
+  "net": {
+   "0.5": -170.0,
+   "1": -317.0,
+   "2": -611.0
+  }
+ },
+ "high": {
+  "n": 121,
+  "mean_gross": 0.98,
+  "dir30_correct": 0.537,
+  "net": {
+   "0.5": 58.0,
+   "1": -2.5,
+   "2": -123.5
+  }
+ },
+ "rest": {
+  "n": 173,
+  "mean_gross": -0.818,
+  "dir30_correct": 0.474,
+  "net": {
+   "0.5": -228.0,
+   "1": -314.5,
+   "2": -487.5
+  }
+ },
+ "high_first_half": {
+  "n": 57,
+  "mean_gross": 1.228,
+  "dir30_correct": 0.596,
+  "net": {
+   "0.5": 41.5,
+   "1": 13.0,
+   "2": -44.0
+  }
+ },
+ "high_second_half": {
+  "n": 64,
+  "mean_gross": 0.758,
+  "dir30_correct": 0.484,
+  "net": {
+   "0.5": 16.5,
+   "1": -15.5,
+   "2": -79.5
+  }
+ },
+ "C1": {
+  "point": 1.798,
+  "bootstrap95": [
+   0.26,
+   3.326
+  ]
+ },
+ "C4": {
+  "high_minus_random_direction_net_cost1": 102.78,
+  "bootstrap95": [
+   -19.96,
+   229.38
+  ]
+ },
+ "checks": {
+  "C1_high_minus_rest_lower_gt_0": true,
+  "C2_high_net_cost1_positive": false,
+  "C3_high_gross_positive_both_halves": true,
+  "C4_high_beats_random_direction_lower_gt_0": false
+ },
+ "decision": "REJECT"
+}

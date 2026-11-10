@@ -1,0 +1,156 @@
+{
+ "timestamp_alignment": {
+  "meaning": "chart timestamp = bar START (interval [t, t+5m)); meta.regularMarketTime = time of the last regular-market quote update as stamped by Yahoo; neither is a delivery/receipt latency",
+  "bars_checked_against_1m": 390,
+  "mismatch_if_start_label": 0,
+  "matches_if_end_label": 0
+ },
+ "data_completeness": {
+  "^GSPC": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 0,
+   "flat_bars": 0
+  },
+  "NVDA": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 37,
+   "flat_bars": 0
+  },
+  "MSFT": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 11,
+   "flat_bars": 0
+  },
+  "AAPL": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 19,
+   "flat_bars": 0
+  },
+  "AMZN": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 8,
+   "flat_bars": 0
+  },
+  "GOOGL": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 21,
+   "flat_bars": 0
+  },
+  "META": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 5,
+   "flat_bars": 0
+  },
+  "AVGO": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 6,
+   "flat_bars": 0
+  },
+  "TSLA": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 20,
+   "flat_bars": 0
+  },
+  "BRK-B": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 2,
+   "flat_bars": 0
+  },
+  "JPM": {
+   "sessions": 57,
+   "incomplete_sessions": 0,
+   "null_bars": 0,
+   "zero_volume_bars": 4,
+   "flat_bars": 0
+  }
+ },
+ "entry_timing": {
+  "rule": "entry = open of first 5m bar starting at or after decision (= close of decision bar); no intrabar entry; assumes zero delivery delay",
+  "high_n": 121,
+  "high_mean_gross_delay0": 0.98,
+  "rest_mean_gross_delay0": -0.818,
+  "sensitivity_one_bar_later": {
+   "high_n": 120,
+   "high_mean_gross": 0.712,
+   "rest_mean_gross": -0.081,
+   "diff": 0.793
+  }
+ },
+ "confounding_with_spx_momentum": {
+  "corr_agreement_vs_spx_aligned_15m_move_in_R": 0.557,
+  "within_strata": {
+   "spx_15m_aligned_move_tercile_1": {
+    "n_high": 16,
+    "n_rest": 82,
+    "diff_high_minus_rest": 1.601
+   },
+   "spx_15m_aligned_move_tercile_2": {
+    "n_high": 40,
+    "n_rest": 58,
+    "diff_high_minus_rest": 1.179
+   },
+   "spx_15m_aligned_move_tercile_3": {
+    "n_high": 65,
+    "n_rest": 33,
+    "diff_high_minus_rest": 0.804
+   }
+  }
+ },
+ "uncertainty": {
+  "point": 1.798,
+  "session_bootstrap95": [
+   0.214,
+   3.34
+  ],
+  "block5_bootstrap95": [
+   -0.12,
+   3.501
+  ],
+  "one_sided_bootstrap_p": 0.0132,
+  "iid_se": 0.897,
+  "session_bootstrap_se": 0.803,
+  "design_effect_var": 0.802,
+  "sd_gross_high": 8.23,
+  "sd_gross_rest": 6.5
+ },
+ "multiple_testing": {
+  "preregistered_protocols_in_research": 36,
+  "bonferroni_adjusted_p": 0.477,
+  "note": "Protocols are not all on the same data or outcome; Bonferroni over them is a conservative bound, not an exact correction."
+ },
+ "validation_target": {
+  "high_events_per_session": 2.12,
+  "rest_events_per_session": 3.04,
+  "for_80pct_power_two_sided_5pct_if_true_diff_equals": {
+   "1.8": {
+    "high_events_needed": 190,
+    "sessions_at_dev_rate": 90
+   },
+   "0.9": {
+    "high_events_needed": 757,
+    "sessions_at_dev_rate": 357
+   }
+  },
+  "note": "Observed diff is a best-case (selected) estimate; the halved diff is the planning case."
+ }
+}

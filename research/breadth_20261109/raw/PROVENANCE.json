@@ -1,0 +1,112 @@
+[
+ {
+  "symbol": "^GSPC",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:43:51.940873+00:00",
+  "received_at": "2026-11-09T19:43:52.535016+00:00",
+  "sha256": "324bb22bdb3a396d16800c050d416d9b3992adb914f578dd1f31f3b8c05ac80a",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:43:51+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "NVDA",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:43:53.579191+00:00",
+  "received_at": "2026-11-09T19:43:53.909351+00:00",
+  "sha256": "5698a799c64424e270df8dcbf350055a87e923444c0e8718b9e81db5edeff995",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:43:53+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "MSFT",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/MSFT?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:43:54.957269+00:00",
+  "received_at": "2026-11-09T19:43:55.257894+00:00",
+  "sha256": "628e52a8e82d750929ad0ce3d4289f737555dc2188cf238a9bea0a62c677cdc9",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:43:51+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "AAPL",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:43:56.295318+00:00",
+  "received_at": "2026-11-09T19:43:56.755070+00:00",
+  "sha256": "5e694adb4bc7f486581620f2ada3d42e121f9cd7bb516c89c67bff946b6db055",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:43:52+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "AMZN",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/AMZN?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:43:57.795775+00:00",
+  "received_at": "2026-11-09T19:43:58.087951+00:00",
+  "sha256": "e828f3ef5fa4851ad683901b3a21024f246dbfdef6c53288237284fc0179d505",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:43:56+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "GOOGL",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/GOOGL?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:43:59.135667+00:00",
+  "received_at": "2026-11-09T19:43:59.566774+00:00",
+  "sha256": "b65a13e31f19d9691ad8de476d61d48df1375141d8e5de73c4e94ddd4324d512",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:43:57+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "META",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/META?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:44:00.615332+00:00",
+  "received_at": "2026-11-09T19:44:01.059356+00:00",
+  "sha256": "9dfd1051036cfb9c1929226549f71fb63ab0a15a2b738ddf5626cd78f0dd30df",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:43:59+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "AVGO",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/AVGO?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:44:02.099485+00:00",
+  "received_at": "2026-11-09T19:44:02.407533+00:00",
+  "sha256": "6f2d1c3b11ca81605cd3785530b84912e2c1227104ba59765651411df61d5c41",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:44:01+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "TSLA",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:44:03.454379+00:00",
+  "received_at": "2026-11-09T19:44:03.836807+00:00",
+  "sha256": "b5e982f806e11df9393dfaff5756748581cc0a925e78b9109b75ff2495781fa7",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:44:01+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "BRK-B",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/BRK-B?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:44:04.886044+00:00",
+  "received_at": "2026-11-09T19:44:05.186059+00:00",
+  "sha256": "11bc41dca6c2466932793f95b85a9e8480dcd471f8ffbeeb14a96c7596c3a065",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:44:00+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "symbol": "JPM",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/JPM?interval=5m&range=60d",
+  "requested_at": "2026-11-09T19:44:06.225646+00:00",
+  "received_at": "2026-11-09T19:44:06.620790+00:00",
+  "sha256": "783cd1bfe4eb24faf7f366b186c6be8852ebccfc3ab4e2eb77cb62248b388607",
+  "bars": 4666,
+  "regular_market_time": "2026-11-09T19:44:03+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ }
+]
