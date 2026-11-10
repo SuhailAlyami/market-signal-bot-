@@ -10,6 +10,9 @@ No alerts, orders, secrets or paid services. Data class: **DELAYED_RESEARCH_ONLY
 
 An identical provider payload (same sha256) is skipped (`DUPLICATE_PAYLOAD_SKIPPED`); provider/network errors exit non-zero and are recorded. `--verify` audits stored sessions against the calendar with no network. `market_status()` classifies a timestamp as PRE_OPEN / OPEN / POST_CLOSE, or NO_SESSION with reason WEEKEND or HOLIDAY, with Asia/Riyadh times.
 
+## Network resilience (`http_fetch.py`)
+Transient failures (timeouts, connection errors, HTTP 429/5xx) are retried up to 4 times with capped exponential backoff and full jitter; a numeric `Retry-After` is honoured. Other 4xx (403/404) are not retried. One fixed honest User-Agent; no rotation or other limit evasion. Every attempt is logged in the snapshot/failure record. `validate_chart()` raises `ProviderFormatError` with a specific reason when the response shape changes (missing keys, array length mismatch, non-JSON such as an HTML block page). JSON API only: no HTML scraping.
+
 ## Breadth 5m collection (`--breadth`)
 Fetches `interval=5m` for `^GSPC` and the frozen breadth universe (NVDA, MSFT, AAPL, AMZN, GOOGL, META, AVGO, TSLA, BRK-B, JPM), 1 s apart, default `range=5d`. Stored under `breadth5m/`: one exclusive raw file per symbol and snapshot, one `snapshots.jsonl` line per symbol (request/receipt times, raw sha256, provider meta, status incl. FETCH_FAILED), and `bars5m.json` {symbol: {day: session}} with complete 78-bar (or early-close) grids only, first read canonical. `--verify-breadth` lists synchronized days (all 11 complete) and every missing (day, symbols); it never fills gaps. The SPX 1m store at the data root is untouched.
 

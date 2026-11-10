@@ -21,6 +21,8 @@ from zoneinfo import ZoneInfo
 
 import exchange_calendars as xc
 
+from http_fetch import FetchFailed, ProviderFormatError, fetch_with_retry, validate_chart  # noqa: F401
+
 NY = ZoneInfo('America/New_York')
 CAL = xc.get_calendar('XNYS', start='2026-01-01', end='2027-12-31')
 RIYADH = ZoneInfo('Asia/Riyadh')
@@ -56,23 +58,17 @@ def market_status(now):
 
 def fetch(host=HOSTS[0], interval='1m', rng='7d', timeout=20, symbol=SYMBOL):
     url = f'https://{host}/v8/finance/chart/{urllib.parse.quote(symbol, safe="")}?interval={interval}&range={rng}'
-    requested = utcnow()
-    t0 = time.monotonic()
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (research collector)'})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        body = resp.read()
-        status = resp.status
-    return body, {'host': host, 'url': url, 'status': status, 'requested_at': requested.isoformat(),
-                  'received_at': utcnow().isoformat(), 'http_seconds': round(time.monotonic()-t0, 3)}
+    body, info = fetch_with_retry(url, timeout=timeout)  # transient errors retried with backoff; failures raise
+    return body, dict(info, host=host, url=url)
 
 
 def parse(body):
     """Return (bars, meta). Bars are dicts with aware NY start time; null OHLC rows are dropped."""
-    doc = json.loads(body)
-    err = doc.get('chart', {}).get('error')
-    result = (doc.get('chart', {}).get('result') or [None])[0]
-    if err or not result:
-        raise ValueError(f'provider_error:{err}')
+    try:
+        doc = json.loads(body)
+    except ValueError as e:
+        raise ProviderFormatError(f'format:not json ({e})') from e
+    result = validate_chart(doc)  # specific error if the provider changed the response shape
     q = result['indicators']['quote'][0]
     meta = result['meta']
     bars, dropped = [], 0
@@ -296,7 +292,7 @@ def collect_breadth(host, rng, pause=1.0):
             body, meta = fetch(host, '5m', rng, symbol=symbol)
             fetched.append((symbol, body, meta))
         except Exception as e:  # recorded per symbol; the run exits nonzero
-            fetched.append((symbol, None, {'failed_at': utcnow().isoformat(), 'error': repr(e)}))
+            fetched.append((symbol, None, {'failed_at': utcnow().isoformat(), 'error': repr(e), 'attempts': getattr(e, 'attempts', None)}))
         time.sleep(pause)
     return fetched
 
@@ -329,7 +325,7 @@ if __name__ == '__main__':
     except Exception as e:  # visible failure: record it, exit nonzero
         a.out.mkdir(parents=True, exist_ok=True)
         with (a.out/'snapshots.jsonl').open('a') as f:
-            f.write(json.dumps({'failed_at': utcnow().isoformat(), 'error': repr(e)})+'\n')
+            f.write(json.dumps({'failed_at': utcnow().isoformat(), 'error': repr(e), 'attempts': getattr(e, 'attempts', None)})+'\n')
         print('COLLECTION_FAILED', repr(e), file=sys.stderr)
         sys.exit(2)
     keys = ('status', 'received_at', 'http_seconds', 'completed_bars', 'last_completed_bar_start_ny',

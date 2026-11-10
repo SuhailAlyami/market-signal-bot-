@@ -45,7 +45,7 @@ jobs:
           cache: pip
           cache-dependency-path: research/spx_collection/requirements.txt
       - run: pip install -r research/spx_collection/requirements.txt
-      - run: python -m unittest test_collect -v
+      - run: python -m unittest test_collect test_http_fetch -v
         working-directory: research/spx_collection
       - name: Frozen breadth screen input separation (development fixture + synthetic only)
         run: python -m unittest test_forward -v
@@ -84,7 +84,7 @@ jobs:
           cache-dependency-path: research/spx_collection/requirements.txt
       - run: pip install -r research/spx_collection/requirements.txt
       - name: Collector tests
-        run: python -m unittest test_collect
+        run: python -m unittest test_collect test_http_fetch
         working-directory: research/spx_collection
       - name: Fetch, validate, store
         shell: bash
