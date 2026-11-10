@@ -4,6 +4,9 @@
 
 Last updated: 2026-11-08 (branch `claude/kind-ramanujan-icu95e`, based on open PR #51 head `446add9`).
 
+## 2026-11-10 03:45 UTC update
+Shared Claude/Codex log: `HANDOFF.md` in draft PR #57 (also adds a backup cron 04:07 Riyadh). Still no `event=schedule` run of spx-collect. Outcome-free forward count: 3 sessions, 7/190 high-agreement events. No new experiment started (multiplicity; evidence must come from forward data).
+
 ## Resume point (2026-11-09 21:00 UTC) — read this first
 
 - Status NOT_READY / RESEARCH_ONLY; alerts OFF. PR #54 (this branch) stays unmerged. PR #55 and PR #56 are merged into main (418d121).
