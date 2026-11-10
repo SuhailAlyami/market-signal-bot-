@@ -1,0 +1,64 @@
+//@version=6
+indicator("Suhail Hunter | feed probe (read-only, no signals, no alerts)", overlay=true)
+// Read-only probe for the TradingView parity check (research/tradingview_parity_20261110/README.md).
+// It computes NO detector signal and creates NO alert. It only reports facts the owner can read off the chart:
+// symbol, timeframe, NY regular-session flag, live-bar state, CFD-minus-SP:SPX basis, and per-symbol bar age.
+// Ages use the browser clock (timenow) against each symbol's latest bar OPEN time. They bracket chart freshness;
+// they are NOT verified provider or exchange latency. Not compiled in this repository's CI (no Pine compiler here).
+
+const string NY_TZ = "America/New_York"
+const string RTH = "0930-1600"   // early closes (e.g. 2026-11-27 13:00) are NOT known to this string
+
+inRTH = not na(time(timeframe.period, RTH, NY_TZ))
+spxClose = request.security("SP:SPX", timeframe.period, close)
+basis = close - spxClose
+
+// Latest bar open time per required symbol on the chart timeframe (no lookahead, may be a forming bar).
+tSPX  = request.security("SP:SPX", timeframe.period, time)
+tNVDA = request.security("NASDAQ:NVDA", timeframe.period, time)
+tMSFT = request.security("NASDAQ:MSFT", timeframe.period, time)
+tAAPL = request.security("NASDAQ:AAPL", timeframe.period, time)
+tAMZN = request.security("NASDAQ:AMZN", timeframe.period, time)
+tGOOG = request.security("NASDAQ:GOOGL", timeframe.period, time)
+tMETA = request.security("NASDAQ:META", timeframe.period, time)
+tAVGO = request.security("NASDAQ:AVGO", timeframe.period, time)
+tTSLA = request.security("NASDAQ:TSLA", timeframe.period, time)
+tBRKB = request.security("NYSE:BRK.B", timeframe.period, time)
+tJPM  = request.security("NYSE:JPM", timeframe.period, time)
+
+// Count script executions inside the current live bar (one per received update on a realtime bar).
+varip int updates = 0
+if barstate.isnew
+    updates := 0
+if barstate.isrealtime
+    updates += 1
+
+ageSec(t) => na(t) ? "n/a" : str.tostring((timenow - t) / 1000.0, "#.0") + " s"
+
+var table tb = table.new(position.top_right, 2, 20, border_width=1)
+row(int r, string k, string v) =>
+    table.cell(tb, 0, r, k, text_size=size.small)
+    table.cell(tb, 1, r, v, text_size=size.small)
+
+if barstate.islast
+    row(0, "chart symbol", syminfo.tickerid)
+    row(1, "timeframe (must be 5)", timeframe.period)
+    row(2, "bar open (Riyadh)", str.format_time(time, "yyyy-MM-dd HH:mm", "Asia/Riyadh"))
+    row(3, "NY regular session", inRTH ? "yes" : "no")
+    row(4, "live bar / confirmed", (barstate.isrealtime ? "realtime" : "history") + " / " + (barstate.isconfirmed ? "closed" : "forming"))
+    row(5, "updates in this bar", str.tostring(updates))
+    row(6, "chart close", str.tostring(close, format.mintick))
+    row(7, "SP:SPX close", str.tostring(spxClose, "#.00"))
+    row(8, "basis chart - SP:SPX", str.tostring(basis, "#.00"))
+    row(9, "age chart bar", ageSec(time))
+    row(10, "age SP:SPX", ageSec(tSPX))
+    row(11, "age NVDA", ageSec(tNVDA))
+    row(12, "age MSFT", ageSec(tMSFT))
+    row(13, "age AAPL", ageSec(tAAPL))
+    row(14, "age AMZN", ageSec(tAMZN))
+    row(15, "age GOOGL", ageSec(tGOOG))
+    row(16, "age META", ageSec(tMETA))
+    row(17, "age AVGO", ageSec(tAVGO))
+    row(18, "age TSLA / BRK.B / JPM", ageSec(tTSLA) + " / " + ageSec(tBRKB) + " / " + ageSec(tJPM))
+
+plot(basis, "basis chart - SP:SPX", display=display.data_window)

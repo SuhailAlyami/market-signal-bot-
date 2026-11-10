@@ -1,0 +1,248 @@
+{
+ "scope": "frozen wave detector + breadth agreement on consumed dates 2026-10-29..2026-11-04; outcome-free; ^GSPC Yahoo 5m",
+ "signals": [
+  {
+   "day": "2026-10-29",
+   "decision_ny": "2026-10-29T10:35:00-04:00",
+   "decision_riyadh": "2026-10-29 17:35",
+   "signal_bar_open_ny": "10:30",
+   "side": "UP",
+   "R_points": 9.59,
+   "agreement_of_10": 8
+  },
+  {
+   "day": "2026-10-29",
+   "decision_ny": "2026-10-29T11:50:00-04:00",
+   "decision_riyadh": "2026-10-29 18:50",
+   "signal_bar_open_ny": "11:45",
+   "side": "DOWN",
+   "R_points": 5.3,
+   "agreement_of_10": 10
+  },
+  {
+   "day": "2026-10-29",
+   "decision_ny": "2026-10-29T13:00:00-04:00",
+   "decision_riyadh": "2026-10-29 20:00",
+   "signal_bar_open_ny": "12:55",
+   "side": "UP",
+   "R_points": 5.38,
+   "agreement_of_10": 5
+  },
+  {
+   "day": "2026-10-29",
+   "decision_ny": "2026-10-29T14:00:00-04:00",
+   "decision_riyadh": "2026-10-29 21:00",
+   "signal_bar_open_ny": "13:55",
+   "side": "UP",
+   "R_points": 5.92,
+   "agreement_of_10": 1
+  },
+  {
+   "day": "2026-10-29",
+   "decision_ny": "2026-10-29T14:35:00-04:00",
+   "decision_riyadh": "2026-10-29 21:35",
+   "signal_bar_open_ny": "14:30",
+   "side": "DOWN",
+   "R_points": 5.0,
+   "agreement_of_10": 7
+  },
+  {
+   "day": "2026-10-29",
+   "decision_ny": "2026-10-29T15:45:00-04:00",
+   "decision_riyadh": "2026-10-29 22:45",
+   "signal_bar_open_ny": "15:40",
+   "side": "DOWN",
+   "R_points": 5.0,
+   "agreement_of_10": 6
+  },
+  {
+   "day": "2026-10-30",
+   "decision_ny": "2026-10-30T10:15:00-04:00",
+   "decision_riyadh": "2026-10-30 17:15",
+   "signal_bar_open_ny": "10:10",
+   "side": "DOWN",
+   "R_points": 9.67,
+   "agreement_of_10": 6
+  },
+  {
+   "day": "2026-10-30",
+   "decision_ny": "2026-10-30T11:05:00-04:00",
+   "decision_riyadh": "2026-10-30 18:05",
+   "signal_bar_open_ny": "11:00",
+   "side": "DOWN",
+   "R_points": 8.99,
+   "agreement_of_10": 7
+  },
+  {
+   "day": "2026-10-30",
+   "decision_ny": "2026-10-30T12:00:00-04:00",
+   "decision_riyadh": "2026-10-30 19:00",
+   "signal_bar_open_ny": "11:55",
+   "side": "UP",
+   "R_points": 5.0,
+   "agreement_of_10": 7
+  },
+  {
+   "day": "2026-10-30",
+   "decision_ny": "2026-10-30T12:30:00-04:00",
+   "decision_riyadh": "2026-10-30 19:30",
+   "signal_bar_open_ny": "12:25",
+   "side": "UP",
+   "R_points": 5.68,
+   "agreement_of_10": 7
+  },
+  {
+   "day": "2026-10-30",
+   "decision_ny": "2026-10-30T14:40:00-04:00",
+   "decision_riyadh": "2026-10-30 21:40",
+   "signal_bar_open_ny": "14:35",
+   "side": "UP",
+   "R_points": 8.04,
+   "agreement_of_10": 2
+  },
+  {
+   "day": "2026-11-02",
+   "decision_ny": "2026-11-02T10:15:00-05:00",
+   "decision_riyadh": "2026-11-02 18:15",
+   "signal_bar_open_ny": "10:10",
+   "side": "UP",
+   "R_points": 7.65,
+   "agreement_of_10": 7
+  },
+  {
+   "day": "2026-11-02",
+   "decision_ny": "2026-11-02T13:05:00-05:00",
+   "decision_riyadh": "2026-11-02 21:05",
+   "signal_bar_open_ny": "13:00",
+   "side": "UP",
+   "R_points": 8.99,
+   "agreement_of_10": 6
+  },
+  {
+   "day": "2026-11-02",
+   "decision_ny": "2026-11-02T13:35:00-05:00",
+   "decision_riyadh": "2026-11-02 21:35",
+   "signal_bar_open_ny": "13:30",
+   "side": "DOWN",
+   "R_points": 5.52,
+   "agreement_of_10": 7
+  },
+  {
+   "day": "2026-11-02",
+   "decision_ny": "2026-11-02T15:00:00-05:00",
+   "decision_riyadh": "2026-11-02 23:00",
+   "signal_bar_open_ny": "14:55",
+   "side": "UP",
+   "R_points": 11.52,
+   "agreement_of_10": 8
+  },
+  {
+   "day": "2026-11-02",
+   "decision_ny": "2026-11-02T15:35:00-05:00",
+   "decision_riyadh": "2026-11-02 23:35",
+   "signal_bar_open_ny": "15:30",
+   "side": "DOWN",
+   "R_points": 9.92,
+   "agreement_of_10": 9
+  },
+  {
+   "day": "2026-11-03",
+   "decision_ny": "2026-11-03T10:20:00-05:00",
+   "decision_riyadh": "2026-11-03 18:20",
+   "signal_bar_open_ny": "10:15",
+   "side": "UP",
+   "R_points": 9.06,
+   "agreement_of_10": 6
+  },
+  {
+   "day": "2026-11-03",
+   "decision_ny": "2026-11-03T11:35:00-05:00",
+   "decision_riyadh": "2026-11-03 19:35",
+   "signal_bar_open_ny": "11:30",
+   "side": "DOWN",
+   "R_points": 5.63,
+   "agreement_of_10": 6
+  },
+  {
+   "day": "2026-11-03",
+   "decision_ny": "2026-11-03T12:35:00-05:00",
+   "decision_riyadh": "2026-11-03 20:35",
+   "signal_bar_open_ny": "12:30",
+   "side": "DOWN",
+   "R_points": 5.67,
+   "agreement_of_10": 5
+  },
+  {
+   "day": "2026-11-03",
+   "decision_ny": "2026-11-03T13:40:00-05:00",
+   "decision_riyadh": "2026-11-03 21:40",
+   "signal_bar_open_ny": "13:35",
+   "side": "DOWN",
+   "R_points": 5.24,
+   "agreement_of_10": 5
+  },
+  {
+   "day": "2026-11-03",
+   "decision_ny": "2026-11-03T15:20:00-05:00",
+   "decision_riyadh": "2026-11-03 23:20",
+   "signal_bar_open_ny": "15:15",
+   "side": "UP",
+   "R_points": 5.59,
+   "agreement_of_10": 8
+  },
+  {
+   "day": "2026-11-04",
+   "decision_ny": "2026-11-04T10:25:00-05:00",
+   "decision_riyadh": "2026-11-04 18:25",
+   "signal_bar_open_ny": "10:20",
+   "side": "DOWN",
+   "R_points": 10.83,
+   "agreement_of_10": 5
+  },
+  {
+   "day": "2026-11-04",
+   "decision_ny": "2026-11-04T11:40:00-05:00",
+   "decision_riyadh": "2026-11-04 19:40",
+   "signal_bar_open_ny": "11:35",
+   "side": "UP",
+   "R_points": 13.02,
+   "agreement_of_10": 9
+  },
+  {
+   "day": "2026-11-04",
+   "decision_ny": "2026-11-04T12:30:00-05:00",
+   "decision_riyadh": "2026-11-04 20:30",
+   "signal_bar_open_ny": "12:25",
+   "side": "UP",
+   "R_points": 8.79,
+   "agreement_of_10": 6
+  },
+  {
+   "day": "2026-11-04",
+   "decision_ny": "2026-11-04T13:25:00-05:00",
+   "decision_riyadh": "2026-11-04 21:25",
+   "signal_bar_open_ny": "13:20",
+   "side": "DOWN",
+   "R_points": 5.61,
+   "agreement_of_10": 6
+  },
+  {
+   "day": "2026-11-04",
+   "decision_ny": "2026-11-04T14:05:00-05:00",
+   "decision_riyadh": "2026-11-04 22:05",
+   "signal_bar_open_ny": "14:00",
+   "side": "UP",
+   "R_points": 5.0,
+   "agreement_of_10": 7
+  },
+  {
+   "day": "2026-11-04",
+   "decision_ny": "2026-11-04T15:20:00-05:00",
+   "decision_riyadh": "2026-11-04 23:20",
+   "signal_bar_open_ny": "15:15",
+   "side": "UP",
+   "R_points": 5.0,
+   "agreement_of_10": 8
+  }
+ ]
+}
