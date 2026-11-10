@@ -16,6 +16,12 @@ Issue #16 evidence and measured holdout results: [engineering report](docs/ISSUE
 See [scanner inventory](docs/HUNTER_INVENTORY.md), [data-source review](docs/DATA_SOURCES.md),
 and the governing [AGENTS.md](AGENTS.md).
 
+أرشيف شموع الدقيقة المجاني وشرح IBKR المحلي: [data/archive/README.md](data/archive/README.md). على جهازك مع TWS أو IB Gateway مفتوح، بلا اشتراك لحظي:
+
+```bash
+python archive_1m.py --source ibkr
+```
+
 ```sh
 python3.11 -m venv .venv
 . .venv/bin/activate

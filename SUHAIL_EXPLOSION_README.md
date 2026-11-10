@@ -15,6 +15,26 @@ Uses **completed** 5-minute candles only. The alert path is the original confirm
 
 `EXPLOSION_MODE=context` is the one-minute study (opening drive, VWAP, lagged VIX/VIX1D, macro clock, lagged NYSE composite). It does not send Telegram alerts. The isolated-test verdict is in `artifacts/explosion_1m/report.json`. The strength score is a deterministic heuristic and **not** a calibrated probability or trading recommendation.
 
+## أرشيف الدقيقة المجاني
+
+Yahoo يُحفظ في `data/archive/<SPY|GSPC|QQQ|VIX|VIX1D>/<YYYY-MM-DD>.csv.gz`. اليوم الموجود لا يُستبدل. GitHub يشغّل `archive_1m.py --source yahoo` عند 01:15 UTC من الثلاثاء إلى السبت (بعد إغلاق ما بعد السوق الساعة 20:00 نيويورك). موعد 21:30 UTC يقطع ما بعد الإغلاق، لذلك لم يُستخدم.
+
+على جهازك وTWS أو IB Gateway مفتوح، بدون اشتراك لحظي مدفوع، الأمر الواحد:
+
+```bash
+python archive_1m.py --source ibkr
+```
+
+المنفذ الافتراضي 4001 كما في بوابة المستودع. لـ TWS أضف `--port 7496`. البيانات المتأخرة تُطلب بـ `reqMarketDataType(3)` ثم `4` عند الحاجة. الرمز الذي بلا صلاحية يُطبع `NO_PERMISSION` ولا يوقف البقية. لم يُختبر هذا الأمر على جلسة IBKR حية من هنا؛ الاختبارات تحاكي الردود.
+
+إعادة الدراسة عندما يكبر الأرشيف (الجلسات حتى 2026-11-10 مستهلكة):
+
+```bash
+python research_1m_lead.py --archive data/archive --spent-through 2026-11-10 --output artifacts/explosion_1m/future_report.json
+```
+
+قبل 12 جلسة جديدة يرفض الحساب ولا يسمي اختبارًا. عتبات التأكيد القديمة الاختيارية، إن وُجدت، تُذكر في `artifacts/explosion_1m/legacy_tune.json` ولا تُستبدل إلا إذا اجتاز الاختبار المعزول الفواصل.
+
 ## Constraints and follow-up
 - Alert deduplication is fail-closed: private GitHub Issues store the last signal key for each symbol. The workflow requires `issues: write` and the workflow-provided `GITHUB_TOKEN`. Concurrency control serializes regular scanner runs. This suppresses duplicate alert messages for the same candle in normal operation, but issue API failures disable alerts, and a failure after reserving can lose an alert. It is not exactly-once delivery.
 - This requires market-data-source validation and historical out-of-sample testing before any trading use.

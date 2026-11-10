@@ -81,7 +81,10 @@ def load_frame(path: Path) -> pd.DataFrame:
     frame.index = pd.to_datetime(frame.index, utc=True)
     frame = frame.sort_index()
     frame = frame[~frame.index.duplicated(keep="last")]
-    return frame.astype(float)
+    for col in ("Open", "High", "Low", "Close", "Volume"):
+        if col in frame:
+            frame[col] = frame[col].astype(float)
+    return frame
 
 
 def drop_partial_last_session(frame: pd.DataFrame) -> pd.DataFrame:
@@ -140,10 +143,21 @@ def five_minute_atr(frame: pd.DataFrame) -> pd.Series:
     return atr.dropna()
 
 
-def legacy_signals(frame: pd.DataFrame) -> list[dict]:
-    """Original 5-minute confirmation, built only from completed one-minute groups."""
+def legacy_signals(
+    frame: pd.DataFrame,
+    lookback: int = 30,
+    rvol_min: float = 2.0,
+    momentum_pct: float = 0.35,
+    min_distance_atr: float = 0.1,
+) -> list[dict]:
+    """5-minute confirmation built only from completed one-minute groups.
+
+    Defaults are the live rule: 30-bar range, RVOL >= 2, five-bar move >= 0.35%,
+    distance >= 0.1 ATR. `momentum_pct` is in percent, matching EXPLOSION_LEGACY_MOMENTUM_PCT.
+    """
     bars = five_minute(frame)
-    if len(bars) < 32:
+    need = max(lookback, 14, 5) + 2
+    if len(bars) < need:
         return []
     previous = bars["Close"].shift()
     tr = pd.concat([
@@ -152,10 +166,11 @@ def legacy_signals(frame: pd.DataFrame) -> list[dict]:
         (bars["Low"] - previous).abs(),
     ], axis=1).max(axis=1)
     atr = tr.rolling(14, min_periods=14).mean().shift(1)
-    prior_high = bars["High"].rolling(30, min_periods=30).max().shift(1)
-    prior_low = bars["Low"].rolling(30, min_periods=30).min().shift(1)
-    vol_mean = bars["Volume"].rolling(30, min_periods=30).mean().shift(1)
+    prior_high = bars["High"].rolling(lookback, min_periods=lookback).max().shift(1)
+    prior_low = bars["Low"].rolling(lookback, min_periods=lookback).min().shift(1)
+    vol_mean = bars["Volume"].rolling(lookback, min_periods=lookback).mean().shift(1)
     momentum = bars["Close"] / bars["Close"].shift(5) - 1
+    momentum_floor = momentum_pct / 100.0
     out = []
     for ts, row in bars.iterrows():
         if not in_rth(ts):
@@ -166,12 +181,12 @@ def legacy_signals(frame: pd.DataFrame) -> list[dict]:
             continue
         rvol = float(row["Volume"] / base)
         close = float(row["Close"])
-        if rvol < 2 or abs(mom) < 0.0035:
+        if rvol < rvol_min or abs(mom) < momentum_floor:
             continue
-        if close > ph and mom > 0 and (close - ph) >= 0.1 * a:
-            direction, level = "BULLISH", float(ph)
-        elif close < pl and mom < 0 and (pl - close) >= 0.1 * a:
-            direction, level = "BEARISH", float(pl)
+        if close > ph and mom > 0 and (close - ph) >= min_distance_atr * a:
+            direction = "BULLISH"
+        elif close < pl and mom < 0 and (pl - close) >= min_distance_atr * a:
+            direction = "BEARISH"
         else:
             continue
         end = ts + pd.Timedelta(minutes=5)
@@ -683,9 +698,23 @@ def promote(candidate: dict | None, legacy: dict) -> dict:
     }
 
 
-def run_study(frames: dict[str, pd.DataFrame]) -> dict:
+def run_study(frames: dict[str, pd.DataFrame], spent_through: str | None = None) -> dict:
     spy = drop_partial_last_session(frames["SPY"])
     sessions = rth_sessions(spy)
+    if spent_through:
+        cutoff = datetime.fromisoformat(spent_through).date()
+        sessions = [day for day in sessions if day > cutoff]
+        if len(sessions) < 12:
+            return {
+                "status": "WAITING_FOR_NEW_SESSIONS",
+                "spent_through": spent_through,
+                "new_sessions": len(sessions),
+                "needed": 12,
+                "verdict_ar": (
+                    f"NOT READY. بعد {spent_through} توجد {len(sessions)} جلسات جديدة فقط. "
+                    "يلزم 12 جلسة على الأقل قبل تقسيم تدريب/تحقق/اختبار جديد. لم يُحسب اختبار."
+                ),
+            }
     parts = split_sessions(sessions)
     atr = five_minute_atr(spy)
     events = build_events(spy, atr)
@@ -864,16 +893,48 @@ def load_dir(path: Path) -> dict[str, pd.DataFrame]:
     return {symbol: load_frame(path / filename) for symbol, filename in names.items()}
 
 
+def load_archive(path: Path) -> dict[str, pd.DataFrame]:
+    """Load data/archive/<folder>/YYYY-MM-DD.csv.gz into Yahoo-symbol frames.
+
+    Folder names omit the caret: GSPC is ^GSPC, VIX is ^VIX, VIX1D is ^VIX1D.
+    """
+    from archive_1m import folders_to_symbols
+
+    frames: dict[str, list[pd.DataFrame]] = {}
+    for folder, symbol in folders_to_symbols().items():
+        day_dir = path / folder
+        if not day_dir.is_dir():
+            continue
+        parts = [load_frame(day) for day in sorted(day_dir.glob("*.csv.gz"))]
+        if parts:
+            frames[symbol] = pd.concat(parts).sort_index()
+            frames[symbol] = frames[symbol][~frames[symbol].index.duplicated(keep="last")]
+    if "SPY" not in frames:
+        raise FileNotFoundError(f"no SPY days under {path}")
+    return frames
+
+
 def main() -> None:
     import argparse
     parser = argparse.ArgumentParser(description="1-minute context lead study")
     parser.add_argument("--fetch", action="store_true")
     parser.add_argument("--save-dir", default="artifacts/explosion_1m")
+    parser.add_argument("--archive", help="Read data/archive day files instead of a single snapshot directory")
+    parser.add_argument("--spent-through", help="YYYY-MM-DD. Score only sessions after this consumed date.")
     parser.add_argument("--output", default="artifacts/explosion_1m/report.json")
     args = parser.parse_args()
     directory = Path(args.save_dir)
-    frames = fetch_all(directory) if args.fetch or not (directory / "SPY_1m.csv.gz").exists() else load_dir(directory)
-    report = run_study(frames)
+    if args.archive:
+        frames = load_archive(Path(args.archive))
+    else:
+        frames = fetch_all(directory) if args.fetch or not (directory / "SPY_1m.csv.gz").exists() else load_dir(directory)
+    report = run_study(frames, spent_through=args.spent_through)
+    if report.get("status") == "WAITING_FOR_NEW_SESSIONS":
+        destination = Path(args.output)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(report["verdict_ar"])
+        return
     report["verdict_ar"] = arabic_verdict(report)
     report["limits"] = [
         "Yahoo 1-minute history available here starts 2026-10-19, not 30 calendar days.",
