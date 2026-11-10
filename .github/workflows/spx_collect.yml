@@ -12,6 +12,7 @@ on:
       - '.github/workflows/spx_collect.yml'
   schedule:
     - cron: '45 21 * * 1-5'
+    - cron: '7 1 * * 2-6'     # backup: 01:07 UTC Tue-Sat = 04:07 Riyadh; duplicate payloads are skipped by the collector
   workflow_dispatch:
     inputs:
       data_branch:
