@@ -1,0 +1,947 @@
+{
+  "sessions": {
+    "train": [
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-26",
+      "2026-10-27",
+      "2026-10-28",
+      "2026-10-29"
+    ],
+    "validation": [
+      "2026-10-30",
+      "2026-11-02",
+      "2026-11-03",
+      "2026-11-04"
+    ],
+    "test": [
+      "2026-11-05",
+      "2026-11-06",
+      "2026-11-09",
+      "2026-11-10"
+    ]
+  },
+  "session_count": 17,
+  "event_definition": "30 one-minute bars, max(0.30%, 3 x prior 14 five-minute ATR), other side must not hit first",
+  "costs": {
+    "spy_latency_seconds": 60,
+    "vix_lag_minutes": 15,
+    "share_cost_usd": 0.01,
+    "share_cost_note": "0.005 half of a one-cent spread plus 0.005 per-share commission, charged on the entry"
+  },
+  "train_net": {
+    "legacy": {
+      "mode": "net",
+      "sessions": 9,
+      "start": "2026-10-19",
+      "end": "2026-10-29",
+      "events": 12,
+      "signals": 5,
+      "matched_events": 0,
+      "recall_before_onset": 0.0,
+      "recall_before_onset_wilson95": [
+        0.0,
+        0.2425
+      ],
+      "early_matches": 0,
+      "median_lead_min": null,
+      "median_lead_bootstrap95": null,
+      "median_entry_quality": null,
+      "forward_hits": 2,
+      "forward_scored": 5,
+      "forward_hit_rate": 0.4,
+      "forward_hit_wilson95": [
+        0.1176,
+        0.7693
+      ],
+      "false_alarms": 3,
+      "false_alarms_per_session": 0.3333,
+      "false_alarms_per_session_bootstrap95": [
+        0.0,
+        1.0
+      ]
+    },
+    "open_drive": {
+      "mode": "net",
+      "sessions": 9,
+      "start": "2026-10-19",
+      "end": "2026-10-29",
+      "events": 12,
+      "signals": 1,
+      "matched_events": 0,
+      "recall_before_onset": 0.0,
+      "recall_before_onset_wilson95": [
+        0.0,
+        0.2425
+      ],
+      "early_matches": 0,
+      "median_lead_min": null,
+      "median_lead_bootstrap95": null,
+      "median_entry_quality": null,
+      "forward_hits": 0,
+      "forward_scored": 1,
+      "forward_hit_rate": 0.0,
+      "forward_hit_wilson95": [
+        0.0,
+        0.7935
+      ],
+      "false_alarms": 1,
+      "false_alarms_per_session": 0.1111,
+      "false_alarms_per_session_bootstrap95": [
+        0.0,
+        0.3333
+      ]
+    },
+    "vwap_start": {
+      "mode": "net",
+      "sessions": 9,
+      "start": "2026-10-19",
+      "end": "2026-10-29",
+      "events": 12,
+      "signals": 110,
+      "matched_events": 9,
+      "recall_before_onset": 0.4167,
+      "recall_before_onset_wilson95": [
+        0.1933,
+        0.6805
+      ],
+      "early_matches": 5,
+      "median_lead_min": 10.0,
+      "median_lead_bootstrap95": [
+        -2.5,
+        25.0
+      ],
+      "median_entry_quality": 0.5062,
+      "forward_hits": 4,
+      "forward_scored": 110,
+      "forward_hit_rate": 0.0364,
+      "forward_hit_wilson95": [
+        0.0142,
+        0.0898
+      ],
+      "false_alarms": 106,
+      "false_alarms_per_session": 11.7778,
+      "false_alarms_per_session_bootstrap95": [
+        9.1111,
+        15.0
+      ]
+    },
+    "vix_lag15": {
+      "mode": "net",
+      "sessions": 9,
+      "start": "2026-10-19",
+      "end": "2026-10-29",
+      "events": 12,
+      "signals": 104,
+      "matched_events": 8,
+      "recall_before_onset": 0.5,
+      "recall_before_onset_wilson95": [
+        0.2538,
+        0.7462
+      ],
+      "early_matches": 6,
+      "median_lead_min": 15.0,
+      "median_lead_bootstrap95": [
+        -18.0,
+        22.5
+      ],
+      "median_entry_quality": 0.8309,
+      "forward_hits": 5,
+      "forward_scored": 104,
+      "forward_hit_rate": 0.0481,
+      "forward_hit_wilson95": [
+        0.0207,
+        0.1076
+      ],
+      "false_alarms": 99,
+      "false_alarms_per_session": 11.0,
+      "false_alarms_per_session_bootstrap95": [
+        7.4444,
+        14.7778
+      ]
+    },
+    "vix1d_lag15": {
+      "mode": "net",
+      "sessions": 9,
+      "start": "2026-10-19",
+      "end": "2026-10-29",
+      "events": 12,
+      "signals": 108,
+      "matched_events": 10,
+      "recall_before_onset": 0.5833,
+      "recall_before_onset_wilson95": [
+        0.3195,
+        0.8067
+      ],
+      "early_matches": 7,
+      "median_lead_min": 12.0,
+      "median_lead_bootstrap95": [
+        -18.0,
+        20.5
+      ],
+      "median_entry_quality": 0.9148,
+      "forward_hits": 11,
+      "forward_scored": 108,
+      "forward_hit_rate": 0.1019,
+      "forward_hit_wilson95": [
+        0.0578,
+        0.1732
+      ],
+      "false_alarms": 97,
+      "false_alarms_per_session": 10.7778,
+      "false_alarms_per_session_bootstrap95": [
+        8.8306,
+        12.8361
+      ]
+    },
+    "macro_release": {
+      "mode": "net",
+      "sessions": 9,
+      "start": "2026-10-19",
+      "end": "2026-10-29",
+      "events": 12,
+      "signals": 1,
+      "matched_events": 0,
+      "recall_before_onset": 0.0,
+      "recall_before_onset_wilson95": [
+        0.0,
+        0.2425
+      ],
+      "early_matches": 0,
+      "median_lead_min": null,
+      "median_lead_bootstrap95": null,
+      "median_entry_quality": null,
+      "forward_hits": 0,
+      "forward_scored": 1,
+      "forward_hit_rate": 0.0,
+      "forward_hit_wilson95": [
+        0.0,
+        0.7935
+      ],
+      "false_alarms": 1,
+      "false_alarms_per_session": 0.1111,
+      "false_alarms_per_session_bootstrap95": [
+        0.0,
+        0.3333
+      ]
+    },
+    "nya_lag15": {
+      "mode": "net",
+      "sessions": 9,
+      "start": "2026-10-19",
+      "end": "2026-10-29",
+      "events": 12,
+      "signals": 48,
+      "matched_events": 5,
+      "recall_before_onset": 0.25,
+      "recall_before_onset_wilson95": [
+        0.0889,
+        0.5323
+      ],
+      "early_matches": 3,
+      "median_lead_min": 20.0,
+      "median_lead_bootstrap95": [
+        -2.0,
+        24.0
+      ],
+      "median_entry_quality": 0.5021,
+      "forward_hits": 2,
+      "forward_scored": 48,
+      "forward_hit_rate": 0.0417,
+      "forward_hit_wilson95": [
+        0.0115,
+        0.1398
+      ],
+      "false_alarms": 46,
+      "false_alarms_per_session": 5.1111,
+      "false_alarms_per_session_bootstrap95": [
+        3.8889,
+        6.5556
+      ]
+    }
+  },
+  "validation_net": {
+    "legacy": {
+      "mode": "net",
+      "sessions": 4,
+      "start": "2026-10-30",
+      "end": "2026-11-04",
+      "events": 9,
+      "signals": 3,
+      "matched_events": 2,
+      "recall_before_onset": 0.0,
+      "recall_before_onset_wilson95": [
+        0.0,
+        0.2992
+      ],
+      "early_matches": 0,
+      "median_lead_min": -4.5,
+      "median_lead_bootstrap95": [
+        -6.0,
+        -3.0
+      ],
+      "median_entry_quality": 0.8803,
+      "forward_hits": 2,
+      "forward_scored": 3,
+      "forward_hit_rate": 0.6667,
+      "forward_hit_wilson95": [
+        0.2077,
+        0.9385
+      ],
+      "false_alarms": 1,
+      "false_alarms_per_session": 0.25,
+      "false_alarms_per_session_bootstrap95": [
+        0.0,
+        0.75
+      ]
+    },
+    "open_drive": {
+      "mode": "net",
+      "sessions": 4,
+      "start": "2026-10-30",
+      "end": "2026-11-04",
+      "events": 9,
+      "signals": 1,
+      "matched_events": 0,
+      "recall_before_onset": 0.0,
+      "recall_before_onset_wilson95": [
+        0.0,
+        0.2992
+      ],
+      "early_matches": 0,
+      "median_lead_min": null,
+      "median_lead_bootstrap95": null,
+      "median_entry_quality": null,
+      "forward_hits": 0,
+      "forward_scored": 1,
+      "forward_hit_rate": 0.0,
+      "forward_hit_wilson95": [
+        0.0,
+        0.7935
+      ],
+      "false_alarms": 1,
+      "false_alarms_per_session": 0.25,
+      "false_alarms_per_session_bootstrap95": [
+        0.0,
+        0.75
+      ]
+    },
+    "vwap_start": {
+      "mode": "net",
+      "sessions": 4,
+      "start": "2026-10-30",
+      "end": "2026-11-04",
+      "events": 9,
+      "signals": 40,
+      "matched_events": 3,
+      "recall_before_onset": 0.1111,
+      "recall_before_onset_wilson95": [
+        0.0199,
+        0.435
+      ],
+      "early_matches": 1,
+      "median_lead_min": -3.0,
+      "median_lead_bootstrap95": [
+        -5.0,
+        25.0
+      ],
+      "median_entry_quality": 0.9426,
+      "forward_hits": 6,
+      "forward_scored": 40,
+      "forward_hit_rate": 0.15,
+      "forward_hit_wilson95": [
+        0.0706,
+        0.2907
+      ],
+      "false_alarms": 34,
+      "false_alarms_per_session": 8.5,
+      "false_alarms_per_session_bootstrap95": [
+        6.0,
+        11.0
+      ]
+    },
+    "vix_lag15": {
+      "mode": "net",
+      "sessions": 4,
+      "start": "2026-10-30",
+      "end": "2026-11-04",
+      "events": 9,
+      "signals": 77,
+      "matched_events": 6,
+      "recall_before_onset": 0.4444,
+      "recall_before_onset_wilson95": [
+        0.1888,
+        0.7334
+      ],
+      "early_matches": 4,
+      "median_lead_min": 6.0,
+      "median_lead_bootstrap95": [
+        -11.0,
+        10.0
+      ],
+      "median_entry_quality": 1.0012,
+      "forward_hits": 9,
+      "forward_scored": 77,
+      "forward_hit_rate": 0.1169,
+      "forward_hit_wilson95": [
+        0.0627,
+        0.2075
+      ],
+      "false_alarms": 68,
+      "false_alarms_per_session": 17.0,
+      "false_alarms_per_session_bootstrap95": [
+        13.0,
+        22.0
+      ]
+    },
+    "vix1d_lag15": {
+      "mode": "net",
+      "sessions": 4,
+      "start": "2026-10-30",
+      "end": "2026-11-04",
+      "events": 9,
+      "signals": 76,
+      "matched_events": 6,
+      "recall_before_onset": 0.5556,
+      "recall_before_onset_wilson95": [
+        0.2666,
+        0.8112
+      ],
+      "early_matches": 5,
+      "median_lead_min": 7.0,
+      "median_lead_bootstrap95": [
+        -5.5,
+        27.0
+      ],
+      "median_entry_quality": 1.0115,
+      "forward_hits": 10,
+      "forward_scored": 76,
+      "forward_hit_rate": 0.1316,
+      "forward_hit_wilson95": [
+        0.0731,
+        0.2255
+      ],
+      "false_alarms": 66,
+      "false_alarms_per_session": 16.5,
+      "false_alarms_per_session_bootstrap95": [
+        14.0,
+        19.5
+      ]
+    },
+    "macro_release": {
+      "mode": "net",
+      "sessions": 4,
+      "start": "2026-10-30",
+      "end": "2026-11-04",
+      "events": 9,
+      "signals": 0,
+      "matched_events": 0,
+      "recall_before_onset": 0.0,
+      "recall_before_onset_wilson95": [
+        0.0,
+        0.2992
+      ],
+      "early_matches": 0,
+      "median_lead_min": null,
+      "median_lead_bootstrap95": null,
+      "median_entry_quality": null,
+      "forward_hits": 0,
+      "forward_scored": 0,
+      "forward_hit_rate": null,
+      "forward_hit_wilson95": null,
+      "false_alarms": 0,
+      "false_alarms_per_session": 0.0,
+      "false_alarms_per_session_bootstrap95": [
+        0.0,
+        0.0
+      ]
+    },
+    "nya_lag15": {
+      "mode": "net",
+      "sessions": 4,
+      "start": "2026-10-30",
+      "end": "2026-11-04",
+      "events": 9,
+      "signals": 34,
+      "matched_events": 5,
+      "recall_before_onset": 0.3333,
+      "recall_before_onset_wilson95": [
+        0.1206,
+        0.6458
+      ],
+      "early_matches": 3,
+      "median_lead_min": 6.0,
+      "median_lead_bootstrap95": [
+        -11.0,
+        23.0
+      ],
+      "median_entry_quality": 0.959,
+      "forward_hits": 5,
+      "forward_scored": 34,
+      "forward_hit_rate": 0.1471,
+      "forward_hit_wilson95": [
+        0.0645,
+        0.3013
+      ],
+      "false_alarms": 29,
+      "false_alarms_per_session": 7.25,
+      "false_alarms_per_session_bootstrap95": [
+        5.5,
+        9.0
+      ]
+    }
+  },
+  "selection": {
+    "selected": "vix1d_lag15",
+    "reason": "highest validation early-recall, then lead, entry quality, and fewer false alarms"
+  },
+  "test": {
+    "legacy": {
+      "gross": {
+        "mode": "gross",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 15,
+        "signals": 17,
+        "matched_events": 7,
+        "recall_before_onset": 0.2667,
+        "recall_before_onset_wilson95": [
+          0.109,
+          0.5195
+        ],
+        "early_matches": 4,
+        "median_lead_min": 2.0,
+        "median_lead_bootstrap95": [
+          -7.0,
+          7.0
+        ],
+        "median_entry_quality": 1.7414,
+        "forward_hits": 11,
+        "forward_scored": 17,
+        "forward_hit_rate": 0.6471,
+        "forward_hit_wilson95": [
+          0.413,
+          0.8269
+        ],
+        "false_alarms": 6,
+        "false_alarms_per_session": 1.5,
+        "false_alarms_per_session_bootstrap95": [
+          0.0,
+          3.0
+        ]
+      },
+      "net": {
+        "mode": "net",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 15,
+        "signals": 17,
+        "matched_events": 5,
+        "recall_before_onset": 0.2667,
+        "recall_before_onset_wilson95": [
+          0.109,
+          0.5195
+        ],
+        "early_matches": 4,
+        "median_lead_min": 6.0,
+        "median_lead_bootstrap95": [
+          -8.0,
+          11.0
+        ],
+        "median_entry_quality": 1.9209,
+        "forward_hits": 11,
+        "forward_scored": 17,
+        "forward_hit_rate": 0.6471,
+        "forward_hit_wilson95": [
+          0.413,
+          0.8269
+        ],
+        "false_alarms": 6,
+        "false_alarms_per_session": 1.5,
+        "false_alarms_per_session_bootstrap95": [
+          0.0,
+          3.0
+        ]
+      }
+    },
+    "vix1d_lag15": {
+      "gross": {
+        "mode": "gross",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 15,
+        "signals": 87,
+        "matched_events": 5,
+        "recall_before_onset": 0.2667,
+        "recall_before_onset_wilson95": [
+          0.109,
+          0.5195
+        ],
+        "early_matches": 4,
+        "median_lead_min": 18.0,
+        "median_lead_bootstrap95": [
+          -19.0,
+          23.0
+        ],
+        "median_entry_quality": 0.9687,
+        "forward_hits": 7,
+        "forward_scored": 87,
+        "forward_hit_rate": 0.0805,
+        "forward_hit_wilson95": [
+          0.0395,
+          0.1569
+        ],
+        "false_alarms": 80,
+        "false_alarms_per_session": 20.0,
+        "false_alarms_per_session_bootstrap95": [
+          13.5,
+          26.5
+        ]
+      },
+      "net": {
+        "mode": "net",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 15,
+        "signals": 87,
+        "matched_events": 5,
+        "recall_before_onset": 0.2667,
+        "recall_before_onset_wilson95": [
+          0.109,
+          0.5195
+        ],
+        "early_matches": 4,
+        "median_lead_min": 17.0,
+        "median_lead_bootstrap95": [
+          -20.0,
+          22.0
+        ],
+        "median_entry_quality": 0.9684,
+        "forward_hits": 7,
+        "forward_scored": 87,
+        "forward_hit_rate": 0.0805,
+        "forward_hit_wilson95": [
+          0.0395,
+          0.1569
+        ],
+        "false_alarms": 80,
+        "false_alarms_per_session": 20.0,
+        "false_alarms_per_session_bootstrap95": [
+          13.5,
+          26.5
+        ]
+      }
+    }
+  },
+  "promotion": {
+    "promote": false,
+    "recall_intervals_separated": false,
+    "entry_quality_not_worse": false,
+    "false_alarms_not_materially_worse": false,
+    "forward_hit_not_entirely_worse": false,
+    "reason": "promotion gates failed"
+  },
+  "spx_transfer": {
+    "note": "Descriptive transfer. A one-cent share cost is negligible on the index and is not an option spread.",
+    "sessions": [
+      "2026-11-05",
+      "2026-11-06",
+      "2026-11-09",
+      "2026-11-10"
+    ],
+    "legacy": {
+      "gross": {
+        "mode": "gross",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 14,
+        "signals": 3,
+        "matched_events": 5,
+        "recall_before_onset": 0.2857,
+        "recall_before_onset_wilson95": [
+          0.1172,
+          0.5465
+        ],
+        "early_matches": 4,
+        "median_lead_min": 7.0,
+        "median_lead_bootstrap95": null,
+        "median_entry_quality": 2.2589,
+        "forward_hits": 1,
+        "forward_scored": 2,
+        "forward_hit_rate": 0.5,
+        "forward_hit_wilson95": [
+          0.0945,
+          0.9055
+        ],
+        "false_alarms": 1,
+        "false_alarms_per_session": 0.25,
+        "false_alarms_per_session_bootstrap95": [
+          0.0,
+          0.75
+        ]
+      },
+      "net": {
+        "mode": "net",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 14,
+        "signals": 3,
+        "matched_events": 4,
+        "recall_before_onset": 0.2143,
+        "recall_before_onset_wilson95": [
+          0.0757,
+          0.4759
+        ],
+        "early_matches": 3,
+        "median_lead_min": 8.5,
+        "median_lead_bootstrap95": null,
+        "median_entry_quality": 2.387,
+        "forward_hits": 1,
+        "forward_scored": 2,
+        "forward_hit_rate": 0.5,
+        "forward_hit_wilson95": [
+          0.0945,
+          0.9055
+        ],
+        "false_alarms": 1,
+        "false_alarms_per_session": 0.25,
+        "false_alarms_per_session_bootstrap95": [
+          0.0,
+          0.75
+        ]
+      }
+    },
+    "selected": {
+      "gross": {
+        "mode": "gross",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 14,
+        "signals": 87,
+        "matched_events": 4,
+        "recall_before_onset": 0.2143,
+        "recall_before_onset_wilson95": [
+          0.0757,
+          0.4759
+        ],
+        "early_matches": 3,
+        "median_lead_min": 5.0,
+        "median_lead_bootstrap95": [
+          -10.0,
+          8.0
+        ],
+        "median_entry_quality": 0.9904,
+        "forward_hits": 7,
+        "forward_scored": 84,
+        "forward_hit_rate": 0.0833,
+        "forward_hit_wilson95": [
+          0.041,
+          0.1622
+        ],
+        "false_alarms": 77,
+        "false_alarms_per_session": 19.25,
+        "false_alarms_per_session_bootstrap95": [
+          13.0,
+          25.5
+        ]
+      },
+      "net": {
+        "mode": "net",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 14,
+        "signals": 87,
+        "matched_events": 4,
+        "recall_before_onset": 0.2143,
+        "recall_before_onset_wilson95": [
+          0.0757,
+          0.4759
+        ],
+        "early_matches": 3,
+        "median_lead_min": 4.0,
+        "median_lead_bootstrap95": [
+          -11.0,
+          7.0
+        ],
+        "median_entry_quality": 0.9903,
+        "forward_hits": 7,
+        "forward_scored": 84,
+        "forward_hit_rate": 0.0833,
+        "forward_hit_wilson95": [
+          0.041,
+          0.1622
+        ],
+        "false_alarms": 77,
+        "false_alarms_per_session": 19.25,
+        "false_alarms_per_session_bootstrap95": [
+          13.0,
+          25.5
+        ]
+      }
+    }
+  },
+  "unconsumed_after_2026_11_04": {
+    "legacy": {
+      "gross": {
+        "mode": "gross",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 15,
+        "signals": 17,
+        "matched_events": 7,
+        "recall_before_onset": 0.2667,
+        "recall_before_onset_wilson95": [
+          0.109,
+          0.5195
+        ],
+        "early_matches": 4,
+        "median_lead_min": 2.0,
+        "median_lead_bootstrap95": [
+          -7.0,
+          7.0
+        ],
+        "median_entry_quality": 1.7414,
+        "forward_hits": 11,
+        "forward_scored": 17,
+        "forward_hit_rate": 0.6471,
+        "forward_hit_wilson95": [
+          0.413,
+          0.8269
+        ],
+        "false_alarms": 6,
+        "false_alarms_per_session": 1.5,
+        "false_alarms_per_session_bootstrap95": [
+          0.0,
+          3.0
+        ]
+      },
+      "net": {
+        "mode": "net",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 15,
+        "signals": 17,
+        "matched_events": 5,
+        "recall_before_onset": 0.2667,
+        "recall_before_onset_wilson95": [
+          0.109,
+          0.5195
+        ],
+        "early_matches": 4,
+        "median_lead_min": 6.0,
+        "median_lead_bootstrap95": [
+          -8.0,
+          11.0
+        ],
+        "median_entry_quality": 1.9209,
+        "forward_hits": 11,
+        "forward_scored": 17,
+        "forward_hit_rate": 0.6471,
+        "forward_hit_wilson95": [
+          0.413,
+          0.8269
+        ],
+        "false_alarms": 6,
+        "false_alarms_per_session": 1.5,
+        "false_alarms_per_session_bootstrap95": [
+          0.0,
+          3.0
+        ]
+      }
+    },
+    "selected": {
+      "gross": {
+        "mode": "gross",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 15,
+        "signals": 87,
+        "matched_events": 5,
+        "recall_before_onset": 0.2667,
+        "recall_before_onset_wilson95": [
+          0.109,
+          0.5195
+        ],
+        "early_matches": 4,
+        "median_lead_min": 18.0,
+        "median_lead_bootstrap95": [
+          -19.0,
+          23.0
+        ],
+        "median_entry_quality": 0.9687,
+        "forward_hits": 7,
+        "forward_scored": 87,
+        "forward_hit_rate": 0.0805,
+        "forward_hit_wilson95": [
+          0.0395,
+          0.1569
+        ],
+        "false_alarms": 80,
+        "false_alarms_per_session": 20.0,
+        "false_alarms_per_session_bootstrap95": [
+          13.5,
+          26.5
+        ]
+      },
+      "net": {
+        "mode": "net",
+        "sessions": 4,
+        "start": "2026-11-05",
+        "end": "2026-11-10",
+        "events": 15,
+        "signals": 87,
+        "matched_events": 5,
+        "recall_before_onset": 0.2667,
+        "recall_before_onset_wilson95": [
+          0.109,
+          0.5195
+        ],
+        "early_matches": 4,
+        "median_lead_min": 17.0,
+        "median_lead_bootstrap95": [
+          -20.0,
+          22.0
+        ],
+        "median_entry_quality": 0.9684,
+        "forward_hits": 7,
+        "forward_scored": 87,
+        "forward_hit_rate": 0.0805,
+        "forward_hit_wilson95": [
+          0.0395,
+          0.1569
+        ],
+        "false_alarms": 80,
+        "false_alarms_per_session": 20.0,
+        "false_alarms_per_session_bootstrap95": [
+          13.5,
+          26.5
+        ]
+      }
+    },
+    "note": "Same sessions as the isolated test if the split already ends there. Not used to select."
+  },
+  "verdict_ar": "NOT READY. المرشح المختار على التحقق هو vix1d_lag15. على الاختبار المعزول (2026-11-05 إلى 2026-11-10، 4 جلسات، 15 انفجارات) وبعد 60 ثانية تأخير وسنت واحد تكلفة: استدعاء قبل بداية الحركة 0.2667 (فترة 95% [0.109, 0.5195]) مقابل 0.2667 ([0.109, 0.5195]) للقاعدة القديمة. وسيط السبق 17.0 دقيقة مقابل 6.0. وسيط جودة الدخول 0.9684 مقابل 1.9209. إصابة 30 دقيقة 0.0805 مقابل 0.6471. إنذارات كاذبة لكل جلسة 20.0 مقابل 1.5. promotion gates failed. التنبيه الحي لم يتغير.",
+  "limits": [
+    "Yahoo 1-minute history available here starts 2026-10-19, not 30 calendar days.",
+    "IBKR was not reachable, so there is no broker receive-time history.",
+    "One live snapshot: SPY last bar was a few seconds old; VIX, VIX1D and NYA were about 15 minutes old. Historical rows do not carry their original publication time.",
+    "$TICK, $ADD and 0DTE flow/gamma were not obtainable without a paid feed.",
+    "CPI on 2026-11-10 is dropped with the incomplete session. FOMC 2026-10-28 is in train. NFP 2026-11-06 falls in the isolated test and was not used to choose the candidate.",
+    "Costs are a SPY share spread and commission, not an SPX option spread.",
+    "The score is not a probability and no order is sent."
+  ]
+}

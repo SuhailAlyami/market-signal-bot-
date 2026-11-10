@@ -473,6 +473,10 @@ def reserve_once(item: dict) -> bool:
 
 
 def run() -> int:
+    if os.getenv("EXPLOSION_MODE", "legacy").strip().lower() == "context":
+        from research_1m_lead import context_mode_status
+        print(context_mode_status())
+        return 0
     now = datetime.now(timezone.utc)
     if not market_session_open(now):
         print("NYSE closed: no alerts")
