@@ -1,0 +1,11 @@
+//@version=5
+indicator("Suhail rare RESEARCH_ONLY — five down closes", overlay=true)
+// RESEARCH_ONLY. Not a promoted signal.
+// Next-day long after five consecutive lower closes on the daily chart.
+// 2008–2026 ^GSPC, 66 trades, win rate 62% (50–73%), expectancy +10.6 points
+// after 0.5 point per side. It did NOT survive a 22-rule reality check (p=0.87).
+// Max drawdown was 167 points. Do not trade it as a proven edge.
+down = close < close[1]
+five = down and down[1] and down[2] and down[3] and down[4]
+plotshape(five, "Research long", shape.triangleup, location.belowbar, color.new(color.teal, 0), size=size.small)
+alertcondition(five, "Five down days RESEARCH_ONLY", "Five lower closes. Research only — reality check failed.")
