@@ -162,6 +162,7 @@ def legacy_signals(
     rvol_min: float = 2.0,
     momentum_pct: float = 0.35,
     min_distance_atr: float = 0.1,
+    require_volume: bool = True,
 ) -> list[dict]:
     """5-minute confirmation built only from completed one-minute groups.
 
@@ -190,11 +191,15 @@ def legacy_signals(
             continue
         a = atr.get(ts, np.nan)
         ph, pl, base, mom = prior_high.get(ts, np.nan), prior_low.get(ts, np.nan), vol_mean.get(ts, np.nan), momentum.get(ts, np.nan)
-        if not all(np.isfinite(x) for x in (a, ph, pl, base, mom)) or a <= 0 or base <= 0 or row["Volume"] <= 0:
+        if not all(np.isfinite(x) for x in (a, ph, pl, mom)) or a <= 0:
             continue
-        rvol = float(row["Volume"] / base)
+        if require_volume and (not np.isfinite(base) or base <= 0 or row["Volume"] <= 0):
+            continue
+        rvol = float(row["Volume"] / base) if require_volume else 0.0
         close = float(row["Close"])
-        if rvol < rvol_min or abs(mom) < momentum_floor:
+        if require_volume and rvol < rvol_min:
+            continue
+        if abs(mom) < momentum_floor:
             continue
         if close > ph and mom > 0 and (close - ph) >= min_distance_atr * a:
             direction = "BULLISH"

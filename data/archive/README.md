@@ -43,6 +43,12 @@ Then rerun the study on the full history (train / validation / last fifth as the
 python research_1m_lead.py --archive data/archive/ibkr --output artifacts/explosion_1m/ibkr_backfill_report.json
 ```
 
+العينة الطويلة الجاهزة (Dukascopy، 2025-01-02 حتى 2026-11-10) في `data/archive/dukascopy/spx_history`. نتيجتها في `artifacts/explosion_long/REPORT.md`: **NOT READY**. إعادة الحساب:
+
+```bash
+python long_explosion_study.py --root data/archive/dukascopy/spx_history --output artifacts/explosion_long/report.json
+```
+
 Yahoo days through 2026-11-10 stay consumed. A later Yahoo-only rerun still uses:
 
 ```bash

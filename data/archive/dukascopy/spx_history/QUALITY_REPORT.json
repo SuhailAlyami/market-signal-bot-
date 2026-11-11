@@ -1,0 +1,1237 @@
+{
+  "generated_at_utc": "2026-11-11T06:09:46.235059+00:00",
+  "sources": {
+    "dukascopy": {
+      "name": "Dukascopy Bank public historical feed",
+      "access": "keyless, via dukascopy-node CLI (https://www.npmjs.com/package/dukascopy-node)",
+      "docs": "https://www.dukascopy-node.app/instrument/spyususd",
+      "datafeed": "https://datafeed.dukascopy.com/datafeed/",
+      "price_type": "bid",
+      "interval": "1m",
+      "requested_range": "2025-01-01 to 2026-11-11 UTC",
+      "volume": "CFD/broker volume, NOT official exchange share volume. Do not mix with Yahoo volume for RVOL.",
+      "nature": "Broker CFD quotes. Prices closely track the official instruments during RTH but are not the primary exchange tape."
+    },
+    "yahoo": {
+      "name": "Yahoo Finance chart API",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?interval=1m|5m&includePrePost=true",
+      "access": "keyless",
+      "1m_observed": "about 2026-10-19 through 2026-11-10 (Yahoo rejected older 8-day chunks with HTTP 422)",
+      "5m_observed": "about 2026-10-02 through 2026-11-10",
+      "volume": "official exchange volume (for ETFs); indices may have 0 or placeholder volume"
+    }
+  },
+  "symbols": {
+    "dukascopy_rth": {
+      "SPY": {
+        "source": "Dukascopy Bank public tick feed via dukascopy-node (bid, m1)",
+        "instrument": "spyususd",
+        "filter": "RTH 09:30-16:00 America/New_York, weekdays only",
+        "first_session": "2025-01-02",
+        "last_session": "2026-11-10",
+        "n_sessions": 466,
+        "n_rth_bars": 181041,
+        "sessions_complete_390_or_early": 427,
+        "sessions_missing_1_to_5": 32,
+        "sessions_missing_gt_5": 7,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [
+          "2025-01-09",
+          "2025-01-20",
+          "2025-02-17",
+          "2025-04-18",
+          "2025-05-26",
+          "2025-06-19",
+          "2025-07-04",
+          "2025-09-01",
+          "2025-11-27",
+          "2025-12-25",
+          "2026-01-01",
+          "2026-01-19",
+          "2026-02-16",
+          "2026-04-03",
+          "2026-05-25",
+          "2026-06-19",
+          "2026-07-03",
+          "2026-09-07"
+        ],
+        "n_missing_weekdays": 18,
+        "gap_days_notable": [
+          {
+            "day": "2025-01-07",
+            "missing": 10,
+            "longest_gap_min": 6,
+            "first_missing": "2025-01-07T09:30:00-05:00"
+          },
+          {
+            "day": "2025-03-25",
+            "missing": 17,
+            "longest_gap_min": 17,
+            "first_missing": "2025-03-25T13:51:00-04:00"
+          },
+          {
+            "day": "2025-09-26",
+            "missing": 6,
+            "longest_gap_min": 6,
+            "first_missing": "2025-09-26T10:51:00-04:00"
+          },
+          {
+            "day": "2026-03-04",
+            "missing": 44,
+            "longest_gap_min": 44,
+            "first_missing": "2026-03-04T09:30:00-05:00"
+          },
+          {
+            "day": "2026-03-05",
+            "missing": 15,
+            "longest_gap_min": 15,
+            "first_missing": "2026-03-05T10:14:00-05:00"
+          },
+          {
+            "day": "2026-05-14",
+            "missing": 13,
+            "longest_gap_min": 3,
+            "first_missing": "2026-05-14T11:58:00-04:00"
+          },
+          {
+            "day": "2026-06-08",
+            "missing": 6,
+            "longest_gap_min": 6,
+            "first_missing": "2026-06-08T12:08:00-04:00"
+          }
+        ],
+        "n_gap_days_notable": 7,
+        "price_min": 481.786,
+        "price_max": 781.607,
+        "last_close": 749.997
+      },
+      "QQQ": {
+        "source": "Dukascopy Bank public tick feed via dukascopy-node (bid, m1)",
+        "instrument": "qqqususd",
+        "filter": "RTH 09:30-16:00 America/New_York, weekdays only",
+        "first_session": "2025-01-02",
+        "last_session": "2026-11-10",
+        "n_sessions": 466,
+        "n_rth_bars": 180935,
+        "sessions_complete_390_or_early": 426,
+        "sessions_missing_1_to_5": 32,
+        "sessions_missing_gt_5": 8,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [
+          "2025-01-09",
+          "2025-01-20",
+          "2025-02-17",
+          "2025-04-18",
+          "2025-05-26",
+          "2025-06-19",
+          "2025-07-04",
+          "2025-09-01",
+          "2025-11-27",
+          "2025-12-25",
+          "2026-01-01",
+          "2026-01-19",
+          "2026-02-16",
+          "2026-04-03",
+          "2026-05-25",
+          "2026-06-19",
+          "2026-07-03",
+          "2026-09-07"
+        ],
+        "n_missing_weekdays": 18,
+        "gap_days_notable": [
+          {
+            "day": "2025-01-07",
+            "missing": 15,
+            "longest_gap_min": 15,
+            "first_missing": "2025-01-07T09:30:00-05:00"
+          },
+          {
+            "day": "2025-03-25",
+            "missing": 16,
+            "longest_gap_min": 16,
+            "first_missing": "2025-03-25T13:51:00-04:00"
+          },
+          {
+            "day": "2025-09-26",
+            "missing": 6,
+            "longest_gap_min": 6,
+            "first_missing": "2025-09-26T10:51:00-04:00"
+          },
+          {
+            "day": "2026-03-04",
+            "missing": 44,
+            "longest_gap_min": 44,
+            "first_missing": "2026-03-04T09:30:00-05:00"
+          },
+          {
+            "day": "2026-03-05",
+            "missing": 15,
+            "longest_gap_min": 15,
+            "first_missing": "2026-03-05T10:14:00-05:00"
+          },
+          {
+            "day": "2026-05-14",
+            "missing": 13,
+            "longest_gap_min": 3,
+            "first_missing": "2026-05-14T11:58:00-04:00"
+          },
+          {
+            "day": "2026-06-08",
+            "missing": 6,
+            "longest_gap_min": 6,
+            "first_missing": "2026-06-08T12:08:00-04:00"
+          },
+          {
+            "day": "2026-10-29",
+            "missing": 106,
+            "longest_gap_min": 48,
+            "first_missing": "2026-10-29T13:19:00-04:00"
+          }
+        ],
+        "n_gap_days_notable": 8,
+        "price_min": 402.387,
+        "price_max": 762.847,
+        "last_close": 674.876
+      },
+      "GSPC": {
+        "source": "Dukascopy Bank public tick feed via dukascopy-node (bid, m1)",
+        "instrument": "usa500idxusd",
+        "filter": "RTH 09:30-16:00 America/New_York, weekdays only",
+        "first_session": "2025-01-02",
+        "last_session": "2026-11-10",
+        "n_sessions": 479,
+        "n_rth_bars": 183821,
+        "sessions_complete_390_or_early": 444,
+        "sessions_missing_1_to_5": 18,
+        "sessions_missing_gt_5": 17,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [
+          "2025-01-09",
+          "2025-04-18",
+          "2025-12-25",
+          "2026-01-01",
+          "2026-04-03"
+        ],
+        "n_missing_weekdays": 5,
+        "gap_days_notable": [
+          {
+            "day": "2025-01-20",
+            "missing": 181,
+            "longest_gap_min": 181,
+            "first_missing": "2025-01-20T12:59:00-05:00"
+          },
+          {
+            "day": "2025-02-17",
+            "missing": 188,
+            "longest_gap_min": 181,
+            "first_missing": "2025-02-17T11:50:00-05:00"
+          },
+          {
+            "day": "2025-04-07",
+            "missing": 8,
+            "longest_gap_min": 4,
+            "first_missing": "2025-04-07T12:14:00-04:00"
+          },
+          {
+            "day": "2025-05-26",
+            "missing": 181,
+            "longest_gap_min": 181,
+            "first_missing": "2025-05-26T12:59:00-04:00"
+          },
+          {
+            "day": "2025-06-19",
+            "missing": 181,
+            "longest_gap_min": 181,
+            "first_missing": "2025-06-19T12:59:00-04:00"
+          },
+          {
+            "day": "2025-07-04",
+            "missing": 181,
+            "longest_gap_min": 181,
+            "first_missing": "2025-07-04T12:59:00-04:00"
+          },
+          {
+            "day": "2025-09-01",
+            "missing": 185,
+            "longest_gap_min": 181,
+            "first_missing": "2025-09-01T10:39:00-04:00"
+          },
+          {
+            "day": "2025-09-26",
+            "missing": 15,
+            "longest_gap_min": 15,
+            "first_missing": "2025-09-26T10:51:00-04:00"
+          },
+          {
+            "day": "2025-11-27",
+            "missing": 185,
+            "longest_gap_min": 181,
+            "first_missing": "2025-11-27T11:44:00-05:00"
+          },
+          {
+            "day": "2026-01-19",
+            "missing": 181,
+            "longest_gap_min": 181,
+            "first_missing": "2026-01-19T12:59:00-05:00"
+          },
+          {
+            "day": "2026-02-16",
+            "missing": 181,
+            "longest_gap_min": 181,
+            "first_missing": "2026-02-16T12:59:00-05:00"
+          },
+          {
+            "day": "2026-03-24",
+            "missing": 9,
+            "longest_gap_min": 9,
+            "first_missing": "2026-03-24T11:06:00-04:00"
+          },
+          {
+            "day": "2026-05-25",
+            "missing": 181,
+            "longest_gap_min": 181,
+            "first_missing": "2026-05-25T12:59:00-04:00"
+          },
+          {
+            "day": "2026-06-08",
+            "missing": 14,
+            "longest_gap_min": 13,
+            "first_missing": "2026-06-08T10:59:00-04:00"
+          },
+          {
+            "day": "2026-06-19",
+            "missing": 181,
+            "longest_gap_min": 181,
+            "first_missing": "2026-06-19T12:59:00-04:00"
+          },
+          {
+            "day": "2026-08-13",
+            "missing": 5,
+            "longest_gap_min": 5,
+            "first_missing": "2026-08-13T12:48:00-04:00"
+          },
+          {
+            "day": "2026-09-07",
+            "missing": 182,
+            "longest_gap_min": 181,
+            "first_missing": "2026-09-07T12:52:00-04:00"
+          },
+          {
+            "day": "2026-11-05",
+            "missing": 32,
+            "longest_gap_min": 32,
+            "first_missing": "2026-11-05T11:08:00-05:00"
+          }
+        ],
+        "n_gap_days_notable": 18,
+        "price_min": 4833.781,
+        "price_max": 7844.518,
+        "last_close": 7521.576
+      },
+      "VIX": {
+        "source": "Dukascopy Bank public tick feed via dukascopy-node (bid, m1)",
+        "instrument": "volidxusd",
+        "filter": "RTH 09:30-16:00 America/New_York, weekdays only",
+        "first_session": "2025-01-02",
+        "last_session": "2026-11-10",
+        "n_sessions": 477,
+        "n_rth_bars": 96335,
+        "sessions_complete_390_or_early": 9,
+        "sessions_missing_1_to_5": 13,
+        "sessions_missing_gt_5": 455,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [
+          "2025-01-09",
+          "2025-04-18",
+          "2025-07-04",
+          "2025-12-25",
+          "2026-01-01",
+          "2026-04-03",
+          "2026-06-19"
+        ],
+        "n_missing_weekdays": 7,
+        "gap_days_notable": [
+          {
+            "day": "2025-01-02",
+            "missing": 29,
+            "longest_gap_min": 3,
+            "first_missing": "2025-01-02T10:11:00-05:00"
+          },
+          {
+            "day": "2025-01-03",
+            "missing": 198,
+            "longest_gap_min": 12,
+            "first_missing": "2025-01-03T09:40:00-05:00"
+          },
+          {
+            "day": "2025-01-06",
+            "missing": 200,
+            "longest_gap_min": 18,
+            "first_missing": "2025-01-06T09:32:00-05:00"
+          },
+          {
+            "day": "2025-01-07",
+            "missing": 69,
+            "longest_gap_min": 5,
+            "first_missing": "2025-01-07T09:31:00-05:00"
+          },
+          {
+            "day": "2025-01-08",
+            "missing": 37,
+            "longest_gap_min": 4,
+            "first_missing": "2025-01-08T10:46:00-05:00"
+          },
+          {
+            "day": "2025-01-10",
+            "missing": 39,
+            "longest_gap_min": 3,
+            "first_missing": "2025-01-10T11:58:00-05:00"
+          },
+          {
+            "day": "2025-01-13",
+            "missing": 45,
+            "longest_gap_min": 3,
+            "first_missing": "2025-01-13T11:31:00-05:00"
+          },
+          {
+            "day": "2025-01-14",
+            "missing": 40,
+            "longest_gap_min": 3,
+            "first_missing": "2025-01-14T09:38:00-05:00"
+          },
+          {
+            "day": "2025-01-15",
+            "missing": 209,
+            "longest_gap_min": 23,
+            "first_missing": "2025-01-15T09:45:00-05:00"
+          },
+          {
+            "day": "2025-01-16",
+            "missing": 200,
+            "longest_gap_min": 17,
+            "first_missing": "2025-01-16T09:30:00-05:00"
+          },
+          {
+            "day": "2025-01-17",
+            "missing": 266,
+            "longest_gap_min": 45,
+            "first_missing": "2025-01-17T09:32:00-05:00"
+          },
+          {
+            "day": "2025-01-20",
+            "missing": 370,
+            "longest_gap_min": 278,
+            "first_missing": "2025-01-20T09:30:00-05:00"
+          },
+          {
+            "day": "2025-01-21",
+            "missing": 319,
+            "longest_gap_min": 58,
+            "first_missing": "2025-01-21T09:31:00-05:00"
+          },
+          {
+            "day": "2025-01-22",
+            "missing": 354,
+            "longest_gap_min": 88,
+            "first_missing": "2025-01-22T09:30:00-05:00"
+          },
+          {
+            "day": "2025-01-23",
+            "missing": 352,
+            "longest_gap_min": 78,
+            "first_missing": "2025-01-23T09:30:00-05:00"
+          },
+          {
+            "day": "2025-01-24",
+            "missing": 337,
+            "longest_gap_min": 29,
+            "first_missing": "2025-01-24T09:32:00-05:00"
+          },
+          {
+            "day": "2025-01-27",
+            "missing": 24,
+            "longest_gap_min": 2,
+            "first_missing": "2025-01-27T10:36:00-05:00"
+          },
+          {
+            "day": "2025-01-28",
+            "missing": 199,
+            "longest_gap_min": 14,
+            "first_missing": "2025-01-28T09:36:00-05:00"
+          },
+          {
+            "day": "2025-01-29",
+            "missing": 134,
+            "longest_gap_min": 10,
+            "first_missing": "2025-01-29T09:40:00-05:00"
+          },
+          {
+            "day": "2025-01-30",
+            "missing": 215,
+            "longest_gap_min": 13,
+            "first_missing": "2025-01-30T09:30:00-05:00"
+          },
+          {
+            "day": "2025-01-31",
+            "missing": 197,
+            "longest_gap_min": 23,
+            "first_missing": "2025-01-31T09:31:00-05:00"
+          },
+          {
+            "day": "2025-02-03",
+            "missing": 49,
+            "longest_gap_min": 5,
+            "first_missing": "2025-02-03T10:15:00-05:00"
+          },
+          {
+            "day": "2025-02-04",
+            "missing": 209,
+            "longest_gap_min": 27,
+            "first_missing": "2025-02-04T09:34:00-05:00"
+          },
+          {
+            "day": "2025-02-05",
+            "missing": 240,
+            "longest_gap_min": 36,
+            "first_missing": "2025-02-05T09:33:00-05:00"
+          },
+          {
+            "day": "2025-02-06",
+            "missing": 262,
+            "longest_gap_min": 21,
+            "first_missing": "2025-02-06T09:31:00-05:00"
+          },
+          {
+            "day": "2025-02-07",
+            "missing": 95,
+            "longest_gap_min": 7,
+            "first_missing": "2025-02-07T09:32:00-05:00"
+          },
+          {
+            "day": "2025-02-10",
+            "missing": 248,
+            "longest_gap_min": 17,
+            "first_missing": "2025-02-10T09:33:00-05:00"
+          },
+          {
+            "day": "2025-02-11",
+            "missing": 259,
+            "longest_gap_min": 35,
+            "first_missing": "2025-02-11T09:31:00-05:00"
+          },
+          {
+            "day": "2025-02-12",
+            "missing": 176,
+            "longest_gap_min": 14,
+            "first_missing": "2025-02-12T09:37:00-05:00"
+          },
+          {
+            "day": "2025-02-13",
+            "missing": 255,
+            "longest_gap_min": 44,
+            "first_missing": "2025-02-13T09:31:00-05:00"
+          }
+        ],
+        "n_gap_days_notable": 455,
+        "price_min": 14.920000000000003,
+        "price_max": 41.43000000000001,
+        "last_close": 19.820000000000004
+      }
+    },
+    "yahoo_1m_rth": {
+      "SPY": {
+        "source": "Yahoo Finance chart API v8, 1-minute, includePrePost then RTH-filtered",
+        "first_session": "2026-10-19",
+        "last_session": "2026-11-10",
+        "n_sessions": 17,
+        "n_rth_bars": 6630,
+        "sessions_complete": 17,
+        "sessions_missing_gt_0": 0,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [],
+        "gap_days_notable": [],
+        "price_min": 732.7100219726562,
+        "price_max": 775.6400146484375,
+        "last_close": 749.9400024414062
+      },
+      "QQQ": {
+        "source": "Yahoo Finance chart API v8, 1-minute, includePrePost then RTH-filtered",
+        "first_session": "2026-10-19",
+        "last_session": "2026-11-10",
+        "n_sessions": 17,
+        "n_rth_bars": 6630,
+        "sessions_complete": 17,
+        "sessions_missing_gt_0": 0,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [],
+        "gap_days_notable": [],
+        "price_min": 647.27001953125,
+        "price_max": 727.9500122070312,
+        "last_close": 674.8099975585938
+      },
+      "GSPC": {
+        "source": "Yahoo Finance chart API v8, 1-minute, includePrePost then RTH-filtered",
+        "first_session": "2026-10-19",
+        "last_session": "2026-11-10",
+        "n_sessions": 17,
+        "n_rth_bars": 6630,
+        "sessions_complete": 17,
+        "sessions_missing_gt_0": 0,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [],
+        "gap_days_notable": [],
+        "price_min": 7350.35009765625,
+        "price_max": 7770.39990234375,
+        "last_close": 7522.27001953125
+      },
+      "VIX": {
+        "source": "Yahoo Finance chart API v8, 1-minute, includePrePost then RTH-filtered",
+        "first_session": "2026-10-19",
+        "last_session": "2026-11-10",
+        "n_sessions": 17,
+        "n_rth_bars": 6611,
+        "sessions_complete": 0,
+        "sessions_missing_gt_0": 17,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [],
+        "gap_days_notable": [],
+        "price_min": 16.209999084472656,
+        "price_max": 28.09000015258789,
+        "last_close": 19.6299991607666
+      },
+      "VIX1D": {
+        "source": "Yahoo Finance chart API v8, 1-minute, includePrePost then RTH-filtered",
+        "first_session": "2026-10-19",
+        "last_session": "2026-11-10",
+        "n_sessions": 17,
+        "n_rth_bars": 6613,
+        "sessions_complete": 0,
+        "sessions_missing_gt_0": 17,
+        "ohlc_violations": 0,
+        "missing_weekdays_in_span": [],
+        "gap_days_notable": [],
+        "price_min": 7.909999847412109,
+        "price_max": 33.59000015258789,
+        "last_close": 14.149999618530273
+      }
+    }
+  },
+  "comparisons": {
+    "SPY": {
+      "common_rth_bars": 6625,
+      "close_abs_mean": 0.02462504237912907,
+      "close_abs_median": 0.01800732421872908,
+      "close_abs_p95": 0.053980468749955435,
+      "close_abs_max": 0.6560024414062582,
+      "close_rel_pct_mean": 0.0032402992061471014,
+      "close_rel_pct_median": 0.002365254350012116,
+      "n_days_compared": 17,
+      "day_closes": [
+        {
+          "day": "2026-10-19",
+          "yahoo_close": 766.5399780273438,
+          "duka_close": 766.466,
+          "abs": 0.07397802734374181,
+          "rel_pct": 0.009650902687961684
+        },
+        {
+          "day": "2026-10-20",
+          "yahoo_close": 769.02001953125,
+          "duka_close": 768.777,
+          "abs": 0.24301953124995634,
+          "rel_pct": 0.03160119698809492
+        },
+        {
+          "day": "2026-10-21",
+          "yahoo_close": 773.1300048828125,
+          "duka_close": 773.197,
+          "abs": 0.06699511718750273,
+          "rel_pct": 0.00866544006368729
+        },
+        {
+          "day": "2026-10-22",
+          "yahoo_close": 763.989990234375,
+          "duka_close": 763.827,
+          "abs": 0.16299023437500182,
+          "rel_pct": 0.021334079825443795
+        },
+        {
+          "day": "2026-10-23",
+          "yahoo_close": 759.9099731445312,
+          "duka_close": 759.686,
+          "abs": 0.22397314453121453,
+          "rel_pct": 0.02947364193740038
+        },
+        {
+          "day": "2026-10-26",
+          "yahoo_close": 765.2249755859375,
+          "duka_close": 765.207,
+          "abs": 0.017975585937506366,
+          "rel_pct": 0.0023490589710225217
+        },
+        {
+          "day": "2026-10-27",
+          "yahoo_close": 769.719970703125,
+          "duka_close": 769.767,
+          "abs": 0.04702929687505275,
+          "rel_pct": 0.006109922915484752
+        },
+        {
+          "day": "2026-10-28",
+          "yahoo_close": 772.3499755859375,
+          "duka_close": 772.337,
+          "abs": 0.012975585937510914,
+          "rel_pct": 0.0016800137693624038
+        },
+        {
+          "day": "2026-10-29",
+          "yahoo_close": 769.530029296875,
+          "duka_close": 769.407,
+          "abs": 0.12302929687496089,
+          "rel_pct": 0.015987588812794433
+        },
+        {
+          "day": "2026-10-30",
+          "yahoo_close": 755.7100219726562,
+          "duka_close": 755.647,
+          "abs": 0.0630219726562018,
+          "rel_pct": 0.008339438517924288
+        },
+        {
+          "day": "2026-11-02",
+          "yahoo_close": 752.1199951171875,
+          "duka_close": 751.966,
+          "abs": 0.15399511718749181,
+          "rel_pct": 0.020474806970594884
+        },
+        {
+          "day": "2026-11-03",
+          "yahoo_close": 754.4099731445312,
+          "duka_close": 754.297,
+          "abs": 0.11297314453122453,
+          "rel_pct": 0.01497503327803713
+        },
+        {
+          "day": "2026-11-04",
+          "yahoo_close": 766.72998046875,
+          "duka_close": 766.637,
+          "abs": 0.09298046875005639,
+          "rel_pct": 0.012126885750993018
+        },
+        {
+          "day": "2026-11-05",
+          "yahoo_close": 733.1300048828125,
+          "duka_close": 733.546,
+          "abs": 0.4159951171875491,
+          "rel_pct": 0.05674233961465594
+        },
+        {
+          "day": "2026-11-06",
+          "yahoo_close": 735.3400268554688,
+          "duka_close": 735.516,
+          "abs": 0.1759731445312127,
+          "rel_pct": 0.023930853496949688
+        },
+        {
+          "day": "2026-11-09",
+          "yahoo_close": 752.6099853515625,
+          "duka_close": 752.507,
+          "abs": 0.10298535156255184,
+          "rel_pct": 0.013683760987365172
+        },
+        {
+          "day": "2026-11-10",
+          "yahoo_close": 749.9400024414062,
+          "duka_close": 749.997,
+          "abs": 0.056997558593707254,
+          "rel_pct": 0.007600282477018625
+        }
+      ]
+    },
+    "QQQ": {
+      "common_rth_bars": 6523,
+      "close_abs_mean": 0.028805953378312002,
+      "close_abs_median": 0.022980468750006366,
+      "close_abs_p95": 0.0719931640625191,
+      "close_abs_max": 9.672975585937479,
+      "close_rel_pct_mean": 0.004142316111518092,
+      "close_rel_pct_median": 0.0031943430540922373,
+      "n_days_compared": 17,
+      "day_closes": [
+        {
+          "day": "2026-10-19",
+          "yahoo_close": 718.3200073242188,
+          "duka_close": 718.206,
+          "abs": 0.11400732421873272,
+          "rel_pct": 0.015871383653006717
+        },
+        {
+          "day": "2026-10-20",
+          "yahoo_close": 717.52001953125,
+          "duka_close": 717.316,
+          "abs": 0.20401953124996908,
+          "rel_pct": 0.028433984515617194
+        },
+        {
+          "day": "2026-10-21",
+          "yahoo_close": 725.2100219726562,
+          "duka_close": 725.296,
+          "abs": 0.08597802734379911,
+          "rel_pct": 0.011855603858028438
+        },
+        {
+          "day": "2026-10-22",
+          "yahoo_close": 704.5900268554688,
+          "duka_close": 704.477,
+          "abs": 0.11302685546877456,
+          "rel_pct": 0.01604150657272354
+        },
+        {
+          "day": "2026-10-23",
+          "yahoo_close": 704.3900146484375,
+          "duka_close": 704.206,
+          "abs": 0.18401464843748272,
+          "rel_pct": 0.026123971750128344
+        },
+        {
+          "day": "2026-10-26",
+          "yahoo_close": 712.1199951171875,
+          "duka_close": 712.076,
+          "abs": 0.04399511718747817,
+          "rel_pct": 0.006178048290897698
+        },
+        {
+          "day": "2026-10-27",
+          "yahoo_close": 721.239990234375,
+          "duka_close": 721.227,
+          "abs": 0.012990234375024556,
+          "rel_pct": 0.0018010973532961245
+        },
+        {
+          "day": "2026-10-28",
+          "yahoo_close": 725.47998046875,
+          "duka_close": 725.357,
+          "abs": 0.1229804687500291,
+          "rel_pct": 0.016951600603860698
+        },
+        {
+          "day": "2026-10-29",
+          "yahoo_close": 715.280029296875,
+          "duka_close": 715.007,
+          "abs": 0.27302929687505184,
+          "rel_pct": 0.03817096601221223
+        },
+        {
+          "day": "2026-10-30",
+          "yahoo_close": 690.5599975585938,
+          "duka_close": 690.487,
+          "abs": 0.07299755859378365,
+          "rel_pct": 0.01057077717386748
+        },
+        {
+          "day": "2026-11-02",
+          "yahoo_close": 681.1300048828125,
+          "duka_close": 680.857,
+          "abs": 0.2730048828125291,
+          "rel_pct": 0.040081171120849274
+        },
+        {
+          "day": "2026-11-03",
+          "yahoo_close": 685.3400268554688,
+          "duka_close": 685.196,
+          "abs": 0.14402685546872362,
+          "rel_pct": 0.02101538649793432
+        },
+        {
+          "day": "2026-11-04",
+          "yahoo_close": 691.8200073242188,
+          "duka_close": 691.777,
+          "abs": 0.043007324218706344,
+          "rel_pct": 0.006216548200889357
+        },
+        {
+          "day": "2026-11-05",
+          "yahoo_close": 648.0599975585938,
+          "duka_close": 648.176,
+          "abs": 0.11600244140629457,
+          "rel_pct": 0.017899953992424337
+        },
+        {
+          "day": "2026-11-06",
+          "yahoo_close": 656.219970703125,
+          "duka_close": 656.276,
+          "abs": 0.056029296874953616,
+          "rel_pct": 0.008538188317389896
+        },
+        {
+          "day": "2026-11-09",
+          "yahoo_close": 678.760009765625,
+          "duka_close": 678.467,
+          "abs": 0.29300976562501546,
+          "rel_pct": 0.04316838962363021
+        },
+        {
+          "day": "2026-11-10",
+          "yahoo_close": 674.8099975585938,
+          "duka_close": 674.876,
+          "abs": 0.06600244140622635,
+          "rel_pct": 0.009780892643116977
+        }
+      ]
+    },
+    "GSPC": {
+      "common_rth_bars": 6596,
+      "close_abs_mean": 0.46423034912257843,
+      "close_abs_median": 0.35512695312490905,
+      "close_abs_p95": 1.258234375000029,
+      "close_abs_max": 15.982019531250444,
+      "close_rel_pct_mean": 0.0061004320021930845,
+      "close_rel_pct_median": 0.00464990919596606,
+      "n_days_compared": 17,
+      "day_closes": [
+        {
+          "day": "2026-10-19",
+          "yahoo_close": 7691.919921875,
+          "duka_close": 7692.058,
+          "abs": 0.13807812499999272,
+          "rel_pct": 0.0017951061165797275
+        },
+        {
+          "day": "2026-10-20",
+          "yahoo_close": 7711.7001953125,
+          "duka_close": 7716.093,
+          "abs": 4.392804687499847,
+          "rel_pct": 0.05696285613086957
+        },
+        {
+          "day": "2026-10-21",
+          "yahoo_close": 7757.22021484375,
+          "duka_close": 7757.528,
+          "abs": 0.3077851562502474,
+          "rel_pct": 0.003967724877286431
+        },
+        {
+          "day": "2026-10-22",
+          "yahoo_close": 7663.4501953125,
+          "duka_close": 7665.089,
+          "abs": 1.6388046874999418,
+          "rel_pct": 0.021384685040458002
+        },
+        {
+          "day": "2026-10-23",
+          "yahoo_close": 7622.990234375,
+          "duka_close": 7623.321,
+          "abs": 0.3307656249999127,
+          "rel_pct": 0.004339053505648781
+        },
+        {
+          "day": "2026-10-26",
+          "yahoo_close": 7676.60986328125,
+          "duka_close": 7677.815,
+          "abs": 1.2051367187495998,
+          "rel_pct": 0.015698814192890122
+        },
+        {
+          "day": "2026-10-27",
+          "yahoo_close": 7722.97998046875,
+          "duka_close": 7721.944,
+          "abs": 1.0359804687495853,
+          "rel_pct": 0.01341425811499651
+        },
+        {
+          "day": "2026-10-28",
+          "yahoo_close": 7748.02978515625,
+          "duka_close": 7749.289,
+          "abs": 1.25921484374976,
+          "rel_pct": 0.016252065088368347
+        },
+        {
+          "day": "2026-10-29",
+          "yahoo_close": 7721.02001953125,
+          "duka_close": 7719.164,
+          "abs": 1.85601953125024,
+          "rel_pct": 0.024038527636960082
+        },
+        {
+          "day": "2026-10-30",
+          "yahoo_close": 7580.9501953125,
+          "duka_close": 7580.402,
+          "abs": 0.5481953124999563,
+          "rel_pct": 0.007231221659244245
+        },
+        {
+          "day": "2026-11-02",
+          "yahoo_close": 7542.330078125,
+          "duka_close": 7544.939,
+          "abs": 2.6089218750003056,
+          "rel_pct": 0.034590396442167846
+        },
+        {
+          "day": "2026-11-03",
+          "yahoo_close": 7568.580078125,
+          "duka_close": 7567.332,
+          "abs": 1.2480781249996653,
+          "rel_pct": 0.016490254606764464
+        },
+        {
+          "day": "2026-11-04",
+          "yahoo_close": 7688.72998046875,
+          "duka_close": 7690.694,
+          "abs": 1.9640195312504147,
+          "rel_pct": 0.025544134548091863
+        },
+        {
+          "day": "2026-11-05",
+          "yahoo_close": 7356.72998046875,
+          "duka_close": 7354.879,
+          "abs": 1.8509804687500946,
+          "rel_pct": 0.02516036980647964
+        },
+        {
+          "day": "2026-11-06",
+          "yahoo_close": 7374.85009765625,
+          "duka_close": 7377.664,
+          "abs": 2.81390234374976,
+          "rel_pct": 0.0381553835873088
+        },
+        {
+          "day": "2026-11-09",
+          "yahoo_close": 7549.009765625,
+          "duka_close": 7549.523,
+          "abs": 0.5132343750001382,
+          "rel_pct": 0.006798697987346508
+        },
+        {
+          "day": "2026-11-10",
+          "yahoo_close": 7522.27001953125,
+          "duka_close": 7521.576,
+          "abs": 0.6940195312499782,
+          "rel_pct": 0.009226198068508393
+        }
+      ]
+    },
+    "VIX": {
+      "common_rth_bars": 4331,
+      "close_abs_mean": 0.852886182229696,
+      "close_abs_median": 0.5700007629394577,
+      "close_abs_p95": 2.50000007629394,
+      "close_abs_max": 5.120000762939448,
+      "close_rel_pct_mean": 4.081152118117345,
+      "close_rel_pct_median": 3.0319190748466194,
+      "n_days_compared": 17,
+      "day_closes": [
+        {
+          "day": "2026-10-19",
+          "yahoo_close": 18.5,
+          "duka_close": 18.080000000000002,
+          "abs": 0.41999999999999815,
+          "rel_pct": 2.2702702702702604
+        },
+        {
+          "day": "2026-10-20",
+          "yahoo_close": 17.549999237060547,
+          "duka_close": 18.380000000000003,
+          "abs": 0.8300007629394557,
+          "rel_pct": 4.729349282173945
+        },
+        {
+          "day": "2026-10-21",
+          "yahoo_close": 16.690000534057617,
+          "duka_close": 18.120000000000005,
+          "abs": 1.4299994659423874,
+          "rel_pct": 8.568001319258979
+        },
+        {
+          "day": "2026-10-22",
+          "yahoo_close": 19.1200008392334,
+          "duka_close": 19.280000000000005,
+          "abs": 0.15999916076660625,
+          "rel_pct": 0.8368156576556997
+        },
+        {
+          "day": "2026-10-23",
+          "yahoo_close": 19.790000915527344,
+          "duka_close": 19.530000000000005,
+          "abs": 0.26000091552733906,
+          "rel_pct": 1.3137994113145337
+        },
+        {
+          "day": "2026-10-26",
+          "yahoo_close": 18.510000228881836,
+          "duka_close": 19.080000000000005,
+          "abs": 0.5699997711181695,
+          "rel_pct": 3.0794152569959334
+        },
+        {
+          "day": "2026-10-27",
+          "yahoo_close": 17.6200008392334,
+          "duka_close": 18.880000000000003,
+          "abs": 1.2599991607666041,
+          "rel_pct": 7.150959709156424
+        },
+        {
+          "day": "2026-10-28",
+          "yahoo_close": 16.829999923706055,
+          "duka_close": 18.470000000000002,
+          "abs": 1.6400000762939477,
+          "rel_pct": 9.744504359645957
+        },
+        {
+          "day": "2026-10-29",
+          "yahoo_close": 16.450000762939453,
+          "duka_close": 18.070000000000004,
+          "abs": 1.6199992370605507,
+          "rel_pct": 9.84801922143542
+        },
+        {
+          "day": "2026-10-30",
+          "yahoo_close": 19.709999084472656,
+          "duka_close": 20.230000000000004,
+          "abs": 0.5200009155273477,
+          "rel_pct": 2.6382594605851573
+        },
+        {
+          "day": "2026-11-02",
+          "yahoo_close": 21.540000915527344,
+          "duka_close": 20.270000000000003,
+          "abs": 1.2700009155273406,
+          "rel_pct": 5.896011427798253
+        },
+        {
+          "day": "2026-11-03",
+          "yahoo_close": 20.739999771118164,
+          "duka_close": 19.830000000000005,
+          "abs": 0.9099997711181587,
+          "rel_pct": 4.387655646869361
+        },
+        {
+          "day": "2026-11-04",
+          "yahoo_close": 16.780000686645508,
+          "duka_close": 17.630000000000003,
+          "abs": 0.8499993133544947,
+          "rel_pct": 5.06554993189585
+        },
+        {
+          "day": "2026-11-05",
+          "yahoo_close": 27.59000015258789,
+          "duka_close": 24.520000000000003,
+          "abs": 3.0700001525878875,
+          "rel_pct": 11.127220498764395
+        },
+        {
+          "day": "2026-11-06",
+          "yahoo_close": 25.559999465942383,
+          "duka_close": 23.620000000000005,
+          "abs": 1.9399994659423783,
+          "rel_pct": 7.589982419707581
+        },
+        {
+          "day": "2026-11-09",
+          "yahoo_close": 19.979999542236328,
+          "duka_close": 19.920000000000005,
+          "abs": 0.05999954223632287,
+          "rel_pct": 0.3002980160709614
+        },
+        {
+          "day": "2026-11-10",
+          "yahoo_close": 19.6299991607666,
+          "duka_close": 19.820000000000004,
+          "abs": 0.19000083923340227,
+          "rel_pct": 0.9679105825595067
+        }
+      ]
+    }
+  },
+  "write_summary": {
+    "SPY": {
+      "path": "/workspace/spx_history/SPY",
+      "source": "dukascopy_bid",
+      "days": 466,
+      "rows": 181041
+    },
+    "QQQ": {
+      "path": "/workspace/spx_history/QQQ",
+      "source": "dukascopy_bid",
+      "days": 466,
+      "rows": 180935
+    },
+    "GSPC": {
+      "path": "/workspace/spx_history/GSPC",
+      "source": "dukascopy_bid",
+      "days": 479,
+      "rows": 183821
+    },
+    "VIX": {
+      "path": "/workspace/spx_history/VIX",
+      "source": "dukascopy_bid",
+      "days": 477,
+      "rows": 96335
+    },
+    "VIX1D": {
+      "path": "/workspace/spx_history/VIX1D",
+      "source": "yahoo_response",
+      "days": 17,
+      "rows": 6613
+    },
+    "yahoo/SPY": {
+      "path": "/workspace/spx_history/yahoo/SPY",
+      "source": "yahoo_response",
+      "days": 17,
+      "rows": 6630
+    },
+    "yahoo/QQQ": {
+      "path": "/workspace/spx_history/yahoo/QQQ",
+      "source": "yahoo_response",
+      "days": 17,
+      "rows": 6630
+    },
+    "yahoo/GSPC": {
+      "path": "/workspace/spx_history/yahoo/GSPC",
+      "source": "yahoo_response",
+      "days": 17,
+      "rows": 6630
+    },
+    "yahoo/VIX": {
+      "path": "/workspace/spx_history/yahoo/VIX",
+      "source": "yahoo_response",
+      "days": 17,
+      "rows": 6611
+    },
+    "yahoo/VIX1D": {
+      "path": "/workspace/spx_history/yahoo/VIX1D",
+      "source": "yahoo_response",
+      "days": 17,
+      "rows": 6613
+    },
+    "yahoo_5m/SPY": {
+      "path": "/workspace/spx_history/yahoo_5m/SPY",
+      "source": "yahoo_response_5m",
+      "days": 28,
+      "rows": 2184
+    },
+    "yahoo_5m/QQQ": {
+      "path": "/workspace/spx_history/yahoo_5m/QQQ",
+      "source": "yahoo_response_5m",
+      "days": 28,
+      "rows": 2184
+    },
+    "yahoo_5m/GSPC": {
+      "path": "/workspace/spx_history/yahoo_5m/GSPC",
+      "source": "yahoo_response_5m",
+      "days": 28,
+      "rows": 2184
+    },
+    "yahoo_5m/VIX": {
+      "path": "/workspace/spx_history/yahoo_5m/VIX",
+      "source": "yahoo_response_5m",
+      "days": 28,
+      "rows": 2184
+    },
+    "yahoo_5m/VIX1D": {
+      "path": "/workspace/spx_history/yahoo_5m/VIX1D",
+      "source": "yahoo_response_5m",
+      "days": 28,
+      "rows": 2184
+    }
+  }
+}
