@@ -1,0 +1,24 @@
+//@version=5
+indicator("Suhail exhaustion RESEARCH_ONLY", overlay=true)
+
+// RESEARCH_ONLY. Do not trade this.
+// On 2026-11-11 it marked a short at 13:41 ET near 7645, about 2 points
+// before the 7647 high, and the next 30 minutes fell about 22 points.
+// On the 22-month USA500 test (116 days, 2026-06-29 to 2026-11-10) the same
+// rule lost 1.56 points per trade. Win rate 4%. 95% interval -2.65 to -0.11.
+// About 0.4 alerts per session. The loss interval is entirely below zero.
+// Use the 1-minute chart. Costs of 0.5 index point per side are not on the chart.
+
+gate = input.float(1.0, "Day move vs prior close, percent") / 100.0
+prior = request.security(syminfo.tickerid, "D", close[1], barmerge.gaps_off, barmerge.lookahead_off)
+dayUp = close / prior - 1 >= gate
+dayDown = close / prior - 1 <= -gate
+[_, _, hist] = ta.macd(close, 12, 26, 9)
+shortNow = dayUp and close >= ta.highest(close[1], 20) and hist < 0
+longNow = dayDown and close <= ta.lowest(close[1], 20) and hist > 0
+shortCond = shortNow and not shortNow[1]
+longCond = longNow and not longNow[1]
+plotshape(shortCond, "Research short", shape.triangledown, location.abovebar, color.new(color.red, 0), size=size.tiny)
+plotshape(longCond, "Research long", shape.triangleup, location.belowbar, color.new(color.teal, 0), size=size.tiny)
+alertcondition(shortCond, "Exhaustion short RESEARCH_ONLY", "Exhaustion short RESEARCH_ONLY — archive test lost money")
+alertcondition(longCond, "Exhaustion long RESEARCH_ONLY", "Exhaustion long RESEARCH_ONLY — archive test lost money")
