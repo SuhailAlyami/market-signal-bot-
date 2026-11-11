@@ -12,22 +12,38 @@ GitHub يشغّل الأرشفة عند 01:15 UTC من الثلاثاء إلى �
 python archive_1m.py --source yahoo --out data/archive
 ```
 
-## IBKR على جهازك
+## IBKR backfill on your PC / تعبئة IBKR على جهازك
 
-افتح TWS أو IB Gateway مع تفعيل API. لا يلزم اشتراك لحظي مدفوع. الأمر الواحد:
+No paid real-time subscription. TWS or IB Gateway must already be open, with the API enabled and 127.0.0.1 trusted. Delayed and historical bars are requested with `reqMarketDataType(3)` and then `4`. Symbols without permission are reported as `NO_PERMISSION` and the others continue. This command was not run against a live IBKR session here; unit tests mock the client.
 
-```bash
-python archive_1m.py --source ibkr
+بلا اشتراك لحظي مدفوع. افتح TWS أو IB Gateway أولًا، وفعّل API، واسمح لـ 127.0.0.1. الأمر الواحد يجلب نحو ستة أشهر من شموع الدقيقة (جلسة عادية فقط) لـ SPY وQQQ وSPX وVIX وVIX1D، ويتخطى الأيام المحفوظة، ويلتزم بحدود سرعة IBKR:
+
+```bat
+python -m pip install -r requirements.txt -r requirements-ibkr.txt
+python archive_1m.py --source ibkr --backfill-days 180 --use-rth 1 --port 7496
 ```
 
-المنفذ الافتراضي `4001` (بوابة المستودع). لـ TWS: `python archive_1m.py --source ibkr --port 7496`.  
-`--use-rth 1` يحصر الطلب في الجلسة العادية. الرمز بلا صلاحية يُطبع في `NO_PERMISSION` ويكمل الباقي. الملفات تحت `data/archive/ibkr/<SPY|QQQ|SPX|VIX>/`. وقت الاستلام يُسجل مع شموع التاريخ كدفعة، ومع التحديث الحي في `live-YYYY-MM-DD.jsonl` إذا أضفت `--live-seconds 120`.
+Gateway on port 4001 instead of TWS:
 
-لم يُشغَّل هذا الأمر على جلسة IBKR حية من بيئة التطوير. الاختبارات تحاكي ردود الوسيط.
+```bat
+python archive_1m.py --source ibkr --backfill-days 180 --use-rth 1 --port 4001
+```
 
-## إعادة الدراسة لاحقًا
+ملفات IBKR: `data/archive/ibkr/<SPY|QQQ|SPX|VIX|VIX1D>/<YYYY-MM-DD>.csv.gz`. اليوم الموجود لا يُطلب مرة أخرى. أعد الأمر نفسه إذا انقطع؛ يكمل من حيث توقف. ثم أرسل الأرشيف:
 
-الجلسات حتى 2026-11-10 مستهلكة. عندما تتوفر 12 جلسة بعدها:
+```bat
+git add data/archive
+git commit -m "Add IBKR 1-minute backfill"
+git push
+```
+
+Then rerun the study on the full history (train / validation / last fifth as the test):
+
+```bat
+python research_1m_lead.py --archive data/archive/ibkr --output artifacts/explosion_1m/ibkr_backfill_report.json
+```
+
+Yahoo days through 2026-11-10 stay consumed. A later Yahoo-only rerun still uses:
 
 ```bash
 python research_1m_lead.py --archive data/archive --spent-through 2026-11-10 --output artifacts/explosion_1m/future_report.json

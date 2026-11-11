@@ -19,7 +19,7 @@ and the governing [AGENTS.md](AGENTS.md).
 أرشيف شموع الدقيقة المجاني وشرح IBKR المحلي: [data/archive/README.md](data/archive/README.md). على جهازك مع TWS أو IB Gateway مفتوح، بلا اشتراك لحظي:
 
 ```bash
-python archive_1m.py --source ibkr
+python archive_1m.py --source ibkr --backfill-days 180 --use-rth 1 --port 7496
 ```
 
 ```sh

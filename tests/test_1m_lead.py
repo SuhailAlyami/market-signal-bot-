@@ -120,6 +120,11 @@ class OneMinuteLeadTests(unittest.TestCase):
         self.assertLess(parts["validation"][-1], parts["test"][0])
         self.assertEqual(len(parts["test"]), 4)
         self.assertEqual(len(parts["validation"]), 4)
+        longer = split_sessions(days + [datetime(2026, 12, 1).date() + timedelta(days=i) for i in range(24)])
+        self.assertGreater(len(longer["test"]), 4)
+        self.assertLess(longer["train"][-1], longer["validation"][0])
+        self.assertLess(longer["validation"][-1], longer["test"][0])
+        self.assertEqual(len(longer["train"]) + len(longer["validation"]) + len(longer["test"]), 40)
         frame, aux = self._market()
         signals = context_signals(frame, aux, five_minute_atr(frame))["macro_release"]
         self.assertEqual(signals, [])

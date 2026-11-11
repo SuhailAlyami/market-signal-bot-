@@ -19,11 +19,13 @@ Uses **completed** 5-minute candles only. The alert path is the original confirm
 
 Yahoo يُحفظ في `data/archive/<SPY|GSPC|QQQ|VIX|VIX1D>/<YYYY-MM-DD>.csv.gz`. اليوم الموجود لا يُستبدل. GitHub يشغّل `archive_1m.py --source yahoo` عند 01:15 UTC من الثلاثاء إلى السبت (بعد إغلاق ما بعد السوق الساعة 20:00 نيويورك). موعد 21:30 UTC يقطع ما بعد الإغلاق، لذلك لم يُستخدم.
 
-على جهازك وTWS أو IB Gateway مفتوح، بدون اشتراك لحظي مدفوع، الأمر الواحد:
+على جهازك وTWS أو IB Gateway مفتوح، بدون اشتراك لحظي مدفوع، الأمر الواحد لتعبئة نحو ستة أشهر:
 
 ```bash
-python archive_1m.py --source ibkr
+python archive_1m.py --source ibkr --backfill-days 180 --use-rth 1 --port 7496
 ```
+
+لبوابة المستودع استبدل المنفذ بـ `4001`. التفاصيل في `data/archive/README.md`.
 
 المنفذ الافتراضي 4001 كما في بوابة المستودع. لـ TWS أضف `--port 7496`. البيانات المتأخرة تُطلب بـ `reqMarketDataType(3)` ثم `4` عند الحاجة. الرمز الذي بلا صلاحية يُطبع `NO_PERMISSION` ولا يوقف البقية. لم يُختبر هذا الأمر على جلسة IBKR حية من هنا؛ الاختبارات تحاكي الردود.
 

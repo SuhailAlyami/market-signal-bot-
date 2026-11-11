@@ -1,15 +1,22 @@
 import tempfile
 import unittest
+import unittest.mock
 from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from archive_1m import (
     HistoryOutcome,
+    IBKR_SPECS,
+    Pacer,
     append_live,
+    backoff_seconds,
+    closed_session_days,
     collect_ibkr,
     day_ready,
+    is_pacing_error,
     is_permission_error,
+    run_backfill,
     store_days,
 )
 
@@ -98,6 +105,86 @@ class ArchiveTests(unittest.TestCase):
         self.assertTrue(is_permission_error(162, "No market data permissions"))
         self.assertFalse(is_permission_error(162, "HMDS query returned no data"))
         self.assertFalse(is_permission_error(2104, "market data farm connected"))
+        self.assertTrue(is_pacing_error(162, "Historical data request pacing violation"))
+        self.assertTrue(is_pacing_error(366, "No historical data query found"))
+        self.assertFalse(is_pacing_error(162, "HMDS query returned no data"))
+        self.assertEqual(backoff_seconds(1), 15)
+        self.assertEqual(backoff_seconds(3), 60)
+
+    def test_pacer_caps_sixty_requests_and_identical_repeats(self):
+        pacer = Pacer()
+        for i in range(60):
+            self.assertEqual(pacer.seconds_until_allowed(f"k{i}", float(i)), 0)
+            pacer.mark(f"k{i}", float(i))
+        wait = pacer.seconds_until_allowed("new", 60.0)
+        self.assertGreater(wait, 500)
+        pacer.mark("same", 1000.0)
+        self.assertGreaterEqual(pacer.seconds_until_allowed("same", 1005.0), 10)
+        self.assertEqual(pacer.seconds_until_allowed("other", 1005.0), 0)
+
+    def test_backfill_skips_saved_days_paces_and_stops_on_permission(self):
+        now = datetime(2026, 11, 13, 2, 0, tzinfo=timezone.utc)
+        days = closed_session_days(now, 12, use_rth=1)
+        self.assertTrue(days)
+        self.assertTrue(all(day.weekday() < 5 for day in days))
+        self.assertEqual(days[0], datetime(2026, 11, 12).date())
+        saved = days[0]
+
+        class Clock:
+            def __init__(self):
+                self.now = 0.0
+                self.sleeps = []
+
+            def __call__(self):
+                return self.now
+
+            def sleep(self, seconds):
+                self.sleeps.append(seconds)
+                self.now += float(seconds)
+
+        class Fake:
+            def __init__(self):
+                self.kind = 3
+                self.calls = []
+                self.paced = True
+
+            def set_market_data_type(self, kind):
+                self.kind = kind
+
+            def request_day(self, spec, day, use_rth, what):
+                self.calls.append((spec["folder"], day, use_rth, what, self.kind))
+                out = HistoryOutcome()
+                if spec["folder"] == "VIX":
+                    out.errors = [{"code": 354, "message": "Requested market data is not subscribed"}]
+                    return out
+                if spec["folder"] == "VIX1D":
+                    out.errors = [{"code": 200, "message": "No security definition has been found"}]
+                    return out
+                if spec["folder"] == "SPY" and self.paced:
+                    self.paced = False
+                    out.errors = [{"code": 162, "message": "Historical data request pacing violation"}]
+                    return out
+                stamp = datetime(day.year, day.month, day.day, 15, 0, tzinfo=timezone.utc)
+                out.bars = [_bar(stamp.isoformat(), 100.0)]
+                return out
+
+        fake = Fake()
+        clock = Clock()
+        specs = tuple(spec for spec in IBKR_SPECS if spec["folder"] in {"SPY", "VIX", "VIX1D"})
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            stamp = datetime(saved.year, saved.month, saved.day, 15, 0, tzinfo=timezone.utc)
+            store_days(root / "ibkr" / "SPY", [_bar(stamp.isoformat())], now)
+            with unittest.mock.patch("archive_1m.IBKR_SPECS", specs):
+                report = run_backfill(fake, root, now, backfill_days=12, use_rth=1, clock=clock, max_attempts=3)
+            self.assertTrue((root / "ibkr" / "SPY" / f"{saved.isoformat()}.csv.gz").exists())
+        self.assertTrue(any(pause >= 15 for pause in clock.sleeps))
+        self.assertNotIn(saved, [call[1] for call in fake.calls if call[0] == "SPY"])
+        self.assertTrue(all(call[2] == 1 for call in fake.calls))
+        self.assertLessEqual(sum(call[0] == "VIX" for call in fake.calls), 4)
+        self.assertEqual(sum(call[0] == "VIX1D" for call in fake.calls), 1)
+        self.assertIn("VIX", [item["symbol"] for item in report["permission_missing"]])
+        self.assertTrue(any(item["symbol"] == "SPY" and item["fetched"] >= 1 for item in report["succeeded"]))
 
 
 if __name__ == "__main__":

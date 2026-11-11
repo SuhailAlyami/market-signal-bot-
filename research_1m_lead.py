@@ -112,13 +112,26 @@ def rth_sessions(frame: pd.DataFrame, minimum: int = 300) -> list:
 
 
 def split_sessions(sessions: list) -> dict[str, list]:
-    """Last four sessions are the isolated test, the four before them validation."""
+    """Chronological train, validation, then an untouched tail.
+
+    Short samples (12 to 20 sessions) keep a four-session test. Longer history,
+    including an IBKR backfill, uses the last fifth as the test and the fifth
+    before that as validation.
+    """
     if len(sessions) < 12:
         raise ValueError(f"need at least 12 complete sessions, found {len(sessions)}")
+    if len(sessions) <= 20:
+        return {
+            "train": sessions[:-8],
+            "validation": sessions[-8:-4],
+            "test": sessions[-4:],
+        }
+    n_test = max(8, len(sessions) // 5)
+    n_val = max(8, len(sessions) // 5)
     return {
-        "train": sessions[:-8],
-        "validation": sessions[-8:-4],
-        "test": sessions[-4:],
+        "train": sessions[:-n_val - n_test],
+        "validation": sessions[-n_val - n_test:-n_test],
+        "test": sessions[-n_test:],
     }
 
 
@@ -894,18 +907,29 @@ def load_dir(path: Path) -> dict[str, pd.DataFrame]:
 
 
 def load_archive(path: Path) -> dict[str, pd.DataFrame]:
-    """Load data/archive/<folder>/YYYY-MM-DD.csv.gz into Yahoo-symbol frames.
+    """Load per-day csv.gz files.
 
-    Folder names omit the caret: GSPC is ^GSPC, VIX is ^VIX, VIX1D is ^VIX1D.
+    `data/archive` reads the Yahoo folders. `data/archive/ibkr` reads the
+    backfill (SPX is exposed as ^GSPC so the same study can join VIX).
     """
-    from archive_1m import folders_to_symbols
+    from archive_1m import IBKR_TO_YAHOO, folders_to_symbols
 
+    if (path / "SPX").is_dir() or (path.name == "ibkr" and (path / "SPY").is_dir()):
+        root, mapping = path, IBKR_TO_YAHOO
+    elif (path / "ibkr" / "SPY").is_dir() and not (path / "SPY").is_dir():
+        root, mapping = path / "ibkr", IBKR_TO_YAHOO
+    else:
+        root, mapping = path, folders_to_symbols()
     frames: dict[str, list[pd.DataFrame]] = {}
-    for folder, symbol in folders_to_symbols().items():
-        day_dir = path / folder
+    for folder, symbol in mapping.items():
+        day_dir = root / folder
         if not day_dir.is_dir():
             continue
-        parts = [load_frame(day) for day in sorted(day_dir.glob("*.csv.gz"))]
+        parts = []
+        for day in sorted(day_dir.glob("*.csv.gz")):
+            part = load_frame(day)
+            if len(part):
+                parts.append(part)
         if parts:
             frames[symbol] = pd.concat(parts).sort_index()
             frames[symbol] = frames[symbol][~frames[symbol].index.duplicated(keep="last")]

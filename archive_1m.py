@@ -50,6 +50,7 @@ IBKR_SPECS = (
     {"folder": "QQQ", "symbol": "QQQ", "sec_type": "STK", "exchange": "SMART", "currency": "USD", "primary": "NASDAQ"},
     {"folder": "SPX", "symbol": "SPX", "sec_type": "IND", "exchange": "CBOE", "currency": "USD", "primary": ""},
     {"folder": "VIX", "symbol": "VIX", "sec_type": "IND", "exchange": "CBOE", "currency": "USD", "primary": ""},
+    {"folder": "VIX1D", "symbol": "VIX1D", "sec_type": "IND", "exchange": "CBOE", "currency": "USD", "primary": ""},
 )
 INFO_CODES = {2104, 2106, 2107, 2108, 2119, 2158, 2176}
 PERMISSION_CODES = {354, 10089, 10167, 10197}
@@ -57,6 +58,15 @@ PERMISSION_CODES = {354, 10089, 10167, 10197}
 
 def folders_to_symbols() -> dict[str, str]:
     return {folder: symbol for symbol, folder in YAHOO}
+
+
+IBKR_TO_YAHOO = {
+    "SPY": "SPY",
+    "QQQ": "QQQ",
+    "SPX": "^GSPC",
+    "VIX": "^VIX",
+    "VIX1D": "^VIX1D",
+}
 
 
 def day_ready(day, now: datetime) -> bool:
@@ -67,6 +77,82 @@ def day_ready(day, now: datetime) -> bool:
     if day > local.date():
         return False
     return local.hour * 60 + local.minute >= 20 * 60 + 5
+
+
+def is_pacing_error(code: int, message: str) -> bool:
+    """IBKR pacing replies are 162 with a pacing sentence, and 366 when a query is rejected."""
+    text = (message or "").lower()
+    if "pacing" in text:
+        return True
+    return int(code) == 366
+
+
+def backoff_seconds(attempt: int) -> float:
+    """attempt is 1 for the first retry. 15s, then 30s, then 60s."""
+    return float(min(60, 15 * (2 ** max(0, attempt - 1))))
+
+
+class Pacer:
+    """At most 60 requests in any 10 minutes, and 15 seconds between identical requests."""
+
+    def __init__(self):
+        self.events: list[tuple[float, str]] = []
+
+    def seconds_until_allowed(self, key: str, now: float) -> float:
+        self.events = [(stamp, item) for stamp, item in self.events if now - stamp < 600]
+        wait = 0.0
+        if len(self.events) >= 60:
+            wait = max(wait, 600 - (now - self.events[0][0]) + 0.05)
+        for stamp, item in reversed(self.events):
+            if item == key and now - stamp < 15:
+                wait = max(wait, 15 - (now - stamp))
+                break
+        return wait
+
+    def mark(self, key: str, now: float) -> None:
+        self.events.append((now, key))
+
+
+def closed_session_days(now: datetime, backfill_days: int, use_rth: int) -> list:
+    """Weekdays walking backward from the last finished session, newest first."""
+    local = now.astimezone(NY)
+    last = local.date()
+    close_minute = (16 * 60 + 5) if use_rth else (20 * 60 + 5)
+    if local.hour * 60 + local.minute < close_minute:
+        last = last - timedelta(days=1)
+    oldest = last - timedelta(days=backfill_days)
+    days = []
+    cursor = last
+    while cursor > oldest:
+        if cursor.weekday() < 5:
+            days.append(cursor)
+        cursor -= timedelta(days=1)
+    return days
+
+
+def missing_backfill_days(folder: Path, days: list) -> list:
+    """Skip a day that already has a csv.gz or was recorded as empty."""
+    skipped = set()
+    marker = folder / "skipped-days.txt"
+    if marker.exists():
+        skipped = {line.strip() for line in marker.read_text(encoding="utf-8").splitlines() if line.strip()}
+    pending = []
+    for day in days:
+        if (folder / f"{day.isoformat()}.csv.gz").exists() or day.isoformat() in skipped:
+            continue
+        pending.append(day)
+    return pending
+
+
+def remember_empty_day(folder: Path, day) -> None:
+    folder.mkdir(parents=True, exist_ok=True)
+    marker = folder / "skipped-days.txt"
+    existing = marker.read_text(encoding="utf-8") if marker.exists() else ""
+    token = day.isoformat()
+    if token in existing.splitlines():
+        return
+    with marker.open("a", encoding="utf-8") as handle:
+        handle.write(token + "\n")
 
 
 def is_permission_error(code: int, message: str) -> bool:
@@ -325,6 +411,7 @@ class _IbkrApp:
                 self.kind = None
                 self.errors = []
                 self.buckets = {}
+                self.next_req = 8000
 
             def nextValidId(self, orderId):
                 self.ready.set()
@@ -408,35 +495,49 @@ class _IbkrApp:
         self.app.reqMarketDataType(int(kind))
         self.market_data_type = kind
 
+    def request_day(self, spec: dict, day, use_rth: int, what_to_show: str) -> "HistoryOutcome":
+        """One `1 D` / `1 min` request ending at the session close. formatDate=2 (UTC epoch)."""
+        close_at = "16:00:00" if int(use_rth) == 1 else "20:00:00"
+        end = f"{day.strftime('%Y%m%d')} {close_at} US/Eastern"
+        self.app.next_req += 1
+        req_id = self.app.next_req
+        bucket = {"bars": [], "live": [], "done": threading.Event(), "received_at": None}
+        self.app.buckets[req_id] = bucket
+        before = len(self.app.errors)
+        self.app.reqHistoricalData(
+            req_id, _contract(spec), end, "1 D", "1 min", what_to_show,
+            int(use_rth), 2, False, [],
+        )
+        bucket["done"].wait(30)
+        try:
+            self.app.cancelHistoricalData(req_id)
+        except Exception:
+            pass
+        outcome = HistoryOutcome()
+        received = bucket["received_at"] or datetime.now(timezone.utc)
+        for bar in bucket["bars"]:
+            bar["received_at"] = received
+            bar["timing"] = "historical_batch"
+            outcome.bars.append(bar)
+        outcome.live_bars.extend(bucket["live"])
+        outcome.errors.extend(self.app.errors[before:])
+        return outcome
+
     def history(self, spec: dict, use_rth: int, what_to_show: str, days: int = 5, pause: float = 11.0) -> "HistoryOutcome":
         outcome = HistoryOutcome()
         today = datetime.now(NY).date()
-        req = 5000 + (abs(hash(spec["folder"] + what_to_show)) % 1000)
-        for offset in range(1, days + 1):
+        taken = 0
+        offset = 1
+        while taken < days and offset < days + 10:
             day = today - timedelta(days=offset)
+            offset += 1
             if day.weekday() >= 5:
                 continue
-            end = f"{day.strftime('%Y%m%d')} 20:00:00 US/Eastern"
-            bucket = {"bars": [], "live": [], "done": threading.Event(), "received_at": None}
-            req_id = req + offset
-            self.app.buckets[req_id] = bucket
-            before = len(self.app.errors)
-            self.app.reqHistoricalData(
-                req_id, _contract(spec), end, "1 D", "1 min", what_to_show,
-                int(use_rth), 2, False, [],
-            )
-            bucket["done"].wait(25)
-            try:
-                self.app.cancelHistoricalData(req_id)
-            except Exception:
-                pass
-            received = bucket["received_at"] or datetime.now(timezone.utc)
-            for bar in bucket["bars"]:
-                bar["received_at"] = received
-                bar["timing"] = "historical_batch"
-                outcome.bars.append(bar)
-            outcome.live_bars.extend(bucket["live"])
-            outcome.errors.extend(self.app.errors[before:])
+            taken += 1
+            part = self.request_day(spec, day, use_rth, what_to_show)
+            outcome.bars.extend(part.bars)
+            outcome.live_bars.extend(part.live_bars)
+            outcome.errors.extend(part.errors)
             if pause:
                 time.sleep(pause)
         return outcome
@@ -478,13 +579,172 @@ class LiveIbkrClient:
             raise RuntimeError("ibkr_not_connected")
         return self._session.history(spec, use_rth=use_rth, what_to_show=what_to_show, days=self.days, pause=self.pause)
 
+    def request_day(self, spec: dict, day, use_rth: int, what_to_show: str) -> HistoryOutcome:
+        if self._session is None:
+            raise RuntimeError("ibkr_not_connected")
+        return self._session.request_day(spec, day, use_rth, what_to_show)
+
     def close(self) -> None:
         if self._session is not None:
             self._session.close()
 
 
+def _request_key(folder: str, day, what: str, use_rth: int) -> str:
+    return f"{folder}|{day.isoformat()}|{what}|{use_rth}"
+
+
+def _outcome_errors(outcome) -> list[dict]:
+    return list(getattr(outcome, "errors", []) or [])
+
+
+def run_backfill(client, out_dir: Path, now: datetime, backfill_days: int = 180, use_rth: int = 1,
+                 clock=None, max_attempts: int = 3) -> dict:
+    """One request per missing weekday. `client.request_day` is the only broker call."""
+    if clock is None:
+        clock = _WallClock()
+    out_dir.mkdir(parents=True, exist_ok=True)
+    client.set_market_data_type(3)
+    pacer = Pacer()
+    days = closed_session_days(now, backfill_days, use_rth)
+    report = {
+        "source": "ibkr",
+        "backfill_days": backfill_days,
+        "use_rth": use_rth,
+        "duration": "1 D",
+        "bar_size": "1 min",
+        "paid_subscription": False,
+        "permission_missing": [],
+        "unavailable": [],
+        "succeeded": [],
+        "stored": [],
+    }
+    print(f"IBKR backfill {len(days)} weekdays useRTH={use_rth} duration=1 D", flush=True)
+    for spec in IBKR_SPECS:
+        folder = out_dir / "ibkr" / spec["folder"]
+        pending = missing_backfill_days(folder, days)
+        skipped = len(days) - len(pending)
+        if skipped:
+            print(f"{spec['folder']} skip {skipped} existing days", flush=True)
+        what_choices = ["TRADES"] + (["MIDPOINT"] if spec["sec_type"] == "IND" else [])
+        type_choices = [3, 4]
+        chosen_what = None
+        chosen_type = None
+        stored_days = []
+        for day in pending:
+            if chosen_what is None:
+                found = _first_working_request(client, pacer, clock, spec, day, use_rth, what_choices, type_choices, max_attempts)
+                kind = found[0]
+                if kind == "permission":
+                    report["permission_missing"].append({"symbol": spec["folder"], "errors": getattr(client, "last_errors", [])})
+                    print(f"{spec['folder']} {day.isoformat()} NO_PERMISSION", flush=True)
+                    break
+                if kind == "stop":
+                    report["unavailable"].append({"symbol": spec["folder"], "errors": getattr(client, "last_errors", [])})
+                    print(f"{spec['folder']} {day.isoformat()} unavailable", flush=True)
+                    break
+                _, chosen_what, chosen_type, outcome = found
+                client.set_market_data_type(chosen_type)
+            else:
+                outcome = _paced_request(client, pacer, clock, spec, day, use_rth, chosen_what, max_attempts)
+                errors = _outcome_errors(outcome)
+                if outcome is not None and not outcome.bars and any(
+                    is_permission_error(item.get("code", 0), item.get("message", "")) for item in errors
+                ):
+                    report["permission_missing"].append({"symbol": spec["folder"], "errors": errors})
+                    print(f"{spec['folder']} {day.isoformat()} NO_PERMISSION", flush=True)
+                    break
+            if outcome is None or not outcome.bars:
+                remember_empty_day(folder, day)
+                print(f"{spec['folder']} {day.isoformat()} empty", flush=True)
+                continue
+            stored = store_days(folder, outcome.bars, now)
+            report["stored"].extend(stored["stored"])
+            if stored["stored"]:
+                stored_days.append(day)
+                print(f"{spec['folder']} {day.isoformat()} stored {stored['stored'][0]['rows']}", flush=True)
+            elif stored["unchanged"] or stored["conflicts"]:
+                print(f"{spec['folder']} {day.isoformat()} skip", flush=True)
+            else:
+                print(f"{spec['folder']} {day.isoformat()} pending", flush=True)
+        if stored_days:
+            report["succeeded"].append({
+                "symbol": spec["folder"],
+                "days": len(stored_days) + skipped,
+                "fetched": len(stored_days),
+                "skipped_existing": skipped,
+                "first": min(stored_days).isoformat(),
+                "last": max(stored_days).isoformat(),
+                "what": chosen_what,
+                "market_data_type": chosen_type,
+            })
+        elif skipped and spec["folder"] not in {item["symbol"] for item in report["permission_missing"]}:
+            report["succeeded"].append({
+                "symbol": spec["folder"], "days": skipped, "fetched": 0,
+                "skipped_existing": skipped, "first": None, "last": None,
+            })
+    for item in report["succeeded"]:
+        print(
+            f"SUMMARY {item['symbol']} days={item['days']} fetched={item['fetched']} "
+            f"range={item.get('first')}..{item.get('last')}",
+            flush=True,
+        )
+    if report["permission_missing"]:
+        print("NO_PERMISSION " + ",".join(item["symbol"] for item in report["permission_missing"]), flush=True)
+    return report
+
+
+def _paced_request(client, pacer: Pacer, clock, spec, day, use_rth: int, what: str, max_attempts: int):
+    key = _request_key(spec["folder"], day, what, use_rth)
+    outcome = None
+    for attempt in range(max_attempts):
+        wait = pacer.seconds_until_allowed(key, clock())
+        if wait > 0:
+            clock.sleep(wait)
+        pacer.mark(key, clock())
+        outcome = client.request_day(spec, day, use_rth, what)
+        errors = _outcome_errors(outcome)
+        client.last_errors = errors
+        if any(is_pacing_error(item.get("code", 0), item.get("message", "")) for item in errors) and not outcome.bars:
+            clock.sleep(backoff_seconds(attempt + 1))
+            continue
+        return outcome
+    return outcome
+
+
+def _first_working_request(client, pacer, clock, spec, day, use_rth, what_choices, type_choices, max_attempts):
+    """Return ('ok'|'empty'|'permission'|'stop', what, market_data_type, outcome)."""
+    last_errors: list[dict] = []
+    last_outcome = None
+    saw_permission = False
+    for kind in type_choices:
+        client.set_market_data_type(kind)
+        for what in what_choices:
+            outcome = _paced_request(client, pacer, clock, spec, day, use_rth, what, max_attempts)
+            last_outcome = outcome
+            last_errors = _outcome_errors(outcome)
+            client.last_errors = last_errors
+            if outcome is not None and outcome.bars:
+                return ("ok", what, kind, outcome)
+            if any(int(item.get("code", 0)) == 200 for item in last_errors):
+                return ("stop", what, kind, outcome)
+            if any(is_permission_error(item.get("code", 0), item.get("message", "")) for item in last_errors):
+                saw_permission = True
+                continue
+    if saw_permission and (last_outcome is None or not last_outcome.bars):
+        return ("permission", None, None, last_outcome)
+    return ("empty", what_choices[0], type_choices[0], last_outcome)
+
+
+class _WallClock:
+    def __call__(self) -> float:
+        return time.monotonic()
+
+    def sleep(self, seconds: float) -> None:
+        time.sleep(seconds)
+
+
 def archive_ibkr(out_dir: Path, now: datetime | None = None, host: str = "127.0.0.1", port: int = 4001,
-                 client_id: int = 21011, use_rth: int = 0, days: int = 5, pause: float = 11.0,
+                 client_id: int = 21011, use_rth: int = 1, days: int = 180, pause: float = 11.0,
                  client=None) -> dict:
     now = now or datetime.now(timezone.utc)
     owns_client = client is None
@@ -492,7 +752,10 @@ def archive_ibkr(out_dir: Path, now: datetime | None = None, host: str = "127.0.
         client = LiveIbkrClient(host, port, client_id, days, pause)
         client.connect()
     try:
-        report = collect_ibkr(client, out_dir, now, use_rth=use_rth)
+        if hasattr(client, "request_day"):
+            report = run_backfill(client, out_dir, now, backfill_days=days, use_rth=use_rth)
+        else:
+            report = collect_ibkr(client, out_dir, now, use_rth=use_rth)
     finally:
         if owns_client:
             client.close()
@@ -510,18 +773,21 @@ def main() -> int:
     parser.add_argument("--host", default=os.getenv("IBKR_HOST", "127.0.0.1"))
     parser.add_argument("--port", type=int, default=int(os.getenv("IBKR_PORT", "4001")))
     parser.add_argument("--client-id", type=int, default=int(os.getenv("IBKR_CLIENT_ID", "21011")))
-    parser.add_argument("--use-rth", type=int, choices=(0, 1), default=0,
-                        help="IBKR reqHistoricalData useRTH. 0 keeps outside regular hours when the feed allows it.")
-    parser.add_argument("--days", type=int, default=5, help="Completed sessions to request from IBKR.")
+    parser.add_argument("--use-rth", type=int, choices=(0, 1), default=1,
+                        help="IBKR reqHistoricalData useRTH. 1 is regular hours only. 0 also asks for outside RTH.")
+    parser.add_argument("--backfill-days", type=int, default=180,
+                        help="Calendar days of IBKR 1-minute history to walk back. Existing day files are skipped.")
+    parser.add_argument("--days", type=int, default=None, help="Alias of --backfill-days.")
     args = parser.parse_args()
     out = Path(args.out)
+    backfill_days = args.days if args.days is not None else args.backfill_days
     try:
         if args.source == "yahoo":
             report = archive_yahoo(out)
         else:
             report = archive_ibkr(
                 out, host=args.host, port=args.port, client_id=args.client_id,
-                use_rth=args.use_rth, days=args.days,
+                use_rth=args.use_rth, days=backfill_days,
             )
     except RuntimeError as exc:
         print(json.dumps({"ok": False, "error": str(exc)}, ensure_ascii=False))
