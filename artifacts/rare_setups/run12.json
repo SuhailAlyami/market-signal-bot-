@@ -1,0 +1,4197 @@
+{
+  "preregistered_new_rules": [
+    "rsi2_lt5_above200",
+    "rsi2_lt2_above200",
+    "rsi2_gt95_below200_short",
+    "rsi2_gt98_below200_short",
+    "lower_lows_3",
+    "lower_lows_4",
+    "higher_highs_3_short",
+    "close_bottom10_down",
+    "close_top10_up_short",
+    "ibs_lt_0.1",
+    "ibs_gt_0.9_short",
+    "vix_spike_long",
+    "vix_inversion_long",
+    "gap_reclaim_5m",
+    "tom_hold",
+    "pre_holiday",
+    "fomc_day_long",
+    "opex_week",
+    "down3_week_long",
+    "low52_uptrend",
+    "nr7_break_5m",
+    "inside_break_5m",
+    "double7_long",
+    "consec5_above200",
+    "consec5_vix_lt20",
+    "consec5_vix_gt25",
+    "consec5_above200_vix_lt25",
+    "consec5up_below200_short",
+    "ibs_gt09_below200_short"
+  ],
+  "run11_rules_included": [
+    "breadth_washout",
+    "compression_break_5m",
+    "consec5_long",
+    "consec5_short",
+    "dxy_up_short",
+    "fomc_into_close",
+    "gap_fade",
+    "gap_go",
+    "last_hour_fade",
+    "nfp_gap_fade",
+    "opex_thu_fri",
+    "overnight_all",
+    "overnight_contango",
+    "overnight_tom",
+    "rsi2_long_5",
+    "rsi2_short_95",
+    "rsi2_walkforward_5_or_10",
+    "stretch_long",
+    "stretch_short",
+    "tnx_spike_short",
+    "usdjpy_down_short",
+    "vix_backwardation_short"
+  ],
+  "configs_this_run_new": 29,
+  "configs_family_wise": 51,
+  "split": {
+    "train": "2008-01-01..2017-12-31",
+    "validation": "2018-01-01..2021-12-31",
+    "test": "2022-01-01..2026-11-11"
+  },
+  "cost_round_trip_points": 1.0,
+  "rows": [
+    {
+      "name": "overnight_all",
+      "family": "run11",
+      "test": {
+        "trades": 1220,
+        "trades_per_month": 20.678,
+        "win_rate": 0.5311,
+        "win_rate_ci": [
+          0.5031,
+          0.559
+        ],
+        "avg_win": 18.6562,
+        "avg_loss": -19.7772,
+        "expectancy": 0.6528,
+        "expectancy_ci": [
+          -0.9475,
+          2.0532
+        ],
+        "profit_factor": 1.0705,
+        "max_drawdown": 883.5852,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 251,
+            "total": -647.64,
+            "win_rate": 0.4343
+          },
+          {
+            "year": 2023,
+            "trades": 250,
+            "total": -48.58,
+            "win_rate": 0.484
+          },
+          {
+            "year": 2024,
+            "trades": 252,
+            "total": 773.11,
+            "win_rate": 0.6071
+          },
+          {
+            "year": 2025,
+            "trades": 250,
+            "total": 333.68,
+            "win_rate": 0.584
+          },
+          {
+            "year": 2026,
+            "trades": 217,
+            "total": 385.89,
+            "win_rate": 0.5484
+          }
+        ],
+        "trades_per_year": 244.0
+      },
+      "test_2x": {
+        "expectancy": -0.3472,
+        "expectancy_ci": [
+          -1.9475,
+          1.0532
+        ],
+        "profit_factor": 0.9643
+      },
+      "validation": {
+        "trades": 1008,
+        "win_rate": 0.5625,
+        "expectancy": 0.486,
+        "expectancy_ci": [
+          -0.6793,
+          1.5172
+        ],
+        "profit_factor": 1.0861
+      },
+      "train": {
+        "trades": 2518,
+        "expectancy": -0.8811,
+        "profit_factor": 0.3936
+      },
+      "family_wise": {
+        "reality_p": 0.876,
+        "dsr": 0.02,
+        "survives": false
+      }
+    },
+    {
+      "name": "overnight_contango",
+      "family": "run11",
+      "test": {
+        "trades": 821,
+        "trades_per_month": 13.915,
+        "win_rate": 0.5566,
+        "win_rate_ci": [
+          0.5225,
+          0.5903
+        ],
+        "avg_win": 16.0462,
+        "avg_loss": -17.6932,
+        "expectancy": 1.109,
+        "expectancy_ci": [
+          -0.6415,
+          2.4823
+        ],
+        "profit_factor": 1.1418,
+        "max_drawdown": 407.0718,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 24,
+            "total": -170.97,
+            "win_rate": 0.3333
+          },
+          {
+            "year": 2023,
+            "trades": 207,
+            "total": -84.46,
+            "win_rate": 0.4879
+          },
+          {
+            "year": 2024,
+            "trades": 227,
+            "total": 652.38,
+            "win_rate": 0.6079
+          },
+          {
+            "year": 2025,
+            "trades": 188,
+            "total": 369.79,
+            "win_rate": 0.6011
+          },
+          {
+            "year": 2026,
+            "trades": 175,
+            "total": 143.74,
+            "win_rate": 0.5543
+          }
+        ],
+        "trades_per_year": 164.2
+      },
+      "test_2x": {
+        "expectancy": 0.109,
+        "expectancy_ci": [
+          -1.6415,
+          1.4823
+        ],
+        "profit_factor": 1.0132
+      },
+      "validation": {
+        "trades": 614,
+        "win_rate": 0.5472,
+        "expectancy": -0.1801,
+        "expectancy_ci": [
+          -1.0681,
+          0.6371
+        ],
+        "profit_factor": 0.9551
+      },
+      "train": {
+        "trades": 1588,
+        "expectancy": -0.8007,
+        "profit_factor": 0.431
+      },
+      "family_wise": {
+        "reality_p": 0.808,
+        "dsr": 0.067,
+        "survives": false
+      }
+    },
+    {
+      "name": "overnight_tom",
+      "family": "run11",
+      "test": {
+        "trades": 136,
+        "trades_per_month": 2.305,
+        "win_rate": 0.4853,
+        "win_rate_ci": [
+          0.4029,
+          0.5685
+        ],
+        "avg_win": 17.8203,
+        "avg_loss": -26.8153,
+        "expectancy": -5.1539,
+        "expectancy_ci": [
+          -11.3612,
+          0.8241
+        ],
+        "profit_factor": 0.6266,
+        "max_drawdown": 875.1201,
+        "years_positive": 0.2,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 29,
+            "total": -100.42,
+            "win_rate": 0.5172
+          },
+          {
+            "year": 2023,
+            "trades": 27,
+            "total": -57.48,
+            "win_rate": 0.3704
+          },
+          {
+            "year": 2024,
+            "trades": 28,
+            "total": -282.84,
+            "win_rate": 0.3929
+          },
+          {
+            "year": 2025,
+            "trades": 26,
+            "total": -266.41,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2026,
+            "trades": 26,
+            "total": 6.22,
+            "win_rate": 0.6538
+          }
+        ],
+        "trades_per_year": 27.2
+      },
+      "test_2x": {
+        "expectancy": -6.1539,
+        "expectancy_ci": [
+          -12.3612,
+          -0.1759
+        ],
+        "profit_factor": 0.5702
+      },
+      "validation": {
+        "trades": 112,
+        "win_rate": 0.5982,
+        "expectancy": 0.9769,
+        "expectancy_ci": [
+          -2.387,
+          3.9979
+        ],
+        "profit_factor": 1.1702
+      },
+      "train": {
+        "trades": 279,
+        "expectancy": -0.5426,
+        "profit_factor": 0.5677
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "rsi2_long_5",
+      "family": "run11",
+      "test": {
+        "trades": 60,
+        "trades_per_month": 1.111,
+        "win_rate": 0.65,
+        "win_rate_ci": [
+          0.5236,
+          0.7583
+        ],
+        "avg_win": 55.7013,
+        "avg_loss": -44.8062,
+        "expectancy": 20.5237,
+        "expectancy_ci": [
+          1.0658,
+          45.1238
+        ],
+        "profit_factor": 2.3087,
+        "max_drawdown": 211.7998,
+        "years_positive": 1.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 19,
+            "total": 163.38,
+            "win_rate": 0.5789
+          },
+          {
+            "year": 2023,
+            "trades": 13,
+            "total": 138.98,
+            "win_rate": 0.6923
+          },
+          {
+            "year": 2024,
+            "trades": 11,
+            "total": 82.43,
+            "win_rate": 0.6364
+          },
+          {
+            "year": 2025,
+            "trades": 12,
+            "total": 533.48,
+            "win_rate": 0.5833
+          },
+          {
+            "year": 2026,
+            "trades": 5,
+            "total": 313.15,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 12.0
+      },
+      "test_2x": {
+        "expectancy": 19.5237,
+        "expectancy_ci": [
+          0.0658,
+          44.1238
+        ],
+        "profit_factor": 2.2178
+      },
+      "validation": {
+        "trades": 45,
+        "win_rate": 0.5556,
+        "expectancy": -1.3578,
+        "expectancy_ci": [
+          -15.715,
+          12.1839
+        ],
+        "profit_factor": 0.9287
+      },
+      "train": {
+        "trades": 123,
+        "expectancy": 1.2965,
+        "profit_factor": 1.1869
+      },
+      "family_wise": {
+        "reality_p": 0.55,
+        "dsr": 0.0783,
+        "survives": false
+      }
+    },
+    {
+      "name": "rsi2_short_95",
+      "family": "run11",
+      "test": {
+        "trades": 117,
+        "trades_per_month": 2.053,
+        "win_rate": 0.4872,
+        "win_rate_ci": [
+          0.3985,
+          0.5767
+        ],
+        "avg_win": 20.7083,
+        "avg_loss": -23.9475,
+        "expectancy": -2.1921,
+        "expectancy_ci": [
+          -6.8171,
+          3.5471
+        ],
+        "profit_factor": 0.8215,
+        "max_drawdown": 579.3792,
+        "years_positive": 0.2,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 11,
+            "total": 203.55,
+            "win_rate": 0.7273
+          },
+          {
+            "year": 2023,
+            "trades": 32,
+            "total": -162.78,
+            "win_rate": 0.3438
+          },
+          {
+            "year": 2024,
+            "trades": 30,
+            "total": -83.07,
+            "win_rate": 0.5333
+          },
+          {
+            "year": 2025,
+            "trades": 30,
+            "total": -127.24,
+            "win_rate": 0.5667
+          },
+          {
+            "year": 2026,
+            "trades": 14,
+            "total": -86.94,
+            "win_rate": 0.3571
+          }
+        ],
+        "trades_per_year": 23.4
+      },
+      "test_2x": {
+        "expectancy": -3.1921,
+        "expectancy_ci": [
+          -7.8171,
+          2.5471
+        ],
+        "profit_factor": 0.7508
+      },
+      "validation": {
+        "trades": 99,
+        "win_rate": 0.4949,
+        "expectancy": 1.178,
+        "expectancy_ci": [
+          -2.4778,
+          5.1882
+        ],
+        "profit_factor": 1.2174
+      },
+      "train": {
+        "trades": 222,
+        "expectancy": -0.5237,
+        "profit_factor": 0.8324
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0001,
+        "survives": false
+      }
+    },
+    {
+      "name": "stretch_long",
+      "family": "run11",
+      "test": {
+        "trades": 61,
+        "trades_per_month": 1.034,
+        "win_rate": 0.5574,
+        "win_rate_ci": [
+          0.433,
+          0.6749
+        ],
+        "avg_win": 64.658,
+        "avg_loss": -45.1093,
+        "expectancy": 16.0725,
+        "expectancy_ci": [
+          -3.9489,
+          39.5607
+        ],
+        "profit_factor": 1.805,
+        "max_drawdown": 211.7998,
+        "years_positive": 1.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 27,
+            "total": 127.75,
+            "win_rate": 0.4815
+          },
+          {
+            "year": 2023,
+            "trades": 14,
+            "total": 49.49,
+            "win_rate": 0.6429
+          },
+          {
+            "year": 2024,
+            "trades": 5,
+            "total": 74.7,
+            "win_rate": 0.6
+          },
+          {
+            "year": 2025,
+            "trades": 10,
+            "total": 527.54,
+            "win_rate": 0.6
+          },
+          {
+            "year": 2026,
+            "trades": 5,
+            "total": 200.94,
+            "win_rate": 0.6
+          }
+        ],
+        "trades_per_year": 12.2
+      },
+      "test_2x": {
+        "expectancy": 15.0725,
+        "expectancy_ci": [
+          -4.9489,
+          38.5607
+        ],
+        "profit_factor": 1.7385
+      },
+      "validation": {
+        "trades": 42,
+        "win_rate": 0.5714,
+        "expectancy": 6.8683,
+        "expectancy_ci": [
+          -11.4866,
+          26.0923
+        ],
+        "profit_factor": 1.2987
+      },
+      "train": {
+        "trades": 119,
+        "expectancy": 3.7723,
+        "profit_factor": 1.5144
+      },
+      "family_wise": {
+        "reality_p": 0.752,
+        "dsr": 0.0318,
+        "survives": false
+      }
+    },
+    {
+      "name": "stretch_short",
+      "family": "run11",
+      "test": {
+        "trades": 141,
+        "trades_per_month": 2.611,
+        "win_rate": 0.4539,
+        "win_rate_ci": [
+          0.374,
+          0.5362
+        ],
+        "avg_win": 22.8127,
+        "avg_loss": -23.0622,
+        "expectancy": -2.2396,
+        "expectancy_ci": [
+          -7.3116,
+          3.3211
+        ],
+        "profit_factor": 0.8222,
+        "max_drawdown": 528.7913,
+        "years_positive": 0.4,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 17,
+            "total": 12.72,
+            "win_rate": 0.5294
+          },
+          {
+            "year": 2023,
+            "trades": 42,
+            "total": -239.63,
+            "win_rate": 0.3571
+          },
+          {
+            "year": 2024,
+            "trades": 32,
+            "total": 296.8,
+            "win_rate": 0.5938
+          },
+          {
+            "year": 2025,
+            "trades": 24,
+            "total": -84.85,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2026,
+            "trades": 26,
+            "total": -300.82,
+            "win_rate": 0.3462
+          }
+        ],
+        "trades_per_year": 28.2
+      },
+      "test_2x": {
+        "expectancy": -3.2396,
+        "expectancy_ci": [
+          -8.3116,
+          2.3211
+        ],
+        "profit_factor": 0.7535
+      },
+      "validation": {
+        "trades": 152,
+        "win_rate": 0.4737,
+        "expectancy": -0.4566,
+        "expectancy_ci": [
+          -3.3192,
+          3.0706
+        ],
+        "profit_factor": 0.9323
+      },
+      "train": {
+        "trades": 294,
+        "expectancy": -0.8962,
+        "profit_factor": 0.7259
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0001,
+        "survives": false
+      }
+    },
+    {
+      "name": "gap_fade",
+      "family": "run11",
+      "test": {
+        "trades": 213,
+        "trades_per_month": 3.61,
+        "win_rate": 0.4178,
+        "win_rate_ci": [
+          0.3536,
+          0.485
+        ],
+        "avg_win": 41.5634,
+        "avg_loss": -46.6394,
+        "expectancy": -9.7847,
+        "expectancy_ci": [
+          -18.4499,
+          -2.0366
+        ],
+        "profit_factor": 0.6396,
+        "max_drawdown": 2180.2117,
+        "years_positive": 0.2,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 71,
+            "total": -1136.31,
+            "win_rate": 0.4085
+          },
+          {
+            "year": 2023,
+            "trades": 25,
+            "total": -73.03,
+            "win_rate": 0.44
+          },
+          {
+            "year": 2024,
+            "trades": 32,
+            "total": -355.73,
+            "win_rate": 0.2812
+          },
+          {
+            "year": 2025,
+            "trades": 50,
+            "total": 63.1,
+            "win_rate": 0.54
+          },
+          {
+            "year": 2026,
+            "trades": 35,
+            "total": -582.18,
+            "win_rate": 0.3714
+          }
+        ],
+        "trades_per_year": 42.6
+      },
+      "test_2x": {
+        "expectancy": -10.7847,
+        "expectancy_ci": [
+          -19.4499,
+          -3.0366
+        ],
+        "profit_factor": 0.6112
+      },
+      "validation": {
+        "trades": 163,
+        "win_rate": 0.3067,
+        "expectancy": -17.5587,
+        "expectancy_ci": [
+          -24.663,
+          -11.0608
+        ],
+        "profit_factor": 0.3243
+      },
+      "train": {
+        "trades": 32,
+        "expectancy": -18.8337,
+        "profit_factor": 0.1337
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "gap_go",
+      "family": "run11",
+      "test": {
+        "trades": 74,
+        "trades_per_month": 1.762,
+        "win_rate": 0.5405,
+        "win_rate_ci": [
+          0.4278,
+          0.6493
+        ],
+        "avg_win": 21.9385,
+        "avg_loss": -35.1847,
+        "expectancy": -4.3073,
+        "expectancy_ci": [
+          -13.0478,
+          2.9897
+        ],
+        "profit_factor": 0.7336,
+        "max_drawdown": 418.9697,
+        "years_positive": 0.25,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2023,
+            "trades": 21,
+            "total": -69.38,
+            "win_rate": 0.5238
+          },
+          {
+            "year": 2024,
+            "trades": 21,
+            "total": 58.96,
+            "win_rate": 0.5714
+          },
+          {
+            "year": 2025,
+            "trades": 18,
+            "total": -289.29,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2026,
+            "trades": 14,
+            "total": -19.03,
+            "win_rate": 0.5714
+          }
+        ],
+        "trades_per_year": 14.8
+      },
+      "test_2x": {
+        "expectancy": -5.3073,
+        "expectancy_ci": [
+          -14.0478,
+          1.9897
+        ],
+        "profit_factor": 0.681
+      },
+      "validation": {
+        "trades": 53,
+        "win_rate": 0.6038,
+        "expectancy": 3.0483,
+        "expectancy_ci": [
+          -0.9094,
+          7.5208
+        ],
+        "profit_factor": 1.613
+      },
+      "train": {
+        "trades": 7,
+        "expectancy": -0.2186,
+        "profit_factor": 0.9699
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "vix_backwardation_short",
+      "family": "run11",
+      "test": {
+        "trades": 1,
+        "trades_per_month": 1.0,
+        "win_rate": 0.0,
+        "win_rate_ci": [
+          0.0,
+          0.7935
+        ],
+        "avg_win": null,
+        "avg_loss": -36.54,
+        "expectancy": -36.54,
+        "expectancy_ci": null,
+        "profit_factor": null,
+        "max_drawdown": 0.0,
+        "years_positive": 0.0,
+        "years_active": 1,
+        "years": [
+          {
+            "year": 2025,
+            "trades": 1,
+            "total": -36.54,
+            "win_rate": 0.0
+          }
+        ],
+        "trades_per_year": 0.2
+      },
+      "test_2x": {
+        "expectancy": -37.54,
+        "expectancy_ci": null,
+        "profit_factor": null
+      },
+      "validation": {
+        "trades": 2,
+        "win_rate": 0.0,
+        "expectancy": -74.285,
+        "expectancy_ci": [
+          -129.78,
+          -18.79
+        ],
+        "profit_factor": null
+      },
+      "train": {
+        "trades": 5,
+        "expectancy": 19.83,
+        "profit_factor": 9.7899
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "usdjpy_down_short",
+      "family": "run11",
+      "test": {
+        "trades": 69,
+        "trades_per_month": 1.255,
+        "win_rate": 0.4493,
+        "win_rate_ci": [
+          0.3377,
+          0.5662
+        ],
+        "avg_win": 44.842,
+        "avg_loss": -33.3616,
+        "expectancy": 1.7733,
+        "expectancy_ci": [
+          -11.6103,
+          13.9204
+        ],
+        "profit_factor": 1.0965,
+        "max_drawdown": 280.4602,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 18,
+            "total": 75.48,
+            "win_rate": 0.6111
+          },
+          {
+            "year": 2023,
+            "trades": 17,
+            "total": -121.03,
+            "win_rate": 0.2353
+          },
+          {
+            "year": 2024,
+            "trades": 14,
+            "total": 40.49,
+            "win_rate": 0.4286
+          },
+          {
+            "year": 2025,
+            "trades": 10,
+            "total": 165.04,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2026,
+            "trades": 10,
+            "total": -37.62,
+            "win_rate": 0.5
+          }
+        ],
+        "trades_per_year": 13.8
+      },
+      "test_2x": {
+        "expectancy": 0.7733,
+        "expectancy_ci": [
+          -12.6103,
+          12.9204
+        ],
+        "profit_factor": 1.0409
+      },
+      "validation": {
+        "trades": 17,
+        "win_rate": 0.5294,
+        "expectancy": 13.1676,
+        "expectancy_ci": [
+          -13.9399,
+          37.4579
+        ],
+        "profit_factor": 1.7917
+      },
+      "train": {
+        "trades": 152,
+        "expectancy": -4.5826,
+        "profit_factor": 0.5584
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0039,
+        "survives": false
+      }
+    },
+    {
+      "name": "dxy_up_short",
+      "family": "run11",
+      "test": {
+        "trades": 43,
+        "trades_per_month": 1.024,
+        "win_rate": 0.4884,
+        "win_rate_ci": [
+          0.3462,
+          0.6325
+        ],
+        "avg_win": 37.4871,
+        "avg_loss": -44.7141,
+        "expectancy": -4.5694,
+        "expectancy_ci": [
+          -21.5122,
+          10.2044
+        ],
+        "profit_factor": 0.8003,
+        "max_drawdown": 645.3518,
+        "years_positive": 0.5,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 24,
+            "total": 47.2,
+            "win_rate": 0.5417
+          },
+          {
+            "year": 2023,
+            "trades": 5,
+            "total": -111.41,
+            "win_rate": 0.2
+          },
+          {
+            "year": 2024,
+            "trades": 6,
+            "total": 22.19,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 8,
+            "total": -154.46,
+            "win_rate": 0.5
+          }
+        ],
+        "trades_per_year": 8.6
+      },
+      "test_2x": {
+        "expectancy": -5.5694,
+        "expectancy_ci": [
+          -22.5122,
+          9.2044
+        ],
+        "profit_factor": 0.7619
+      },
+      "validation": {
+        "trades": 17,
+        "win_rate": 0.5294,
+        "expectancy": 12.3741,
+        "expectancy_ci": [
+          -15.8035,
+          42.2906
+        ],
+        "profit_factor": 1.7662
+      },
+      "train": {
+        "trades": 160,
+        "expectancy": 0.0212,
+        "profit_factor": 1.0029
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0002,
+        "survives": false
+      }
+    },
+    {
+      "name": "tnx_spike_short",
+      "family": "run11",
+      "test": {
+        "trades": 80,
+        "trades_per_month": 1.356,
+        "win_rate": 0.5125,
+        "win_rate_ci": [
+          0.4049,
+          0.6189
+        ],
+        "avg_win": 37.5595,
+        "avg_loss": -41.2587,
+        "expectancy": -0.8644,
+        "expectancy_ci": [
+          -17.4304,
+          13.1356
+        ],
+        "profit_factor": 0.957,
+        "max_drawdown": 505.1997,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 30,
+            "total": 121.2,
+            "win_rate": 0.6
+          },
+          {
+            "year": 2023,
+            "trades": 23,
+            "total": 97.62,
+            "win_rate": 0.6087
+          },
+          {
+            "year": 2024,
+            "trades": 17,
+            "total": 7.43,
+            "win_rate": 0.3529
+          },
+          {
+            "year": 2025,
+            "trades": 5,
+            "total": -202.72,
+            "win_rate": 0.4
+          },
+          {
+            "year": 2026,
+            "trades": 5,
+            "total": -92.68,
+            "win_rate": 0.2
+          }
+        ],
+        "trades_per_year": 16.0
+      },
+      "test_2x": {
+        "expectancy": -1.8644,
+        "expectancy_ci": [
+          -18.4304,
+          12.1356
+        ],
+        "profit_factor": 0.9095
+      },
+      "validation": {
+        "trades": 15,
+        "win_rate": 0.5333,
+        "expectancy": 15.9967,
+        "expectancy_ci": [
+          -2.0001,
+          36.4248
+        ],
+        "profit_factor": 3.9708
+      },
+      "train": {
+        "trades": 112,
+        "expectancy": 3.2764,
+        "profit_factor": 1.6383
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0011,
+        "survives": false
+      }
+    },
+    {
+      "name": "nfp_gap_fade",
+      "family": "run11",
+      "test": {
+        "trades": 27,
+        "trades_per_month": 0.482,
+        "win_rate": 0.2963,
+        "win_rate_ci": [
+          0.1585,
+          0.4848
+        ],
+        "avg_win": 35.3162,
+        "avg_loss": -47.4684,
+        "expectancy": -22.9396,
+        "expectancy_ci": [
+          -44.8412,
+          -1.2865
+        ],
+        "profit_factor": 0.3133,
+        "max_drawdown": 669.4998,
+        "years_positive": 0.2,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 8,
+            "total": 5.49,
+            "win_rate": 0.375
+          },
+          {
+            "year": 2023,
+            "trades": 7,
+            "total": -130.88,
+            "win_rate": 0.2857
+          },
+          {
+            "year": 2024,
+            "trades": 3,
+            "total": -51.67,
+            "win_rate": 0.0
+          },
+          {
+            "year": 2025,
+            "trades": 5,
+            "total": -278.84,
+            "win_rate": 0.2
+          },
+          {
+            "year": 2026,
+            "trades": 4,
+            "total": -163.47,
+            "win_rate": 0.5
+          }
+        ],
+        "trades_per_year": 5.4
+      },
+      "test_2x": {
+        "expectancy": -23.9396,
+        "expectancy_ci": [
+          -45.8412,
+          -2.2865
+        ],
+        "profit_factor": 0.2981
+      },
+      "validation": {
+        "trades": 17,
+        "win_rate": 0.2941,
+        "expectancy": -17.7011,
+        "expectancy_ci": [
+          -30.0333,
+          -6.4002
+        ],
+        "profit_factor": 0.1782
+      },
+      "train": {
+        "trades": 0,
+        "expectancy": null,
+        "profit_factor": null
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "opex_thu_fri",
+      "family": "run11",
+      "test": {
+        "trades": 55,
+        "trades_per_month": 0.948,
+        "win_rate": 0.4545,
+        "win_rate_ci": [
+          0.3303,
+          0.5848
+        ],
+        "avg_win": 37.4372,
+        "avg_loss": -39.7684,
+        "expectancy": -4.6749,
+        "expectancy_ci": [
+          -15.9643,
+          8.6034
+        ],
+        "profit_factor": 0.7845,
+        "max_drawdown": 337.8809,
+        "years_positive": 0.2,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 11,
+            "total": -15.23,
+            "win_rate": 0.4545
+          },
+          {
+            "year": 2023,
+            "trades": 12,
+            "total": -114.17,
+            "win_rate": 0.3333
+          },
+          {
+            "year": 2024,
+            "trades": 12,
+            "total": -88.18,
+            "win_rate": 0.4167
+          },
+          {
+            "year": 2025,
+            "trades": 11,
+            "total": 149.02,
+            "win_rate": 0.6364
+          },
+          {
+            "year": 2026,
+            "trades": 9,
+            "total": -188.56,
+            "win_rate": 0.4444
+          }
+        ],
+        "trades_per_year": 11.0
+      },
+      "test_2x": {
+        "expectancy": -5.6749,
+        "expectancy_ci": [
+          -16.9643,
+          7.6034
+        ],
+        "profit_factor": 0.7449
+      },
+      "validation": {
+        "trades": 47,
+        "win_rate": 0.4043,
+        "expectancy": -5.5344,
+        "expectancy_ci": [
+          -14.2587,
+          1.6391
+        ],
+        "profit_factor": 0.5922
+      },
+      "train": {
+        "trades": 118,
+        "expectancy": -0.5269,
+        "profit_factor": 0.8971
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0001,
+        "survives": false
+      }
+    },
+    {
+      "name": "fomc_into_close",
+      "family": "run11",
+      "test": {
+        "trades": 39,
+        "trades_per_month": 0.672,
+        "win_rate": 0.4103,
+        "win_rate_ci": [
+          0.2708,
+          0.5658
+        ],
+        "avg_win": 55.5687,
+        "avg_loss": -44.4504,
+        "expectancy": -3.4169,
+        "expectancy_ci": [
+          -23.7264,
+          18.0436
+        ],
+        "profit_factor": 0.8697,
+        "max_drawdown": 519.29,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 8,
+            "total": 175.91,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 8,
+            "total": 8.45,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2024,
+            "trades": 8,
+            "total": -77.65,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 8,
+            "total": 78.26,
+            "win_rate": 0.375
+          },
+          {
+            "year": 2026,
+            "trades": 7,
+            "total": -318.23,
+            "win_rate": 0.1429
+          }
+        ],
+        "trades_per_year": 7.8
+      },
+      "test_2x": {
+        "expectancy": -4.4169,
+        "expectancy_ci": [
+          -24.7264,
+          17.0436
+        ],
+        "profit_factor": 0.8352
+      },
+      "validation": {
+        "trades": 32,
+        "win_rate": 0.4375,
+        "expectancy": -1.9619,
+        "expectancy_ci": [
+          -16.1748,
+          11.1863
+        ],
+        "profit_factor": 0.8659
+      },
+      "train": {
+        "trades": 24,
+        "expectancy": 1.3888,
+        "profit_factor": 1.2823
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0005,
+        "survives": false
+      }
+    },
+    {
+      "name": "consec5_long",
+      "family": "run11",
+      "test": {
+        "trades": 14,
+        "trades_per_month": 0.259,
+        "win_rate": 0.7857,
+        "win_rate_ci": [
+          0.5241,
+          0.9243
+        ],
+        "avg_win": 50.3473,
+        "avg_loss": -31.3866,
+        "expectancy": 32.8329,
+        "expectancy_ci": [
+          7.573,
+          56.1981
+        ],
+        "profit_factor": 5.8817,
+        "max_drawdown": 40.1499,
+        "years_positive": 0.8,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 8,
+            "total": 286.44,
+            "win_rate": 0.75
+          },
+          {
+            "year": 2023,
+            "trades": 1,
+            "total": 10.89,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2024,
+            "trades": 2,
+            "total": -16.94,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 2,
+            "total": 131.72,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2026,
+            "trades": 1,
+            "total": 47.55,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 2.8
+      },
+      "test_2x": {
+        "expectancy": 31.8329,
+        "expectancy_ci": [
+          6.573,
+          55.1981
+        ],
+        "profit_factor": 5.5869
+      },
+      "validation": {
+        "trades": 13,
+        "win_rate": 0.5385,
+        "expectancy": 0.8731,
+        "expectancy_ci": [
+          -26.0124,
+          32.8846
+        ],
+        "profit_factor": 1.0401
+      },
+      "train": {
+        "trades": 39,
+        "expectancy": 5.78,
+        "profit_factor": 1.7811
+      },
+      "family_wise": {
+        "reality_p": 0.99,
+        "dsr": 0.1064,
+        "survives": false
+      }
+    },
+    {
+      "name": "consec5_short",
+      "family": "run11",
+      "test": {
+        "trades": 50,
+        "trades_per_month": 1.351,
+        "win_rate": 0.5,
+        "win_rate_ci": [
+          0.3664,
+          0.6336
+        ],
+        "avg_win": 17.4856,
+        "avg_loss": -27.5268,
+        "expectancy": -5.0206,
+        "expectancy_ci": [
+          -12.6973,
+          2.2927
+        ],
+        "profit_factor": 0.6352,
+        "max_drawdown": 305.1611,
+        "years_positive": 0.25,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2023,
+            "trades": 10,
+            "total": 2.78,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2024,
+            "trades": 16,
+            "total": -76.62,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 14,
+            "total": -127.04,
+            "win_rate": 0.5714
+          },
+          {
+            "year": 2026,
+            "trades": 10,
+            "total": -50.15,
+            "win_rate": 0.4
+          }
+        ],
+        "trades_per_year": 10.0
+      },
+      "test_2x": {
+        "expectancy": -6.0206,
+        "expectancy_ci": [
+          -13.6973,
+          1.2927
+        ],
+        "profit_factor": 0.5784
+      },
+      "validation": {
+        "trades": 39,
+        "win_rate": 0.4872,
+        "expectancy": 0.3326,
+        "expectancy_ci": [
+          -4.0596,
+          4.4976
+        ],
+        "profit_factor": 1.0626
+      },
+      "train": {
+        "trades": 75,
+        "expectancy": -0.08,
+        "profit_factor": 0.9759
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "breadth_washout",
+      "family": "run11",
+      "test": {
+        "trades": 260,
+        "trades_per_month": 4.483,
+        "win_rate": 0.4846,
+        "win_rate_ci": [
+          0.4245,
+          0.5451
+        ],
+        "avg_win": 46.3498,
+        "avg_loss": -43.8965,
+        "expectancy": -0.1618,
+        "expectancy_ci": [
+          -8.6874,
+          7.5838
+        ],
+        "profit_factor": 0.9928,
+        "max_drawdown": 586.3384,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 96,
+            "total": -326.89,
+            "win_rate": 0.4375
+          },
+          {
+            "year": 2023,
+            "trades": 61,
+            "total": 167.66,
+            "win_rate": 0.5574
+          },
+          {
+            "year": 2024,
+            "trades": 24,
+            "total": 91.31,
+            "win_rate": 0.5417
+          },
+          {
+            "year": 2025,
+            "trades": 46,
+            "total": 156.09,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2026,
+            "trades": 33,
+            "total": -130.23,
+            "win_rate": 0.4242
+          }
+        ],
+        "trades_per_year": 52.0
+      },
+      "test_2x": {
+        "expectancy": -1.1618,
+        "expectancy_ci": [
+          -9.6874,
+          6.5838
+        ],
+        "profit_factor": 0.9498
+      },
+      "validation": {
+        "trades": 193,
+        "win_rate": 0.544,
+        "expectancy": 0.5492,
+        "expectancy_ci": [
+          -6.5547,
+          7.1669
+        ],
+        "profit_factor": 1.0312
+      },
+      "train": {
+        "trades": 639,
+        "expectancy": 0.2887,
+        "profit_factor": 1.038
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0017,
+        "survives": false
+      }
+    },
+    {
+      "name": "rsi2_walkforward_5_or_10",
+      "family": "run11",
+      "test": {
+        "trades": 124,
+        "trades_per_month": 2.296,
+        "win_rate": 0.5403,
+        "win_rate_ci": [
+          0.4527,
+          0.6255
+        ],
+        "avg_win": 49.0651,
+        "avg_loss": -40.3569,
+        "expectancy": 7.9598,
+        "expectancy_ci": [
+          -3.8243,
+          19.6013
+        ],
+        "profit_factor": 1.4291,
+        "max_drawdown": 380.2803,
+        "years_positive": 1.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 45,
+            "total": 109.5,
+            "win_rate": 0.4889
+          },
+          {
+            "year": 2023,
+            "trades": 26,
+            "total": 45.12,
+            "win_rate": 0.5769
+          },
+          {
+            "year": 2024,
+            "trades": 21,
+            "total": 100.64,
+            "win_rate": 0.5714
+          },
+          {
+            "year": 2025,
+            "trades": 27,
+            "total": 418.61,
+            "win_rate": 0.4815
+          },
+          {
+            "year": 2026,
+            "trades": 5,
+            "total": 313.15,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 24.8
+      },
+      "test_2x": {
+        "expectancy": 6.9598,
+        "expectancy_ci": [
+          -4.8243,
+          18.6013
+        ],
+        "profit_factor": 1.3661
+      },
+      "validation": {
+        "trades": 83,
+        "win_rate": 0.5663,
+        "expectancy": 3.8063,
+        "expectancy_ci": [
+          -5.6368,
+          13.1489
+        ],
+        "profit_factor": 1.2601
+      },
+      "train": {
+        "trades": 217,
+        "expectancy": 0.8591,
+        "profit_factor": 1.1469
+      },
+      "family_wise": {
+        "reality_p": 0.746,
+        "dsr": 0.0327,
+        "survives": false
+      }
+    },
+    {
+      "name": "compression_break_5m",
+      "family": "run11",
+      "test": {
+        "trades": 0,
+        "trades_per_month": 0,
+        "win_rate": null,
+        "win_rate_ci": null,
+        "avg_win": null,
+        "avg_loss": null,
+        "expectancy": null,
+        "expectancy_ci": null,
+        "profit_factor": null,
+        "max_drawdown": null,
+        "years_positive": null,
+        "years": [],
+        "trades_per_year": 0
+      },
+      "test_2x": {
+        "expectancy": null,
+        "expectancy_ci": null,
+        "profit_factor": null
+      },
+      "validation": {
+        "trades": 0,
+        "win_rate": null,
+        "expectancy": null,
+        "expectancy_ci": null,
+        "profit_factor": null
+      },
+      "train": {
+        "trades": 3,
+        "expectancy": -0.5727,
+        "profit_factor": 0.0012
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "last_hour_fade",
+      "family": "run11",
+      "test": {
+        "trades": 85,
+        "trades_per_month": 1.441,
+        "win_rate": 0.5176,
+        "win_rate_ci": [
+          0.413,
+          0.6208
+        ],
+        "avg_win": 11.2209,
+        "avg_loss": -15.5456,
+        "expectancy": -1.69,
+        "expectancy_ci": [
+          -5.7995,
+          1.7706
+        ],
+        "profit_factor": 0.7746,
+        "max_drawdown": 284.02,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 43,
+            "total": -169.6,
+            "win_rate": 0.4419
+          },
+          {
+            "year": 2023,
+            "trades": 18,
+            "total": -16.71,
+            "win_rate": 0.5556
+          },
+          {
+            "year": 2024,
+            "trades": 4,
+            "total": 4.35,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 11,
+            "total": 5.0,
+            "win_rate": 0.6364
+          },
+          {
+            "year": 2026,
+            "trades": 9,
+            "total": 33.32,
+            "win_rate": 0.6667
+          }
+        ],
+        "trades_per_year": 17.0
+      },
+      "test_2x": {
+        "expectancy": -2.69,
+        "expectancy_ci": [
+          -6.7995,
+          0.7706
+        ],
+        "profit_factor": 0.6641
+      },
+      "validation": {
+        "trades": 45,
+        "win_rate": 0.5556,
+        "expectancy": 1.7629,
+        "expectancy_ci": [
+          -4.1115,
+          7.8186
+        ],
+        "profit_factor": 1.3077
+      },
+      "train": {
+        "trades": 34,
+        "expectancy": -2.1188,
+        "profit_factor": 0.3421
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "rsi2_lt5_above200",
+      "family": "run12",
+      "test": {
+        "trades": 37,
+        "trades_per_month": 0.685,
+        "win_rate": 0.6216,
+        "win_rate_ci": [
+          0.461,
+          0.7594
+        ],
+        "avg_win": 44.9809,
+        "avg_loss": -35.8193,
+        "expectancy": 14.4078,
+        "expectancy_ci": [
+          -2.3767,
+          31.4561
+        ],
+        "profit_factor": 2.0631,
+        "max_drawdown": 191.9102,
+        "years_positive": 0.8,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 4,
+            "total": -83.18,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 9,
+            "total": 78.53,
+            "win_rate": 0.5556
+          },
+          {
+            "year": 2024,
+            "trades": 11,
+            "total": 82.43,
+            "win_rate": 0.6364
+          },
+          {
+            "year": 2025,
+            "trades": 9,
+            "total": 147.2,
+            "win_rate": 0.5556
+          },
+          {
+            "year": 2026,
+            "trades": 4,
+            "total": 308.11,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 7.4
+      },
+      "test_2x": {
+        "expectancy": 13.4078,
+        "expectancy_ci": [
+          -3.3767,
+          30.4561
+        ],
+        "profit_factor": 1.9624
+      },
+      "validation": {
+        "trades": 33,
+        "win_rate": 0.5758,
+        "expectancy": -6.0848,
+        "expectancy_ci": [
+          -22.3106,
+          8.3465
+        ],
+        "profit_factor": 0.6983
+      },
+      "train": {
+        "trades": 70,
+        "expectancy": 2.8953,
+        "profit_factor": 1.7042
+      },
+      "family_wise": {
+        "reality_p": 0.986,
+        "dsr": 0.0974,
+        "survives": false
+      }
+    },
+    {
+      "name": "rsi2_lt2_above200",
+      "family": "run12",
+      "test": {
+        "trades": 6,
+        "trades_per_month": 0.136,
+        "win_rate": 0.6667,
+        "win_rate_ci": [
+          0.3,
+          0.9032
+        ],
+        "avg_win": 50.5199,
+        "avg_loss": -48.5601,
+        "expectancy": 17.4932,
+        "expectancy_ci": [
+          -28.2243,
+          63.7509
+        ],
+        "profit_factor": 2.0807,
+        "max_drawdown": 22.6802,
+        "years_positive": 0.75,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 1,
+            "total": -74.44,
+            "win_rate": 0.0
+          },
+          {
+            "year": 2023,
+            "trades": 2,
+            "total": 3.14,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2024,
+            "trades": 1,
+            "total": 22.27,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2025,
+            "trades": 2,
+            "total": 153.99,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 1.2
+      },
+      "test_2x": {
+        "expectancy": 16.4932,
+        "expectancy_ci": [
+          -29.2243,
+          62.7509
+        ],
+        "profit_factor": 1.9984
+      },
+      "validation": {
+        "trades": 14,
+        "win_rate": 0.5,
+        "expectancy": -9.5057,
+        "expectancy_ci": [
+          -36.8155,
+          16.2104
+        ],
+        "profit_factor": 0.66
+      },
+      "train": {
+        "trades": 27,
+        "expectancy": 2.0237,
+        "profit_factor": 1.3979
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0104,
+        "survives": false
+      }
+    },
+    {
+      "name": "rsi2_gt95_below200_short",
+      "family": "run12",
+      "test": {
+        "trades": 14,
+        "trades_per_month": 0.359,
+        "win_rate": 0.5,
+        "win_rate_ci": [
+          0.268,
+          0.732
+        ],
+        "avg_win": 24.3628,
+        "avg_loss": -30.7329,
+        "expectancy": -3.185,
+        "expectancy_ci": [
+          -21.7393,
+          19.4973
+        ],
+        "profit_factor": 0.7927,
+        "max_drawdown": 138.5,
+        "years_positive": 0.3333,
+        "years_active": 3,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 8,
+            "total": 89.97,
+            "win_rate": 0.625
+          },
+          {
+            "year": 2023,
+            "trades": 2,
+            "total": -46.09,
+            "win_rate": 0.0
+          },
+          {
+            "year": 2025,
+            "trades": 4,
+            "total": -88.47,
+            "win_rate": 0.5
+          }
+        ],
+        "trades_per_year": 2.8
+      },
+      "test_2x": {
+        "expectancy": -4.185,
+        "expectancy_ci": [
+          -22.7393,
+          18.4973
+        ],
+        "profit_factor": 0.7372
+      },
+      "validation": {
+        "trades": 3,
+        "win_rate": 0.6667,
+        "expectancy": 5.3534,
+        "expectancy_ci": [
+          -8.3332,
+          23.98
+        ],
+        "profit_factor": 2.5502
+      },
+      "train": {
+        "trades": 22,
+        "expectancy": 4.8905,
+        "profit_factor": 2.9785
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.001,
+        "survives": false
+      }
+    },
+    {
+      "name": "rsi2_gt98_below200_short",
+      "family": "run12",
+      "test": {
+        "trades": 2,
+        "trades_per_month": 2.0,
+        "win_rate": 0.5,
+        "win_rate_ci": [
+          0.0945,
+          0.9055
+        ],
+        "avg_win": 3.9399,
+        "avg_loss": -41.79,
+        "expectancy": -18.925,
+        "expectancy_ci": [
+          -41.79,
+          3.9399
+        ],
+        "profit_factor": 0.0943,
+        "max_drawdown": 0.0,
+        "years_positive": 0.0,
+        "years_active": 1,
+        "years": [
+          {
+            "year": 2025,
+            "trades": 2,
+            "total": -37.85,
+            "win_rate": 0.5
+          }
+        ],
+        "trades_per_year": 0.4
+      },
+      "test_2x": {
+        "expectancy": -19.925,
+        "expectancy_ci": [
+          -42.79,
+          2.9399
+        ],
+        "profit_factor": 0.0687
+      },
+      "validation": {
+        "trades": 2,
+        "win_rate": 1.0,
+        "expectancy": 13.21,
+        "expectancy_ci": [
+          2.4399,
+          23.98
+        ],
+        "profit_factor": null
+      },
+      "train": {
+        "trades": 4,
+        "expectancy": 7.3575,
+        "profit_factor": 53.5478
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "lower_lows_3",
+      "family": "run12",
+      "test": {
+        "trades": 153,
+        "trades_per_month": 2.638,
+        "win_rate": 0.5621,
+        "win_rate_ci": [
+          0.4829,
+          0.6382
+        ],
+        "avg_win": 36.3709,
+        "avg_loss": -34.6218,
+        "expectancy": 5.2826,
+        "expectancy_ci": [
+          -2.2868,
+          12.5728
+        ],
+        "profit_factor": 1.3484,
+        "max_drawdown": 214.3501,
+        "years_positive": 1.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 47,
+            "total": 341.44,
+            "win_rate": 0.5745
+          },
+          {
+            "year": 2023,
+            "trades": 36,
+            "total": 22.13,
+            "win_rate": 0.5278
+          },
+          {
+            "year": 2024,
+            "trades": 22,
+            "total": 99.5,
+            "win_rate": 0.6364
+          },
+          {
+            "year": 2025,
+            "trades": 28,
+            "total": 1.18,
+            "win_rate": 0.4643
+          },
+          {
+            "year": 2026,
+            "trades": 20,
+            "total": 343.98,
+            "win_rate": 0.65
+          }
+        ],
+        "trades_per_year": 30.6
+      },
+      "test_2x": {
+        "expectancy": 4.2826,
+        "expectancy_ci": [
+          -3.2868,
+          11.5728
+        ],
+        "profit_factor": 1.2745
+      },
+      "validation": {
+        "trades": 90,
+        "win_rate": 0.5556,
+        "expectancy": 4.3902,
+        "expectancy_ci": [
+          -5.5552,
+          14.3035
+        ],
+        "profit_factor": 1.2917
+      },
+      "train": {
+        "trades": 231,
+        "expectancy": 0.5858,
+        "profit_factor": 1.081
+      },
+      "family_wise": {
+        "reality_p": 0.864,
+        "dsr": 0.0742,
+        "survives": false
+      }
+    },
+    {
+      "name": "lower_lows_4",
+      "family": "run12",
+      "test": {
+        "trades": 69,
+        "trades_per_month": 1.19,
+        "win_rate": 0.6232,
+        "win_rate_ci": [
+          0.5052,
+          0.7282
+        ],
+        "avg_win": 37.4368,
+        "avg_loss": -29.3127,
+        "expectancy": 12.2848,
+        "expectancy_ci": [
+          2.0267,
+          22.0112
+        ],
+        "profit_factor": 2.1122,
+        "max_drawdown": 140.0601,
+        "years_positive": 1.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 24,
+            "total": 404.33,
+            "win_rate": 0.625
+          },
+          {
+            "year": 2023,
+            "trades": 19,
+            "total": 78.37,
+            "win_rate": 0.5789
+          },
+          {
+            "year": 2024,
+            "trades": 9,
+            "total": 3.25,
+            "win_rate": 0.6667
+          },
+          {
+            "year": 2025,
+            "trades": 11,
+            "total": 229.79,
+            "win_rate": 0.6364
+          },
+          {
+            "year": 2026,
+            "trades": 6,
+            "total": 131.91,
+            "win_rate": 0.6667
+          }
+        ],
+        "trades_per_year": 13.8
+      },
+      "test_2x": {
+        "expectancy": 11.2848,
+        "expectancy_ci": [
+          1.0267,
+          21.0112
+        ],
+        "profit_factor": 1.988
+      },
+      "validation": {
+        "trades": 40,
+        "win_rate": 0.525,
+        "expectancy": 3.305,
+        "expectancy_ci": [
+          -15.8208,
+          19.8235
+        ],
+        "profit_factor": 1.1591
+      },
+      "train": {
+        "trades": 99,
+        "expectancy": 3.8044,
+        "profit_factor": 1.5651
+      },
+      "family_wise": {
+        "reality_p": 0.842,
+        "dsr": 0.3132,
+        "survives": false
+      }
+    },
+    {
+      "name": "higher_highs_3_short",
+      "family": "run12",
+      "test": {
+        "trades": 242,
+        "trades_per_month": 4.246,
+        "win_rate": 0.4917,
+        "win_rate_ci": [
+          0.4294,
+          0.5544
+        ],
+        "avg_win": 27.6053,
+        "avg_loss": -25.3249,
+        "expectancy": 0.7028,
+        "expectancy_ci": [
+          -4.2481,
+          5.3087
+        ],
+        "profit_factor": 1.0546,
+        "max_drawdown": 678.3828,
+        "years_positive": 0.4,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 41,
+            "total": 439.09,
+            "win_rate": 0.5854
+          },
+          {
+            "year": 2023,
+            "trades": 52,
+            "total": -176.44,
+            "win_rate": 0.4231
+          },
+          {
+            "year": 2024,
+            "trades": 48,
+            "total": -21.63,
+            "win_rate": 0.5417
+          },
+          {
+            "year": 2025,
+            "trades": 65,
+            "total": 55.47,
+            "win_rate": 0.4615
+          },
+          {
+            "year": 2026,
+            "trades": 36,
+            "total": -126.42,
+            "win_rate": 0.4722
+          }
+        ],
+        "trades_per_year": 48.4
+      },
+      "test_2x": {
+        "expectancy": -0.2972,
+        "expectancy_ci": [
+          -5.2481,
+          4.3087
+        ],
+        "profit_factor": 0.9778
+      },
+      "validation": {
+        "trades": 201,
+        "win_rate": 0.408,
+        "expectancy": -2.0982,
+        "expectancy_ci": [
+          -4.7145,
+          0.8215
+        ],
+        "profit_factor": 0.7354
+      },
+      "train": {
+        "trades": 425,
+        "expectancy": -1.2984,
+        "profit_factor": 0.7101
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0044,
+        "survives": false
+      }
+    },
+    {
+      "name": "close_bottom10_down",
+      "family": "run12",
+      "test": {
+        "trades": 127,
+        "trades_per_month": 2.153,
+        "win_rate": 0.5827,
+        "win_rate_ci": [
+          0.4957,
+          0.6648
+        ],
+        "avg_win": 34.2556,
+        "avg_loss": -37.3266,
+        "expectancy": 4.3827,
+        "expectancy_ci": [
+          -4.6621,
+          13.58
+        ],
+        "profit_factor": 1.2814,
+        "max_drawdown": 251.3792,
+        "years_positive": 1.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 38,
+            "total": 261.06,
+            "win_rate": 0.5789
+          },
+          {
+            "year": 2023,
+            "trades": 31,
+            "total": 39.64,
+            "win_rate": 0.5484
+          },
+          {
+            "year": 2024,
+            "trades": 23,
+            "total": 111.46,
+            "win_rate": 0.6522
+          },
+          {
+            "year": 2025,
+            "trades": 14,
+            "total": 110.53,
+            "win_rate": 0.6429
+          },
+          {
+            "year": 2026,
+            "trades": 21,
+            "total": 33.91,
+            "win_rate": 0.5238
+          }
+        ],
+        "trades_per_year": 25.4
+      },
+      "test_2x": {
+        "expectancy": 3.3827,
+        "expectancy_ci": [
+          -5.6621,
+          12.58
+        ],
+        "profit_factor": 1.2114
+      },
+      "validation": {
+        "trades": 103,
+        "win_rate": 0.6505,
+        "expectancy": 5.3097,
+        "expectancy_ci": [
+          -2.5327,
+          13.0549
+        ],
+        "profit_factor": 1.4238
+      },
+      "train": {
+        "trades": 299,
+        "expectancy": 1.9945,
+        "profit_factor": 1.3156
+      },
+      "family_wise": {
+        "reality_p": 0.982,
+        "dsr": 0.0311,
+        "survives": false
+      }
+    },
+    {
+      "name": "close_top10_up_short",
+      "family": "run12",
+      "test": {
+        "trades": 191,
+        "trades_per_month": 3.411,
+        "win_rate": 0.4293,
+        "win_rate_ci": [
+          0.3612,
+          0.5002
+        ],
+        "avg_win": 31.6094,
+        "avg_loss": -28.9451,
+        "expectancy": -2.9479,
+        "expectancy_ci": [
+          -9.3904,
+          2.6552
+        ],
+        "profit_factor": 0.8215,
+        "max_drawdown": 833.8191,
+        "years_positive": 0.2,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 49,
+            "total": 250.9,
+            "win_rate": 0.5102
+          },
+          {
+            "year": 2023,
+            "trades": 39,
+            "total": -244.24,
+            "win_rate": 0.4103
+          },
+          {
+            "year": 2024,
+            "trades": 44,
+            "total": -254.41,
+            "win_rate": 0.3864
+          },
+          {
+            "year": 2025,
+            "trades": 40,
+            "total": -4.92,
+            "win_rate": 0.45
+          },
+          {
+            "year": 2026,
+            "trades": 19,
+            "total": -310.38,
+            "win_rate": 0.3158
+          }
+        ],
+        "trades_per_year": 38.2
+      },
+      "test_2x": {
+        "expectancy": -3.9479,
+        "expectancy_ci": [
+          -10.3904,
+          1.6552
+        ],
+        "profit_factor": 0.7692
+      },
+      "validation": {
+        "trades": 184,
+        "win_rate": 0.413,
+        "expectancy": 0.1585,
+        "expectancy_ci": [
+          -3.527,
+          4.1701
+        ],
+        "profit_factor": 1.0176
+      },
+      "train": {
+        "trades": 506,
+        "expectancy": -0.4306,
+        "profit_factor": 0.9152
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0001,
+        "survives": false
+      }
+    },
+    {
+      "name": "ibs_lt_0.1",
+      "family": "run12",
+      "test": {
+        "trades": 134,
+        "trades_per_month": 2.271,
+        "win_rate": 0.5896,
+        "win_rate_ci": [
+          0.5049,
+          0.6692
+        ],
+        "avg_win": 34.0838,
+        "avg_loss": -36.6589,
+        "expectancy": 5.0476,
+        "expectancy_ci": [
+          -3.3309,
+          13.6892
+        ],
+        "profit_factor": 1.3355,
+        "max_drawdown": 251.3792,
+        "years_positive": 1.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 38,
+            "total": 261.06,
+            "win_rate": 0.5789
+          },
+          {
+            "year": 2023,
+            "trades": 32,
+            "total": 49.89,
+            "win_rate": 0.5625
+          },
+          {
+            "year": 2024,
+            "trades": 26,
+            "total": 120.9,
+            "win_rate": 0.6538
+          },
+          {
+            "year": 2025,
+            "trades": 15,
+            "total": 112.55,
+            "win_rate": 0.6667
+          },
+          {
+            "year": 2026,
+            "trades": 23,
+            "total": 131.98,
+            "win_rate": 0.5217
+          }
+        ],
+        "trades_per_year": 26.8
+      },
+      "test_2x": {
+        "expectancy": 4.0476,
+        "expectancy_ci": [
+          -4.3309,
+          12.6892
+        ],
+        "profit_factor": 1.2618
+      },
+      "validation": {
+        "trades": 115,
+        "win_rate": 0.6435,
+        "expectancy": 4.501,
+        "expectancy_ci": [
+          -2.1231,
+          11.4024
+        ],
+        "profit_factor": 1.3689
+      },
+      "train": {
+        "trades": 311,
+        "expectancy": 2.0546,
+        "profit_factor": 1.333
+      },
+      "family_wise": {
+        "reality_p": 0.942,
+        "dsr": 0.0454,
+        "survives": false
+      }
+    },
+    {
+      "name": "ibs_gt_0.9_short",
+      "family": "run12",
+      "test": {
+        "trades": 203,
+        "trades_per_month": 3.625,
+        "win_rate": 0.4187,
+        "win_rate_ci": [
+          0.353,
+          0.4875
+        ],
+        "avg_win": 31.6187,
+        "avg_loss": -30.1135,
+        "expectancy": -4.2651,
+        "expectancy_ci": [
+          -9.7392,
+          1.4745
+        ],
+        "profit_factor": 0.7563,
+        "max_drawdown": 1053.7693,
+        "years_positive": 0.2,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 51,
+            "total": 159.81,
+            "win_rate": 0.4902
+          },
+          {
+            "year": 2023,
+            "trades": 44,
+            "total": -256.32,
+            "win_rate": 0.4318
+          },
+          {
+            "year": 2024,
+            "trades": 45,
+            "total": -297.53,
+            "win_rate": 0.3778
+          },
+          {
+            "year": 2025,
+            "trades": 42,
+            "total": -50.09,
+            "win_rate": 0.4286
+          },
+          {
+            "year": 2026,
+            "trades": 21,
+            "total": -421.68,
+            "win_rate": 0.2857
+          }
+        ],
+        "trades_per_year": 40.6
+      },
+      "test_2x": {
+        "expectancy": -5.2651,
+        "expectancy_ci": [
+          -10.7392,
+          0.4745
+        ],
+        "profit_factor": 0.7091
+      },
+      "validation": {
+        "trades": 195,
+        "win_rate": 0.4103,
+        "expectancy": -0.6146,
+        "expectancy_ci": [
+          -4.5719,
+          3.2041
+        ],
+        "profit_factor": 0.9368
+      },
+      "train": {
+        "trades": 536,
+        "expectancy": -0.3533,
+        "profit_factor": 0.9291
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "vix_spike_long",
+      "family": "run12",
+      "test": {
+        "trades": 55,
+        "trades_per_month": 0.932,
+        "win_rate": 0.6,
+        "win_rate_ci": [
+          0.4681,
+          0.7188
+        ],
+        "avg_win": 66.8233,
+        "avg_loss": -50.7795,
+        "expectancy": 19.7822,
+        "expectancy_ci": [
+          -3.6989,
+          43.0006
+        ],
+        "profit_factor": 1.9739,
+        "max_drawdown": 355.98,
+        "years_positive": 1.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 12,
+            "total": 13.21,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 4,
+            "total": 12.12,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2024,
+            "trades": 16,
+            "total": 104.68,
+            "win_rate": 0.625
+          },
+          {
+            "year": 2025,
+            "trades": 14,
+            "total": 563.34,
+            "win_rate": 0.7143
+          },
+          {
+            "year": 2026,
+            "trades": 9,
+            "total": 394.67,
+            "win_rate": 0.5556
+          }
+        ],
+        "trades_per_year": 11.0
+      },
+      "test_2x": {
+        "expectancy": 18.7822,
+        "expectancy_ci": [
+          -4.6989,
+          42.0006
+        ],
+        "profit_factor": 1.9068
+      },
+      "validation": {
+        "trades": 72,
+        "win_rate": 0.5417,
+        "expectancy": -1.1113,
+        "expectancy_ci": [
+          -14.8459,
+          12.0352
+        ],
+        "profit_factor": 0.953
+      },
+      "train": {
+        "trades": 97,
+        "expectancy": 3.0143,
+        "profit_factor": 1.3213
+      },
+      "family_wise": {
+        "reality_p": 0.668,
+        "dsr": 0.0517,
+        "survives": false
+      }
+    },
+    {
+      "name": "vix_inversion_long",
+      "family": "run12",
+      "test": {
+        "trades": 65,
+        "trades_per_month": 1.102,
+        "win_rate": 0.5077,
+        "win_rate_ci": [
+          0.3892,
+          0.6254
+        ],
+        "avg_win": 76.6133,
+        "avg_loss": -58.5738,
+        "expectancy": 10.0597,
+        "expectancy_ci": [
+          -10.3413,
+          33.3409
+        ],
+        "profit_factor": 1.3489,
+        "max_drawdown": 563.2002,
+        "years_positive": 1.0,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 15,
+            "total": 210.75,
+            "win_rate": 0.4667
+          },
+          {
+            "year": 2024,
+            "trades": 9,
+            "total": 149.33,
+            "win_rate": 0.7778
+          },
+          {
+            "year": 2025,
+            "trades": 29,
+            "total": 87.04,
+            "win_rate": 0.4483
+          },
+          {
+            "year": 2026,
+            "trades": 12,
+            "total": 206.76,
+            "win_rate": 0.5
+          }
+        ],
+        "trades_per_year": 13.0
+      },
+      "test_2x": {
+        "expectancy": 9.0597,
+        "expectancy_ci": [
+          -11.3413,
+          32.3409
+        ],
+        "profit_factor": 1.3089
+      },
+      "validation": {
+        "trades": 121,
+        "win_rate": 0.5124,
+        "expectancy": 0.1775,
+        "expectancy_ci": [
+          -10.1686,
+          9.882
+        ],
+        "profit_factor": 1.0087
+      },
+      "train": {
+        "trades": 293,
+        "expectancy": -0.7095,
+        "profit_factor": 0.9351
+      },
+      "family_wise": {
+        "reality_p": 0.958,
+        "dsr": 0.0126,
+        "survives": false
+      }
+    },
+    {
+      "name": "consec5_above200",
+      "family": "run12",
+      "test": {
+        "trades": 6,
+        "trades_per_month": 0.111,
+        "win_rate": 0.8333,
+        "win_rate_ci": [
+          0.4365,
+          0.9699
+        ],
+        "avg_win": 48.8941,
+        "avg_loss": -39.21,
+        "expectancy": 34.2101,
+        "expectancy_ci": [
+          1.3717,
+          63.3701
+        ],
+        "profit_factor": 6.2349,
+        "max_drawdown": 39.21,
+        "years_positive": 0.75,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 1,
+            "total": 42.93,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2024,
+            "trades": 2,
+            "total": -16.94,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 2,
+            "total": 131.72,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2026,
+            "trades": 1,
+            "total": 47.55,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 1.2
+      },
+      "test_2x": {
+        "expectancy": 33.2101,
+        "expectancy_ci": [
+          0.3717,
+          62.3701
+        ],
+        "profit_factor": 5.9555
+      },
+      "validation": {
+        "trades": 6,
+        "win_rate": 0.3333,
+        "expectancy": -25.4667,
+        "expectancy_ci": [
+          -55.8062,
+          7.198
+        ],
+        "profit_factor": 0.2192
+      },
+      "train": {
+        "trades": 22,
+        "expectancy": 5.1827,
+        "profit_factor": 2.0738
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0378,
+        "survives": false
+      }
+    },
+    {
+      "name": "consec5_vix_lt20",
+      "family": "run12",
+      "test": {
+        "trades": 6,
+        "trades_per_month": 0.111,
+        "win_rate": 0.8333,
+        "win_rate_ci": [
+          0.4365,
+          0.9699
+        ],
+        "avg_win": 48.8941,
+        "avg_loss": -39.21,
+        "expectancy": 34.2101,
+        "expectancy_ci": [
+          1.3717,
+          63.3701
+        ],
+        "profit_factor": 6.2349,
+        "max_drawdown": 39.21,
+        "years_positive": 0.75,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 1,
+            "total": 42.93,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2024,
+            "trades": 2,
+            "total": -16.94,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 2,
+            "total": 131.72,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2026,
+            "trades": 1,
+            "total": 47.55,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 1.2
+      },
+      "test_2x": {
+        "expectancy": 33.2101,
+        "expectancy_ci": [
+          0.3717,
+          62.3701
+        ],
+        "profit_factor": 5.9555
+      },
+      "validation": {
+        "trades": 2,
+        "win_rate": 0.5,
+        "expectancy": -9.8201,
+        "expectancy_ci": [
+          -54.3301,
+          34.6899
+        ],
+        "profit_factor": 0.6385
+      },
+      "train": {
+        "trades": 11,
+        "expectancy": 2.5264,
+        "profit_factor": 1.5035
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0378,
+        "survives": false
+      }
+    },
+    {
+      "name": "consec5_vix_gt25",
+      "family": "run12",
+      "test": {
+        "trades": 6,
+        "trades_per_month": 1.2,
+        "win_rate": 0.6667,
+        "win_rate_ci": [
+          0.3,
+          0.9032
+        ],
+        "avg_win": 70.9349,
+        "avg_loss": -27.475,
+        "expectancy": 38.1316,
+        "expectancy_ci": [
+          -8.0591,
+          88.534
+        ],
+        "profit_factor": 5.1636,
+        "max_drawdown": 40.1499,
+        "years_positive": 1.0,
+        "years_active": 1,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 6,
+            "total": 228.79,
+            "win_rate": 0.6667
+          }
+        ],
+        "trades_per_year": 1.2
+      },
+      "test_2x": {
+        "expectancy": 37.1316,
+        "expectancy_ci": [
+          -9.0591,
+          87.534
+        ],
+        "profit_factor": 4.912
+      },
+      "validation": {
+        "trades": 4,
+        "win_rate": 0.75,
+        "expectancy": 24.045,
+        "expectancy_ci": [
+          -34.8475,
+          93.635
+        ],
+        "profit_factor": 2.1345
+      },
+      "train": {
+        "trades": 18,
+        "expectancy": 6.6067,
+        "profit_factor": 1.629
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0043,
+        "survives": false
+      }
+    },
+    {
+      "name": "consec5_above200_vix_lt25",
+      "family": "run12",
+      "test": {
+        "trades": 6,
+        "trades_per_month": 0.111,
+        "win_rate": 0.8333,
+        "win_rate_ci": [
+          0.4365,
+          0.9699
+        ],
+        "avg_win": 48.8941,
+        "avg_loss": -39.21,
+        "expectancy": 34.2101,
+        "expectancy_ci": [
+          1.3717,
+          63.3701
+        ],
+        "profit_factor": 6.2349,
+        "max_drawdown": 39.21,
+        "years_positive": 0.75,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 1,
+            "total": 42.93,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2024,
+            "trades": 2,
+            "total": -16.94,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 2,
+            "total": 131.72,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2026,
+            "trades": 1,
+            "total": 47.55,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 1.2
+      },
+      "test_2x": {
+        "expectancy": 33.2101,
+        "expectancy_ci": [
+          0.3717,
+          62.3701
+        ],
+        "profit_factor": 5.9555
+      },
+      "validation": {
+        "trades": 5,
+        "win_rate": 0.4,
+        "expectancy": -13.604,
+        "expectancy_ci": [
+          -42.948,
+          14.998
+        ],
+        "profit_factor": 0.3867
+      },
+      "train": {
+        "trades": 20,
+        "expectancy": 5.0705,
+        "profit_factor": 2.0189
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0378,
+        "survives": false
+      }
+    },
+    {
+      "name": "consec5up_below200_short",
+      "family": "run12",
+      "test": {
+        "trades": 6,
+        "trades_per_month": 0.462,
+        "win_rate": 0.3333,
+        "win_rate_ci": [
+          0.0968,
+          0.7
+        ],
+        "avg_win": 11.97,
+        "avg_loss": -48.7051,
+        "expectancy": -28.4801,
+        "expectancy_ci": [
+          -55.0308,
+          -0.5232
+        ],
+        "profit_factor": 0.1229,
+        "max_drawdown": 117.9204,
+        "years_positive": 0.0,
+        "years_active": 2,
+        "years": [
+          {
+            "year": 2025,
+            "trades": 5,
+            "total": -141.43,
+            "win_rate": 0.4
+          },
+          {
+            "year": 2026,
+            "trades": 1,
+            "total": -29.45,
+            "win_rate": 0.0
+          }
+        ],
+        "trades_per_year": 1.2
+      },
+      "test_2x": {
+        "expectancy": -29.4801,
+        "expectancy_ci": [
+          -56.0308,
+          -1.5232
+        ],
+        "profit_factor": 0.1104
+      },
+      "validation": {
+        "trades": 2,
+        "win_rate": 0.5,
+        "expectancy": -3.355,
+        "expectancy_ci": [
+          -9.1499,
+          2.4399
+        ],
+        "profit_factor": 0.2667
+      },
+      "train": {
+        "trades": 6,
+        "expectancy": 14.5633,
+        "profit_factor": 6.3772
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "ibs_gt09_below200_short",
+      "family": "run12",
+      "test": {
+        "trades": 50,
+        "trades_per_month": 0.962,
+        "win_rate": 0.44,
+        "win_rate_ci": [
+          0.3116,
+          0.5769
+        ],
+        "avg_win": 50.0504,
+        "avg_loss": -38.6193,
+        "expectancy": 0.3954,
+        "expectancy_ci": [
+          -14.0556,
+          15.3005
+        ],
+        "profit_factor": 1.0183,
+        "max_drawdown": 317.1401,
+        "years_positive": 0.25,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 37,
+            "total": 229.55,
+            "win_rate": 0.5135
+          },
+          {
+            "year": 2023,
+            "trades": 5,
+            "total": -136.65,
+            "win_rate": 0.2
+          },
+          {
+            "year": 2025,
+            "trades": 6,
+            "total": -23.92,
+            "win_rate": 0.3333
+          },
+          {
+            "year": 2026,
+            "trades": 2,
+            "total": -49.21,
+            "win_rate": 0.0
+          }
+        ],
+        "trades_per_year": 10.0
+      },
+      "test_2x": {
+        "expectancy": -0.6046,
+        "expectancy_ci": [
+          -15.0556,
+          14.3005
+        ],
+        "profit_factor": 0.9728
+      },
+      "validation": {
+        "trades": 34,
+        "win_rate": 0.3824,
+        "expectancy": -3.6618,
+        "expectancy_ci": [
+          -16.5785,
+          11.152
+        ],
+        "profit_factor": 0.7643
+      },
+      "train": {
+        "trades": 142,
+        "expectancy": 0.0968,
+        "profit_factor": 1.0129
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0022,
+        "survives": false
+      }
+    },
+    {
+      "name": "low52_uptrend",
+      "family": "run12",
+      "test": {
+        "trades": 1,
+        "trades_per_month": 1.0,
+        "win_rate": 0.0,
+        "win_rate_ci": [
+          0.0,
+          0.7935
+        ],
+        "avg_win": null,
+        "avg_loss": -211.7998,
+        "expectancy": -211.7998,
+        "expectancy_ci": null,
+        "profit_factor": null,
+        "max_drawdown": 0.0,
+        "years_positive": 0.0,
+        "years_active": 1,
+        "years": [
+          {
+            "year": 2025,
+            "trades": 1,
+            "total": -211.8,
+            "win_rate": 0.0
+          }
+        ],
+        "trades_per_year": 0.2
+      },
+      "test_2x": {
+        "expectancy": -212.7998,
+        "expectancy_ci": null,
+        "profit_factor": null
+      },
+      "validation": {
+        "trades": 5,
+        "win_rate": 0.6,
+        "expectancy": 13.37,
+        "expectancy_ci": [
+          -70.6061,
+          96.644
+        ],
+        "profit_factor": 1.3507
+      },
+      "train": {
+        "trades": 3,
+        "expectancy": 4.68,
+        "profit_factor": 2.0677
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "fomc_day_long",
+      "family": "run12",
+      "test": {
+        "trades": 39,
+        "trades_per_month": 0.672,
+        "win_rate": 0.4615,
+        "win_rate_ci": [
+          0.3157,
+          0.6143
+        ],
+        "avg_win": 36.2744,
+        "avg_loss": -52.6481,
+        "expectancy": -11.607,
+        "expectancy_ci": [
+          -30.4294,
+          6.2732
+        ],
+        "profit_factor": 0.5906,
+        "max_drawdown": 683.4214,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 8,
+            "total": 25.43,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 8,
+            "total": 5.53,
+            "win_rate": 0.625
+          },
+          {
+            "year": 2024,
+            "trades": 8,
+            "total": -173.66,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 8,
+            "total": 36.55,
+            "win_rate": 0.375
+          },
+          {
+            "year": 2026,
+            "trades": 7,
+            "total": -346.52,
+            "win_rate": 0.2857
+          }
+        ],
+        "trades_per_year": 7.8
+      },
+      "test_2x": {
+        "expectancy": -12.607,
+        "expectancy_ci": [
+          -31.4294,
+          5.2732
+        ],
+        "profit_factor": 0.5636
+      },
+      "validation": {
+        "trades": 32,
+        "win_rate": 0.4062,
+        "expectancy": -4.19,
+        "expectancy_ci": [
+          -13.1787,
+          4.7743
+        ],
+        "profit_factor": 0.6734
+      },
+      "train": {
+        "trades": 24,
+        "expectancy": 0.1371,
+        "profit_factor": 1.0249
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "tom_hold",
+      "family": "run12",
+      "test": {
+        "trades": 59,
+        "trades_per_month": 1.0,
+        "win_rate": 0.4915,
+        "win_rate_ci": [
+          0.3684,
+          0.6156
+        ],
+        "avg_win": 85.6914,
+        "avg_loss": -65.4376,
+        "expectancy": 8.8461,
+        "expectancy_ci": [
+          -17.2908,
+          33.1822
+        ],
+        "profit_factor": 1.2659,
+        "max_drawdown": 633.5796,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 12,
+            "total": 15.25,
+            "win_rate": 0.3333
+          },
+          {
+            "year": 2023,
+            "trades": 12,
+            "total": 59.85,
+            "win_rate": 0.3333
+          },
+          {
+            "year": 2024,
+            "trades": 12,
+            "total": -223.39,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 12,
+            "total": -23.99,
+            "win_rate": 0.5833
+          },
+          {
+            "year": 2026,
+            "trades": 11,
+            "total": 694.2,
+            "win_rate": 0.7273
+          }
+        ],
+        "trades_per_year": 11.8
+      },
+      "test_2x": {
+        "expectancy": 7.8461,
+        "expectancy_ci": [
+          -18.2908,
+          32.1822
+        ],
+        "profit_factor": 1.2323
+      },
+      "validation": {
+        "trades": 48,
+        "win_rate": 0.6875,
+        "expectancy": 17.9535,
+        "expectancy_ci": [
+          -0.1842,
+          35.7299
+        ],
+        "profit_factor": 2.1155
+      },
+      "train": {
+        "trades": 120,
+        "expectancy": 1.2629,
+        "profit_factor": 1.1383
+      },
+      "family_wise": {
+        "reality_p": 0.986,
+        "dsr": 0.0159,
+        "survives": false
+      }
+    },
+    {
+      "name": "pre_holiday",
+      "family": "run12",
+      "test": {
+        "trades": 35,
+        "trades_per_month": 0.614,
+        "win_rate": 0.3714,
+        "win_rate_ci": [
+          0.2317,
+          0.5366
+        ],
+        "avg_win": 17.76,
+        "avg_loss": -21.8323,
+        "expectancy": -7.1266,
+        "expectancy_ci": [
+          -15.8792,
+          1.5238
+        ],
+        "profit_factor": 0.4807,
+        "max_drawdown": 285.1296,
+        "years_positive": 0.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 8,
+            "total": -55.95,
+            "win_rate": 0.25
+          },
+          {
+            "year": 2023,
+            "trades": 8,
+            "total": -34.28,
+            "win_rate": 0.375
+          },
+          {
+            "year": 2024,
+            "trades": 6,
+            "total": -68.06,
+            "win_rate": 0.3333
+          },
+          {
+            "year": 2025,
+            "trades": 6,
+            "total": -59.14,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2026,
+            "trades": 7,
+            "total": -32.0,
+            "win_rate": 0.4286
+          }
+        ],
+        "trades_per_year": 7.0
+      },
+      "test_2x": {
+        "expectancy": -8.1266,
+        "expectancy_ci": [
+          -16.8792,
+          0.5238
+        ],
+        "profit_factor": 0.4338
+      },
+      "validation": {
+        "trades": 26,
+        "win_rate": 0.5,
+        "expectancy": -0.0593,
+        "expectancy_ci": [
+          -7.3802,
+          6.6729
+        ],
+        "profit_factor": 0.9912
+      },
+      "train": {
+        "trades": 68,
+        "expectancy": -0.8526,
+        "profit_factor": 0.5198
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "opex_week",
+      "family": "run12",
+      "test": {
+        "trades": 48,
+        "trades_per_month": 0.842,
+        "win_rate": 0.4792,
+        "win_rate_ci": [
+          0.3447,
+          0.6167
+        ],
+        "avg_win": 97.5591,
+        "avg_loss": -90.674,
+        "expectancy": -0.479,
+        "expectancy_ci": [
+          -32.5894,
+          31.1437
+        ],
+        "profit_factor": 0.9899,
+        "max_drawdown": 564.6904,
+        "years_positive": 0.4,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 10,
+            "total": -342.81,
+            "win_rate": 0.2
+          },
+          {
+            "year": 2023,
+            "trades": 11,
+            "total": 239.29,
+            "win_rate": 0.5455
+          },
+          {
+            "year": 2024,
+            "trades": 10,
+            "total": -218.15,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 9,
+            "total": 456.59,
+            "win_rate": 0.7778
+          },
+          {
+            "year": 2026,
+            "trades": 8,
+            "total": -157.91,
+            "win_rate": 0.375
+          }
+        ],
+        "trades_per_year": 9.6
+      },
+      "test_2x": {
+        "expectancy": -1.479,
+        "expectancy_ci": [
+          -33.5894,
+          30.1437
+        ],
+        "profit_factor": 0.969
+      },
+      "validation": {
+        "trades": 44,
+        "win_rate": 0.5,
+        "expectancy": -1.5661,
+        "expectancy_ci": [
+          -22.6238,
+          18.9927
+        ],
+        "profit_factor": 0.9361
+      },
+      "train": {
+        "trades": 110,
+        "expectancy": 2.7293,
+        "profit_factor": 1.2674
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0018,
+        "survives": false
+      }
+    },
+    {
+      "name": "down3_week_long",
+      "family": "run12",
+      "test": {
+        "trades": 33,
+        "trades_per_month": 0.611,
+        "win_rate": 0.5455,
+        "win_rate_ci": [
+          0.3799,
+          0.7016
+        ],
+        "avg_win": 134.0334,
+        "avg_loss": -94.61,
+        "expectancy": 30.1045,
+        "expectancy_ci": [
+          -18.8232,
+          72.9997
+        ],
+        "profit_factor": 1.7,
+        "max_drawdown": 416.7893,
+        "years_positive": 0.8,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 18,
+            "total": 178.25,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 4,
+            "total": -65.17,
+            "win_rate": 0.25
+          },
+          {
+            "year": 2024,
+            "trades": 4,
+            "total": 444.38,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2025,
+            "trades": 5,
+            "total": 84.59,
+            "win_rate": 0.4
+          },
+          {
+            "year": 2026,
+            "trades": 2,
+            "total": 351.4,
+            "win_rate": 1.0
+          }
+        ],
+        "trades_per_year": 6.6
+      },
+      "test_2x": {
+        "expectancy": 29.1045,
+        "expectancy_ci": [
+          -19.8232,
+          71.9997
+        ],
+        "profit_factor": 1.6695
+      },
+      "validation": {
+        "trades": 28,
+        "win_rate": 0.6429,
+        "expectancy": 20.3964,
+        "expectancy_ci": [
+          -28.906,
+          62.8344
+        ],
+        "profit_factor": 1.5376
+      },
+      "train": {
+        "trades": 79,
+        "expectancy": 7.8403,
+        "profit_factor": 1.5957
+      },
+      "family_wise": {
+        "reality_p": 0.744,
+        "dsr": 0.0452,
+        "survives": false
+      }
+    },
+    {
+      "name": "double7_long",
+      "family": "run12",
+      "test": {
+        "trades": 81,
+        "trades_per_month": 1.373,
+        "win_rate": 0.6543,
+        "win_rate_ci": [
+          0.5459,
+          0.7488
+        ],
+        "avg_win": 94.4121,
+        "avg_loss": -142.1046,
+        "expectancy": 12.6532,
+        "expectancy_ci": [
+          -18.2326,
+          40.295
+        ],
+        "profit_factor": 1.2576,
+        "max_drawdown": 1025.2495,
+        "years_positive": 0.8,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 19,
+            "total": -222.59,
+            "win_rate": 0.5263
+          },
+          {
+            "year": 2023,
+            "trades": 15,
+            "total": 7.48,
+            "win_rate": 0.6667
+          },
+          {
+            "year": 2024,
+            "trades": 15,
+            "total": 395.05,
+            "win_rate": 0.7333
+          },
+          {
+            "year": 2025,
+            "trades": 15,
+            "total": 248.85,
+            "win_rate": 0.7333
+          },
+          {
+            "year": 2026,
+            "trades": 17,
+            "total": 596.12,
+            "win_rate": 0.6471
+          }
+        ],
+        "trades_per_year": 16.2
+      },
+      "test_2x": {
+        "expectancy": 11.6532,
+        "expectancy_ci": [
+          -19.2326,
+          39.295
+        ],
+        "profit_factor": 1.2355
+      },
+      "validation": {
+        "trades": 56,
+        "win_rate": 0.6607,
+        "expectancy": 12.7999,
+        "expectancy_ci": [
+          -17.1094,
+          42.4354
+        ],
+        "profit_factor": 1.3668
+      },
+      "train": {
+        "trades": 162,
+        "expectancy": 4.647,
+        "profit_factor": 1.3558
+      },
+      "family_wise": {
+        "reality_p": 0.722,
+        "dsr": 0.0238,
+        "survives": false
+      }
+    },
+    {
+      "name": "nr7_break_5m",
+      "family": "run12",
+      "test": {
+        "trades": 193,
+        "trades_per_month": 3.328,
+        "win_rate": 0.5285,
+        "win_rate_ci": [
+          0.4582,
+          0.5977
+        ],
+        "avg_win": 23.9236,
+        "avg_loss": -21.422,
+        "expectancy": 2.543,
+        "expectancy_ci": [
+          -1.2425,
+          6.0151
+        ],
+        "profit_factor": 1.2518,
+        "max_drawdown": 240.8956,
+        "years_positive": 0.6,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 45,
+            "total": 385.45,
+            "win_rate": 0.6222
+          },
+          {
+            "year": 2023,
+            "trades": 34,
+            "total": 133.88,
+            "win_rate": 0.5882
+          },
+          {
+            "year": 2024,
+            "trades": 36,
+            "total": -83.74,
+            "win_rate": 0.3889
+          },
+          {
+            "year": 2025,
+            "trades": 46,
+            "total": 112.88,
+            "win_rate": 0.5652
+          },
+          {
+            "year": 2026,
+            "trades": 32,
+            "total": -57.67,
+            "win_rate": 0.4375
+          }
+        ],
+        "trades_per_year": 38.6
+      },
+      "test_2x": {
+        "expectancy": 1.543,
+        "expectancy_ci": [
+          -2.2425,
+          5.0151
+        ],
+        "profit_factor": 1.1459
+      },
+      "validation": {
+        "trades": 156,
+        "win_rate": 0.5,
+        "expectancy": -1.1961,
+        "expectancy_ci": [
+          -3.4774,
+          1.3671
+        ],
+        "profit_factor": 0.8341
+      },
+      "train": {
+        "trades": 219,
+        "expectancy": -0.3917,
+        "profit_factor": 0.8723
+      },
+      "family_wise": {
+        "reality_p": 0.99,
+        "dsr": 0.0546,
+        "survives": false
+      }
+    },
+    {
+      "name": "inside_break_5m",
+      "family": "run12",
+      "test": {
+        "trades": 102,
+        "trades_per_month": 1.729,
+        "win_rate": 0.4216,
+        "win_rate_ci": [
+          0.3303,
+          0.5185
+        ],
+        "avg_win": 24.8951,
+        "avg_loss": -30.7677,
+        "expectancy": -7.302,
+        "expectancy_ci": [
+          -14.0462,
+          -1.3105
+        ],
+        "profit_factor": 0.5897,
+        "max_drawdown": 852.1951,
+        "years_positive": 0.2,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 16,
+            "total": -302.61,
+            "win_rate": 0.3125
+          },
+          {
+            "year": 2023,
+            "trades": 19,
+            "total": -155.34,
+            "win_rate": 0.3158
+          },
+          {
+            "year": 2024,
+            "trades": 27,
+            "total": -167.81,
+            "win_rate": 0.4074
+          },
+          {
+            "year": 2025,
+            "trades": 21,
+            "total": 72.99,
+            "win_rate": 0.5714
+          },
+          {
+            "year": 2026,
+            "trades": 19,
+            "total": -192.04,
+            "win_rate": 0.4737
+          }
+        ],
+        "trades_per_year": 20.4
+      },
+      "test_2x": {
+        "expectancy": -8.302,
+        "expectancy_ci": [
+          -15.0462,
+          -2.3105
+        ],
+        "profit_factor": 0.5482
+      },
+      "validation": {
+        "trades": 96,
+        "win_rate": 0.5625,
+        "expectancy": 1.2914,
+        "expectancy_ci": [
+          -1.4984,
+          3.7576
+        ],
+        "profit_factor": 1.2523
+      },
+      "train": {
+        "trades": 185,
+        "expectancy": -1.2352,
+        "profit_factor": 0.719
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      }
+    },
+    {
+      "name": "gap_reclaim_5m",
+      "family": "run12",
+      "test": {
+        "trades": 14,
+        "trades_per_month": 0.269,
+        "win_rate": 0.3571,
+        "win_rate_ci": [
+          0.1634,
+          0.6124
+        ],
+        "avg_win": 40.1224,
+        "avg_loss": -16.9698,
+        "expectancy": 3.4203,
+        "expectancy_ci": [
+          -13.5827,
+          21.6608
+        ],
+        "profit_factor": 1.3135,
+        "max_drawdown": 79.632,
+        "years_positive": 0.5,
+        "years_active": 4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 8,
+            "total": 102.74,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 3,
+            "total": -72.25,
+            "win_rate": 0.0
+          },
+          {
+            "year": 2025,
+            "trades": 2,
+            "total": 24.41,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2026,
+            "trades": 1,
+            "total": -7.01,
+            "win_rate": 0.0
+          }
+        ],
+        "trades_per_year": 2.8
+      },
+      "test_2x": {
+        "expectancy": 2.4203,
+        "expectancy_ci": [
+          -14.5827,
+          20.6608
+        ],
+        "profit_factor": 1.2095
+      },
+      "validation": {
+        "trades": 6,
+        "win_rate": 0.6667,
+        "expectancy": 4.7847,
+        "expectancy_ci": [
+          -19.923,
+          26.6918
+        ],
+        "profit_factor": 1.5825
+      },
+      "train": {
+        "trades": 3,
+        "expectancy": 7.003,
+        "profit_factor": 4.4272
+      },
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0035,
+        "survives": false
+      }
+    }
+  ],
+  "best_test_mean_rule": "rsi2_long_5",
+  "reality_check_best": {
+    "p_value": 0.55,
+    "hurdle_95": 1.8884,
+    "candidate_daily_mean": 1.0094,
+    "survives": false,
+    "draws": 500
+  },
+  "deflated_sharpe_best": {
+    "sharpe_daily": 0.0525,
+    "sr_star": 0.0828,
+    "dsr": 0.0783,
+    "survives": false
+  },
+  "family_wise_survivors": [],
+  "validation_locked_members": [],
+  "ensemble_test": {
+    "trades": 0,
+    "trades_per_month": 0,
+    "win_rate": null,
+    "win_rate_ci": null,
+    "avg_win": null,
+    "avg_loss": null,
+    "expectancy": null,
+    "expectancy_ci": null,
+    "profit_factor": null,
+    "max_drawdown": null,
+    "years_positive": null,
+    "years": [],
+    "trades_per_year": 0
+  },
+  "ensemble_test_2x": {
+    "expectancy": null,
+    "expectancy_ci": null,
+    "profit_factor": null
+  },
+  "live_default": "legacy"
+}

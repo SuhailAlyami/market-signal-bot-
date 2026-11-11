@@ -1,0 +1,11 @@
+//@version=5
+indicator("Suhail rare RESEARCH_ONLY — RSI(2) below 5", overlay=true)
+// RESEARCH_ONLY. Not a live signal.
+// Long bias the next session after daily RSI(2) closes under 5.
+// Test window 2022-2026: 60 trades, win rate 65% (52–76%), expectancy +20.5
+// points (1.1 to 45.1). The 2018-2021 window was negative. Family-wise check
+// across 51 rules: p=0.55. Do not treat the recent window as a proven edge.
+rsi = ta.rsi(close, 2)
+armed = rsi < 5
+plotshape(armed and not armed[1], "Research long", shape.triangleup, location.belowbar, color.new(color.teal, 0), size=size.small)
+alertcondition(armed and not armed[1], "RSI2 under 5 RESEARCH_ONLY", "RSI(2) under 5. Research only — family-wise check failed.")
