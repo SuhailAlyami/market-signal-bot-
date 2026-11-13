@@ -69,18 +69,16 @@ If Saturday/closed: only connection + offline tests; do not claim live detection
 
 ## Research finding — 2026-11-14
 
-**Root cause of NOT_READY identified.** The signal exists. The data source is the bottleneck.
+### ملخص التجارب
 
-### What all experiments prove
-
-| Experiment | Best result | Why it fails |
+| Experiment | أفضل نتيجة | الحالة |
 |---|---|---|
-| explosion_detector.py (5m Yahoo bars) | Detects moves | Bars arrive 9-10 min late; 70-90% of move is done |
-| halfminute-pilot (30s ES/NQ) | 16.7% precision, +60s lead | Too weak, not SPX |
-| detector_v2 (4 ML models) | 29.2% precision, −1 min lead | Negative lead = confirms after move |
-| **breadth_20261109** | **59.6% direction, +1.23pt gross** | **Yahoo delay kills entry; net turns negative at 1pt cost** |
+| explosion_detector.py (5m Yahoo) | يكشف حركات | لا يكشف مبكراً؛ تأخر Yahoo لم يُقس تحديداً |
+| halfminute-pilot (30s ES/NQ) | 16.7% precision, +60s lead | ضعيف جداً، وهو ES/NQ لا SPX |
+| detector_v2 (4 نماذج ML) | 29.2% precision، قيادة −1 دقيقة | قيادة سلبية = يؤكد بعد الحركة |
+| breadth_20261109 | C1 PASS، لكن REJECT | أفضل نتيجة إحصائية، غير مثبت للتداول |
 
-### نتائج breadth_20261109 الفعلية (لا يُبالغ فيها)
+### نتائج breadth_20261109 الفعلية
 
 `wave_capture.detect` + constituent agreement ≥ 8/10 على dev (57 جلسة):
 
@@ -89,7 +87,7 @@ If Saturday/closed: only connection + offline tests; do not claim live detection
 | C1: فرق high−rest (CI يستبعد صفر) | +1.80 pt [0.26, 3.33] | **PASS** |
 | C2: صافي high عند تكلفة 1pt > 0 | −2.5pt | **FAIL** |
 | C3: متوسط gross موجب في كلا النصفين | النصف الأول +1.23pt، الثاني +0.76pt | **PASS** |
-| C4: high يتفوق على اتجاه عشوائي (CI يستبعد صفر) | CI: [−20, +229] يشمل الصفر | **FAIL** |
+| C4: high يتفوق على اتجاه عشوائي (CI يستبعد صفر) | CI: [−20, +229] **يشمل الصفر** | **FAIL** |
 | **القرار المسجل** | **REJECT** | — |
 
 ملاحظات دقيقة:
@@ -104,15 +102,17 @@ If Saturday/closed: only connection + offline tests; do not claim live detection
 
 ### Path to next test (الخطوة المتبقية الوحيدة)
 
-جمع بيانات اتساع forward (branch `data/spx-collection`) من جهازك:
+جمع بيانات اتساع forward من جهازك (يُحفظ تلقائياً في `research/spx_collection/data/breadth5m/bars5m.json`):
 ```bash
+cd market-signal-bot-
 pip install yfinance exchange_calendars
 python3 research/spx_collection/collect_yahoo_spx.py --breadth
-# يخزن في breadth5m/bars5m.json
+# --out افتراضي: research/spx_collection/data/
+# الملف الناتج: research/spx_collection/data/breadth5m/bars5m.json
 ```
 بعد تجميع 190 حدثاً بالاتفاق العالي (≥8) عبر جلسات Nov 05+:
 ```bash
-python3 research/breadth_20261109/run.py --forward breadth5m/bars5m.json
+python3 research/breadth_20261109/run.py --forward research/spx_collection/data/breadth5m/bars5m.json
 ```
 النتيجة إما FORWARD_PASS_STILL_NOT_READY أو FORWARD_FAIL. في كلا الحالتين: تبقى الإنذارات مغلقة.
 
