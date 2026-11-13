@@ -87,7 +87,7 @@ If Saturday/closed: only connection + offline tests; do not claim live detection
 | C1: فرق high−rest (CI يستبعد صفر) | +1.80 pt [0.26, 3.33] | **PASS** |
 | C2: صافي high عند تكلفة 1pt > 0 | −2.5pt | **FAIL** |
 | C3: متوسط gross موجب في كلا النصفين | النصف الأول +1.23pt، الثاني +0.76pt | **PASS** |
-| C4: high يتفوق على اتجاه عشوائي (CI يستبعد صفر) | CI: [−20, +229] **يشمل الصفر** | **FAIL** |
+| C4: high يتفوق على اتجاه عشوائي (CI يشمل الصفر) | CI: [−20, +229] **يشمل الصفر** | **FAIL** |
 | **القرار المسجل** | **REJECT** | — |
 
 ملاحظات دقيقة:
