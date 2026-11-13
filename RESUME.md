@@ -80,48 +80,47 @@ If Saturday/closed: only connection + offline tests; do not claim live detection
 | detector_v2 (4 ML models) | 29.2% precision, −1 min lead | Negative lead = confirms after move |
 | **breadth_20261109** | **59.6% direction, +1.23pt gross** | **Yahoo delay kills entry; net turns negative at 1pt cost** |
 
-### The breakthrough signal
+### نتائج breadth_20261109 الفعلية (لا يُبالغ فيها)
 
-`wave_capture.detect` on SPX 5m + constituent agreement ≥ 8/10 megacaps + first session half:
-- 59.6% directional accuracy (bootstrap CI excludes zero — only signal in repo with this property)
-- +1.23pt mean gross per signal over 57 development sessions
-- Net at 0.5pt cost: **+41.5pt total** (profitable)
-- Net at 1.0pt cost: +13.0pt total (marginal but positive)
+`wave_capture.detect` + constituent agreement ≥ 8/10 على dev (57 جلسة):
 
-**The signal code is already written and frozen** in `research/breadth_20261109/`.
+| معيار | نتيجة | الحكم |
+|---|---|---|
+| C1: فرق high−rest (CI يستبعد صفر) | +1.80 pt [0.26, 3.33] | **PASS** |
+| C2: صافي high عند تكلفة 1pt > 0 | −2.5pt | **FAIL** |
+| C3: متوسط gross موجب في كلا النصفين | النصف الأول +1.23pt، الثاني +0.76pt | **PASS** |
+| C4: high يتفوق على اتجاه عشوائي (CI يستبعد صفر) | CI: [−20, +229] يشمل الصفر | **FAIL** |
+| **القرار المسجل** | **REJECT** | — |
 
-### Why Yahoo delay kills it
+ملاحظات دقيقة:
+- 59.6% اتجاه تخص النصف الأول فقط (57 إشارة)؛ الجلسة كاملة 53.7%
+- C1 يثبت أن high تتفوق على rest، لا أنها تتفوق على الصدفة
+- تأخر Yahoo لم يُقس فعلياً؛ لا دليل أن IB Gateway يحل المشكلة
+- واجهة الاختبار الأمامي هي `run.py --forward <store>` لا `--holdout`، وتشترط 190 حدثاً قبل إخراج نتائج
 
-Yahoo bars arrive 9-10 min old. By the time the signal fires, the move is already complete. With IB Gateway (< 1s latency), the same signal fires on the current bar and the full +1.23pt gross is capturable.
+### الحالة الحقيقية للمشروع
 
-### Path to READY
+**مرشح بحثي واعد، غير مثبت.** C1 هو أفضل إشارة إحصائية في المستودع لكنه وحده غير كافٍ للقرار. القاعدة رُفضت بشكل صريح في التقرير.
 
-1. **Collect 20 new sessions** (Nov 10 – Dec 10 ≈ 20 trading days) using `research/spx_collection/collect_yahoo_spx.py --breadth` from your machine (needs `yfinance` installed)
-2. **Run holdout protocol**: `python3 research/breadth_20261109/run.py --holdout` — code already frozen, no fitting
-3. **Verify live feed**: IB Gateway on during RTH → `spx_primary.py` → confirm SPX last-trade timestamp age ≤ 2s
-4. **Shadow run**: 10 sessions with live IB feed, breadth signal logging only, no alerts
-5. If shadow performance within 20% of backtest: upgrade to READY
+### Path to next test (الخطوة المتبقية الوحيدة)
 
-### Owner actions (from your machine only)
-
+جمع بيانات اتساع forward (branch `data/spx-collection`) من جهازك:
 ```bash
-# Step 1: collect breadth data daily (5 min/session)
 pip install yfinance exchange_calendars
 python3 research/spx_collection/collect_yahoo_spx.py --breadth
-
-# Step 2: after 20 sessions, run holdout
-python3 research/breadth_20261109/run.py --holdout
-
-# Step 3: verify live feed on any open RTH
-# IB Gateway running → python3 spx_primary.py → check for LIVE_VERIFIED in log
+# يخزن في breadth5m/bars5m.json
 ```
+بعد تجميع 190 حدثاً بالاتفاق العالي (≥8) عبر جلسات Nov 05+:
+```bash
+python3 research/breadth_20261109/run.py --forward breadth5m/bars5m.json
+```
+النتيجة إما FORWARD_PASS_STILL_NOT_READY أو FORWARD_FAIL. في كلا الحالتين: تبقى الإنذارات مغلقة.
 
 ### Consumed data
 
-- Dev: Aug 17 – Nov 04 (57 sessions) — all consumed by breadth_20261109
-- Holdout (SPENT): Oct 12–16 — do not retune on these
-- Breadth holdout (LOCKED): Nov 05-09 (3 sessions) — do not read until 20 new sessions collected
-- Nov 10+ dates: unconsumed, available for new collection
+- Dev: Aug 17 – Nov 04 (57 جلسة) — مستهلك بالكامل
+- Holdout (SPENT): Oct 12–16 — لا تعد إلى هذه البيانات
+- Breadth forward (LOCKED ≥ Nov 05): لا تقرأ النتائج قبل بلوغ 190 حدثاً
 
 ## Resume command
 
@@ -137,4 +136,4 @@ Next research action: collect breadth sessions Nov 10+ from owner's machine.
 
 - 2026-10-24 (earlier): Initial RESUME.md from repo exam.
 - 2026-10-24 (this update): Verification checklist; IBKR chat connector account OK; SPX snapshot top-status REJECT on Saturday; still NOT READY; alerts remain OFF.
-- 2026-11-14: Full experiment audit. Root cause identified: Yahoo delay kills a real signal. Breadth first-half has 59.6% direction accuracy with bootstrap CI excluding zero — best result in repo. Path to READY documented above.
+- 2026-11-14 (تحديث أول): تدقيق كامل للتجارب. breadth_20261109 أفضل نتيجة في المستودع (C1 PASS)، لكن القاعدة رُفضت رسمياً (C2+C4 FAIL). لا دليل على أن التأخر هو السبب. الخطوة الوحيدة: جمع forward data ≥190 حدث ثم run.py --forward. تصحيح ادعاءات مبالغ فيها من التحديث الأول.
