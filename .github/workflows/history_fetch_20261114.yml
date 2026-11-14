@@ -1,0 +1,19 @@
+name: history-fetch-20261114
+# One-shot research fetch. No alerts, no orders, no secrets, no writes to any branch. Output is a workflow artifact only.
+on:
+  push:
+    branches: ['research/history-fetch-20261114']
+permissions:
+  contents: read
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: OUT_DIR=out python research/history_fetch_20261114/fetch.py
+      - uses: actions/upload-artifact@v4
+        with: {name: history-fetch, path: out/, retention-days: 30}
