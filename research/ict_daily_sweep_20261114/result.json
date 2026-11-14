@@ -833,5 +833,34 @@
   "origin/data-history-20261114:history/GSPC_1h_730d.json.gz": "^GSPC 1h 728 sessions 2023-12-18..2026-11-13 (new)",
   "origin/data-history-20261114:history/SPY_1h_730d.json.gz": "SPY 1h 728 sessions (new, separate)",
   "origin/data-history-20261114:history/GSPC_1d_max.json": "Yahoo downgraded to 3-month bars: unusable; daily derived from 1h RTH bars instead"
+ },
+ "_side_test_H-L_gap_continuation_frozen_rules_1h": {
+  "SPX_unseen_before_2026-08-17": {
+   "n": 575,
+   "win%": 49.9,
+   "mean_net%": -0.0017,
+   "ci": [
+    -0.072,
+    0.0637
+   ],
+   "maxDD%": -29.25
+  },
+  "SPX_all": {
+   "n": 633,
+   "mean_net%": 0.01,
+   "ci": [
+    -0.055,
+    0.0733
+   ]
+  },
+  "SPY_unseen": {
+   "n": 574,
+   "mean_net%": -0.0809,
+   "ci": [
+    -0.1494,
+    -0.0143
+   ]
+  },
+  "verdict": "REJECT on SPX (n=575 unseen, no edge). The n=17 OOS 64.7% result was noise."
  }
 }
