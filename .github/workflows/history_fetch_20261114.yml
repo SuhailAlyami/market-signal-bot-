@@ -1,19 +1,27 @@
 name: history-fetch-20261114
-# One-shot research fetch. No alerts, no orders, no secrets, no writes to any branch. Output is a workflow artifact only.
+# One-shot research fetch. No alerts, no orders, no secrets.
+# Writes ONLY to a new orphan branch data/history-20261114 (never main, never data/spx-collection).
 on:
   push:
     branches: ['research/history-fetch-20261114']
 permissions:
-  contents: read
+  contents: write
+concurrency: {group: history-fetch-20261114, cancel-in-progress: false}
 jobs:
   fetch:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-        with: {persist-credentials: false}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - run: OUT_DIR=out python research/history_fetch_20261114/fetch.py
-      - uses: actions/upload-artifact@v4
-        with: {name: history-fetch, path: out/, retention-days: 30}
+      - run: OUT_DIR=/tmp/out python research/history_fetch_20261114/fetch.py
+      - name: Commit to dedicated data branch
+        run: |
+          git config user.name "history-fetch-bot"; git config user.email "actions@users.noreply.github.com"
+          git checkout --orphan data/history-20261114
+          git rm -rq --cached . ; rm -rf ./*  .github 2>/dev/null || true
+          mkdir -p history && cp /tmp/out/* history/
+          gzip -9 history/*_1h_*.json history/*_15m_*.json history/*_5m_*.json || true
+          git add history && git commit -qm "Historical Yahoo fetch $(date -u +%FT%TZ) DELAYED_RESEARCH_ONLY"
+          git push -f origin data/history-20261114
