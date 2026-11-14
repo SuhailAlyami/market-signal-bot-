@@ -1,0 +1,72 @@
+{
+  "experiment": "intraday_hypotheses_20261114",
+  "date": "2026-11-14",
+  "data": {"symbol": "^GSPC", "sessions": 64, "period": "2026-08-17 to 2026-11-13", "bar": "5min"},
+  "protocol": {"train_n": 40, "test_n": 24, "bootstrap_iters": 3000, "seed": 42, "cost_rt_pct": 0.03},
+  "hypotheses": {
+    "H-I": {
+      "name": "Intraday Momentum (Gao et al. 2018)",
+      "signal": "First 30min return direction (open → 10:00)",
+      "outcome": "Last 30min direction (15:30 → 16:00)",
+      "oos_hit_pct": 50.0,
+      "oos_hit_ci_95": [29.2, 70.8],
+      "oos_mean_ret_pct": -0.0100,
+      "oos_ret_ci_95": [-0.0826, 0.0611],
+      "ci_excludes_50pct": false,
+      "verdict": "FAIL",
+      "note": "Published edge on SPY does not replicate on 64 SPX sessions"
+    },
+    "H-J": {
+      "name": "First 5-min candle color continuation",
+      "signal": "Green/red first bar → long/short session",
+      "outcome": "Session close vs first bar close",
+      "oos_hit_pct": 58.3,
+      "oos_hit_ci_95": [37.5, 75.0],
+      "oos_gross_mean_ret_pct": 0.1481,
+      "oos_gross_ret_ci_95": [-0.1774, 0.5436],
+      "oos_net_mean_ret_pct": 0.1181,
+      "oos_net_ret_ci_95": [-0.2067, 0.5267],
+      "oos_max_drawdown_pct": -3.45,
+      "ci_excludes_zero_net": false,
+      "verdict": "MARGINAL — gross positive but net CI includes zero; sample too small to confirm",
+      "note": "Consistent with mql5 replication finding (+0.113R gross, net negative after costs)"
+    },
+    "H-K": {
+      "name": "VWAP position at 11:30 → afternoon reversion",
+      "signal": "Price below/above equal-weight typical-price proxy at bar 24",
+      "outcome": "13:00–16:00 direction",
+      "oos_hit_pct": 54.2,
+      "oos_hit_ci_95": [37.5, 75.0],
+      "oos_mean_ret_pct": -0.0040,
+      "oos_ret_ci_95": [-0.1204, 0.1112],
+      "ci_excludes_50pct": false,
+      "verdict": "FAIL",
+      "note": "No volume data; proxy VWAP likely insufficient"
+    },
+    "H-L": {
+      "name": "Opening gap continuation",
+      "signal": "Gap up/down vs prev close (threshold ≥0.05%)",
+      "outcome": "Open-to-close return in gap direction",
+      "oos_n": 17,
+      "oos_hit_pct": 64.7,
+      "oos_hit_ci_95": [41.2, 88.2],
+      "oos_gross_mean_ret_pct": 0.3996,
+      "oos_gross_ret_ci_95": [-0.0503, 1.0071],
+      "oos_net_mean_ret_pct": 0.3696,
+      "oos_net_ret_ci_95": [-0.0780, 0.9999],
+      "oos_max_drawdown_pct": -1.34,
+      "ci_excludes_zero_net": false,
+      "verdict": "INCONCLUSIVE — only 17 OOS signals; CI too wide",
+      "note": "Most promising direction: needs 200+ sessions to confirm"
+    }
+  },
+  "overall_decision": "NO_EDGE_PROVEN",
+  "reason": "All 4 hypotheses fail to show net-positive CI excluding zero in OOS on 64 sessions. Sample size is the primary limiting factor (±10% hit-rate SE at n=24).",
+  "what_is_needed": {
+    "sessions_required": "200+ for ±3.5% SE (current: 64 → ±10% SE)",
+    "data_collection_eta": "~22 more sessions reach 190 events threshold (breadth); ~136 more sessions reach 200 total — approximately Jan 2027 at current rate",
+    "best_candidate": "H-L (gap continuation) — largest point estimate but needs confirmation",
+    "live_data": "Required for real-time alerts phase"
+  },
+  "status": "NOT_READY / RESEARCH_ONLY"
+}
