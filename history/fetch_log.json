@@ -1,0 +1,82 @@
+[
+ {
+  "file": "GSPC_1d_max.json",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=1d&range=max&includePrePost=false",
+  "status": 200,
+  "request_utc": "2026-11-14T20:21:35.617015+00:00",
+  "response_utc": "2026-11-14T20:21:35.692511+00:00",
+  "bars": 169,
+  "last_bar_utc": "2026-11-13T21:43:19+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "file": "GSPC_1h_730d.json",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=1h&range=730d&includePrePost=false",
+  "status": 200,
+  "request_utc": "2026-11-14T20:21:37.693136+00:00",
+  "response_utc": "2026-11-14T20:21:37.804717+00:00",
+  "bars": 5099,
+  "last_bar_utc": "2026-11-13T21:00:00+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "file": "GSPC_15m_60d.json",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=15m&range=60d&includePrePost=false",
+  "status": 200,
+  "request_utc": "2026-11-14T20:21:39.809113+00:00",
+  "response_utc": "2026-11-14T20:21:39.896616+00:00",
+  "bars": 1561,
+  "last_bar_utc": "2026-11-13T21:00:00+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "file": "GSPC_5m_60d.json",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=5m&range=60d&includePrePost=false",
+  "status": 200,
+  "request_utc": "2026-11-14T20:21:41.897897+00:00",
+  "response_utc": "2026-11-14T20:21:42.064361+00:00",
+  "bars": 4681,
+  "last_bar_utc": "2026-11-13T21:00:00+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "file": "SPY_1d_max.json",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1d&range=max&includePrePost=false",
+  "status": 200,
+  "request_utc": "2026-11-14T20:21:44.067191+00:00",
+  "response_utc": "2026-11-14T20:21:44.162354+00:00",
+  "bars": 407,
+  "last_bar_utc": "2026-11-13T21:00:00+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "file": "SPY_1h_730d.json",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1h&range=730d&includePrePost=false",
+  "status": 200,
+  "request_utc": "2026-11-14T20:21:46.163280+00:00",
+  "response_utc": "2026-11-14T20:21:46.291395+00:00",
+  "bars": 5099,
+  "last_bar_utc": "2026-11-13T21:00:00+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "file": "SPY_15m_60d.json",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=15m&range=60d&includePrePost=false",
+  "status": 200,
+  "request_utc": "2026-11-14T20:21:48.297319+00:00",
+  "response_utc": "2026-11-14T20:21:48.376028+00:00",
+  "bars": 1561,
+  "last_bar_utc": "2026-11-13T21:00:00+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ },
+ {
+  "file": "SPY_5m_60d.json",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=5m&range=60d&includePrePost=false",
+  "status": 200,
+  "request_utc": "2026-11-14T20:21:50.378088+00:00",
+  "response_utc": "2026-11-14T20:21:50.503403+00:00",
+  "bars": 4681,
+  "last_bar_utc": "2026-11-13T21:00:00+00:00",
+  "classification": "DELAYED_RESEARCH_ONLY"
+ }
+]
