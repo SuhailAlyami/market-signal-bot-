@@ -1,0 +1,179 @@
+{
+ "SPX_5m_64": {
+  "source": "data/spx-collection:breadth5m/bars5m.json",
+  "sessions": 64,
+  "d%": 0.15,
+  "K_bars": 6,
+  "n_real": 87,
+  "meanR_real": -0.337,
+  "ci_real": [
+   -0.518,
+   -0.152
+  ],
+  "win%_real": 37.9,
+  "n_placebo": 3520,
+  "meanR_placebo": -0.282,
+  "win%_placebo": 41.2,
+  "edge_vs_placebo": -0.055,
+  "ci_edge": [
+   -0.236,
+   0.13
+  ],
+  "per_level": {
+   "H": {
+    "n": 23,
+    "meanR": -0.221,
+    "ci": [
+     -0.564,
+     0.144
+    ]
+   },
+   "L": {
+    "n": 21,
+    "meanR": -0.382,
+    "ci": [
+     -0.739,
+     -0.005
+    ]
+   },
+   "O": {
+    "n": 22,
+    "meanR": -0.282,
+    "ci": [
+     -0.669,
+     0.1
+    ]
+   },
+   "C": {
+    "n": 21,
+    "meanR": -0.476,
+    "ci": [
+     -0.832,
+     -0.095
+    ]
+   }
+  }
+ },
+ "SPX_1h_728": {
+  "source": "origin/data-history-20261114:history/GSPC_1h_730d.json.gz",
+  "sessions": 728,
+  "d%": 0.3,
+  "K_bars": 2,
+  "n_real": 1061,
+  "meanR_real": -0.209,
+  "ci_real": [
+   -0.26,
+   -0.163
+  ],
+  "win%_real": 40.5,
+  "n_placebo": 36970,
+  "meanR_placebo": -0.186,
+  "win%_placebo": 42.1,
+  "edge_vs_placebo": -0.024,
+  "ci_edge": [
+   -0.074,
+   0.023
+  ],
+  "unseen_n": 990,
+  "unseen_meanR": -0.211,
+  "unseen_ci": [
+   -0.259,
+   -0.161
+  ],
+  "per_level": {
+   "H": {
+    "n": 270,
+    "meanR": -0.219,
+    "ci": [
+     -0.302,
+     -0.134
+    ]
+   },
+   "L": {
+    "n": 223,
+    "meanR": -0.199,
+    "ci": [
+     -0.309,
+     -0.088
+    ]
+   },
+   "O": {
+    "n": 230,
+    "meanR": -0.187,
+    "ci": [
+     -0.294,
+     -0.081
+    ]
+   },
+   "C": {
+    "n": 338,
+    "meanR": -0.223,
+    "ci": [
+     -0.307,
+     -0.135
+    ]
+   }
+  }
+ },
+ "SPY_1h_728": {
+  "source": "origin/data-history-20261114:history/SPY_1h_730d.json.gz",
+  "sessions": 728,
+  "d%": 0.3,
+  "K_bars": 2,
+  "n_real": 1056,
+  "meanR_real": -0.218,
+  "ci_real": [
+   -0.266,
+   -0.17
+  ],
+  "win%_real": 39.5,
+  "n_placebo": 37852,
+  "meanR_placebo": -0.165,
+  "win%_placebo": 43.4,
+  "edge_vs_placebo": -0.053,
+  "ci_edge": [
+   -0.101,
+   -0.005
+  ],
+  "unseen_n": 989,
+  "unseen_meanR": -0.217,
+  "unseen_ci": [
+   -0.268,
+   -0.165
+  ],
+  "per_level": {
+   "H": {
+    "n": 271,
+    "meanR": -0.2,
+    "ci": [
+     -0.286,
+     -0.111
+    ]
+   },
+   "L": {
+    "n": 223,
+    "meanR": -0.206,
+    "ci": [
+     -0.32,
+     -0.092
+    ]
+   },
+   "O": {
+    "n": 225,
+    "meanR": -0.252,
+    "ci": [
+     -0.36,
+     -0.133
+    ]
+   },
+   "C": {
+    "n": 337,
+    "meanR": -0.217,
+    "ci": [
+     -0.301,
+     -0.129
+    ]
+   }
+  }
+ }
+}
