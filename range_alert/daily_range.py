@@ -1,0 +1,77 @@
+"""Pre-open SPX daily range alert (Telegram). Expected 1-day move = prior close x (VIX/100) / sqrt(252).
+Historical coverage 2010-2026 (both daily high and low inside the band): +/-1 move 68.7%, +/-1.5 moves 90.1%.
+No direction forecast: SPX closed up on 54.5% of days since 2010 (base rate, not a signal). Data: Yahoo daily (delayed)."""
+import json
+import math
+import os
+import sys
+import urllib.parse
+import urllib.request
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import exchange_calendars as xc
+
+NY, RIYADH = ZoneInfo('America/New_York'), ZoneInfo('Asia/Riyadh')
+CAL = xc.get_calendar('XNYS', start='2026-01-01', end='2027-12-31')
+
+
+def last_close(symbol, before):
+    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol, safe="")}?interval=1d&range=10d'
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; suhail-hunter-range-alert)'})
+    r = json.loads(urllib.request.urlopen(req, timeout=20).read())['chart']['result'][0]
+    rows = [(datetime.fromtimestamp(t, timezone.utc).astimezone(NY).date(), c)
+            for t, c in zip(r['timestamp'], r['indicators']['quote'][0]['close']) if c]
+    rows = [x for x in rows if x[0] < before]  # completed sessions only
+    return rows[-1]
+
+
+def build(now=None, force=False):
+    now = now or datetime.now(timezone.utc)
+    today = now.astimezone(NY).date()
+    if CAL.is_session(today.isoformat()):
+        session = today
+    elif force:
+        session = CAL.date_to_session(today.isoformat(), direction='next').date()
+    else:
+        return None
+    opening = CAL.session_open(session.isoformat()).to_pydatetime()
+    (d, spx), (dv, vix) = last_close('^GSPC', session), last_close('^VIX', session)
+    m = spx*vix/100/math.sqrt(252)
+    late = now > opening
+    lines = [
+        f"📊 نطاق SPX المتوقع — جلسة {session.isoformat()}",
+        f"إغلاق {d.isoformat()}: {spx:,.2f} | VIX: {vix:.2f}",
+        f"الحركة المتوقعة: ±{m:.0f} نقطة",
+        "",
+        f"النطاق المرجّح (68.7% تاريخيًا): {spx-m:,.0f} – {spx+m:,.0f}",
+        f"النطاق الواسع (90.1% تاريخيًا): {spx-1.5*m:,.0f} – {spx+1.5*m:,.0f}",
+        "",
+        "الاتجاه: لا توقع (منذ 2010 أغلق SPX صاعدًا 54.5% من الأيام).",
+        f"الافتتاح: {opening.astimezone(RIYADH).strftime('%H:%M')} بتوقيت الرياض"
+        + (" — ⚠️ وصل التنبيه بعد الافتتاح" if late else ""),
+        "المصدر: Yahoo يومي (متأخر). نطاق إحصائي، ليس توصية تداول.",
+    ]
+    return "\n".join(lines)
+
+
+def send(text):
+    token, chat = os.environ.get('TELEGRAM_BOT_TOKEN'), os.environ.get('TELEGRAM_CHAT_ID')
+    if not token or not chat:
+        print('NO_TELEGRAM_CREDENTIALS; message not sent')
+        return False
+    data = urllib.parse.urlencode({'chat_id': chat, 'text': text}).encode()
+    resp = json.loads(urllib.request.urlopen(f'https://api.telegram.org/bot{token}/sendMessage', data=data, timeout=20).read())
+    print('TELEGRAM_OK' if resp.get('ok') else f'TELEGRAM_FAILED {resp}')
+    return bool(resp.get('ok'))
+
+
+if __name__ == '__main__':
+    force = '--force' in sys.argv
+    msg = build(force=force)
+    if msg is None:
+        print('NO_SESSION_TODAY')
+        sys.exit(0)
+    print(msg)
+    if '--dry-run' not in sys.argv and not send(msg):
+        sys.exit(1)

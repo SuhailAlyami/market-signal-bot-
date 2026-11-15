@@ -1,0 +1,54 @@
+name: range-alert
+# Daily pre-open SPX range alert to Telegram. Several slots because GitHub schedules can run hours late;
+# the cache key makes only the first successful run of each New York day send.
+on:
+  schedule:
+    - cron: '13 10 * * 1-5'   # 13:13 Riyadh
+    - cron: '13 11 * * 1-5'   # 14:13 Riyadh
+    - cron: '13 12 * * 1-5'   # 15:13 Riyadh
+    - cron: '13 13 * * 1-5'   # 16:13 Riyadh
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Send for the next session even if today is not a trading day'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: range-alert
+  cancel-in-progress: false
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: day
+        run: echo "ny=$(TZ=America/New_York date +%F)" >> "$GITHUB_OUTPUT"
+      - id: sent
+        if: github.event_name == 'schedule'
+        uses: actions/cache/restore@v4
+        with:
+          path: .range-alert-sent
+          key: range-alert-${{ steps.day.outputs.ny }}
+      - uses: actions/setup-python@v5
+        if: steps.sent.outputs.cache-hit != 'true'
+        with:
+          python-version: '3.12'
+      - if: steps.sent.outputs.cache-hit != 'true'
+        run: pip install exchange_calendars==4.13.2
+      - if: steps.sent.outputs.cache-hit != 'true'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python range_alert/daily_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
+          grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY' out.txt && echo ok > .range-alert-sent
+      - if: github.event_name == 'schedule' && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-alert-sent') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: .range-alert-sent
+          key: range-alert-${{ steps.day.outputs.ny }}
