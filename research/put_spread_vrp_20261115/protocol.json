@@ -1,0 +1,25 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY",
+  "registered": "2026-11-15, committed and pushed before any result was computed",
+  "hypothesis": "The SPX volatility risk premium (VIX above subsequent realized vol on 86% of days 1990-2026) can be harvested with a defined-risk, short-dated put credit spread whose modelled credit exceeds payouts plus costs.",
+  "data": "Yahoo daily closes ^GSPC and ^VIX 1990-01-02..2026-11-13 (research/volatility_premium_20261115). DELAYED_RESEARCH_ONLY.",
+  "pricing_assumption": "No historical option prices exist in the repo. Spreads are priced with Black-Scholes, sigma = VIX/100 for both strikes, r = 0, q = 0, T = 30/365. VIX is 30-day ATM-weighted implied vol; real OTM puts trade at higher implied vol (skew), so modelled credits are expected to be LOWER than real credits for the short leg and the long leg alike; net effect on the spread is not assumed. Results are a model estimate, not a fill record.",
+  "rules": {
+    "schedule": "Non-overlapping cycles: enter at the close of trading day i, expire at the close of day i+21 (trading days), next entry at that expiry close.",
+    "short_strike": "K1 = S * exp(-1.0 * sigma * sqrt(T)) (about one standard deviation below spot).",
+    "long_strike": "K2 = K1 - 0.5 * S * sigma * sqrt(T) (width = half a standard deviation).",
+    "credit": "BS_put(K1) - BS_put(K2).",
+    "payout_at_expiry": "min(max(K1 - S_T, 0), K1 - K2), cash settled on the close.",
+    "costs": "2 SPX index points per spread (1 per leg, entry only; held to cash-settled expiry). Sensitivity: 4 points.",
+    "no_filters": "No VIX filter, no stop, no early exit, no sizing rule. One change per experiment."
+  },
+  "blocks": {"A": "1990-1999", "B": "2000-2009", "C": "2010-2022", "D_recent": "2023-2026"},
+  "baselines": ["no trade = 0", "buying the identical spread (the old project's side: pays credit + costs, receives payout)", "SPX points change over the same cycles (context only)"],
+  "metrics": "cycles, win rate, mean net points per spread, total, worst cycle, max drawdown of cumulative net, mean net as % of max risk (width - credit), bootstrap 95% CI of mean (2000 draws, seed 1601).",
+  "verdict_at_cost_2": {
+    "SUCCESS": "mean net > 0 in every block AND full-period bootstrap 95% lower bound > 0",
+    "FAILURE": "full-period mean net <= 0",
+    "INCONCLUSIVE": "otherwise"
+  },
+  "scope_limit": "Even SUCCESS only permits a paper test with real IBKR quotes (no orders). It is not evidence of real fills, skew, early-assignment-free execution, or margin outcomes."
+}
