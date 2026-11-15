@@ -64,3 +64,11 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python shadow_tradingagents/notify.py data-repo/records
+      - name: Telegram failure notice
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python -c "import os,sys; sys.path.insert(0,'range_alert'); from daily_range import send; send('⚠️ تشغيل TradingAgents (ظل SPY) فشل اليوم — لا قرار مسجل.\n' + os.environ['RUN_URL'])"
