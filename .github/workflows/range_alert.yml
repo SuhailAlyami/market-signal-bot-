@@ -42,8 +42,8 @@ jobs:
         run: pip install exchange_calendars==4.13.2
       - if: steps.sent.outputs.cache-hit != 'true'
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_SECOND_BOT_TOKEN || secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_SECOND_CHAT_ID || secrets.TELEGRAM_CHAT_ID }}
         run: |
           python range_alert/daily_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
           grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY' out.txt && echo ok > .range-alert-sent
