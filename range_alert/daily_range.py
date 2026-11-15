@@ -7,7 +7,7 @@ import os
 import sys
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 import exchange_calendars as xc
@@ -43,6 +43,20 @@ def options_cost_line(vix, rv):
     return f"تكلفة الأوبشن: VIX {vix:.1f} مقابل تقلب فعلي (21 يوم) {rv:.1f} ← الفارق {p:+.1f} نقطة — {label}"
 
 
+def calendar_notes(session):
+    """Arabic notes from the official NYSE calendar: early close today, market closed on the next weekday(s)."""
+    notes = []
+    close = CAL.session_close(session.isoformat()).to_pydatetime()
+    if close.astimezone(NY).hour < 16:
+        notes.append(f"⚠️ جلسة قصيرة: الإغلاق {close.astimezone(NY).strftime('%H:%M')} نيويورك = "
+                     f"{close.astimezone(RIYADH).strftime('%H:%M')} الرياض")
+    nxt = CAL.date_to_session((session+timedelta(days=1)).isoformat(), direction='next').date()
+    closed = [session+timedelta(days=k) for k in range(1, (nxt-session).days) if (session+timedelta(days=k)).weekday() < 5]
+    if closed:
+        notes.append(f"🏖️ السوق مغلق (عطلة رسمية): {'، '.join(d.isoformat() for d in closed)} — الجلسة التالية {nxt.isoformat()}")
+    return notes
+
+
 def build(now=None, force=False):
     now = now or datetime.now(timezone.utc)
     today = now.astimezone(NY).date()
@@ -70,6 +84,7 @@ def build(now=None, force=False):
         "الاتجاه: لا توقع (منذ 2010 أغلق SPX صاعدًا 54.5% من الأيام).",
         f"الافتتاح: {opening.astimezone(RIYADH).strftime('%H:%M')} بتوقيت الرياض"
         + (" — ⚠️ وصل التنبيه بعد الافتتاح" if late else ""),
+        *calendar_notes(session),
         "المصدر: Yahoo يومي (متأخر). نطاق إحصائي، ليس توصية تداول.",
     ]
     return "\n".join(lines)

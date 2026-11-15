@@ -47,8 +47,8 @@ def plan(deep_c, quick_c, n=MAX_ATTEMPTS):
     return pairs
 
 
-def main(out_dir, force=False):
-    now = datetime.now(timezone.utc)
+def main(out_dir, force=False, now=None):
+    now = now or datetime.now(timezone.utc)
     today = now.astimezone(NY).date().isoformat()
     if not CAL.is_session(today):
         if not force:

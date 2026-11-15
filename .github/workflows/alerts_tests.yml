@@ -1,0 +1,17 @@
+name: alerts-tests
+on:
+  pull_request:
+    paths: ['range_alert/**', 'shadow_tradingagents/**', '.github/workflows/alerts_tests.yml']
+  push:
+    branches: [main]
+    paths: ['range_alert/**', 'shadow_tradingagents/**']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q exchange_calendars==4.13.2
+      - run: python -m unittest range_alert/test_calendar.py shadow_tradingagents/test_run_shadow.py -v
