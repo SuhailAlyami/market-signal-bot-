@@ -1,0 +1,78 @@
+{
+ "first": "2010-01-04",
+ "last": "2026-11-13",
+ "n": 4243,
+ "mae": {
+  "2010-2019": {
+   "demark": {
+    "high": 8.4,
+    "low": 10.2
+   },
+   "prior_hl": {
+    "high": 9.5,
+    "low": 11.5
+   },
+   "vix_band": {
+    "high": 12.3,
+    "low": 14.2
+   },
+   "avg_range": {
+    "high": 8.0,
+    "low": 9.6
+   }
+  },
+  "2020+": {
+   "demark": {
+    "high": 27.8,
+    "low": 32.6
+   },
+   "prior_hl": {
+    "high": 30.1,
+    "low": 35.2
+   },
+   "vix_band": {
+    "high": 39.3,
+    "low": 45.5
+   },
+   "avg_range": {
+    "high": 27.1,
+    "low": 31.2
+   }
+  }
+ },
+ "levels": {
+  "2010-2019": {
+   "demark": {
+    "high_touched_pct": 47.8,
+    "high_reject_pct": 36.5,
+    "low_touched_pct": 43.6,
+    "low_reject_pct": 48.8
+   },
+   "prior_hl": {
+    "high_touched_pct": 53.5,
+    "high_reject_pct": 36.7,
+    "low_touched_pct": 41.9,
+    "low_reject_pct": 48.7
+   }
+  },
+  "2020+": {
+   "demark": {
+    "high_touched_pct": 51.7,
+    "high_reject_pct": 38.0,
+    "low_touched_pct": 44.2,
+    "low_reject_pct": 43.6
+   },
+   "prior_hl": {
+    "high_touched_pct": 56.8,
+    "high_reject_pct": 37.2,
+    "low_touched_pct": 44.5,
+    "low_reject_pct": 43.4
+   }
+  }
+ },
+ "n_by_period": {
+  "2010-2019": 2516,
+  "2020+": 1727
+ },
+ "verdict": "NOT_BETTER_THAN_BASELINES"
+}
