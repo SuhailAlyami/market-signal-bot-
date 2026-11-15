@@ -24,7 +24,12 @@ DEEP_PREF = ['meta-llama/llama-4-maverick-17b-128e-instruct', 'moonshotai/kimi-k
              'openai/gpt-oss-120b', 'llama-3.3-70b-versatile', 'meta-llama/llama-4-scout-17b-16e-instruct', 'qwen/qwen3-32b']
 QUICK_PREF = ['meta-llama/llama-4-scout-17b-16e-instruct', 'llama-3.3-70b-versatile', 'openai/gpt-oss-20b',
               'moonshotai/kimi-k2-instruct-0905', 'moonshotai/kimi-k2-instruct', 'openai/gpt-oss-120b', 'qwen/qwen3-32b']
-MIN_TPM = 9000      # one analyst request was 8291 tokens
+MIN_TPM = 9000      # one analyst request was 8291 tokens, a later one 10156
+# Google AI Studio free tier (no card): used instead of Groq when GOOGLE_API_KEY is set; far higher token limits.
+GOOGLE_PREF = ['gemini-3.5-flash', 'gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite',
+               'gemini-2.5-flash-lite']
+# Smaller prompts so each request fits the free per-minute token caps (defaults: 20 / 10 / 7, output unbounded).
+SLIM = dict(news_article_limit=6, global_news_article_limit=4, global_news_lookback_days=3, max_tokens=1500)
 MAX_ATTEMPTS = 3
 API = 'https://api.groq.com/openai/v1'
 
@@ -49,6 +54,12 @@ def probe_tpm(model):
         return int(e.headers.get('x-ratelimit-limit-tokens') or 0) if e.code == 429 else 0
     except Exception:  # noqa: BLE001
         return 0
+
+
+def google_models():
+    req = urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200',
+                                 headers={'x-goog-api-key': os.environ['GOOGLE_API_KEY'], 'User-Agent': 'suhail-hunter-shadow'})
+    return sorted(m['name'].split('/', 1)[1] for m in json.loads(urllib.request.urlopen(req, timeout=20).read())['models'])
 
 
 def usable(name):
@@ -88,12 +99,20 @@ def main(out_dir, force=False, now=None):
     out = Path(out_dir)/f'{today}.json'
     if out.exists():
         print('ALREADY_RECORDED', out.name); return 0
-    available = groq_models()
-    print('GROQ_MODELS', ' '.join(available), file=sys.stderr)
-    tpm = {m: probe_tpm(m) for m in dict.fromkeys(DEEP_PREF+QUICK_PREF) if m in available and usable(m)}
-    print('GROQ_TPM', json.dumps(tpm), file=sys.stderr, flush=True)
-    pairs = plan(candidates(DEEP_PREF, available, os.environ.get('SHADOW_DEEP_MODEL'), tpm),
-                 candidates(QUICK_PREF, available, os.environ.get('SHADOW_QUICK_MODEL'), tpm))
+    if os.environ.get('GOOGLE_API_KEY'):
+        provider = 'google'
+        available = google_models()
+        tpm = {}
+        g = candidates(GOOGLE_PREF, available, os.environ.get('SHADOW_DEEP_MODEL'))
+        pairs = plan(g, g)
+    else:
+        provider = 'groq'
+        available = groq_models()
+        tpm = {m: probe_tpm(m) for m in dict.fromkeys(DEEP_PREF+QUICK_PREF) if m in available and usable(m)}
+        print('GROQ_TPM', json.dumps(tpm), file=sys.stderr, flush=True)
+        pairs = plan(candidates(DEEP_PREF, available, os.environ.get('SHADOW_DEEP_MODEL'), tpm),
+                     candidates(QUICK_PREF, available, os.environ.get('SHADOW_QUICK_MODEL'), tpm))
+    print('PROVIDER', provider, 'MODELS', ' '.join(available), file=sys.stderr)
     print('PLAN', json.dumps(pairs), file=sys.stderr, flush=True)
     from tradingagents.default_config import DEFAULT_CONFIG
     from tradingagents.graph.trading_graph import TradingAgentsGraph
@@ -102,7 +121,8 @@ def main(out_dir, force=False, now=None):
     failures = []
     for deep, quick in pairs:
         cfg = DEFAULT_CONFIG.copy()
-        cfg.update(llm_provider='groq', deep_think_llm=deep, quick_think_llm=quick, max_debate_rounds=1,
+        cfg.update(SLIM)
+        cfg.update(llm_provider=provider, deep_think_llm=deep, quick_think_llm=quick, max_debate_rounds=1,
                    max_risk_discuss_rounds=1, llm_max_retries=6, output_language='English')
         t0 = time.time()
         try:
@@ -118,7 +138,7 @@ def main(out_dir, force=False, now=None):
     rec = {'session': today, 'data_as_of_close': prev, 'ticker': TICKER, 'signal': signal,
            'generated_at_utc': datetime.now(timezone.utc).isoformat(), 'seconds': round(time.time()-t0, 1),
            'deep_model': deep, 'quick_model': quick, 'tradingagents_commit': os.environ.get('TA_COMMIT'),
-           'failed_attempts': failures, 'groq_tpm': tpm,
+           'provider': provider, 'failed_attempts': failures, 'groq_tpm': tpm,
            'final_trade_decision': str(state.get('final_trade_decision', ''))[:4000],
            'classification': 'SHADOW_RESEARCH_ONLY'}
     out.parent.mkdir(parents=True, exist_ok=True)
