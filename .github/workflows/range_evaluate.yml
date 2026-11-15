@@ -44,9 +44,11 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        shell: bash
         run: |
+          set -o pipefail
           python range_alert/evaluate_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
-          grep -q -E 'TELEGRAM_OK' out.txt && echo ok > .range-eval-sent || true
+          if grep -q 'TELEGRAM_OK' out.txt; then echo ok > .range-eval-sent; fi
       - if: github.event_name == 'schedule' && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-eval-sent') != ''
         uses: actions/cache/save@v4
         with:
