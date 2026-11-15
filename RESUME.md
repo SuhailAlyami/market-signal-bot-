@@ -1,5 +1,7 @@
 # RESUME.md — Suhail Hunter
 
+> **2026-11-15: this file's detailed notes below are historical (from 2026-10-24). Current state for any AI tool: [AI_CONTEXT.md](AI_CONTEXT.md).**
+
 **Status: NOT READY** (ready for *connection/health verification only*; not ready for live early-detection use)
 
 Last examined: 2026-10-24  
