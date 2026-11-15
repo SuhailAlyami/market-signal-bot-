@@ -1,0 +1,32 @@
+{
+  "status": "NOT_READY_RESEARCH_ONLY",
+  "registered": "2026-11-15, committed and pushed before any result was computed",
+  "source_of_rule": "TikTok AI-generated video (samooalgo, 'Square of Nine simplified', gold). Shown: base = previous close; step = sqrt(close)/2; lines at close +/- step multiples; 'rejection candle at the line = confirmation'; 'strong close beyond the line = break' toward the next line. Examples were illustrative drawings, not recorded trades.",
+  "assumptions_not_in_video (fixed once, not changed after results)": {
+    "instrument_bars": "SPX cash index, 5-minute closed bars, XNYS regular session only (1m data aggregated to 5m).",
+    "base": "P = close of the last regular-session 5m bar of the immediately preceding XNYS session; a day whose preceding session is missing is skipped.",
+    "levels": "L_k = P + k*S for k in {-3,-2,-1,+1,+2,+3}, S = sqrt(P)/2.",
+    "rejection (fade)": "Level above the bar open: bar high >= L and close < L -> SHORT. Level below the bar open: bar low <= L and close > L -> LONG.",
+    "break (continuation)": "Bar open below L and close >= L + 0.25*S -> LONG. Bar open above L and close <= L - 0.25*S -> SHORT.",
+    "priority": "If one bar produces several setups, use the level nearest the bar close; break takes precedence over rejection at the same level.",
+    "entry": "Open of the next 5m bar.",
+    "stop": "0.25*S beyond the level against the trade (LONG: L - 0.25*S; SHORT: L + 0.25*S).",
+    "target": "One step from the level in the trade direction (LONG: L + S; SHORT: L - S).",
+    "exit": "First of stop/target on later bars; stop first if both in one bar (worst case); gap through stop fills at the bar open; otherwise exit at the session's last bar close. Skip the trade if the entry open is already beyond the stop or target.",
+    "position": "One open trade at a time; each (level, setup) can fire once per session; no new entries in the last 15 minutes."
+  },
+  "costs_points_round_trip": [0.5, 1.0, 2.0],
+  "data": "research/objective_review_20261107/opening_validation_raw.json.gz (116 previously consumed sessions 2026-05-19..2026-11-04; 5m before 2026-09-14, 1m after). Sessions >= 2026-11-05 are NOT used (reserved for another frozen test). No new data.",
+  "temporal_split": {"development": "sessions < 2026-09-14 (reported only; nothing is fitted)", "out_of_sample_test": "sessions 2026-09-14..2026-11-04"},
+  "controls": {
+    "C_vol": "Same rules with S_vol = 0.5 x previous session high-low range (volatility-normalized step), same anchor P.",
+    "C_anchor": "Same rules and Gann step S, anchor shifted by a random phase u*S, u ~ Uniform(-0.5, 0.5) per session; 200 draws, seed 1501; report the distribution of test net.",
+    "no_signal": "No trades: net 0."
+  },
+  "metrics": "trades, net points after costs, expectancy per trade, max drawdown of the chronological cumulative net curve, session-cluster bootstrap 95% CI of expectancy (2000 draws, seed 1502).",
+  "verdict_on_test_block_at_cost_1": {
+    "SUCCESS": "net > 0 AND bootstrap 95% lower bound of expectancy > 0 AND net > C_vol net AND net > 95th percentile of C_anchor nets",
+    "FAILURE": "net <= 0, OR net not above C_vol, OR net not above the C_anchor median",
+    "INCONCLUSIVE": "anything else"
+  }
+}
