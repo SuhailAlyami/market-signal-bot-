@@ -11,7 +11,9 @@ Read-only checks through the claude.ai Interactive Brokers connector. No orders,
 | Open interest per contract | YES: 7560 call OI 188, 7560 put OI 549 |
 | Greeks per contract | YES: gamma 0.00462 (both), call delta 0.418, put delta -0.582; bid/ask returned (frozen) |
 
-Conclusion: the inputs for a dealer-gamma (GEX) regime and level (open interest x gamma per strike) are available from the owner's IBKR account. Open interest is end-of-day, so a pre-open GEX map does not need a real-time feed.
+Conclusion (corrected 2026-11-15 after owner review): one sample at market close shows that SOME values (OI, model greeks, frozen bid/ask) are returned for two contracts. It does NOT show coverage of all intended SPX 0DTE contracts, their timeliness during an open session, or any trading edge. IBKR documentation describes open-interest tick 101 as currently available for stocks, and real-time greeks require market-data subscriptions for both the underlying and the option; coverage must be measured per contract, not assumed.
+
+OI and gamma do not reveal whether dealers bought or sold a contract. Any "negative gamma" regime is a model output under an assumed customer-positioning convention, not an observation of dealer positions. Nothing here is a confirmed hedging map.
 
 Constraints found:
 - One snapshot call per option contract; a usable map (about +/-150 points, several expirations) needs hundreds of calls per day. Feasible through the IB Gateway/TWS API scripts already in the repo (owner machine), not practical through chat calls, and not reachable from GitHub Actions (connector lives only in Claude sessions).
