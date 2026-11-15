@@ -16,14 +16,31 @@ NY, RIYADH = ZoneInfo('America/New_York'), ZoneInfo('Asia/Riyadh')
 CAL = xc.get_calendar('XNYS', start='2026-01-01', end='2027-12-31')
 
 
-def last_close(symbol, before):
-    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol, safe="")}?interval=1d&range=10d'
+def closes(symbol, before, rng='3mo'):
+    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol, safe="")}?interval=1d&range={rng}'
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; suhail-hunter-range-alert)'})
     r = json.loads(urllib.request.urlopen(req, timeout=20).read())['chart']['result'][0]
     rows = [(datetime.fromtimestamp(t, timezone.utc).astimezone(NY).date(), c)
             for t, c in zip(r['timestamp'], r['indicators']['quote'][0]['close']) if c]
-    rows = [x for x in rows if x[0] < before]  # completed sessions only
-    return rows[-1]
+    return [x for x in rows if x[0] < before]  # completed sessions only
+
+
+def last_close(symbol, before):
+    return closes(symbol, before)[-1]
+
+
+def realized_vol_21(rows):
+    """Annualized close-to-close volatility (%) over the last 21 completed sessions (known before the open)."""
+    px = [c for _, c in rows[-22:]]
+    rets = [math.log(b/a) for a, b in zip(px, px[1:])]
+    return math.sqrt(sum(x*x for x in rets)*252/len(rets))*100
+
+
+def options_cost_line(vix, rv):
+    """VIX minus trailing realized vol. Long-run mean of VIX minus subsequent realized vol, 1990-2026: +4.1 points."""
+    p = vix-rv
+    label = 'مرتفعة: المشتري يدفع علاوة أعلى من المعتاد' if p > 4.1 else ('عادية' if p >= 0 else 'رخيصة نسبيًا: التقلب الفعلي أعلى من المسعّر')
+    return f"تكلفة الأوبشن: VIX {vix:.1f} مقابل تقلب فعلي (21 يوم) {rv:.1f} ← الفارق {p:+.1f} نقطة — {label}"
 
 
 def build(now=None, force=False):
@@ -36,7 +53,9 @@ def build(now=None, force=False):
     else:
         return None
     opening = CAL.session_open(session.isoformat()).to_pydatetime()
-    (d, spx), (dv, vix) = last_close('^GSPC', session), last_close('^VIX', session)
+    spx_rows = closes('^GSPC', session)
+    (d, spx), (dv, vix) = spx_rows[-1], last_close('^VIX', session)
+    rv = realized_vol_21(spx_rows)
     m = spx*vix/100/math.sqrt(252)
     late = now > opening
     lines = [
@@ -47,6 +66,7 @@ def build(now=None, force=False):
         f"النطاق المرجّح (68.7% تاريخيًا): {spx-m:,.0f} – {spx+m:,.0f}",
         f"النطاق الواسع (90.1% تاريخيًا): {spx-1.5*m:,.0f} – {spx+1.5*m:,.0f}",
         "",
+        options_cost_line(vix, rv),
         "الاتجاه: لا توقع (منذ 2010 أغلق SPX صاعدًا 54.5% من الأيام).",
         f"الافتتاح: {opening.astimezone(RIYADH).strftime('%H:%M')} بتوقيت الرياض"
         + (" — ⚠️ وصل التنبيه بعد الافتتاح" if late else ""),
