@@ -1,0 +1,182 @@
+{
+ "protocol_sha256": "aeabf4c070e3b2f9b0de0533f430c1673ee755fe9fc2e708b75fb64ad19aff35",
+ "sessions": {
+  "development": [
+   76,
+   "2026-05-20",
+   "2026-09-10"
+  ],
+  "test": [
+   37,
+   "2026-09-15",
+   "2026-11-04"
+  ]
+ },
+ "development": {
+  "gann": {
+   "0.5": {
+    "trades": 102,
+    "net": -275.8,
+    "expectancy": -2.704,
+    "max_drawdown": 283.85,
+    "win_rate": 0.353
+   },
+   "1.0": {
+    "trades": 102,
+    "net": -326.8,
+    "expectancy": -3.204,
+    "max_drawdown": 333.85,
+    "win_rate": 0.353
+   },
+   "2.0": {
+    "trades": 102,
+    "net": -428.8,
+    "expectancy": -4.204,
+    "max_drawdown": 433.85,
+    "win_rate": 0.333
+   }
+  },
+  "gann_ci95_expectancy_cost1": [
+   -7.079,
+   1.164
+  ],
+  "gann_exit_reasons": {
+   "target": 22,
+   "stop": 58,
+   "stop_gap": 0,
+   "session_close": 22
+  },
+  "gann_by_kind_cost1": {
+   "reject": {
+    "trades": 86,
+    "net": -365.62,
+    "expectancy": -4.251,
+    "max_drawdown": 372.67,
+    "win_rate": 0.314
+   },
+   "break": {
+    "trades": 16,
+    "net": 38.82,
+    "expectancy": 2.426,
+    "max_drawdown": 93.58,
+    "win_rate": 0.562
+   }
+  },
+  "median_step_points": 43.38,
+  "median_vol_step_points": 30.7,
+  "control_vol": {
+   "0.5": {
+    "trades": 178,
+    "net": -204.41,
+    "expectancy": -1.148,
+    "max_drawdown": 471.37,
+    "win_rate": 0.376
+   },
+   "1.0": {
+    "trades": 178,
+    "net": -293.41,
+    "expectancy": -1.648,
+    "max_drawdown": 541.87,
+    "win_rate": 0.376
+   },
+   "2.0": {
+    "trades": 178,
+    "net": -471.41,
+    "expectancy": -2.648,
+    "max_drawdown": 682.87,
+    "win_rate": 0.365
+   }
+  },
+  "no_signal_net": 0,
+  "control_anchor_net_cost1": {
+   "median": -12.58,
+   "p5": -321.48,
+   "p95": 313.55,
+   "gann_rank_pct": 5.0
+  }
+ },
+ "test": {
+  "gann": {
+   "0.5": {
+    "trades": 40,
+    "net": -253.67,
+    "expectancy": -6.342,
+    "max_drawdown": 253.67,
+    "win_rate": 0.225
+   },
+   "1.0": {
+    "trades": 40,
+    "net": -273.67,
+    "expectancy": -6.842,
+    "max_drawdown": 273.67,
+    "win_rate": 0.2
+   },
+   "2.0": {
+    "trades": 40,
+    "net": -313.67,
+    "expectancy": -7.842,
+    "max_drawdown": 313.67,
+    "win_rate": 0.2
+   }
+  },
+  "gann_ci95_expectancy_cost1": [
+   -12.133,
+   0.246
+  ],
+  "gann_exit_reasons": {
+   "target": 6,
+   "stop": 27,
+   "stop_gap": 0,
+   "session_close": 7
+  },
+  "gann_by_kind_cost1": {
+   "reject": {
+    "trades": 35,
+    "net": -207.3,
+    "expectancy": -5.923,
+    "max_drawdown": 231.49,
+    "win_rate": 0.171
+   },
+   "break": {
+    "trades": 5,
+    "net": -66.37,
+    "expectancy": -13.274,
+    "max_drawdown": 66.37,
+    "win_rate": 0.4
+   }
+  },
+  "median_step_points": 43.9,
+  "median_vol_step_points": 28.77,
+  "control_vol": {
+   "0.5": {
+    "trades": 77,
+    "net": 204.42,
+    "expectancy": 2.655,
+    "max_drawdown": 95.63,
+    "win_rate": 0.455
+   },
+   "1.0": {
+    "trades": 77,
+    "net": 165.92,
+    "expectancy": 2.155,
+    "max_drawdown": 117.13,
+    "win_rate": 0.455
+   },
+   "2.0": {
+    "trades": 77,
+    "net": 88.92,
+    "expectancy": 1.155,
+    "max_drawdown": 160.13,
+    "win_rate": 0.442
+   }
+  },
+  "no_signal_net": 0,
+  "control_anchor_net_cost1": {
+   "median": -36.74,
+   "p5": -267.85,
+   "p95": 163.75,
+   "gann_rank_pct": 5.0
+  }
+ },
+ "verdict": "FAILURE"
+}
