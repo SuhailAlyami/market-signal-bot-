@@ -1,0 +1,66 @@
+name: tradingagents-shadow
+# Daily SHADOW decision of TradingAgents (pinned commit) on SPY before the open. No orders.
+# Records go to branch data/tradingagents-shadow. The LLM step never sees Telegram secrets,
+# and the Telegram step never sees the Groq key.
+on:
+  schedule:
+    - cron: '7 11 * * 1-5'    # 14:07 Riyadh
+    - cron: '7 12 * * 1-5'    # 15:07 Riyadh
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Run for the next session even if today is not a trading day'
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: tradingagents-shadow
+  cancel-in-progress: false
+env:
+  TA_COMMIT: 9fa1196fffbcfd9de5146d2dd2869df84ab99838
+jobs:
+  shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Data branch (create on first run)
+        shell: bash
+        run: |
+          if git ls-remote --exit-code --heads "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" data/tradingagents-shadow >/dev/null; then
+            git clone -q --depth 1 --branch data/tradingagents-shadow "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" data-repo
+          else
+            mkdir data-repo && cd data-repo && git init -q -b data/tradingagents-shadow && git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q "git+https://github.com/TauricResearch/TradingAgents@${TA_COMMIT}" exchange_calendars==4.13.2
+      - name: Shadow decision (Groq)
+        id: run
+        shell: bash
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          SEC_EDGAR_USER_AGENT: suhail-hunter research shadow
+        run: |
+          set -o pipefail
+          python shadow_tradingagents/run_shadow.py data-repo/records ${{ inputs.force && '--force' || '' }} | tee out.txt
+          if grep -q '"signal"' out.txt; then echo "new=1" >> "$GITHUB_OUTPUT"; fi
+      - name: Persist record
+        shell: bash
+        working-directory: data-repo
+        run: |
+          git config user.name "tradingagents-shadow"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -q -m "TradingAgents shadow record $(date -u +%FT%TZ) [run ${GITHUB_RUN_ID}]"
+          git push -q origin HEAD:refs/heads/data/tradingagents-shadow
+      - name: Telegram
+        if: steps.run.outputs.new == '1'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python shadow_tradingagents/notify.py data-repo/records
