@@ -1,0 +1,56 @@
+name: range-evaluate
+# Post-close Telegram check of the pre-open range alert. Several slots because GitHub schedules can run late;
+# the per-day cache key makes only the first successful run send.
+on:
+  schedule:
+    - cron: '37 21 * * 1-5'   # 00:37 Riyadh
+    - cron: '37 22 * * 1-5'   # 01:37 Riyadh
+    - cron: '37 23 * * 1-5'   # 02:37 Riyadh
+    - cron: '37 1 * * 2-6'    # 04:37 Riyadh
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Evaluate the latest completed session even if it is not today'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: range-evaluate
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: day
+        run: echo "ny=$(TZ=America/New_York date +%F)" >> "$GITHUB_OUTPUT"
+      - id: sent
+        if: github.event_name == 'schedule'
+        uses: actions/cache/restore@v4
+        with:
+          path: .range-eval-sent
+          key: range-eval-${{ steps.day.outputs.ny }}
+      - uses: actions/setup-python@v5
+        if: steps.sent.outputs.cache-hit != 'true'
+        with:
+          python-version: '3.12'
+      - if: steps.sent.outputs.cache-hit != 'true'
+        run: pip install exchange_calendars==4.13.2
+      - if: steps.sent.outputs.cache-hit != 'true'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        shell: bash
+        run: |
+          set -o pipefail
+          python range_alert/evaluate_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
+          if grep -q 'TELEGRAM_OK' out.txt; then echo ok > .range-eval-sent; fi
+      - if: github.event_name == 'schedule' && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-eval-sent') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: .range-eval-sent
+          key: range-eval-${{ steps.day.outputs.ny }}
