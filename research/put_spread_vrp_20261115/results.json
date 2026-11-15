@@ -1,0 +1,246 @@
+{
+ "protocol_sha256": "7d4fd5470f015827d7e41fef1900c964ccbbf52be71f715296d942d3ccb8c327",
+ "cost_2": {
+  "full_sell": {
+   "cycles": 442,
+   "win_rate": 0.747,
+   "mean_net": 0.95,
+   "total_net": 421.9,
+   "worst": -154.4,
+   "max_drawdown": 307.0,
+   "mean_pct_of_max_risk": -2.01,
+   "mean_credit": 5.84,
+   "mean_width": 52.8
+  },
+  "full_sell_ci95": [
+   -0.48,
+   2.22
+  ],
+  "full_buy": {
+   "cycles": 442,
+   "win_rate": 0.066,
+   "mean_net": -4.95,
+   "total_net": -2189.9,
+   "worst": -31.5,
+   "max_drawdown": 2195.8,
+   "mean_pct_of_max_risk": -15.27,
+   "mean_credit": 5.84,
+   "mean_width": 52.8
+  },
+  "spx_change_mean_points": 16.2,
+  "A_1990_1999": {
+   "cycles": 121,
+   "win_rate": 0.314,
+   "mean_net": -0.23,
+   "total_net": -27.7,
+   "worst": -12.7,
+   "max_drawdown": 106.5,
+   "mean_pct_of_max_risk": -8.44,
+   "mean_credit": 2.04,
+   "mean_width": 18.4,
+   "ci95": [
+    -0.67,
+    0.17
+   ]
+  },
+  "B_2000_2009": {
+   "cycles": 120,
+   "win_rate": 0.883,
+   "mean_net": -0.96,
+   "total_net": -114.6,
+   "worst": -43.3,
+   "max_drawdown": 176.6,
+   "mean_pct_of_max_risk": -2.76,
+   "mean_credit": 3.97,
+   "mean_width": 35.8,
+   "ci95": [
+    -2.76,
+    0.57
+   ]
+  },
+  "C_2010_2022": {
+   "cycles": 155,
+   "win_rate": 0.923,
+   "mean_net": 1.22,
+   "total_net": 189.6,
+   "worst": -154.4,
+   "max_drawdown": 290.3,
+   "mean_pct_of_max_risk": 1.47,
+   "mean_credit": 7.23,
+   "mean_width": 65.4,
+   "ci95": [
+    -1.82,
+    3.63
+   ]
+  },
+  "D_2023_2026": {
+   "cycles": 46,
+   "win_rate": 0.935,
+   "mean_net": 8.14,
+   "total_net": 374.6,
+   "worst": -129.1,
+   "max_drawdown": 129.1,
+   "mean_pct_of_max_risk": 5.11,
+   "mean_credit": 15.99,
+   "mean_width": 145.0,
+   "ci95": [
+    0.12,
+    14.55
+   ]
+  },
+  "worst_5": [
+   {
+    "entry": "2020-03-05",
+    "vix": 39.6,
+    "net": -154.4,
+    "spx_change": -535.3
+   },
+   {
+    "entry": "2025-02-07",
+    "vix": 16.5,
+    "net": -129.1,
+    "spx_change": -453.9
+   },
+   {
+    "entry": "2024-07-09",
+    "vix": 12.5,
+    "net": -91.1,
+    "spx_change": -377.5
+   },
+   {
+    "entry": "2020-02-04",
+    "vix": 16.0,
+    "net": -69.5,
+    "spx_change": -273.7
+   },
+   {
+    "entry": "2018-11-30",
+    "vix": 18.1,
+    "net": -65.6,
+    "spx_change": -312.3
+   }
+  ]
+ },
+ "cost_4": {
+  "full_sell": {
+   "cycles": 442,
+   "win_rate": 0.5,
+   "mean_net": -1.05,
+   "total_net": -462.1,
+   "worst": -156.4,
+   "max_drawdown": 1026.8,
+   "mean_pct_of_max_risk": -10.65,
+   "mean_credit": 5.84,
+   "mean_width": 52.8
+  },
+  "full_sell_ci95": [
+   -2.48,
+   0.22
+  ],
+  "full_buy": {
+   "cycles": 442,
+   "win_rate": 0.066,
+   "mean_net": -6.95,
+   "total_net": -3073.9,
+   "worst": -33.5,
+   "max_drawdown": 3077.8,
+   "mean_pct_of_max_risk": -23.91,
+   "mean_credit": 5.84,
+   "mean_width": 52.8
+  },
+  "spx_change_mean_points": 16.2,
+  "A_1990_1999": {
+   "cycles": 121,
+   "win_rate": 0.165,
+   "mean_net": -2.23,
+   "total_net": -269.7,
+   "worst": -14.7,
+   "max_drawdown": 290.4,
+   "mean_pct_of_max_risk": -26.65,
+   "mean_credit": 2.04,
+   "mean_width": 18.4,
+   "ci95": [
+    -2.67,
+    -1.83
+   ]
+  },
+  "B_2000_2009": {
+   "cycles": 120,
+   "win_rate": 0.392,
+   "mean_net": -2.96,
+   "total_net": -354.6,
+   "worst": -45.3,
+   "max_drawdown": 368.7,
+   "mean_pct_of_max_risk": -9.75,
+   "mean_credit": 3.97,
+   "mean_width": 35.8,
+   "ci95": [
+    -4.76,
+    -1.43
+   ]
+  },
+  "C_2010_2022": {
+   "cycles": 155,
+   "win_rate": 0.716,
+   "mean_net": -0.78,
+   "total_net": -120.4,
+   "worst": -156.4,
+   "max_drawdown": 402.6,
+   "mean_pct_of_max_risk": -3.03,
+   "mean_credit": 7.23,
+   "mean_width": 65.4,
+   "ci95": [
+    -3.82,
+    1.63
+   ]
+  },
+  "D_2023_2026": {
+   "cycles": 46,
+   "win_rate": 0.935,
+   "mean_net": 6.14,
+   "total_net": 282.6,
+   "worst": -131.1,
+   "max_drawdown": 137.1,
+   "mean_pct_of_max_risk": 3.4,
+   "mean_credit": 15.99,
+   "mean_width": 145.0,
+   "ci95": [
+    -1.88,
+    12.55
+   ]
+  },
+  "worst_5": [
+   {
+    "entry": "2020-03-05",
+    "vix": 39.6,
+    "net": -156.4,
+    "spx_change": -535.3
+   },
+   {
+    "entry": "2025-02-07",
+    "vix": 16.5,
+    "net": -131.1,
+    "spx_change": -453.9
+   },
+   {
+    "entry": "2024-07-09",
+    "vix": 12.5,
+    "net": -93.1,
+    "spx_change": -377.5
+   },
+   {
+    "entry": "2020-02-04",
+    "vix": 16.0,
+    "net": -71.5,
+    "spx_change": -273.7
+   },
+   {
+    "entry": "2018-11-30",
+    "vix": 18.1,
+    "net": -67.6,
+    "spx_change": -312.3
+   }
+  ]
+ },
+ "verdict": "INCONCLUSIVE"
+}
