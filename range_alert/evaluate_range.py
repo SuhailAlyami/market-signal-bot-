@@ -3,6 +3,7 @@ prior close and prior VIX close (same formula as daily_range.py), so no storage 
 Cumulative live record counts every completed session from LIVE_START."""
 import json
 import math
+import os
 import sys
 import urllib.parse
 import urllib.request
@@ -40,6 +41,43 @@ def evaluate(spx, vix, day):
             'broke_up1': h > pc+m, 'broke_dn1': l < pc-m}
 
 
+POS = {'Buy': 1, 'Overweight': 1, 'Sell': -1, 'Underweight': -1}   # Hold / REVIEW = no position
+
+
+def shadow_lines(records_dir, spy, day):
+    """Score TradingAgents shadow decisions against SPY close-to-close returns (decision made before the open
+    with data up to the previous close). Baseline: always long. Returns Arabic lines ([] if no records)."""
+    if not records_dir or not os.path.isdir(records_dir):
+        return []
+    days = sorted(spy)
+    rows = []
+    for f in sorted(os.listdir(records_dir)):
+        if not f.endswith('.json'):
+            continue
+        r = json.loads(open(os.path.join(records_dir, f)).read())
+        d = r.get('session')
+        if not d or d > day or d not in spy or days.index(d) == 0:
+            continue
+        prev = days[days.index(d)-1]
+        ret = 100*(spy[d][3]/spy[prev][3]-1)
+        rows.append({'d': d, 'sig': r.get('signal'), 'pos': POS.get(r.get('signal'), 0), 'ret': ret})
+    if not rows:
+        return []
+    AR = {'Buy': 'شراء', 'Overweight': 'زيادة', 'Hold': 'احتفاظ', 'Underweight': 'تخفيف', 'Sell': 'بيع'}
+    out = ["", "🤖 تقييم TradingAgents (تجريبي):"]
+    today = [x for x in rows if x['d'] == day]
+    if today:
+        x = today[0]
+        verdict = 'بلا مركز' if x['pos'] == 0 else ('✅ صحيح' if x['pos']*x['ret'] > 0 else '❌ خطأ')
+        out.append(f"اليوم: {AR.get(x['sig'], x['sig'])} | SPY {x['ret']:+.2f}% → {verdict}")
+    calls = [x for x in rows if x['pos'] != 0]
+    hits = sum(x['pos']*x['ret'] > 0 for x in calls)
+    strat, base = sum(x['pos']*x['ret'] for x in rows), sum(x['ret'] for x in rows)
+    out.append(f"التراكمي ({len(rows)} جلسة): قرارات اتجاه {len(calls)}، صحيحة {hits} | "
+               f"اتباعه {strat:+.2f}% مقابل \"صاعد دائمًا\" {base:+.2f}%")
+    return out
+
+
 def build(now=None, force=False):
     now = now or datetime.now(timezone.utc)
     today = now.astimezone(NY).date().isoformat()
@@ -73,6 +111,10 @@ def build(now=None, force=False):
                   f"الواسع: {sum(x['in15'] for x in live)}/{n} = {100*sum(x['in15'] for x in live)/n:.0f}% (المتوقع 90.1%)"]
     else:
         lines.append(f"السجل الحي يبدأ من جلسة {LIVE_START}.")
+    try:
+        lines += shadow_lines(os.environ.get('SHADOW_RECORDS'), daily('SPY'), target)
+    except Exception as ex:  # noqa: BLE001  (scoring must never block the range evaluation)
+        print('SHADOW_SCORING_FAILED', ex, file=sys.stderr)
     lines.append("المصدر: Yahoo يومي (متأخر).")
     return "\n".join(lines)
 

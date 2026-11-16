@@ -11,7 +11,7 @@ files = sorted(Path(sys.argv[1]).glob('*.json'))
 if not files:
     print('NO_RECORD'); sys.exit(0)
 r = json.loads(files[-1].read_text())
-msg = (f"🤖 TradingAgents (ظل، بلا تداول) — SPY جلسة {r['session']}\n"
+msg = (f"🤖 TradingAgents (تجريبي، لا ينفّذ أوامر) — SPY جلسة {r['session']}\n"
        f"القرار: {AR.get(r['signal'], r['signal'])} ({r['signal']})\n"
        f"بيانات حتى إغلاق {r['data_as_of_close']} | نموذج: {r['deep_model']}\n"
        "يُسجَّل للمقارنة لاحقًا مع حركة SPY الفعلية و\"صاعد دائمًا\". ليس توصية.")

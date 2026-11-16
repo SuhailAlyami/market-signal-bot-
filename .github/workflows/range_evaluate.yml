@@ -40,10 +40,14 @@ jobs:
           python-version: '3.12'
       - if: steps.sent.outputs.cache-hit != 'true'
         run: pip install exchange_calendars==4.13.2
+      - name: TradingAgents shadow records (read-only)
+        if: steps.sent.outputs.cache-hit != 'true'
+        run: git clone -q --depth 1 --branch data/tradingagents-shadow "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" shadow-data || echo "no shadow records"
       - if: steps.sent.outputs.cache-hit != 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SHADOW_RECORDS: shadow-data/records
         shell: bash
         run: |
           set -o pipefail
