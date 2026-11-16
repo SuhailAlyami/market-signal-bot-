@@ -1,0 +1,63 @@
+{
+ "n_train": 2516,
+ "n_test": 1727,
+ "test_last": "2026-11-13",
+ "pc_p0.7": {
+  "k_high": 0.174,
+  "k_low": 0.11,
+  "test_cov_high": 0.724,
+  "test_cov_low": 0.687,
+  "test_cov_both": 0.412,
+  "example_today_pts": null
+ },
+ "pc_p0.8": {
+  "k_high": 0.031,
+  "k_low": -0.012,
+  "test_cov_high": 0.811,
+  "test_cov_low": 0.764,
+  "test_cov_both": 0.575,
+  "example_today_pts": null
+ },
+ "pc_p0.9": {
+  "k_high": -0.063,
+  "k_low": -0.134,
+  "test_cov_high": 0.856,
+  "test_cov_low": 0.843,
+  "test_cov_both": 0.699,
+  "example_today_pts": null
+ },
+ "O_p0.7": {
+  "k_high": 0.191,
+  "k_low": 0.161,
+  "test_cov_high": 0.715,
+  "test_cov_low": 0.712,
+  "test_cov_both": 0.435,
+  "example_today_pts": null
+ },
+ "O_p0.8": {
+  "k_high": 0.099,
+  "k_low": 0.049,
+  "test_cov_high": 0.856,
+  "test_cov_low": 0.865,
+  "test_cov_both": 0.72,
+  "example_today_pts": null
+ },
+ "O_p0.9": {
+  "k_high": 0.0,
+  "k_low": 0.0,
+  "test_cov_high": 1.0,
+  "test_cov_low": 1.0,
+  "test_cov_both": 1.0,
+  "example_today_pts": null
+ },
+ "up_close_vs_prev_train": 0.548,
+ "up_close_vs_prev_test": 0.54,
+ "close_above_open_test": 0.539
+}
+k_m  P(high>=O+k)  P(low<=O-k)  P(either)  P(both)   [2020+ test, open anchor]
+0.1 0.853 0.797 0.999 0.651
+0.25 0.633 0.6 0.957 0.276
+0.5 0.371 0.361 0.687 0.045
+0.75 0.172 0.213 0.38 0.005
+1.0 0.067 0.125 0.192 0.0
+1.5 0.01 0.036 0.046 0.0
