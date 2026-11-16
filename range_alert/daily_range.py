@@ -43,6 +43,20 @@ def options_cost_line(vix, rv):
     return f"تكلفة الأوبشن: VIX {vix:.1f} مقابل تقلب فعلي (21 يوم) {rv:.1f} ← الفارق {p:+.1f} نقطة — {label}"
 
 
+# Reach probabilities from the open, in units of m (expected 1-day move). k values calibrated on 2010-2019;
+# percentages measured on 1727 untouched sessions 2020-01 .. 2026-11-13 (branch research/demark-20261115, research/demark_20261115/minreach.py).
+MOVE_FROM_OPEN = [(0.1, 85, 80), (0.25, 63, 60), (0.5, 37, 36)]   # (k, P(high >= open+k*m) %, P(low <= open-k*m) %)
+EITHER_SIDE = [(0.25, 96), (0.5, 69)]                              # (k, P(at least one side reaches k*m) %)
+
+
+def move_lines(m):
+    """Arabic lines: how far from the open price usually travels. Direction is not predicted."""
+    return ["من سعر الافتتاح (نسب 2020–2026):",
+            *[f"• {k*m:.0f} نقطة في اتجاه واحد على الأقل: {p}%" for k, p in EITHER_SIDE],
+            *[f"• القمة ≥ الافتتاح +{k*m:.0f}: {ph}% | القاع ≤ الافتتاح −{k*m:.0f}: {pl}%" for k, ph, pl in MOVE_FROM_OPEN],
+            "الاتجاه غير معروف مسبقًا، وأسعار الأوبشن تسعّر هذه الحركة عادةً."]
+
+
 def calendar_notes(session):
     """Arabic notes from the official NYSE calendar: early close today, market closed on the next weekday(s)."""
     notes = []
@@ -81,6 +95,9 @@ def build(now=None, force=False):
         f"النطاق الواسع (90.1% تاريخيًا): {spx-1.5*m:,.0f} – {spx+1.5*m:,.0f}",
         "",
         options_cost_line(vix, rv),
+        "",
+        *move_lines(m),
+        "",
         "الاتجاه: لا توقع (منذ 2010 أغلق SPX صاعدًا 54.5% من الأيام).",
         f"الافتتاح: {opening.astimezone(RIYADH).strftime('%H:%M')} بتوقيت الرياض"
         + (" — ⚠️ وصل التنبيه بعد الافتتاح" if late else ""),
