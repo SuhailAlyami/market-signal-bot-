@@ -1,0 +1,1201 @@
+{
+ "connector_available": true,
+ "spx_start": {
+  "requested_utc": "2026-11-16T15:19:37Z",
+  "received_utc_approx": "2026-11-16T15:19:37Z",
+  "response": {
+   "last": {
+    "price": 7471.01,
+    "ts": 1794841474,
+    "halted": false,
+    "is_close": false
+   },
+   "top-status": {
+    "status": "DELAYED"
+   }
+  }
+ },
+ "expiration": {
+  "date": "20261116",
+  "trading_class": "SPXW"
+ },
+ "strike_range": [
+  7420,
+  7520
+ ],
+ "spot_round5": 7470,
+ "batches": [
+  {
+   "received_utc": "2026-11-16T15:19:58.037Z",
+   "rows": [
+    [
+     "7420",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.7987735595870179,
+       "gamma": 0.004736440848737004,
+       "theta": -7.804576026147515,
+       "vega": 0.5398383480815028,
+       "option_price": 55.984751807397515
+      },
+      "option-open-interest": {
+       "callInterest": 61,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 62.1,
+       "bid_size": 2.0,
+       "ask": 62.400000000000006,
+       "ask_size": 3.0
+      }
+     }
+    ],
+    [
+     "7420",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.20134611740287894,
+       "gamma": 0.004736440848737004,
+       "theta": -6.707891725080117,
+       "vega": 0.5398383480815028,
+       "option_price": 6.707891725080117
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1720
+      },
+      "bid-ask": {
+       "bid": 7.4,
+       "bid_size": 61.0,
+       "ask": 7.5,
+       "ask_size": 30.0
+      }
+     }
+    ],
+    [
+     "7425",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.7693960998526455,
+       "gamma": 0.005175927878338105,
+       "theta": -9.019875180360032,
+       "vega": 0.5832638922911428,
+       "option_price": 50.85971893036003
+      },
+      "option-open-interest": {
+       "callInterest": 54,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 57.900000000000006,
+       "bid_size": 19.0,
+       "ask": 58.300000000000004,
+       "ask_size": 12.0
+      }
+     }
+    ],
+    [
+     "7425",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.2307238058555196,
+       "gamma": 0.005175927878338105,
+       "theta": -7.92111871874522,
+       "vega": 0.5832638922920523,
+       "option_price": 7.92111871874522
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 2273
+      },
+      "bid-ask": {
+       "bid": 8.200000000000001,
+       "bid_size": 139.0,
+       "ask": 8.4,
+       "ask_size": 178.0
+      }
+     }
+    ],
+    [
+     "7430",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.7445562036758856,
+       "gamma": 0.005522591766572593,
+       "theta": -10.072976443888365,
+       "vega": 0.6154107138481777,
+       "option_price": 46.912820193888365
+      },
+      "option-open-interest": {
+       "callInterest": 32,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 53.900000000000006,
+       "bid_size": 10.0,
+       "ask": 54.2,
+       "ask_size": 1.0
+      }
+     }
+    ],
+    [
+     "7430",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.2555637020322795,
+       "gamma": 0.005522591766572593,
+       "theta": -8.974082985815357,
+       "vega": 0.6154107138470408,
+       "option_price": 8.974082985815357
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 2083
+      },
+      "bid-ask": {
+       "bid": 9.200000000000001,
+       "bid_size": 58.0,
+       "ask": 9.3,
+       "ask_size": 15.0
+      }
+     }
+    ],
+    [
+     "7435",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.7232010713202075,
+       "gamma": 0.005805174669492926,
+       "theta": -10.991640736699992,
+       "vega": 0.6396278367219566,
+       "option_price": 43.75140636169999
+      },
+      "option-open-interest": {
+       "callInterest": 63,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 49.900000000000006,
+       "bid_size": 21.0,
+       "ask": 50.2,
+       "ask_size": 1.0
+      }
+     }
+    ],
+    [
+     "7435",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.2769186115342597,
+       "gamma": 0.005805174669492926,
+       "theta": -9.894542785495105,
+       "vega": 0.6396278367205923,
+       "option_price": 9.894542785495105
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1806
+      },
+      "bid-ask": {
+       "bid": 10.200000000000001,
+       "bid_size": 112.0,
+       "ask": 10.4,
+       "ask_size": 73.0
+      }
+     }
+    ],
+    [
+     "7440",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.6948140989583821,
+       "gamma": 0.006127691614087994,
+       "theta": -12.293017001044063,
+       "vega": 0.6685274562123595,
+       "option_price": 40.05278262604406
+      },
+      "option-open-interest": {
+       "callInterest": 115,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 46.2,
+       "bid_size": 1.0,
+       "ask": 46.400000000000006,
+       "ask_size": 1.0
+      }
+     }
+    ],
+    [
+     "7440",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.30530558389608514,
+       "gamma": 0.006127691614087994,
+       "theta": -11.195782307978789,
+       "vega": 0.6685274562128143,
+       "option_price": 11.195782307978789
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1793
+      },
+      "bid-ask": {
+       "bid": 11.4,
+       "bid_size": 96.0,
+       "ask": 11.600000000000001,
+       "ask_size": 92.0
+      }
+     }
+    ]
+   ]
+  },
+  {
+   "received_utc": "2026-11-16T15:20:12.383Z",
+   "rows": [
+    [
+     "7445",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.6476515805803468,
+       "gamma": 0.006561468753192993,
+       "theta": -14.615351288069178,
+       "vega": 0.7065758982043917,
+       "option_price": 34.71544894431918
+      },
+      "option-open-interest": {
+       "callInterest": 58,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 39.0,
+       "bid_size": 11.0,
+       "ask": 39.300000000000004,
+       "ask_size": 15.0
+      }
+     }
+    ],
+    [
+     "7445",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.35246800257642963,
+       "gamma": 0.006561468753192993,
+       "theta": -13.519212019757106,
+       "vega": 0.7065758982034822,
+       "option_price": 13.519212019757106
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 974
+      },
+      "bid-ask": {
+       "bid": 14.3,
+       "bid_size": 22.0,
+       "ask": 14.4,
+       "ask_size": 7.0
+      }
+     }
+    ],
+    [
+     "7450",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.6216884855105015,
+       "gamma": 0.00678327496981426,
+       "theta": -15.90963959651981,
+       "vega": 0.7231402948928007,
+       "option_price": 31.94967865901981
+      },
+      "option-open-interest": {
+       "callInterest": 104,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 35.7,
+       "bid_size": 1.0,
+       "ask": 35.9,
+       "ask_size": 30.0
+      }
+     }
+    ],
+    [
+     "7450",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.37843110351084464,
+       "gamma": 0.00678327496981426,
+       "theta": -14.813197530997058,
+       "vega": 0.723140294892346,
+       "option_price": 14.813197530997058
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 4075
+      },
+      "bid-ask": {
+       "bid": 15.8,
+       "bid_size": 39.0,
+       "ask": 16.0,
+       "ask_size": 7.0
+      }
+     }
+    ],
+    [
+     "7455",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.5815196705732806,
+       "gamma": 0.007039406382032322,
+       "theta": -18.07239781363478,
+       "vega": 0.7420539823842773,
+       "option_price": 28.17249546988478
+      },
+      "option-open-interest": {
+       "callInterest": 74,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 32.4,
+       "bid_size": 3.0,
+       "ask": 32.6,
+       "ask_size": 22.0
+      }
+     }
+    ],
+    [
+     "7455",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.4185999125834959,
+       "gamma": 0.007039406382032322,
+       "theta": -16.97598528940216,
+       "vega": 0.7420539823838226,
+       "option_price": 16.97598528940216
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1720
+      },
+      "bid-ask": {
+       "bid": 17.6,
+       "bid_size": 9.0,
+       "ask": 17.7,
+       "ask_size": 3.0
+      }
+     }
+    ],
+    [
+     "7460",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.5530420279480238,
+       "gamma": 0.007172888233478227,
+       "theta": -19.69956009722955,
+       "vega": 0.7510324865638722,
+       "option_price": 25.73959915972955
+      },
+      "option-open-interest": {
+       "callInterest": 674,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 29.3,
+       "bid_size": 42.0,
+       "ask": 29.5,
+       "ask_size": 27.0
+      }
+     }
+    ],
+    [
+     "7460",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.44707756107332225,
+       "gamma": 0.007172888233478227,
+       "theta": -18.60284476238712,
+       "vega": 0.7510324865638722,
+       "option_price": 18.60284476238712
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1479
+      },
+      "bid-ask": {
+       "bid": 19.5,
+       "bid_size": 5.0,
+       "ask": 19.6,
+       "ask_size": 4.0
+      }
+     }
+    ],
+    [
+     "7465",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.5171062990494416,
+       "gamma": 0.007288965875351851,
+       "theta": -21.862267431888085,
+       "vega": 0.7568438937905739,
+       "option_price": 22.902306494388085
+      },
+      "option-open-interest": {
+       "callInterest": 723,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 26.400000000000002,
+       "bid_size": 25.0,
+       "ask": 26.5,
+       "ask_size": 11.0
+      }
+     }
+    ],
+    [
+     "7465",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.48301328997190457,
+       "gamma": 0.007288965875351851,
+       "theta": -20.76541546238468,
+       "vega": 0.7568438937905739,
+       "option_price": 20.76541546238468
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 2393
+      },
+      "bid-ask": {
+       "bid": 21.5,
+       "bid_size": 29.0,
+       "ask": 21.700000000000003,
+       "ask_size": 7.0
+      }
+     }
+    ],
+    [
+     "7470",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.48046229642676447,
+       "gamma": 0.007347503226748598,
+       "theta": -20.24289279604409,
+       "vega": 0.756637094274538,
+       "option_price": 20.24289279604409
+      },
+      "option-open-interest": {
+       "callInterest": 222,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 23.6,
+       "bid_size": 20.0,
+       "ask": 23.700000000000003,
+       "ask_size": 17.0
+      }
+     }
+    ],
+    [
+     "7470",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.5196572925945817,
+       "gamma": 0.007347503226748598,
+       "theta": -19.145904191880163,
+       "vega": 0.756637094274538,
+       "option_price": 23.105865129380163
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 860
+      },
+      "bid-ask": {
+       "bid": 23.8,
+       "bid_size": 8.0,
+       "ask": 23.900000000000002,
+       "ask_size": 4.0
+      }
+     }
+    ]
+   ]
+  },
+  {
+   "received_utc": "2026-11-16T15:20:28.762Z",
+   "rows": [
+    [
+     "7475",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.42037259734953064,
+       "gamma": 0.007246398213778865,
+       "theta": -16.46756413998537,
+       "vega": 0.7422875479992399,
+       "option_price": 16.46756413998537
+      },
+      "option-open-interest": {
+       "callInterest": 200,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 21.0,
+       "bid_size": 22.0,
+       "ask": 21.1,
+       "ask_size": 19.0
+      }
+     }
+    ],
+    [
+     "7475",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.5797469037032724,
+       "gamma": 0.007246398213778865,
+       "theta": -15.371627126346539,
+       "vega": 0.7422875480006041,
+       "option_price": 27.52152947009654
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 3093
+      },
+      "bid-ask": {
+       "bid": 26.1,
+       "bid_size": 9.0,
+       "ask": 26.3,
+       "ask_size": 3.0
+      }
+     }
+    ],
+    [
+     "7480",
+     "C",
+     {
+      "connector_error": "code -32300 Rate limit reached (limit: 10 requests per second, 30 requests per minute)"
+     }
+    ],
+    [
+     "7480",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.6161681396062612,
+       "gamma": 0.007118766951015967,
+       "theta": -13.258614429560112,
+       "vega": 0.7257316638524571,
+       "option_price": 30.40851677331011
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1001
+      },
+      "bid-ask": {
+       "bid": 28.700000000000003,
+       "bid_size": 4.0,
+       "ask": 28.900000000000002,
+       "ask_size": 4.0
+      }
+     }
+    ],
+    [
+     "7485",
+     "C",
+     {
+      "connector_error": "code -32300 Rate limit reached (limit: 10 requests per second, 30 requests per minute)"
+     }
+    ],
+    [
+     "7485",
+     "P",
+     {
+      "connector_error": "code -32300 Rate limit reached (limit: 10 requests per second, 30 requests per minute)"
+     }
+    ],
+    [
+     "7490",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.3112333206893663,
+       "gamma": 0.006664492686651721,
+       "theta": -10.574625856002058,
+       "vega": 0.6732872331790531,
+       "option_price": 10.574625856002058
+      },
+      "option-open-interest": {
+       "callInterest": 321,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 14.3,
+       "bid_size": 25.0,
+       "ask": 14.4,
+       "ask_size": 31.0
+      }
+     }
+    ],
+    [
+     "7490",
+     "P",
+     {
+      "connector_error": "code -32300 Rate limit reached (limit: 10 requests per second, 30 requests per minute)"
+     }
+    ],
+    [
+     "7495",
+     "C",
+     {
+      "connector_error": "code -32300 Rate limit reached (limit: 10 requests per second, 30 requests per minute)"
+     }
+    ],
+    [
+     "7495",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.7220424377542479,
+       "gamma": 0.006351224549841799,
+       "theta": -7.947642903958695,
+       "vega": 0.6403447990405766,
+       "option_price": 40.397838216458695
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1006
+      },
+      "bid-ask": {
+       "bid": 37.5,
+       "bid_size": 1.0,
+       "ask": 37.800000000000004,
+       "ask_size": 13.0
+      }
+     }
+    ],
+    [
+     "7500",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.24679589227770932,
+       "gamma": 0.005990365941600653,
+       "theta": -7.698707009682721,
+       "vega": 0.603665397431314,
+       "option_price": 7.698707009682721
+      },
+      "option-open-interest": {
+       "callInterest": 677,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 10.700000000000001,
+       "bid_size": 27.0,
+       "ask": 10.8,
+       "ask_size": 2.0
+      }
+     }
+    ],
+    [
+     "7500",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.7533236029105244,
+       "gamma": 0.005990365941600653,
+       "theta": -6.602177025185483,
+       "vega": 0.6036653974315414,
+       "option_price": 44.05237233768548
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 2929
+      },
+      "bid-ask": {
+       "bid": 40.800000000000004,
+       "bid_size": 1.0,
+       "ask": 41.1,
+       "ask_size": 3.0
+      }
+     }
+    ]
+   ]
+  },
+  {
+   "received_utc": "2026-11-16T15:21:50.492Z",
+   "rows": [
+    [
+     "7505",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.20879437251907648,
+       "gamma": 0.005560939546500245,
+       "theta": -6.073409155810168,
+       "vega": 0.5501242951227141,
+       "option_price": 6.073409155810168
+      },
+      "option-open-interest": {
+       "callInterest": 175,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 8.9,
+       "bid_size": 43.0,
+       "ask": 9.0,
+       "ask_size": 1.0
+      }
+     }
+    ],
+    [
+     "7505",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.7913034758336505,
+       "gamma": 0.005560939546500245,
+       "theta": -5.139192540328622,
+       "vega": 0.5501242951231688,
+       "option_price": 48.24905582157862
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 419
+      },
+      "bid-ask": {
+       "bid": 44.800000000000004,
+       "bid_size": 11.0,
+       "ask": 45.2,
+       "ask_size": 14.0
+      }
+     }
+    ],
+    [
+     "7510",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.1820181242587574,
+       "gamma": 0.0051207664662193016,
+       "theta": -5.093313566593906,
+       "vega": 0.5076079581772319,
+       "option_price": 5.093313566593906
+      },
+      "option-open-interest": {
+       "callInterest": 379,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 7.6000000000000005,
+       "bid_size": 47.0,
+       "ask": 7.7,
+       "ask_size": 77.0
+      }
+     }
+    ],
+    [
+     "7510",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.8180797240939696,
+       "gamma": 0.0051207664662193016,
+       "theta": -4.158960986451348,
+       "vega": 0.5076079581776867,
+       "option_price": 52.26882426770135
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1084
+      },
+      "bid-ask": {
+       "bid": 48.5,
+       "bid_size": 11.0,
+       "ask": 48.800000000000004,
+       "ask_size": 2.0
+      }
+     }
+    ],
+    [
+     "7515",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.1578165422832234,
+       "gamma": 0.004669058242711517,
+       "theta": -4.261094469115051,
+       "vega": 0.4650107655065767,
+       "option_price": 4.261094469115051
+      },
+      "option-open-interest": {
+       "callInterest": 143,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 6.4,
+       "bid_size": 99.0,
+       "ask": 6.6000000000000005,
+       "ask_size": 152.0
+      }
+     }
+    ],
+    [
+     "7515",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.8422814266198726,
+       "gamma": 0.004669058242711517,
+       "theta": -3.3254566000287014,
+       "vega": 0.46501076550703146,
+       "option_price": 56.4553394125287
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 741
+      },
+      "bid-ask": {
+       "bid": 52.400000000000006,
+       "bid_size": 1.0,
+       "ask": 52.7,
+       "ask_size": 1.0
+      }
+     }
+    ],
+    [
+     "7520",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.1361262859010849,
+       "gamma": 0.004221670435882918,
+       "theta": -3.5532450243102858,
+       "vega": 0.4225729692608411,
+       "option_price": 3.5532450243102858
+      },
+      "option-open-interest": {
+       "callInterest": 291,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 5.4,
+       "bid_size": 55.0,
+       "ask": 5.5,
+       "ask_size": 59.0
+      }
+     }
+    ],
+    [
+     "7520",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.863971683002011,
+       "gamma": 0.004221670435882918,
+       "theta": -2.6174710230616256,
+       "vega": 0.4225729692616369,
+       "option_price": 60.747353835561626
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 776
+      },
+      "bid-ask": {
+       "bid": 56.300000000000004,
+       "bid_size": 3.0,
+       "ask": 56.7,
+       "ask_size": 2.0
+      }
+     }
+    ]
+   ]
+  },
+  {
+   "received_utc": "2026-11-16T15:22:00.030Z",
+   "note": "technical retry of the 5 contracts rejected by the connector rate limit (30 requests/minute); first successful snapshot per contract",
+   "rows": [
+    [
+     "7480",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.37889559881140367,
+       "gamma": 0.0072567089942345035,
+       "theta": -13.762883860964848,
+       "vega": 0.7215273152819464,
+       "option_price": 13.762883860964848
+      },
+      "option-open-interest": {
+       "callInterest": 708,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 18.1,
+       "bid_size": 29.0,
+       "ask": 18.2,
+       "ask_size": 8.0
+      }
+     }
+    ],
+    [
+     "7485",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.3444113641779953,
+       "gamma": 0.0070530466628366565,
+       "theta": -11.976264206766245,
+       "vega": 0.6991257825911816,
+       "option_price": 11.976264206766245
+      },
+      "option-open-interest": {
+       "callInterest": 204,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 15.9,
+       "bid_size": 56.0,
+       "ask": 16.1,
+       "ask_size": 48.0
+      }
+     }
+    ],
+    [
+     "7485",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.6556864938187605,
+       "gamma": 0.0070530466628366565,
+       "theta": -11.042396695706884,
+       "vega": 0.6991257825911816,
+       "option_price": 33.102455289456884
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1184
+      },
+      "bid-ask": {
+       "bid": 31.900000000000002,
+       "bid_size": 1.0,
+       "ask": 32.1,
+       "ask_size": 1.0
+      }
+     }
+    ],
+    [
+     "7490",
+     "P",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": -0.6907312284621938,
+       "gamma": 0.006775034325398793,
+       "theta": -9.35657944605191,
+       "vega": 0.6703097183990394,
+       "option_price": 36.41663803980191
+      },
+      "option-open-interest": {
+       "callInterest": 0,
+       "putInterest": 1179
+      },
+      "bid-ask": {
+       "bid": 34.800000000000004,
+       "bid_size": 11.0,
+       "ask": 35.1,
+       "ask_size": 1.0
+      }
+     }
+    ],
+    [
+     "7495",
+     "C",
+     {
+      "top-status": {
+       "status": "DELAYED"
+      },
+      "option-greeks": {
+       "delta": 0.2758950407654754,
+       "gamma": 0.0064420337920471984,
+       "theta": -8.789532882975436,
+       "vega": 0.6367682083960062,
+       "option_price": 8.789532882975436
+      },
+      "option-open-interest": {
+       "callInterest": 169,
+       "putInterest": 0
+      },
+      "bid-ask": {
+       "bid": 12.0,
+       "bid_size": 62.0,
+       "ask": 12.200000000000001,
+       "ask_size": 69.0
+      }
+     }
+    ]
+   ]
+  }
+ ],
+ "spx_end": {
+  "received_utc_approx": "2026-11-16T15:22:03Z",
+  "response": {
+   "last": {
+    "price": 7467.12,
+    "ts": 1794841619,
+    "halted": false,
+    "is_close": false
+   },
+   "top-status": {
+    "status": "DELAYED"
+   }
+  }
+ },
+ "spx_last_trade_utc": {
+  "start": "2026-11-16T15:04:34Z",
+  "end": "2026-11-16T15:06:59Z"
+ },
+ "timing_note": "Receipt times are per batch (wall clock after each batch of parallel calls), not per contract."
+}

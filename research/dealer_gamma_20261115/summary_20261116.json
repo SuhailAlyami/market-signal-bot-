@@ -1,0 +1,30 @@
+{
+ "check": "CHECK_PROTOCOL.md limited technical check (owner decision B), single pass",
+ "session_open_confirmed_xnys": true,
+ "connector_available": true,
+ "contracts_listed_by_chain": 42,
+ "contracts_returning_data": 42,
+ "connector_rate_limit_rejections_then_retried_ok": 5,
+ "open_interest_field_present": 42,
+ "open_interest_positive": 42,
+ "greeks_present": 42,
+ "bid_ask_present": 42,
+ "top_status_distribution_options": {
+  "DELAYED": 42
+ },
+ "spx_status_start_end": [
+  "DELAYED",
+  "DELAYED"
+ ],
+ "spx_last_trade_age_at_receipt_minutes": [
+  15.0,
+  15.1
+ ],
+ "first_receipt_utc": "2026-11-16T15:19:37Z",
+ "last_receipt_utc": "2026-11-16T15:22:03Z",
+ "duration_seconds": 146,
+ "criterion_A_open_interest_ge_40_of_42": true,
+ "criterion_B_all_realtime": false,
+ "criterion_B_detail": "every option snapshot and both SPX snapshots reported top_status DELAYED; SPX last-trade timestamps were ~15 minutes old",
+ "interpretation": "A passes (OI available, end-of-day). B fails: this account/connector serves DELAYED option quotes and greeks, so no timely intraday dealer-positioning input. No GEX computed, no signal, no orders, alerts, watchlists or subscriptions."
+}
