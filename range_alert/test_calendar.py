@@ -81,7 +81,8 @@ class CalendarTests(unittest.TestCase):
 
     def test_morning_message_includes_notes_on_half_day(self):
         with mock.patch.object(D, 'closes', fake_closes), \
-             mock.patch.object(D, 'last_close', lambda s, b: (date(2026, 11, 25), 16.0)):
+             mock.patch.object(D, 'last_close', lambda s, b: (date(2026, 11, 25), 16.0)), \
+             mock.patch.object(D, 'es_move', lambda s, n: None):
             msg = D.build(now=at('2026-11-27', 13, 13))
         self.assertIn('جلسة قصيرة', msg)
 

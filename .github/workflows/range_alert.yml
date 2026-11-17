@@ -14,7 +14,7 @@ on:
         type: boolean
         default: false
 permissions:
-  contents: read
+  contents: write   # only to store each sent call on branch data/daily-calls (scored in the evening)
 concurrency:
   group: range-alert
   cancel-in-progress: false
@@ -46,7 +46,20 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python range_alert/daily_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
-          grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY' out.txt && echo ok > .range-alert-sent
+          grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY' out.txt && echo ok > .range-alert-sent || true
+      - name: Store the sent call (data branch)
+        if: steps.sent.outputs.cache-hit != 'true' && hashFiles('out.txt') != ''
+        shell: bash
+        run: |
+          grep -q TELEGRAM_OK out.txt || exit 0
+          line=$(grep '^CALL_JSON ' out.txt | head -1 | cut -d' ' -f2-); [ -n "$line" ] || exit 0
+          session=$(python -c "import json,sys; print(json.loads(sys.argv[1])['session'])" "$line")
+          url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+          if git ls-remote --exit-code --heads "$url" data/daily-calls >/dev/null; then git clone -q --depth 1 --branch data/daily-calls "$url" calls-repo
+          else mkdir calls-repo && cd calls-repo && git init -q -b data/daily-calls && git remote add origin "$url" && cd ..; fi
+          mkdir -p calls-repo/calls && echo "$line" > "calls-repo/calls/$session.json"
+          cd calls-repo && git config user.name "range-alert" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && (git diff --cached --quiet || git commit -q -m "call $session") && git push -q origin HEAD:refs/heads/data/daily-calls
       - if: ${{ !inputs.force && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-alert-sent') != '' }}
         uses: actions/cache/save@v4
         with:

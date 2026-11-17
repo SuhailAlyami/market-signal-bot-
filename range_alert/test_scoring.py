@@ -44,6 +44,45 @@ class DailyCallTests(unittest.TestCase):
         self.assertFalse(e['up']); self.assertFalse(e['hit_high']); self.assertTrue(e['hit_low']); self.assertFalse(e['in1'])
 
 
+class GapCallTests(unittest.TestCase):
+    def test_direction_buckets(self):
+        self.assertEqual(D.gap_direction(-0.6)[0:3:2], ('down', 90))
+        self.assertEqual(D.gap_direction(-0.3)[0:3:2], ('down', 74))
+        self.assertEqual(D.gap_direction(0.0)[0], 'flat')
+        self.assertEqual(D.gap_direction(0.3)[0:3:2], ('up', 76))
+        self.assertEqual(D.gap_direction(0.7)[0:3:2], ('up', 89))
+
+    def test_levels_anchor_on_implied_open(self):
+        c = D.gap_call(7416.59, 107.0, -0.0024)
+        a = 7416.59*(1-0.0024)
+        self.assertAlmostEqual(c['anchor'], a, places=6)
+        self.assertAlmostEqual(c['levels'][0]['high'], a+10.7, places=6)
+        self.assertAlmostEqual(c['levels'][1]['low'], a-26.75, places=6)
+        self.assertEqual(c['direction'], 'down')
+
+    def test_stale_or_missing_futures_fall_back(self):
+        from datetime import date, datetime, timezone
+        from unittest import mock
+        body = json.dumps({'chart': {'result': [{'timestamp': [1794853800], 'indicators': {'quote': [{'close': [7400.0]}]}}]}}).encode()
+        class R:
+            def read(self): return body
+        with mock.patch('urllib.request.urlopen', return_value=R()):
+            self.assertIsNone(D.es_move(date(2026, 11, 17), datetime(2026, 11, 17, 13, 41, tzinfo=timezone.utc)))
+
+    def test_stored_call_is_scored_and_summarised(self):
+        call = {'session': '2026-11-17', 'prev_close': 7416.59, 'direction': 'down', 'conf': 60, 'method': 'gap',
+                'levels': [{'k': .1, 'high': 7410, 'low': 7388, 'p_high': 85, 'p_low': 80},
+                           {'k': .25, 'high': 7426, 'low': 7372, 'p_high': 63, 'p_low': 60}], 'range': [7310, 7524]}
+        with tempfile.TemporaryDirectory() as t:
+            Path(t, '2026-11-17.json').write_text(json.dumps(call))
+            spx = {'2026-11-16': (0, 0, 0, 7416.59), '2026-11-17': (7400, 7420, 7380, 7390)}
+            text = '\n'.join(E.call_lines(t, spx, '2026-11-17'))
+        self.assertIn('الاتجاه هابط (60%): ✅', text)
+        self.assertIn('القمة ≥ 7,410 (85%): ✅ | القاع ≤ 7,388 (80%): ✅', text)
+        self.assertIn('القمة ≥ 7,426 (63%): ❌ | القاع ≤ 7,372 (60%): ❌', text)
+        self.assertIn('السجل (1 جلسة): الاتجاه 1/1', text)
+
+
 class ShadowScoringTests(unittest.TestCase):
     def test_no_records_dir_gives_nothing(self):
         self.assertEqual(E.shadow_lines(None, spy(100, 101), '2026-11-13'), [])
