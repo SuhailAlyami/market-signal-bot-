@@ -57,6 +57,19 @@ def move_lines(m):
             "الاتجاه غير معروف مسبقًا، وأسعار الأوبشن تسعّر هذه الحركة عادةً."]
 
 
+# The daily call. Anchored on the previous close so it is known before the open. k values calibrated on
+# 2010-2019; hit rates measured on 1727 untouched sessions 2020-01 .. 2026-11-13 (branch research/demark-20261115,
+# research/demark_20261115/minreach.py, anchor pc, p=0.7). Direction: always "up", the best-measured call.
+K_HIGH, HIT_HIGH = 0.174, 72     # P(day high >= prev_close + K_HIGH*m)
+K_LOW, HIT_LOW = 0.11, 69        # P(day low  <= prev_close - K_LOW*m)
+UP_RATE = 54                     # % of sessions closing above the previous close (2010-2026)
+RANGE_RATE = 69                  # % of sessions whose high and low both stay within prev_close +- m
+
+
+def call_levels(pc, m):
+    return {'high': pc+K_HIGH*m, 'low': pc-K_LOW*m, 'max_high': pc+m, 'min_low': pc-m}
+
+
 def calendar_notes(session):
     """Arabic notes from the official NYSE calendar: early close today, market closed on the next weekday(s)."""
     notes = []
@@ -81,28 +94,25 @@ def build(now=None, force=False):
     else:
         return None
     opening = CAL.session_open(session.isoformat()).to_pydatetime()
+    if now > opening and not force:
+        return 'LATE'   # a pre-open call that arrives after the open is useless; never send it unforced
     spx_rows = closes('^GSPC', session)
     (d, spx), (dv, vix) = spx_rows[-1], last_close('^VIX', session)
     rv = realized_vol_21(spx_rows)
     m = spx*vix/100/math.sqrt(252)
     late = now > opening
+    lv = call_levels(spx, m)
     lines = [
-        f"📊 نطاق SPX المتوقع — جلسة {session.isoformat()}",
-        f"إغلاق {d.isoformat()}: {spx:,.2f} | VIX: {vix:.2f}",
-        f"الحركة المتوقعة: ±{m:.0f} نقطة",
+        f"📊 SPX اليوم — {session.isoformat()}",
+        f"الاتجاه: صاعد 📈 (يصيب {UP_RATE}% من الأيام)",
+        f"القمة: سيصل على الأقل إلى {lv['high']:,.0f} (يتحقق {HIT_HIGH}%)",
+        f"القاع: سينزل على الأقل إلى {lv['low']:,.0f} (يتحقق {HIT_LOW}%)",
+        f"أقصى مدى مرجّح: {lv['min_low']:,.0f} – {lv['max_high']:,.0f} (يبقى داخله {RANGE_RATE}%)",
         "",
-        f"النطاق المرجّح (68.7% تاريخيًا): {spx-m:,.0f} – {spx+m:,.0f}",
-        f"النطاق الواسع (90.1% تاريخيًا): {spx-1.5*m:,.0f} – {spx+1.5*m:,.0f}",
-        "",
-        options_cost_line(vix, rv),
-        "",
-        *move_lines(m),
-        "",
-        "الاتجاه: لا توقع (منذ 2010 أغلق SPX صاعدًا 54.5% من الأيام).",
-        f"الافتتاح: {opening.astimezone(RIYADH).strftime('%H:%M')} بتوقيت الرياض"
-        + (" — ⚠️ وصل التنبيه بعد الافتتاح" if late else ""),
+        f"إغلاق أمس {spx:,.2f} | VIX {vix:.1f} | الافتتاح {opening.astimezone(RIYADH).strftime('%H:%M')} الرياض"
+        + (" ⚠️ وصل بعد الافتتاح" if late else ""),
         *calendar_notes(session),
-        "المصدر: Yahoo يومي (متأخر). نطاق إحصائي، ليس توصية تداول.",
+        "نسب تاريخية، ليست ضمانًا ولا توصية.",
     ]
     return "\n".join(lines)
 
@@ -123,6 +133,9 @@ if __name__ == '__main__':
     msg = build(force=force)
     if msg is None:
         print('NO_SESSION_TODAY')
+        sys.exit(0)
+    if msg == 'LATE':
+        print('LATE_AFTER_OPEN_NOT_SENT')
         sys.exit(0)
     print(msg)
     if '--dry-run' not in sys.argv and not send(msg):

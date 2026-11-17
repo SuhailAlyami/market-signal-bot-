@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 import exchange_calendars as xc
 
-from daily_range import send
+from daily_range import HIT_HIGH, HIT_LOW, RANGE_RATE, UP_RATE, call_levels, send
 
 NY = ZoneInfo('America/New_York')
 CAL = xc.get_calendar('XNYS', start='2026-01-01', end='2027-12-31')
@@ -38,7 +38,9 @@ def evaluate(spx, vix, day):
     inside = lambda k: l >= pc-k*m and h <= pc+k*m
     return {'day': day, 'prev_close': pc, 'move': m, 'high': h, 'low': l, 'close': c,
             'in1': inside(1.0), 'in15': inside(1.5), 'up': c > pc,
-            'broke_up1': h > pc+m, 'broke_dn1': l < pc-m}
+            'broke_up1': h > pc+m, 'broke_dn1': l < pc-m,
+            'hit_high': h >= call_levels(pc, m)['high'], 'hit_low': l <= call_levels(pc, m)['low'],
+            'call_high': call_levels(pc, m)['high'], 'call_low': call_levels(pc, m)['low']}
 
 
 POS = {'Buy': 1, 'Overweight': 1, 'Sell': -1, 'Underweight': -1}   # Hold / REVIEW = no position
@@ -83,8 +85,10 @@ def build(now=None, force=False):
     today = now.astimezone(NY).date().isoformat()
     sessions = [str(s.date()) for s in CAL.sessions_in_range('2026-01-02', today)]
     done = [d for d in sessions if CAL.session_close(d).to_pydatetime() + timedelta(minutes=15) <= now]
-    if not done or (done[-1] != today and not force):
-        return None  # today's session not closed yet (or not a session)
+    if not done:
+        return None
+    # Always the latest closed session; delivery is deduplicated per evaluated session by the workflow cache,
+    # so a late or next-morning run still delivers a result that was missed, exactly once.
     spx, vix = daily('^GSPC'), daily('^VIX')
     target = done[-1]
     if target not in spx:
@@ -92,25 +96,20 @@ def build(now=None, force=False):
     e = evaluate(spx, vix, target)
     live = [evaluate(spx, vix, d) for d in done if d >= LIVE_START and d in spx]
     n = len(live)
-    sides = []
-    if e['broke_up1']:
-        sides.append('تجاوز الحد الأعلى')
-    if e['broke_dn1']:
-        sides.append('كسر الحد الأدنى')
-    yes = lambda b: '✅ داخل' if b else '❌ خارج'
+    ok = lambda b: '✅' if b else '❌'
     lines = [
-        f"📈 نتيجة جلسة {target}",
-        f"الأعلى: {e['high']:,.2f} | الأدنى: {e['low']:,.2f} | الإغلاق: {e['close']:,.2f} ({'صاعد' if e['up'] else 'هابط'})",
-        f"النطاق المرجّح {e['prev_close']-e['move']:,.0f} – {e['prev_close']+e['move']:,.0f}: {yes(e['in1'])}" + (f" ({'، '.join(sides)})" if sides else ""),
-        f"النطاق الواسع {e['prev_close']-1.5*e['move']:,.0f} – {e['prev_close']+1.5*e['move']:,.0f}: {yes(e['in15'])}",
-        "",
+        f"📈 نتيجة SPX — {target}",
+        f"الأعلى {e['high']:,.0f} | الأدنى {e['low']:,.0f} | الإغلاق {e['close']:,.0f}",
+        f"الاتجاه صاعد: {ok(e['up'])} ({'صعد' if e['up'] else 'نزل'} {e['close']-e['prev_close']:+,.0f})",
+        f"القمة ≥ {e['call_high']:,.0f}: {ok(e['hit_high'])}",
+        f"القاع ≤ {e['call_low']:,.0f}: {ok(e['hit_low'])}",
+        f"داخل المدى {e['prev_close']-e['move']:,.0f} – {e['prev_close']+e['move']:,.0f}: {ok(e['in1'])}",
     ]
     if n:
-        lines += [f"السجل الحي منذ {LIVE_START} ({n} جلسة):",
-                  f"المرجّح: {sum(x['in1'] for x in live)}/{n} = {100*sum(x['in1'] for x in live)/n:.0f}% (المتوقع 68.7%)",
-                  f"الواسع: {sum(x['in15'] for x in live)}/{n} = {100*sum(x['in15'] for x in live)/n:.0f}% (المتوقع 90.1%)"]
-    else:
-        lines.append(f"السجل الحي يبدأ من جلسة {LIVE_START}.")
+        pct = lambda k: f"{sum(x[k] for x in live)}/{n}"
+        lines += ["", f"السجل منذ {LIVE_START} ({n} جلسة):",
+                  f"الاتجاه {pct('up')} (المتوقع {UP_RATE}%) | القمة {pct('hit_high')} ({HIT_HIGH}%) | "
+                  f"القاع {pct('hit_low')} ({HIT_LOW}%) | المدى {pct('in1')} ({RANGE_RATE}%)"]
     try:
         lines += shadow_lines(os.environ.get('SHADOW_RECORDS'), daily('SPY'), target)
     except Exception as ex:  # noqa: BLE001  (scoring must never block the range evaluation)
@@ -119,7 +118,20 @@ def build(now=None, force=False):
     return "\n".join(lines)
 
 
+def last_closed(now=None):
+    now = now or datetime.now(timezone.utc)
+    today = now.astimezone(NY).date().isoformat()
+    done = [str(s.date()) for s in CAL.sessions_in_range('2026-01-02', today)
+            if CAL.session_close(s).to_pydatetime() + timedelta(minutes=15) <= now]
+    return done[-1] if done else 'none'
+
+
 if __name__ == '__main__':
+    if '--print-target' in sys.argv:
+        print(last_closed()); sys.exit(0)
+    if '--force' not in sys.argv and last_closed() < '2026-11-17':
+        # 2026-11-16 was delivered by a forced manual run before per-session dedupe existed.
+        print('ALREADY_DELIVERED'); sys.exit(0)
     msg = build(force='--force' in sys.argv)
     if msg is None:
         print('SESSION_NOT_CLOSED_OR_NO_SESSION')

@@ -1,6 +1,6 @@
 name: range-evaluate
 # Post-close Telegram check of the pre-open range alert. Several slots because GitHub schedules can run late;
-# the per-day cache key makes only the first successful run send.
+# the cache key is the evaluated session, so a late or next-morning run delivers a missed result exactly once.
 on:
   schedule:
     - cron: '37 21 * * 1-5'   # 00:37 Riyadh
@@ -26,20 +26,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - id: day
-        run: echo "ny=$(TZ=America/New_York date +%F)" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install exchange_calendars==4.13.2
+      - id: day   # the session being evaluated (latest closed one): one delivery per session
+        run: echo "ny=$(python range_alert/evaluate_range.py --print-target)" >> "$GITHUB_OUTPUT"
       - id: sent
-        if: github.event_name == 'schedule'
+        if: ${{ !inputs.force }}
         uses: actions/cache/restore@v4
         with:
           path: .range-eval-sent
           key: range-eval-${{ steps.day.outputs.ny }}
-      - uses: actions/setup-python@v5
-        if: steps.sent.outputs.cache-hit != 'true'
-        with:
-          python-version: '3.12'
-      - if: steps.sent.outputs.cache-hit != 'true'
-        run: pip install exchange_calendars==4.13.2
       - name: TradingAgents shadow records (read-only)
         if: steps.sent.outputs.cache-hit != 'true'
         run: git clone -q --depth 1 --branch data/tradingagents-shadow "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" shadow-data || echo "no shadow records"
@@ -53,7 +51,7 @@ jobs:
           set -o pipefail
           python range_alert/evaluate_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
           if grep -q 'TELEGRAM_OK' out.txt; then echo ok > .range-eval-sent; fi
-      - if: github.event_name == 'schedule' && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-eval-sent') != ''
+      - if: ${{ steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-eval-sent') != '' }}
         uses: actions/cache/save@v4
         with:
           path: .range-eval-sent

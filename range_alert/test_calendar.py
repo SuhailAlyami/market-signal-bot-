@@ -43,18 +43,17 @@ class CalendarTests(unittest.TestCase):
             for d in HOLIDAYS + WEEKEND:
                 self.assertIsNone(D.build(now=at(d, 13, 13)), d)
 
-    def test_evening_evaluation_silent_on_holidays_and_weekends(self):
-        with NO_NET:
-            for d in HOLIDAYS + WEEKEND:
-                self.assertIsNone(E.build(now=at(d, 21, 37)), d)
+    def test_evening_target_is_last_closed_session_so_holidays_add_nothing_new(self):
+        # Delivery is deduplicated per evaluated session, so on a holiday/weekend the target is a session
+        # that was already delivered and nothing new is sent.
+        self.assertEqual(E.last_closed(at('2026-11-26', 21, 37)), '2026-11-25')   # Thanksgiving
+        self.assertEqual(E.last_closed(at('2026-11-15', 21, 37)), '2026-11-13')   # Sunday
+        self.assertEqual(E.last_closed(at('2026-12-25', 21, 37)), '2026-12-24')   # Christmas
 
-    def test_evening_evaluation_waits_for_early_close_not_later(self):
-        # 2026-11-27 closes 13:00 NY = 18:00 UTC; evaluation is allowed from 18:15 UTC.
-        with NO_NET:
-            self.assertIsNone(E.build(now=at('2026-11-27', 18, 10)))
-        with mock.patch.object(E, 'daily', side_effect=RuntimeError('fetch reached')):
-            with self.assertRaisesRegex(RuntimeError, 'fetch reached'):
-                E.build(now=at('2026-11-27', 18, 20))
+    def test_evening_target_waits_for_early_close_not_later(self):
+        # 2026-11-27 closes 13:00 New York = 18:00 UTC; it becomes the target from 18:15 UTC.
+        self.assertEqual(E.last_closed(at('2026-11-27', 18, 10)), '2026-11-25')
+        self.assertEqual(E.last_closed(at('2026-11-27', 18, 20)), '2026-11-27')
 
     def test_shadow_run_skips_holidays_and_weekends(self):
         with NO_NET, tempfile.TemporaryDirectory() as tmp:
@@ -63,6 +62,10 @@ class CalendarTests(unittest.TestCase):
                 with redirect_stdout(buf):
                     self.assertEqual(S.main(tmp, now=at(d, 11, 7)), 0)
                 self.assertIn('NO_SESSION_TODAY', buf.getvalue(), d)
+
+    def test_morning_call_never_sent_after_the_open_unforced(self):
+        with NO_NET:
+            self.assertEqual(D.build(now=at('2026-11-17', 15, 0)), 'LATE')   # 10:00 New York
 
     def test_notes_half_day(self):
         notes = D.calendar_notes(date(2026, 11, 27))

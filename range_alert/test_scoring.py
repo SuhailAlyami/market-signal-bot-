@@ -30,6 +30,20 @@ class MoveLinesTests(unittest.TestCase):
         self.assertIn('الاتجاه غير معروف', text)
 
 
+class DailyCallTests(unittest.TestCase):
+    def test_levels_from_previous_close(self):
+        lv = D.call_levels(7561.67, 92.0)
+        self.assertAlmostEqual(lv['high'], 7561.67+0.174*92, places=6)
+        self.assertAlmostEqual(lv['low'], 7561.67-0.11*92, places=6)
+        self.assertEqual((round(lv['min_low']), round(lv['max_high'])), (7470, 7654))
+
+    def test_evaluation_flags_for_16_nov(self):
+        spx = {'2026-11-13': (7500, 7621.78, 7499.40, 7561.67), '2026-11-16': (7513.98, 7515.60, 7400.15, 7416.59)}
+        vix = {'2026-11-13': (0, 0, 0, 19.3), '2026-11-16': (0, 0, 0, 22.0)}
+        e = E.evaluate(spx, vix, '2026-11-16')
+        self.assertFalse(e['up']); self.assertFalse(e['hit_high']); self.assertTrue(e['hit_low']); self.assertFalse(e['in1'])
+
+
 class ShadowScoringTests(unittest.TestCase):
     def test_no_records_dir_gives_nothing(self):
         self.assertEqual(E.shadow_lines(None, spy(100, 101), '2026-11-13'), [])
