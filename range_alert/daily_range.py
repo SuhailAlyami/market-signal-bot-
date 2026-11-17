@@ -70,6 +70,50 @@ def call_levels(pc, m):
     return {'high': pc+K_HIGH*m, 'low': pc-K_LOW*m, 'max_high': pc+m, 'min_low': pc-m}
 
 
+# Direction from the overnight futures move. g = (implied pre-open level - prev_close) / m. P(close > prev close) per
+# bucket, measured on 1726 untouched sessions 2020-01 .. 2026-11-13 with the 09:30 open as the proxy for the pre-open
+# level (branch research/gap-direction-20261117, gapdir.py). Sign of the gap: 71% correct vs 54% for always-up.
+GAP_BUCKETS = [(-9e9, -0.5, 10), (-0.5, -0.2, 26), (-0.2, -0.05, 40), (-0.05, 0.05, 49),
+               (0.05, 0.2, 66), (0.2, 0.5, 76), (0.5, 9e9, 89)]
+# Reach from the open (same test sessions): high >= open + k*m / low <= open - k*m.
+OPEN_LEVELS = [(0.1, 85, 80), (0.25, 63, 60)]
+
+
+def gap_direction(g):
+    """(key, Arabic label, confidence %) for a gap measured in units of m."""
+    for lo, hi, p_up in GAP_BUCKETS:
+        if lo <= g < hi:
+            if p_up >= 55:
+                return 'up', 'صاعد 📈', p_up
+            if p_up <= 45:
+                return 'down', 'هابط 📉', 100-p_up
+            return 'flat', 'محايد ↔️', max(p_up, 100-p_up)
+
+
+def es_move(session, now):
+    """ES futures change since the previous session's close bar, from Yahoo 5m bars (about 10 min delayed).
+    Returns (fraction, bar time) or None if unavailable or stale (> 45 min old)."""
+    prev = CAL.previous_session(session.isoformat())
+    ref_t = CAL.session_close(prev).to_pydatetime() - timedelta(minutes=5)
+    url = 'https://query1.finance.yahoo.com/v8/finance/chart/ES%3DF?interval=5m&range=5d&includePrePost=true'
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; suhail-hunter-range-alert)'})
+    r = json.loads(urllib.request.urlopen(req, timeout=20).read())['chart']['result'][0]
+    bars = [(datetime.fromtimestamp(t, timezone.utc), c) for t, c in zip(r['timestamp'], r['indicators']['quote'][0]['close']) if c]
+    ref = [c for t, c in bars if t <= ref_t]
+    last = [(t, c) for t, c in bars if t <= now]
+    if not ref or not last or now - last[-1][0] > timedelta(minutes=45) or last[-1][0] <= ref_t:
+        return None
+    return last[-1][1]/ref[-1]-1, last[-1][0]
+
+
+def gap_call(pc, m, move):
+    a = pc*(1+move)
+    key, label, conf = gap_direction((a-pc)/m)
+    return {'method': 'gap', 'anchor': a, 'direction': key, 'label': label, 'conf': conf,
+            'levels': [{'k': k, 'high': a+k*m, 'low': a-k*m, 'p_high': ph, 'p_low': pl} for k, ph, pl in OPEN_LEVELS],
+            'range': [pc-m, pc+m]}
+
+
 def calendar_notes(session):
     """Arabic notes from the official NYSE calendar: early close today, market closed on the next weekday(s)."""
     notes = []
@@ -101,13 +145,34 @@ def build(now=None, force=False):
     rv = realized_vol_21(spx_rows)
     m = spx*vix/100/math.sqrt(252)
     late = now > opening
-    lv = call_levels(spx, m)
-    lines = [
-        f"📊 SPX اليوم — {session.isoformat()}",
-        f"الاتجاه: صاعد 📈 (يصيب {UP_RATE}% من الأيام)",
-        f"القمة: سيصل على الأقل إلى {lv['high']:,.0f} (يتحقق {HIT_HIGH}%)",
-        f"القاع: سينزل على الأقل إلى {lv['low']:,.0f} (يتحقق {HIT_LOW}%)",
-        f"أقصى مدى مرجّح: {lv['min_low']:,.0f} – {lv['max_high']:,.0f} (يبقى داخله {RANGE_RATE}%)",
+    try:
+        mv = es_move(session, now)
+    except Exception as ex:  # noqa: BLE001  (futures are optional; fall back to the base call)
+        print('ES_FETCH_FAILED', ex, file=sys.stderr)
+        mv = None
+    head = [f"📊 SPX اليوم — {session.isoformat()}"]
+    if mv:
+        c = gap_call(spx, m, mv[0])
+        l1, l2 = c['levels']
+        body = [f"الاتجاه: {c['label']} — الثقة {c['conf']}%",
+                f"القمة: سيصل على الأقل إلى {l1['high']:,.0f} ({l1['p_high']}%)، ومحتمل {l2['high']:,.0f} ({l2['p_high']}%)",
+                f"القاع: سينزل على الأقل إلى {l1['low']:,.0f} ({l1['p_low']}%)، ومحتمل {l2['low']:,.0f} ({l2['p_low']}%)",
+                f"الافتتاح المتوقع: {c['anchor']:,.0f} (العقود الآجلة {100*mv[0]:+.2f}% منذ إغلاق أمس، "
+                f"آخر قراءة {mv[1].astimezone(RIYADH).strftime('%H:%M')} الرياض)",
+                f"أقصى مدى مرجّح: {c['range'][0]:,.0f} – {c['range'][1]:,.0f} ({RANGE_RATE}%)"]
+    else:
+        lv = call_levels(spx, m)
+        c = {'method': 'base', 'anchor': spx, 'direction': 'up', 'conf': UP_RATE,
+             'levels': [{'k': None, 'high': lv['high'], 'low': lv['low'], 'p_high': HIT_HIGH, 'p_low': HIT_LOW}],
+             'range': [lv['min_low'], lv['max_high']]}
+        body = [f"الاتجاه: صاعد 📈 (يصيب {UP_RATE}% من الأيام) — العقود الآجلة غير متاحة الآن",
+                f"القمة: سيصل على الأقل إلى {lv['high']:,.0f} ({HIT_HIGH}%)",
+                f"القاع: سينزل على الأقل إلى {lv['low']:,.0f} ({HIT_LOW}%)",
+                f"أقصى مدى مرجّح: {lv['min_low']:,.0f} – {lv['max_high']:,.0f} ({RANGE_RATE}%)"]
+    c.update(session=session.isoformat(), prev_close=spx, m=m, vix=vix, sent_utc=now.isoformat())
+    c.pop('label', None)
+    print('CALL_JSON ' + json.dumps(c, ensure_ascii=False))
+    lines = head + body + [
         "",
         f"إغلاق أمس {spx:,.2f} | VIX {vix:.1f} | الافتتاح {opening.astimezone(RIYADH).strftime('%H:%M')} الرياض"
         + (" ⚠️ وصل بعد الافتتاح" if late else ""),

@@ -80,6 +80,46 @@ def shadow_lines(records_dir, spy, day):
     return out
 
 
+def load_call(calls_dir, day):
+    f = os.path.join(calls_dir or '', f'{day}.json')
+    return json.loads(open(f).read()) if calls_dir and os.path.isfile(f) else None
+
+
+def score_call(c, o, h, l, close):
+    """Score a stored morning call against the session's actual high/low/close."""
+    pc = c['prev_close']
+    d = c['direction']
+    dir_ok = None if d == 'flat' else ((close > pc) if d == 'up' else (close < pc))
+    lv = [{'high': x['high'], 'low': x['low'], 'hit_high': h >= x['high'], 'hit_low': l <= x['low'],
+           'p_high': x['p_high'], 'p_low': x['p_low']} for x in c['levels']]
+    return {'dir': d, 'conf': c['conf'], 'dir_ok': dir_ok, 'levels': lv, 'method': c.get('method'),
+            'in_range': c['range'][0] <= l and h <= c['range'][1]}
+
+
+def call_lines(calls_dir, spx, target):
+    c = load_call(calls_dir, target)
+    if not c or target not in spx:
+        return None
+    o, h, l, close = spx[target]
+    s = score_call(c, o, h, l, close)
+    ok = lambda b: '✅' if b else '❌'
+    AR = {'up': 'صاعد', 'down': 'هابط', 'flat': 'محايد'}
+    pc = c['prev_close']
+    lines = [f"📈 نتيجة SPX — {target}",
+             f"الأعلى {h:,.0f} | الأدنى {l:,.0f} | الإغلاق {close:,.0f} ({close-pc:+,.0f} عن أمس)",
+             f"الاتجاه {AR[s['dir']]} ({s['conf']}%): " + ('— بلا حكم' if s['dir_ok'] is None else ok(s['dir_ok']))]
+    for x in s['levels']:
+        lines.append(f"القمة ≥ {x['high']:,.0f} ({x['p_high']}%): {ok(x['hit_high'])} | "
+                     f"القاع ≤ {x['low']:,.0f} ({x['p_low']}%): {ok(x['hit_low'])}")
+    lines.append(f"داخل المدى {c['range'][0]:,.0f} – {c['range'][1]:,.0f}: {ok(s['in_range'])}")
+    hist = [score_call(load_call(calls_dir, d), *spx[d]) for d in sorted(spx) if d <= target and load_call(calls_dir, d)]
+    dirs = [x['dir_ok'] for x in hist if x['dir_ok'] is not None]
+    first = [x['levels'][0] for x in hist]
+    lines += ["", f"السجل ({len(hist)} جلسة): الاتجاه {sum(dirs)}/{len(dirs)} | "
+              f"القمة الأولى {sum(x['hit_high'] for x in first)}/{len(first)} | القاع الأول {sum(x['hit_low'] for x in first)}/{len(first)}"]
+    return lines
+
+
 def build(now=None, force=False):
     now = now or datetime.now(timezone.utc)
     today = now.astimezone(NY).date().isoformat()
@@ -96,8 +136,9 @@ def build(now=None, force=False):
     e = evaluate(spx, vix, target)
     live = [evaluate(spx, vix, d) for d in done if d >= LIVE_START and d in spx]
     n = len(live)
+    stored = call_lines(os.environ.get('CALLS_DIR'), spx, target)
     ok = lambda b: '✅' if b else '❌'
-    lines = [
+    lines = stored or [
         f"📈 نتيجة SPX — {target}",
         f"الأعلى {e['high']:,.0f} | الأدنى {e['low']:,.0f} | الإغلاق {e['close']:,.0f}",
         f"الاتجاه صاعد: {ok(e['up'])} ({'صعد' if e['up'] else 'نزل'} {e['close']-e['prev_close']:+,.0f})",
@@ -105,7 +146,7 @@ def build(now=None, force=False):
         f"القاع ≤ {e['call_low']:,.0f}: {ok(e['hit_low'])}",
         f"داخل المدى {e['prev_close']-e['move']:,.0f} – {e['prev_close']+e['move']:,.0f}: {ok(e['in1'])}",
     ]
-    if n:
+    if n and not stored:
         pct = lambda k: f"{sum(x[k] for x in live)}/{n}"
         lines += ["", f"السجل منذ {LIVE_START} ({n} جلسة):",
                   f"الاتجاه {pct('up')} (المتوقع {UP_RATE}%) | القمة {pct('hit_high')} ({HIT_HIGH}%) | "
