@@ -1,0 +1,209 @@
+{
+  "preregistered": "nhnl_washout_long",
+  "markets": [
+    "QQQ",
+    "IWM",
+    "GDAXI",
+    "N225"
+  ],
+  "definition": "Same 52-week washout. Next 09:30, exit 5 sessions later. Pass needs the S&P bar, the pooled QQQ/IWM/DAX/Nikkei bar, and the reality check.",
+  "test_end": "2026-11-16",
+  "spx_2x": {
+    "trades": 16,
+    "win_rate": 0.625,
+    "win_rate_ci": [
+      0.3864,
+      0.8152
+    ],
+    "expectancy": 62.7473,
+    "expectancy_ci": [
+      -5.3513,
+      136.7638
+    ],
+    "profit_factor": 4.0756,
+    "avg_win": 133.0386,
+    "avg_loss": -54.4048,
+    "years_positive": 1.0,
+    "years": [
+      {
+        "year": 2022,
+        "trades": 13,
+        "total": 338.2,
+        "win_rate": 0.6154
+      },
+      {
+        "year": 2025,
+        "trades": 3,
+        "total": 665.75,
+        "win_rate": 0.6667
+      }
+    ]
+  },
+  "spx_bar": false,
+  "by_market_2x": {
+    "QQQ": {
+      "trades": 6,
+      "win_rate": 0.6667,
+      "win_rate_ci": [
+        0.3,
+        0.9032
+      ],
+      "expectancy": 0.0199,
+      "expectancy_ci": [
+        -0.0104,
+        0.0785
+      ],
+      "profit_factor": 3.7182,
+      "avg_win": 0.0408,
+      "avg_loss": -0.0219,
+      "years_positive": 0.5,
+      "years": [
+        {
+          "year": 2022,
+          "trades": 5,
+          "total": 0.0,
+          "win_rate": 0.6
+        },
+        {
+          "year": 2025,
+          "trades": 1,
+          "total": 0.12,
+          "win_rate": 1.0
+        }
+      ]
+    },
+    "IWM": {
+      "trades": 6,
+      "win_rate": 0.6667,
+      "win_rate_ci": [
+        0.3,
+        0.9032
+      ],
+      "expectancy": 0.0118,
+      "expectancy_ci": [
+        -0.0104,
+        0.0447
+      ],
+      "profit_factor": 2.1143,
+      "avg_win": 0.0334,
+      "avg_loss": -0.0316,
+      "years_positive": 0.5,
+      "years": [
+        {
+          "year": 2022,
+          "trades": 5,
+          "total": 0.0,
+          "win_rate": 0.6
+        },
+        {
+          "year": 2025,
+          "trades": 1,
+          "total": 0.07,
+          "win_rate": 1.0
+        }
+      ]
+    },
+    "GDAXI": {
+      "trades": 6,
+      "win_rate": 0.6667,
+      "win_rate_ci": [
+        0.3,
+        0.9032
+      ],
+      "expectancy": 0.0265,
+      "expectancy_ci": [
+        -0.0074,
+        0.0756
+      ],
+      "profit_factor": 3.4594,
+      "avg_win": 0.056,
+      "avg_loss": -0.0324,
+      "years_positive": 1.0,
+      "years": [
+        {
+          "year": 2022,
+          "trades": 5,
+          "total": 0.04,
+          "win_rate": 0.6
+        },
+        {
+          "year": 2025,
+          "trades": 1,
+          "total": 0.12,
+          "win_rate": 1.0
+        }
+      ]
+    },
+    "N225": {
+      "trades": 6,
+      "win_rate": 0.6667,
+      "win_rate_ci": [
+        0.3,
+        0.9032
+      ],
+      "expectancy": 0.0079,
+      "expectancy_ci": [
+        -0.0166,
+        0.0262
+      ],
+      "profit_factor": 1.8864,
+      "avg_win": 0.0253,
+      "avg_loss": -0.0269,
+      "years_positive": 1.0,
+      "years": [
+        {
+          "year": 2022,
+          "trades": 5,
+          "total": 0.02,
+          "win_rate": 0.6
+        },
+        {
+          "year": 2025,
+          "trades": 1,
+          "total": 0.02,
+          "win_rate": 1.0
+        }
+      ]
+    }
+  },
+  "pooled_2x": {
+    "trades": 24,
+    "win_rate": 0.6667,
+    "win_rate_ci": [
+      0.4671,
+      0.8203
+    ],
+    "expectancy": 0.0165,
+    "expectancy_ci": [
+      -0.0079,
+      0.0527
+    ],
+    "profit_factor": 2.7578,
+    "avg_win": 0.0389,
+    "avg_loss": -0.0282,
+    "years_positive": 1.0,
+    "years": [
+      {
+        "year": 2022,
+        "trades": 20,
+        "total": 0.07,
+        "win_rate": 0.6
+      },
+      {
+        "year": 2025,
+        "trades": 4,
+        "total": 0.33,
+        "win_rate": 1.0
+      }
+    ]
+  },
+  "pooled_bar": false,
+  "family_wise": {
+    "reality_p": 1.0,
+    "dsr": 0.0,
+    "survives": false
+  },
+  "matrix_rules": 230,
+  "any_meets_success_bar": false,
+  "live_default": "legacy"
+}
