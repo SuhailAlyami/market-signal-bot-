@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 import exchange_calendars as xc
 
-from daily_range import send
+from daily_range import HIT_HIGH, HIT_LOW, RANGE_RATE, UP_RATE, call_levels, send
 
 NY = ZoneInfo('America/New_York')
 CAL = xc.get_calendar('XNYS', start='2026-01-01', end='2027-12-31')
@@ -38,7 +38,9 @@ def evaluate(spx, vix, day):
     inside = lambda k: l >= pc-k*m and h <= pc+k*m
     return {'day': day, 'prev_close': pc, 'move': m, 'high': h, 'low': l, 'close': c,
             'in1': inside(1.0), 'in15': inside(1.5), 'up': c > pc,
-            'broke_up1': h > pc+m, 'broke_dn1': l < pc-m}
+            'broke_up1': h > pc+m, 'broke_dn1': l < pc-m,
+            'hit_high': h >= call_levels(pc, m)['high'], 'hit_low': l <= call_levels(pc, m)['low'],
+            'call_high': call_levels(pc, m)['high'], 'call_low': call_levels(pc, m)['low']}
 
 
 POS = {'Buy': 1, 'Overweight': 1, 'Sell': -1, 'Underweight': -1}   # Hold / REVIEW = no position
@@ -92,25 +94,20 @@ def build(now=None, force=False):
     e = evaluate(spx, vix, target)
     live = [evaluate(spx, vix, d) for d in done if d >= LIVE_START and d in spx]
     n = len(live)
-    sides = []
-    if e['broke_up1']:
-        sides.append('تجاوز الحد الأعلى')
-    if e['broke_dn1']:
-        sides.append('كسر الحد الأدنى')
-    yes = lambda b: '✅ داخل' if b else '❌ خارج'
+    ok = lambda b: '✅' if b else '❌'
     lines = [
-        f"📈 نتيجة جلسة {target}",
-        f"الأعلى: {e['high']:,.2f} | الأدنى: {e['low']:,.2f} | الإغلاق: {e['close']:,.2f} ({'صاعد' if e['up'] else 'هابط'})",
-        f"النطاق المرجّح {e['prev_close']-e['move']:,.0f} – {e['prev_close']+e['move']:,.0f}: {yes(e['in1'])}" + (f" ({'، '.join(sides)})" if sides else ""),
-        f"النطاق الواسع {e['prev_close']-1.5*e['move']:,.0f} – {e['prev_close']+1.5*e['move']:,.0f}: {yes(e['in15'])}",
-        "",
+        f"📈 نتيجة SPX — {target}",
+        f"الأعلى {e['high']:,.0f} | الأدنى {e['low']:,.0f} | الإغلاق {e['close']:,.0f}",
+        f"الاتجاه صاعد: {ok(e['up'])} ({'صعد' if e['up'] else 'نزل'} {e['close']-e['prev_close']:+,.0f})",
+        f"القمة ≥ {e['call_high']:,.0f}: {ok(e['hit_high'])}",
+        f"القاع ≤ {e['call_low']:,.0f}: {ok(e['hit_low'])}",
+        f"داخل المدى {e['prev_close']-e['move']:,.0f} – {e['prev_close']+e['move']:,.0f}: {ok(e['in1'])}",
     ]
     if n:
-        lines += [f"السجل الحي منذ {LIVE_START} ({n} جلسة):",
-                  f"المرجّح: {sum(x['in1'] for x in live)}/{n} = {100*sum(x['in1'] for x in live)/n:.0f}% (المتوقع 68.7%)",
-                  f"الواسع: {sum(x['in15'] for x in live)}/{n} = {100*sum(x['in15'] for x in live)/n:.0f}% (المتوقع 90.1%)"]
-    else:
-        lines.append(f"السجل الحي يبدأ من جلسة {LIVE_START}.")
+        pct = lambda k: f"{sum(x[k] for x in live)}/{n}"
+        lines += ["", f"السجل منذ {LIVE_START} ({n} جلسة):",
+                  f"الاتجاه {pct('up')} (المتوقع {UP_RATE}%) | القمة {pct('hit_high')} ({HIT_HIGH}%) | "
+                  f"القاع {pct('hit_low')} ({HIT_LOW}%) | المدى {pct('in1')} ({RANGE_RATE}%)"]
     try:
         lines += shadow_lines(os.environ.get('SHADOW_RECORDS'), daily('SPY'), target)
     except Exception as ex:  # noqa: BLE001  (scoring must never block the range evaluation)

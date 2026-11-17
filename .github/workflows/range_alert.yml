@@ -29,7 +29,7 @@ jobs:
       - id: day
         run: echo "ny=$(TZ=America/New_York date +%F)" >> "$GITHUB_OUTPUT"
       - id: sent
-        if: github.event_name == 'schedule'
+        if: ${{ !inputs.force }}
         uses: actions/cache/restore@v4
         with:
           path: .range-alert-sent
@@ -47,7 +47,7 @@ jobs:
         run: |
           python range_alert/daily_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
           grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY' out.txt && echo ok > .range-alert-sent
-      - if: github.event_name == 'schedule' && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-alert-sent') != ''
+      - if: ${{ !inputs.force && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-alert-sent') != '' }}
         uses: actions/cache/save@v4
         with:
           path: .range-alert-sent

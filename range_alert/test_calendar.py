@@ -64,6 +64,10 @@ class CalendarTests(unittest.TestCase):
                     self.assertEqual(S.main(tmp, now=at(d, 11, 7)), 0)
                 self.assertIn('NO_SESSION_TODAY', buf.getvalue(), d)
 
+    def test_morning_call_never_sent_after_the_open_unforced(self):
+        with NO_NET:
+            self.assertEqual(D.build(now=at('2026-11-17', 15, 0)), 'LATE')   # 10:00 New York
+
     def test_notes_half_day(self):
         notes = D.calendar_notes(date(2026, 11, 27))
         self.assertTrue(any('جلسة قصيرة' in n and '13:00' in n and '21:00' in n for n in notes), notes)

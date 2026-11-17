@@ -29,7 +29,7 @@ jobs:
       - id: day
         run: echo "ny=$(TZ=America/New_York date +%F)" >> "$GITHUB_OUTPUT"
       - id: sent
-        if: github.event_name == 'schedule'
+        if: ${{ !inputs.force }}
         uses: actions/cache/restore@v4
         with:
           path: .range-eval-sent
@@ -53,7 +53,7 @@ jobs:
           set -o pipefail
           python range_alert/evaluate_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
           if grep -q 'TELEGRAM_OK' out.txt; then echo ok > .range-eval-sent; fi
-      - if: github.event_name == 'schedule' && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-eval-sent') != ''
+      - if: ${{ !inputs.force && steps.sent.outputs.cache-hit != 'true' && hashFiles('.range-eval-sent') != '' }}
         uses: actions/cache/save@v4
         with:
           path: .range-eval-sent
