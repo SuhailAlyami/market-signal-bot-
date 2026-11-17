@@ -85,8 +85,10 @@ def build(now=None, force=False):
     today = now.astimezone(NY).date().isoformat()
     sessions = [str(s.date()) for s in CAL.sessions_in_range('2026-01-02', today)]
     done = [d for d in sessions if CAL.session_close(d).to_pydatetime() + timedelta(minutes=15) <= now]
-    if not done or (done[-1] != today and not force):
-        return None  # today's session not closed yet (or not a session)
+    if not done:
+        return None
+    # Always the latest closed session; delivery is deduplicated per evaluated session by the workflow cache,
+    # so a late or next-morning run still delivers a result that was missed, exactly once.
     spx, vix = daily('^GSPC'), daily('^VIX')
     target = done[-1]
     if target not in spx:
@@ -116,7 +118,20 @@ def build(now=None, force=False):
     return "\n".join(lines)
 
 
+def last_closed(now=None):
+    now = now or datetime.now(timezone.utc)
+    today = now.astimezone(NY).date().isoformat()
+    done = [str(s.date()) for s in CAL.sessions_in_range('2026-01-02', today)
+            if CAL.session_close(s).to_pydatetime() + timedelta(minutes=15) <= now]
+    return done[-1] if done else 'none'
+
+
 if __name__ == '__main__':
+    if '--print-target' in sys.argv:
+        print(last_closed()); sys.exit(0)
+    if '--force' not in sys.argv and last_closed() < '2026-11-17':
+        # 2026-11-16 was delivered by a forced manual run before per-session dedupe existed.
+        print('ALREADY_DELIVERED'); sys.exit(0)
     msg = build(force='--force' in sys.argv)
     if msg is None:
         print('SESSION_NOT_CLOSED_OR_NO_SESSION')
