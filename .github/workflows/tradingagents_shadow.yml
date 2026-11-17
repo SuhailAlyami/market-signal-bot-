@@ -48,7 +48,7 @@ jobs:
   shadow:
     if: ${{ !inputs.check_keys }}
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 100   # paced free-tier calls take ~15-30 min
     steps:
       - uses: actions/checkout@v4
         with:

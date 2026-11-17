@@ -26,8 +26,12 @@ QUICK_PREF = ['meta-llama/llama-4-scout-17b-16e-instruct', 'llama-3.3-70b-versat
               'moonshotai/kimi-k2-instruct-0905', 'moonshotai/kimi-k2-instruct', 'openai/gpt-oss-120b', 'qwen/qwen3-32b']
 MIN_TPM = 9000      # one analyst request was 8291 tokens, a later one 10156
 # Google AI Studio free tier (no card): used instead of Groq when GOOGLE_API_KEY is set; far higher token limits.
-GOOGLE_PREF = ['gemini-3.5-flash', 'gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite',
-               'gemini-2.5-flash-lite']
+# Free tier: about 5 requests per minute per model (429 RESOURCE_EXHAUSTED, run 44162137326), so deep and quick use
+# different models (separate quotas) and every call is paced (pace_invoke). gemini-2.5-* is closed to new users (404).
+GOOGLE_DEEP = ['gemini-3.5-flash', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.6-flash']
+GOOGLE_QUICK = ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemini-3.6-flash', 'gemini-3.7-flash']
+PACE_SECONDS = 13.0      # <= ~4.6 calls/minute per model
+RETRYABLE = ('429', 'RESOURCE_EXHAUSTED', '503', 'UNAVAILABLE')
 # Smaller prompts so each request fits the free per-minute token caps (defaults: 20 / 10 / 7, output unbounded).
 SLIM = dict(news_article_limit=6, global_news_article_limit=4, global_news_lookback_days=3, max_tokens=1500)
 MAX_ATTEMPTS = 3
@@ -54,6 +58,32 @@ def probe_tpm(model):
         return int(e.headers.get('x-ratelimit-limit-tokens') or 0) if e.code == 429 else 0
     except Exception:  # noqa: BLE001
         return 0
+
+
+def pace_invoke(cls, interval=PACE_SECONDS, wait_on_limit=65.0, tries=6, sleep=time.sleep, clock=time.time):
+    """Wrap cls.invoke: at most one call per `interval` seconds per model, and on a rate-limit/overload error wait
+    `wait_on_limit` seconds and retry (up to `tries` attempts). Keeps a free-tier key under its per-minute quota."""
+    import threading
+    lock, last, orig = threading.Lock(), {}, cls.invoke
+
+    def invoke(self, input, config=None, **kw):
+        model = getattr(self, 'model', '?')
+        for attempt in range(tries):
+            with lock:
+                gap = last.get(model, -1e18) + interval - clock()
+                if gap > 0:
+                    sleep(gap)
+                last[model] = clock()
+            try:
+                return orig(self, input, config, **kw)
+            except Exception as e:  # noqa: BLE001
+                if attempt < tries-1 and any(k in str(e) for k in RETRYABLE):
+                    print('RATE_LIMIT_WAIT', model, file=sys.stderr, flush=True)
+                    sleep(wait_on_limit)
+                    continue
+                raise
+    cls.invoke = invoke
+    return cls
 
 
 def google_models():
@@ -103,8 +133,10 @@ def main(out_dir, force=False, now=None):
         provider = 'google'
         available = google_models()
         tpm = {}
-        g = candidates(GOOGLE_PREF, available, os.environ.get('SHADOW_DEEP_MODEL'))
-        pairs = plan(g, g)
+        pairs = plan(candidates(GOOGLE_DEEP, available, os.environ.get('SHADOW_DEEP_MODEL')),
+                     candidates(GOOGLE_QUICK, available, os.environ.get('SHADOW_QUICK_MODEL')))
+        from tradingagents.llm_clients import google_client
+        pace_invoke(google_client.NormalizedChatGoogleGenerativeAI)
     else:
         provider = 'groq'
         available = groq_models()
