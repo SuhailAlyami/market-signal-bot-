@@ -89,8 +89,11 @@ def session_returns(state) -> dict[date, float]:
 
 
 def weekday_bars(bars: pd.DataFrame) -> pd.DataFrame:
-    """Drop weekend placeholder prints. Sunday cash hours in this feed are a frozen price."""
-    return bars[bars.index.day_of_week < 5]
+    """Drop Saturday and the frozen Sunday cash-hour prints. Keep Sunday 18:00, the real reopen."""
+    minute = bars.index.hour * 60 + bars.index.minute
+    saturday = bars.index.day_of_week == 5
+    sunday_placeholder = (bars.index.day_of_week == 6) & (minute < 18 * 60)
+    return bars[~(saturday | sunday_placeholder)]
 
 
 def complete_sessions(state) -> list[date]:
