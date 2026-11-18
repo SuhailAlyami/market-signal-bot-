@@ -3,9 +3,7 @@ name: tradingagents-shadow
 # Records go to branch data/tradingagents-shadow. The LLM step never sees Telegram secrets,
 # and the Telegram step never sees the Groq/Google keys. GOOGLE_API_KEY (free AI Studio key), when set, replaces Groq.
 on:
-  schedule:
-    - cron: '7 11 * * 1-5'    # 14:07 Riyadh
-    - cron: '7 12 * * 1-5'    # 15:07 Riyadh
+  # Schedule removed 2026-11-18: owner cancelled the SPY shadow run (failed on free-tier limits, sent failure messages).
   workflow_dispatch:
     inputs:
       force:

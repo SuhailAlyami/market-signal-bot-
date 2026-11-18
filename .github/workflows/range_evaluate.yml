@@ -38,16 +38,14 @@ jobs:
         with:
           path: .range-eval-sent
           key: range-eval-${{ steps.day.outputs.ny }}
-      - name: TradingAgents shadow records (read-only)
+      - name: Stored morning calls (read-only)
         if: steps.sent.outputs.cache-hit != 'true'
         run: |
-          git clone -q --depth 1 --branch data/tradingagents-shadow "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" shadow-data || echo "no shadow records"
           git clone -q --depth 1 --branch data/daily-calls "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" calls-data || echo "no stored calls"
       - if: steps.sent.outputs.cache-hit != 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          SHADOW_RECORDS: shadow-data/records
           CALLS_DIR: calls-data/calls
         shell: bash
         run: |
