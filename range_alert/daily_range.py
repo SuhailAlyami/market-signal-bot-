@@ -6,6 +6,7 @@ import math
 import os
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -200,15 +201,30 @@ def build(now=None, force=False):
     return "\n".join(lines)
 
 
-def send(text):
+def send(text, tries=4, sleep=time.sleep):
     token, chat = os.environ.get('TELEGRAM_BOT_TOKEN'), os.environ.get('TELEGRAM_CHAT_ID')
     if not token or not chat:
         print('NO_TELEGRAM_CREDENTIALS; message not sent')
         return False
     data = urllib.parse.urlencode({'chat_id': chat, 'text': text}).encode()
-    resp = json.loads(urllib.request.urlopen(f'https://api.telegram.org/bot{token}/sendMessage', data=data, timeout=20).read())
-    print('TELEGRAM_OK' if resp.get('ok') else f'TELEGRAM_FAILED {resp}')
-    return bool(resp.get('ok'))
+    # Telegram timed out from the GitHub runner on 2026-11-19: retry network errors and 5xx, never 4xx.
+    for i in range(tries):
+        try:
+            resp = json.loads(urllib.request.urlopen(f'https://api.telegram.org/bot{token}/sendMessage', data=data, timeout=30).read())
+            print('TELEGRAM_OK' if resp.get('ok') else f'TELEGRAM_FAILED {resp}')
+            return bool(resp.get('ok'))
+        except urllib.error.HTTPError as e:
+            if e.code < 500:
+                print(f'TELEGRAM_FAILED HTTP {e.code}')
+                return False
+            err = f'HTTP {e.code}'
+        except OSError as e:
+            err = f'{type(e).__name__}: {e}'
+        print(f'TELEGRAM_RETRY {i+1}/{tries} {err}', file=sys.stderr, flush=True)
+        if i < tries-1:
+            sleep((10, 30, 60)[min(i, 2)])
+    print('TELEGRAM_UNAVAILABLE')   # not marked as sent: a later run retries
+    return False
 
 
 if __name__ == '__main__':
@@ -225,5 +241,5 @@ if __name__ == '__main__':
         print('LATE_AFTER_OPEN_NOT_SENT')
         sys.exit(0)
     print(msg)
-    if '--dry-run' not in sys.argv and not send(msg):
-        sys.exit(1)
+    if '--dry-run' not in sys.argv:
+        send(msg)   # TELEGRAM_OK is what the workflow records as sent; anything else is retried by a later run
