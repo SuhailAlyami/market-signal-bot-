@@ -1,0 +1,35 @@
+name: explosion-retrain
+# Monthly walk-forward retrain of the explosion-day risk model (range_alert/explosion.py). The new model is stored on
+# branch data/explosion-model; the morning alert uses it when present, otherwise the committed explosion_model.json.
+on:
+  schedule:
+    - cron: '17 3 2 * *'    # 2nd of each month, 06:17 Riyadh
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: explosion-retrain
+  cancel-in-progress: false
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q exchange_calendars==4.13.2 numpy scikit-learn
+      - name: Train (walk-forward out-of-sample evaluation, then final fit)
+        run: cd range_alert && python explosion.py ../explosion_model.json
+      - name: Store on data branch
+        shell: bash
+        run: |
+          url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+          if git ls-remote --exit-code --heads "$url" data/explosion-model >/dev/null; then git clone -q --depth 1 --branch data/explosion-model "$url" model-repo
+          else mkdir model-repo && cd model-repo && git init -q -b data/explosion-model && git remote add origin "$url" && cd ..; fi
+          cp explosion_model.json model-repo/explosion_model.json
+          cd model-repo && git config user.name "explosion-retrain" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && (git diff --cached --quiet || git commit -q -m "explosion model $(date -u +%F)") && git push -q origin HEAD:refs/heads/data/explosion-model

@@ -144,6 +144,22 @@ def gap_call(pc, m, move):
             'range': [pc-m, pc+m]}
 
 
+def explosion_risk(session, anchor):
+    """Explosion-day risk from the walk-forward model (explosion.py). None if the model or data is unavailable."""
+    import explosion as X
+    path = os.environ.get('EXPLOSION_MODEL') or os.path.join(os.path.dirname(os.path.abspath(__file__)), 'explosion_model.json')
+    model = json.loads(open(path).read())
+    start = (session - timedelta(days=60)).isoformat()
+    spx = X.yahoo_daily('^GSPC', start)
+    vix = {d: v[3] for d, v in X.yahoo_daily('^VIX', start).items()}
+    rows = [(d, *spx[d]) for d in sorted(spx) if d < session.isoformat() and d in vix]
+    f, m = X.features(session.isoformat(), rows, vix, anchor=anchor)
+    p = X.prob(model, f)
+    key, label, rate = X.tier(model, p)
+    return {'p': round(p, 4), 'tier': key, 'label': label, 'rate': rate, 'base_rate': model['base_rate'],
+            'threshold_pts': round(model['k_explode']*m, 1), 'model_through': model['trained_through']}
+
+
 def calendar_notes(session):
     """Arabic notes from the official NYSE calendar: early close today, market closed on the next weekday(s)."""
     notes = []
@@ -199,6 +215,14 @@ def build(now=None, force=False):
                 f"القمة: سيصل على الأقل إلى {lv['high']:,.0f} ({HIT_HIGH}%)",
                 f"القاع: سينزل على الأقل إلى {lv['low']:,.0f} ({HIT_LOW}%)",
                 f"أقصى مدى مرجّح: {lv['min_low']:,.0f} – {lv['max_high']:,.0f} ({RANGE_RATE}%)"]
+    if mv:
+        try:
+            c['explosion'] = ex = explosion_risk(session, c['anchor'])
+            if ex['tier'] != 'normal':   # shown only on flagged days: the model is weak otherwise (AUC 0.62)
+                body.append(f"⚡ خطر حركة قوية اليوم: {ex['label']} — حركة ≥ {ex['threshold_pts']:.0f} نقطة من الافتتاح "
+                            f"تحدث في {ex['rate']}% من مثل هذه الأيام مقابل {ex['base_rate']}% عادة")
+        except Exception as e:  # noqa: BLE001  (risk line is optional)
+            print('EXPLOSION_RISK_FAILED', e, file=sys.stderr)
     c.update(session=session.isoformat(), prev_close=spx, m=m, vix=vix, sent_utc=now.isoformat())
     c.pop('label', None)
     print('CALL_JSON ' + json.dumps(c, ensure_ascii=False))

@@ -40,6 +40,11 @@ jobs:
           python-version: '3.12'
       - if: steps.sent.outputs.cache-hit != 'true'
         run: pip install exchange_calendars==4.13.2
+      - name: Latest retrained explosion model (optional)
+        if: steps.sent.outputs.cache-hit != 'true'
+        run: |
+          git clone -q --depth 1 --branch data/explosion-model "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" model-data \
+            && echo "EXPLOSION_MODEL=$PWD/model-data/explosion_model.json" >> "$GITHUB_ENV" || echo "using committed model"
       - if: steps.sent.outputs.cache-hit != 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
