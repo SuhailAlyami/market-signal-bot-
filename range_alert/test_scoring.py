@@ -107,6 +107,46 @@ class YahooRetryTests(unittest.TestCase):
                 D.yahoo_chart('^GSPC', 'interval=1d', tries=3, sleep=lambda s: None)
 
 
+class TelegramRetryTests(unittest.TestCase):
+    def setUp(self):
+        import os
+        self.env = mock_env = {'TELEGRAM_BOT_TOKEN': 't', 'TELEGRAM_CHAT_ID': 'c'}
+        self._old = {k: os.environ.get(k) for k in mock_env}
+        os.environ.update(mock_env)
+
+    def tearDown(self):
+        import os
+        for k, v in self._old.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+    def test_timeout_then_success(self):
+        from unittest import mock
+        class R:
+            def read(self): return b'{"ok": true}'
+        calls = []
+        def fake(url, data, timeout):
+            calls.append(1)
+            if len(calls) < 2:
+                raise TimeoutError('The read operation timed out')
+            return R()
+        with mock.patch('urllib.request.urlopen', side_effect=fake):
+            self.assertTrue(D.send('x', sleep=lambda s: None))
+        self.assertEqual(len(calls), 2)
+
+    def test_client_error_not_retried_and_outage_gives_up(self):
+        import urllib.error
+        from unittest import mock
+        with mock.patch('urllib.request.urlopen', side_effect=urllib.error.HTTPError('u', 400, 'Bad Request', {}, None)) as m:
+            self.assertFalse(D.send('x', sleep=lambda s: None))
+            self.assertEqual(m.call_count, 1)
+        with mock.patch('urllib.request.urlopen', side_effect=TimeoutError('t')) as m:
+            self.assertFalse(D.send('x', tries=3, sleep=lambda s: None))
+            self.assertEqual(m.call_count, 3)
+
+
 class ShadowScoringTests(unittest.TestCase):
     def test_no_records_dir_gives_nothing(self):
         self.assertEqual(E.shadow_lines(None, spy(100, 101), '2026-11-13'), [])

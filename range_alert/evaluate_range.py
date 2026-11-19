@@ -181,5 +181,5 @@ if __name__ == '__main__':
         print('SESSION_NOT_CLOSED_OR_NO_SESSION')
         sys.exit(0)
     print(msg)
-    if '--dry-run' not in sys.argv and not send(msg):
-        sys.exit(1)
+    if '--dry-run' not in sys.argv:
+        send(msg)   # TELEGRAM_OK is what the workflow records as delivered; otherwise a later run retries
