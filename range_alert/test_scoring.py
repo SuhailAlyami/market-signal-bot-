@@ -52,6 +52,12 @@ class GapCallTests(unittest.TestCase):
         self.assertEqual(D.gap_direction(0.3)[0:3:2], ('up', 76))
         self.assertEqual(D.gap_direction(0.7)[0:3:2], ('up', 89))
 
+    def test_strength_labels(self):
+        self.assertIn('ضعيف', D.strength(60))
+        self.assertIn('ضعيف', D.strength(66))
+        self.assertEqual(D.strength(76), 'قوي')
+        self.assertEqual(D.strength(90), 'قوي جدًا')
+
     def test_levels_anchor_on_implied_open(self):
         c = D.gap_call(7416.59, 107.0, -0.0024)
         a = 7416.59*(1-0.0024)
@@ -80,7 +86,7 @@ class GapCallTests(unittest.TestCase):
         self.assertIn('الاتجاه هابط (60%): ✅', text)
         self.assertIn('القمة ≥ 7,410 (85%): ✅ | القاع ≤ 7,388 (80%): ✅', text)
         self.assertIn('القمة ≥ 7,426 (63%): ❌ | القاع ≤ 7,372 (60%): ❌', text)
-        self.assertIn('السجل (1 جلسة): الاتجاه 1/1', text)
+        self.assertIn('السجل (1 جلسة): الاتجاه 1/1 (القوي منه 0/0)', text)
 
 
 class YahooRetryTests(unittest.TestCase):

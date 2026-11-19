@@ -100,6 +100,17 @@ GAP_BUCKETS = [(-9e9, -0.5, 10), (-0.5, -0.2, 26), (-0.2, -0.05, 40), (-0.05, 0.
 OPEN_LEVELS = [(0.1, 85, 80), (0.25, 63, 60)]
 
 
+STRONG = 74   # bucket confidence from which the direction is a real call (|gap| >= 0.2 m); below it, near a coin toss
+
+
+def strength(conf):
+    if conf >= 85:
+        return 'قوي جدًا'
+    if conf >= STRONG:
+        return 'قوي'
+    return 'ضعيف: حركة ليلية صغيرة، قريب من التخمين'
+
+
 def gap_direction(g):
     """(key, Arabic label, confidence %) for a gap measured in units of m."""
     for lo, hi, p_up in GAP_BUCKETS:
@@ -173,7 +184,7 @@ def build(now=None, force=False):
     if mv:
         c = gap_call(spx, m, mv[0])
         l1, l2 = c['levels']
-        body = [f"الاتجاه: {c['label']} — الثقة {c['conf']}%",
+        body = [f"الاتجاه: {c['label']} — الثقة {c['conf']}% ({strength(c['conf'])})",
                 f"القمة: سيصل على الأقل إلى {l1['high']:,.0f} ({l1['p_high']}%)، ومحتمل {l2['high']:,.0f} ({l2['p_high']}%)",
                 f"القاع: سينزل على الأقل إلى {l1['low']:,.0f} ({l1['p_low']}%)، ومحتمل {l2['low']:,.0f} ({l2['p_low']}%)",
                 f"الافتتاح المتوقع: {c['anchor']:,.0f} (العقود الآجلة {100*mv[0]:+.2f}% منذ إغلاق أمس، "

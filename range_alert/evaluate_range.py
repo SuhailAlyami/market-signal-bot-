@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 import exchange_calendars as xc
 
-from daily_range import HIT_HIGH, HIT_LOW, RANGE_RATE, UP_RATE, DataUnavailable, call_levels, send, yahoo_chart
+from daily_range import HIT_HIGH, HIT_LOW, RANGE_RATE, STRONG, UP_RATE, DataUnavailable, call_levels, send, yahoo_chart
 
 NY = ZoneInfo('America/New_York')
 CAL = xc.get_calendar('XNYS', start='2026-01-01', end='2027-12-31')
@@ -112,8 +112,9 @@ def call_lines(calls_dir, spx, target):
     lines.append(f"داخل المدى {c['range'][0]:,.0f} – {c['range'][1]:,.0f}: {ok(s['in_range'])}")
     hist = [score_call(load_call(calls_dir, d), *spx[d]) for d in sorted(spx) if d <= target and load_call(calls_dir, d)]
     dirs = [x['dir_ok'] for x in hist if x['dir_ok'] is not None]
+    strong = [x['dir_ok'] for x in hist if x['dir_ok'] is not None and x['conf'] >= STRONG]
     first = [x['levels'][0] for x in hist]
-    lines += ["", f"السجل ({len(hist)} جلسة): الاتجاه {sum(dirs)}/{len(dirs)} | "
+    lines += ["", f"السجل ({len(hist)} جلسة): الاتجاه {sum(dirs)}/{len(dirs)} (القوي منه {sum(strong)}/{len(strong)}) | "
               f"القمة الأولى {sum(x['hit_high'] for x in first)}/{len(first)} | القاع الأول {sum(x['hit_low'] for x in first)}/{len(first)}"]
     return lines
 
