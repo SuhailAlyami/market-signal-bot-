@@ -110,12 +110,25 @@ def call_lines(calls_dir, spx, target):
         lines.append(f"القمة ≥ {x['high']:,.0f} ({x['p_high']}%): {ok(x['hit_high'])} | "
                      f"القاع ≤ {x['low']:,.0f} ({x['p_low']}%): {ok(x['hit_low'])}")
     lines.append(f"داخل المدى {c['range'][0]:,.0f} – {c['range'][1]:,.0f}: {ok(s['in_range'])}")
+    if c.get('explosion'):
+        ex = c['explosion']
+        lines.append(f"حركة قوية (≥ {ex['threshold_pts']:.0f} نقطة من الافتتاح): {'حدثت' if abs(close-o) >= ex['threshold_pts'] else 'لم تحدث'}"
+                     f" — الخطر الصباحي: {ex['label']}")
     hist = [score_call(load_call(calls_dir, d), *spx[d]) for d in sorted(spx) if d <= target and load_call(calls_dir, d)]
     dirs = [x['dir_ok'] for x in hist if x['dir_ok'] is not None]
     strong = [x['dir_ok'] for x in hist if x['dir_ok'] is not None and x['conf'] >= STRONG]
     first = [x['levels'][0] for x in hist]
+    exr = []
+    for d in sorted(spx):
+        cd = load_call(calls_dir, d) if d <= target else None
+        if cd and cd.get('explosion'):
+            exr.append((cd['explosion']['tier'] != 'normal', abs(spx[d][3]-spx[d][0]) >= cd['explosion']['threshold_pts']))
+    ex_line = ""
+    if exr:
+        hi = [b for a, b in exr if a]; lo = [b for a, b in exr if not a]
+        ex_line = f" | الحركة القوية: أيام الخطر {sum(hi)}/{len(hi)}، الأيام العادية {sum(lo)}/{len(lo)}"
     lines += ["", f"السجل ({len(hist)} جلسة): الاتجاه {sum(dirs)}/{len(dirs)} (القوي منه {sum(strong)}/{len(strong)}) | "
-              f"القمة الأولى {sum(x['hit_high'] for x in first)}/{len(first)} | القاع الأول {sum(x['hit_low'] for x in first)}/{len(first)}"]
+              f"القمة الأولى {sum(x['hit_high'] for x in first)}/{len(first)} | القاع الأول {sum(x['hit_low'] for x in first)}/{len(first)}" + ex_line]
     return lines
 
 
