@@ -90,6 +90,4 @@ if __name__ == '__main__':
     out['collected_ny'] = datetime.now(NY).isoformat(timespec='minutes')
     print('GAMMA_JSON ' + json.dumps(out))
     if len(sys.argv) > 1:
-        import os
-        os.makedirs(sys.argv[1], exist_ok=True)
-        open(os.path.join(sys.argv[1], f'{day}.json'), 'w').write(json.dumps(out, indent=1)+'\n')
+        open(sys.argv[1], 'w').write(json.dumps(out, indent=1)+'\n')
