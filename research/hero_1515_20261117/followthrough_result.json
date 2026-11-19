@@ -1,0 +1,89 @@
+{
+ "k=0.35": {
+  "all": {
+   "n": 360,
+   "win%": 51,
+   "mean_pts": 0.9,
+   "median_pts": 0.7,
+   "total_pts": 340,
+   "mean_adverse_pts": 28.3,
+   "pf": 1.07
+  },
+  "2025": {
+   "n": 197,
+   "win%": 54,
+   "mean_pts": 4.3,
+   "median_pts": 2.7,
+   "total_pts": 851,
+   "mean_adverse_pts": 28.1,
+   "pf": 1.36
+  },
+  "2026": {
+   "n": 163,
+   "win%": 47,
+   "mean_pts": -3.1,
+   "median_pts": -4.7,
+   "total_pts": -511,
+   "mean_adverse_pts": 28.6,
+   "pf": 0.79
+  }
+ },
+ "k=0.5": {
+  "all": {
+   "n": 246,
+   "win%": 53,
+   "mean_pts": 4.1,
+   "median_pts": 1.5,
+   "total_pts": 1020,
+   "mean_adverse_pts": 25.5,
+   "pf": 1.38
+  },
+  "2025": {
+   "n": 136,
+   "win%": 53,
+   "mean_pts": 8.2,
+   "median_pts": 1.3,
+   "total_pts": 1115,
+   "mean_adverse_pts": 26.6,
+   "pf": 1.82
+  },
+  "2026": {
+   "n": 110,
+   "win%": 53,
+   "mean_pts": -0.9,
+   "median_pts": 1.6,
+   "total_pts": -95,
+   "mean_adverse_pts": 24.1,
+   "pf": 0.93
+  }
+ },
+ "k=0.75": {
+  "all": {
+   "n": 105,
+   "win%": 46,
+   "mean_pts": 5.7,
+   "median_pts": -2.6,
+   "total_pts": 601,
+   "mean_adverse_pts": 29.0,
+   "pf": 1.51
+  },
+  "2025": {
+   "n": 64,
+   "win%": 47,
+   "mean_pts": 9.1,
+   "median_pts": -1.5,
+   "total_pts": 583,
+   "mean_adverse_pts": 30.7,
+   "pf": 1.93
+  },
+  "2026": {
+   "n": 41,
+   "win%": 44,
+   "mean_pts": 0.4,
+   "median_pts": -5.9,
+   "total_pts": 18,
+   "mean_adverse_pts": 26.4,
+   "pf": 1.03
+  }
+ }
+}
