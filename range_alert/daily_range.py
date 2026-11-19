@@ -160,6 +160,19 @@ def explosion_risk(session, anchor):
             'threshold_pts': round(model['k_explode']*m, 1), 'model_through': model['trained_through']}
 
 
+def gamma_line(g):
+    """Experimental, unproven: dealer gamma regime from gamma_radar/radar.py (assumed dealer positioning)."""
+    state = 'سالب — صناع السوق يضخّمون الحركة' if g['regime'] == 'negative' else 'موجب — صناع السوق يهدّئون الحركة'
+    parts = [f"🧪 رادار الغاما (تجريبي): {state}"]
+    if g.get('flip'):
+        parts.append(f"الانقلاب {g['flip']:,.0f}")
+    if g.get('call_wall'):
+        parts.append(f"مقاومة {g['call_wall']:,.0f}")
+    if g.get('put_wall'):
+        parts.append(f"دعم {g['put_wall']:,.0f}")
+    return ' | '.join(parts)
+
+
 def calendar_notes(session):
     """Arabic notes from the official NYSE calendar: early close today, market closed on the next weekday(s)."""
     notes = []
@@ -223,6 +236,14 @@ def build(now=None, force=False):
                             f"تحدث في {ex['rate']}% من مثل هذه الأيام مقابل {ex['base_rate']}% عادة")
         except Exception as e:  # noqa: BLE001  (risk line is optional)
             print('EXPLOSION_RISK_FAILED', e, file=sys.stderr)
+    gp = os.environ.get('GAMMA_JSON')
+    if gp and os.path.isfile(gp):
+        try:
+            gm = json.loads(open(gp).read())
+            c['gamma'] = {k: gm.get(k) for k in ('regime', 'flip', 'call_wall', 'put_wall', 'net_gamma_bn_per_1pct', 'spot', 'cboe_timestamp')}
+            body.append(gamma_line(c['gamma']))
+        except Exception as e:  # noqa: BLE001  (radar is optional)
+            print('GAMMA_LINE_FAILED', e, file=sys.stderr)
     c.update(session=session.isoformat(), prev_close=spx, m=m, vix=vix, sent_utc=now.isoformat())
     c.pop('label', None)
     print('CALL_JSON ' + json.dumps(c, ensure_ascii=False))

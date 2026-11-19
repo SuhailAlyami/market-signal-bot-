@@ -41,6 +41,7 @@ def evaluate(spx, vix, day):
             'call_high': call_levels(pc, m)['high'], 'call_low': call_levels(pc, m)['low']}
 
 
+K_BOOM = 0.75   # strong move: |close - open| >= 0.75 m (same definition as the explosion model)
 POS = {'Buy': 1, 'Overweight': 1, 'Sell': -1, 'Underweight': -1}   # Hold / REVIEW = no position
 
 
@@ -114,6 +115,9 @@ def call_lines(calls_dir, spx, target):
         ex = c['explosion']
         lines.append(f"حركة قوية (≥ {ex['threshold_pts']:.0f} نقطة من الافتتاح): {'حدثت' if abs(close-o) >= ex['threshold_pts'] else 'لم تحدث'}"
                      f" — الخطر الصباحي: {ex['label']}")
+    if c.get('gamma'):
+        boom = abs(close-o) >= K_BOOM*c['m']
+        lines.append(f"رادار الغاما: {'سالب' if c['gamma']['regime'] == 'negative' else 'موجب'} — حركة قوية: {'حدثت' if boom else 'لم تحدث'}")
     hist = [score_call(load_call(calls_dir, d), *spx[d]) for d in sorted(spx) if d <= target and load_call(calls_dir, d)]
     dirs = [x['dir_ok'] for x in hist if x['dir_ok'] is not None]
     strong = [x['dir_ok'] for x in hist if x['dir_ok'] is not None and x['conf'] >= STRONG]
@@ -123,10 +127,18 @@ def call_lines(calls_dir, spx, target):
         cd = load_call(calls_dir, d) if d <= target else None
         if cd and cd.get('explosion'):
             exr.append((cd['explosion']['tier'] != 'normal', abs(spx[d][3]-spx[d][0]) >= cd['explosion']['threshold_pts']))
+    gam = []
+    for d in sorted(spx):
+        cd = load_call(calls_dir, d) if d <= target else None
+        if cd and cd.get('gamma') and cd.get('m'):
+            gam.append((cd['gamma']['regime'] == 'negative', abs(spx[d][3]-spx[d][0]) >= K_BOOM*cd['m']))
     ex_line = ""
     if exr:
         hi = [b for a, b in exr if a]; lo = [b for a, b in exr if not a]
         ex_line = f" | الحركة القوية: أيام الخطر {sum(hi)}/{len(hi)}، الأيام العادية {sum(lo)}/{len(lo)}"
+    if gam:
+        neg = [b for a, b in gam if a]; pos = [b for a, b in gam if not a]
+        ex_line += f" | الغاما السالبة: انفجار {sum(neg)}/{len(neg)}، الموجبة {sum(pos)}/{len(pos)}"
     lines += ["", f"السجل ({len(hist)} جلسة): الاتجاه {sum(dirs)}/{len(dirs)} (القوي منه {sum(strong)}/{len(strong)}) | "
               f"القمة الأولى {sum(x['hit_high'] for x in first)}/{len(first)} | القاع الأول {sum(x['hit_low'] for x in first)}/{len(first)}" + ex_line]
     return lines

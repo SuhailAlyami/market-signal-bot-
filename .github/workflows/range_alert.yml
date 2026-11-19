@@ -40,6 +40,10 @@ jobs:
           python-version: '3.12'
       - if: steps.sent.outputs.cache-hit != 'true'
         run: pip install exchange_calendars==4.13.2
+      - name: Gamma radar snapshot (optional, experimental)
+        if: steps.sent.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python gamma_radar/radar.py gamma.json && echo "GAMMA_JSON=$PWD/gamma.json" >> "$GITHUB_ENV"
       - name: Latest retrained explosion model (optional)
         if: steps.sent.outputs.cache-hit != 'true'
         run: |
