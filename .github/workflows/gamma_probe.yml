@@ -1,6 +1,9 @@
 name: gamma-probe
 on:
   workflow_dispatch:
+  push:
+    branches: [feat/gamma-radar-20261119]
+    paths: ['gamma_radar/**', '.github/workflows/gamma_probe.yml']
 permissions:
   contents: read
 jobs:
