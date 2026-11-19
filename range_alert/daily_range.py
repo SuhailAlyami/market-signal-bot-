@@ -5,6 +5,7 @@ import json
 import math
 import os
 import sys
+import time
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -16,10 +17,29 @@ NY, RIYADH = ZoneInfo('America/New_York'), ZoneInfo('Asia/Riyadh')
 CAL = xc.get_calendar('XNYS', start='2026-01-01', end='2027-12-31')
 
 
+class DataUnavailable(Exception):
+    """Yahoo did not answer after all retries; the run ends cleanly and a later run retries."""
+
+
+def yahoo_chart(symbol, query, tries=4, sleep=time.sleep):
+    """Yahoo chart JSON with retries across both public hosts (it returned 502s and read timeouts on 2026-11-19)."""
+    last = None
+    for i in range(tries):
+        host = ('query1', 'query2')[i % 2]
+        url = f'https://{host}.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol, safe="")}?{query}'
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; suhail-hunter-range-alert)'})
+        try:
+            return json.loads(urllib.request.urlopen(req, timeout=30).read())['chart']['result'][0]
+        except (OSError, ValueError, KeyError, TypeError) as e:   # URLError/HTTPError/timeouts are OSError
+            last = e
+            print(f'YAHOO_RETRY {symbol} {host} {type(e).__name__}: {e}', file=sys.stderr, flush=True)
+            if i < tries-1:
+                sleep((5, 15, 30)[min(i, 2)])
+    raise DataUnavailable(f'{symbol}: {last}')
+
+
 def closes(symbol, before, rng='3mo'):
-    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol, safe="")}?interval=1d&range={rng}'
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; suhail-hunter-range-alert)'})
-    r = json.loads(urllib.request.urlopen(req, timeout=20).read())['chart']['result'][0]
+    r = yahoo_chart(symbol, f'interval=1d&range={rng}')
     rows = [(datetime.fromtimestamp(t, timezone.utc).astimezone(NY).date(), c)
             for t, c in zip(r['timestamp'], r['indicators']['quote'][0]['close']) if c]
     return [x for x in rows if x[0] < before]  # completed sessions only
@@ -95,9 +115,7 @@ def es_move(session, now):
     Returns (fraction, bar time) or None if unavailable or stale (> 45 min old)."""
     prev = CAL.previous_session(session.isoformat())
     ref_t = CAL.session_close(prev).to_pydatetime() - timedelta(minutes=5)
-    url = 'https://query1.finance.yahoo.com/v8/finance/chart/ES%3DF?interval=5m&range=5d&includePrePost=true'
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; suhail-hunter-range-alert)'})
-    r = json.loads(urllib.request.urlopen(req, timeout=20).read())['chart']['result'][0]
+    r = yahoo_chart('ES=F', 'interval=5m&range=5d&includePrePost=true', tries=2)
     bars = [(datetime.fromtimestamp(t, timezone.utc), c) for t, c in zip(r['timestamp'], r['indicators']['quote'][0]['close']) if c]
     ref = [c for t, c in bars if t <= ref_t]
     last = [(t, c) for t, c in bars if t <= now]
@@ -195,7 +213,11 @@ def send(text):
 
 if __name__ == '__main__':
     force = '--force' in sys.argv
-    msg = build(force=force)
+    try:
+        msg = build(force=force)
+    except DataUnavailable as e:
+        print('DATA_UNAVAILABLE', e)   # not cached as sent: the next run retries; no failed-run email
+        sys.exit(0)
     if msg is None:
         print('NO_SESSION_TODAY')
         sys.exit(0)

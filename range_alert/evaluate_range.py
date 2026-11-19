@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 import exchange_calendars as xc
 
-from daily_range import HIT_HIGH, HIT_LOW, RANGE_RATE, UP_RATE, call_levels, send
+from daily_range import HIT_HIGH, HIT_LOW, RANGE_RATE, UP_RATE, DataUnavailable, call_levels, send, yahoo_chart
 
 NY = ZoneInfo('America/New_York')
 CAL = xc.get_calendar('XNYS', start='2026-01-01', end='2027-12-31')
@@ -20,9 +20,7 @@ LIVE_START = '2026-11-16'  # first session announced by the pre-open alert
 
 
 def daily(symbol):
-    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol, safe="")}?interval=1d&range=1y'
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; suhail-hunter-range-alert)'})
-    r = json.loads(urllib.request.urlopen(req, timeout=20).read())['chart']['result'][0]
+    r = yahoo_chart(symbol, 'interval=1d&range=1y')
     q = r['indicators']['quote'][0]
     return {datetime.fromtimestamp(t, timezone.utc).astimezone(NY).date().isoformat(): (q['open'][i], q['high'][i], q['low'][i], q['close'][i])
             for i, t in enumerate(r['timestamp']) if q['close'][i] and q['high'][i] and q['low'][i]}
@@ -132,7 +130,7 @@ def build(now=None, force=False):
     spx, vix = daily('^GSPC'), daily('^VIX')
     target = done[-1]
     if target not in spx:
-        raise RuntimeError(f'Yahoo has no daily bar for {target} yet')
+        raise DataUnavailable(f'Yahoo has no daily bar for {target} yet')
     e = evaluate(spx, vix, target)
     live = [evaluate(spx, vix, d) for d in done if d >= LIVE_START and d in spx]
     n = len(live)
@@ -151,10 +149,11 @@ def build(now=None, force=False):
         lines += ["", f"السجل منذ {LIVE_START} ({n} جلسة):",
                   f"الاتجاه {pct('up')} (المتوقع {UP_RATE}%) | القمة {pct('hit_high')} ({HIT_HIGH}%) | "
                   f"القاع {pct('hit_low')} ({HIT_LOW}%) | المدى {pct('in1')} ({RANGE_RATE}%)"]
-    try:
-        lines += shadow_lines(os.environ.get('SHADOW_RECORDS'), daily('SPY'), target)
-    except Exception as ex:  # noqa: BLE001  (scoring must never block the range evaluation)
-        print('SHADOW_SCORING_FAILED', ex, file=sys.stderr)
+    if os.environ.get('SHADOW_RECORDS'):   # TradingAgents shadow stopped 2026-11-18; kept for manual runs
+        try:
+            lines += shadow_lines(os.environ['SHADOW_RECORDS'], daily('SPY'), target)
+        except Exception as ex:  # noqa: BLE001  (scoring must never block the range evaluation)
+            print('SHADOW_SCORING_FAILED', ex, file=sys.stderr)
     lines.append("المصدر: Yahoo يومي (متأخر).")
     return "\n".join(lines)
 
@@ -173,7 +172,11 @@ if __name__ == '__main__':
     if '--force' not in sys.argv and last_closed() < '2026-11-17':
         # 2026-11-16 was delivered by a forced manual run before per-session dedupe existed.
         print('ALREADY_DELIVERED'); sys.exit(0)
-    msg = build(force='--force' in sys.argv)
+    try:
+        msg = build(force='--force' in sys.argv)
+    except DataUnavailable as e:
+        print('DATA_UNAVAILABLE', e)   # not cached as delivered: the next run retries; no failed-run email
+        sys.exit(0)
     if msg is None:
         print('SESSION_NOT_CLOSED_OR_NO_SESSION')
         sys.exit(0)

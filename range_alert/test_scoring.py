@@ -83,6 +83,30 @@ class GapCallTests(unittest.TestCase):
         self.assertIn('السجل (1 جلسة): الاتجاه 1/1', text)
 
 
+class YahooRetryTests(unittest.TestCase):
+    def test_retries_across_hosts_then_succeeds(self):
+        import urllib.error
+        from unittest import mock
+        ok = json.dumps({'chart': {'result': [{'x': 1}]}}).encode()
+        class R:
+            def read(self): return ok
+        seen = []
+        def fake(req, timeout):
+            seen.append(req.full_url.split('/')[2])
+            if len(seen) < 3:
+                raise urllib.error.HTTPError(req.full_url, 502, 'Bad Gateway', {}, None)
+            return R()
+        with mock.patch('urllib.request.urlopen', side_effect=fake):
+            self.assertEqual(D.yahoo_chart('^GSPC', 'interval=1d', sleep=lambda s: None), {'x': 1})
+        self.assertEqual(seen, ['query1.finance.yahoo.com', 'query2.finance.yahoo.com', 'query1.finance.yahoo.com'])
+
+    def test_gives_up_with_data_unavailable(self):
+        from unittest import mock
+        with mock.patch('urllib.request.urlopen', side_effect=TimeoutError('read timed out')):
+            with self.assertRaises(D.DataUnavailable):
+                D.yahoo_chart('^GSPC', 'interval=1d', tries=3, sleep=lambda s: None)
+
+
 class ShadowScoringTests(unittest.TestCase):
     def test_no_records_dir_gives_nothing(self):
         self.assertEqual(E.shadow_lines(None, spy(100, 101), '2026-11-13'), [])
