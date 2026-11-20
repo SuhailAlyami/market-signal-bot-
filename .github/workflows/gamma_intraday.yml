@@ -1,0 +1,34 @@
+name: gamma-intraday
+# Silent forward log of the gamma radar during the NYSE session (every ~15 min; GitHub may delay runs, each snapshot
+# records its own time). Stored on branch data/gamma-intraday. Nothing is sent to Telegram.
+on:
+  schedule:
+    - cron: '*/15 13-21 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gamma-intraday
+  cancel-in-progress: false
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q exchange_calendars==4.13.2
+      - name: Snapshot and store
+        shell: bash
+        run: |
+          url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+          if git ls-remote --exit-code --heads "$url" data/gamma-intraday >/dev/null; then git clone -q --depth 1 --branch data/gamma-intraday "$url" store
+          else mkdir store && cd store && git init -q -b data/gamma-intraday && git remote add origin "$url" && cd ..; fi
+          python gamma_radar/intraday.py store/days | tee out.txt
+          grep -q '^SNAPSHOT' out.txt || exit 0
+          cd store && git config user.name "gamma-intraday" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && (git diff --cached --quiet || git commit -q -m "snapshot $(date -u +%FT%H:%MZ)")
+          for i in 1 2 3; do git push -q origin HEAD:refs/heads/data/gamma-intraday && break; git pull -q --rebase origin data/gamma-intraday || true; sleep 5; done

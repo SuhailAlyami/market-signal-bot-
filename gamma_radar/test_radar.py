@@ -49,6 +49,29 @@ class RadarTests(unittest.TestCase):
         self.assertIn('7,250+، 7,100−', line2)
 
 
+class IntradayTests(unittest.TestCase):
+    def test_crossing_events(self):
+        import intraday as I
+        cur = {'spot': 7290, 'flip': 7300, 'levels': [{'k': 7295, 'gex_bn': -2.0}, {'k': 7280, 'gex_bn': 1.0}]}
+        ev = I.events({'spot': 7310}, cur)
+        self.assertIn({'type': 'into_negative_gamma', 'level': 7300}, ev)
+        self.assertIn({'type': 'crossed_negative_level_down', 'level': 7295}, ev)
+        self.assertEqual(len(ev), 2)                     # positive-gamma 7280 not crossed and not counted
+        self.assertEqual(I.events(None, cur), [])
+
+    def test_session_gate_and_append(self):
+        import tempfile
+        import intraday as I
+        self.assertIsNone(I.run('/nonexistent', now=datetime(2026, 11, 21, 15, 0, tzinfo=timezone.utc)))  # Saturday
+        now = datetime(2026, 11, 20, 15, 0, tzinfo=timezone.utc)                                           # 10:00 NY
+        with tempfile.TemporaryDirectory() as t:
+            I.run(t, now=now, chain=chain(7390, [('P', 7300, 40000), ('C', 7400, 40000)]))
+            r = I.run(t, now=now, chain=chain(7250, [('P', 7300, 40000), ('C', 7400, 40000)]))
+            lines = Path(t, '2026-11-20.jsonl').read_text().splitlines()
+        self.assertEqual(len(lines), 2)
+        self.assertTrue(any(e['type'] == 'into_negative_gamma' for e in r['events']))
+
+
 class EveningGammaTests(unittest.TestCase):
     def test_line_and_tally(self):
         import json, tempfile
