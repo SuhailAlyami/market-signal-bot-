@@ -1,0 +1,17 @@
+name: source-probe
+on:
+  push:
+    branches: [feat/radar-source-20261120]
+    paths: ['gamma_radar/source_probe.py', '.github/workflows/source_probe.yml']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python gamma_radar/source_probe.py
