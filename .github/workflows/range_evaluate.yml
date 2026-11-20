@@ -46,7 +46,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'off' }}   # owner: off by default; set repo variable to 'on' to resume
+          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}   # owner wants messages (2026-11-20); repo variable 'off' silences
           CALLS_DIR: calls-data/calls
         shell: bash
         run: |
