@@ -53,6 +53,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'off' }}   # owner: off by default; set repo variable to 'on' to resume
         run: |
           python range_alert/daily_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
           grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY' out.txt && echo ok > .range-alert-sent || true
