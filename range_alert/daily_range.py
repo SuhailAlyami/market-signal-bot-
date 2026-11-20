@@ -170,7 +170,11 @@ def gamma_line(g):
         parts.append(f"مقاومة {g['call_wall']:,.0f}")
     if g.get('put_wall'):
         parts.append(f"دعم {g['put_wall']:,.0f}")
-    return ' | '.join(parts)
+    out = ' | '.join(parts)
+    if g.get('levels'):
+        lv = '، '.join(f"{x['k']:,.0f}{'+' if x['gex_bn'] > 0 else '−'}" for x in g['levels'])
+        out += f"\n   مستويات الغاما القريبة (+ تهدئة، − تسارع): {lv}"
+    return out
 
 
 def calendar_notes(session):
@@ -240,7 +244,7 @@ def build(now=None, force=False):
     if gp and os.path.isfile(gp):
         try:
             gm = json.loads(open(gp).read())
-            c['gamma'] = {k: gm.get(k) for k in ('regime', 'flip', 'call_wall', 'put_wall', 'net_gamma_bn_per_1pct', 'spot', 'cboe_timestamp')}
+            c['gamma'] = {k: gm.get(k) for k in ('regime', 'flip', 'call_wall', 'put_wall', 'net_gamma_bn_per_1pct', 'spot', 'cboe_timestamp', 'levels')}
             body.append(gamma_line(c['gamma']))
         except Exception as e:  # noqa: BLE001  (radar is optional)
             print('GAMMA_LINE_FAILED', e, file=sys.stderr)
