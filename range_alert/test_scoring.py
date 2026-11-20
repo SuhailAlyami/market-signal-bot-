@@ -142,6 +142,16 @@ class TelegramRetryTests(unittest.TestCase):
             self.assertTrue(D.send('x', sleep=lambda s: None))
         self.assertEqual(len(calls), 2)
 
+    def test_silent_mode_sends_nothing(self):
+        import os
+        from unittest import mock
+        os.environ['TELEGRAM_NOTIFY'] = 'off'
+        try:
+            with mock.patch('urllib.request.urlopen', side_effect=AssertionError('must not send')):
+                self.assertTrue(D.send('x'))
+        finally:
+            os.environ.pop('TELEGRAM_NOTIFY')
+
     def test_client_error_not_retried_and_outage_gives_up(self):
         import urllib.error
         from unittest import mock

@@ -262,6 +262,11 @@ def build(now=None, force=False):
 
 
 def send(text, tries=4, sleep=time.sleep):
+    if os.environ.get('TELEGRAM_NOTIFY', 'on').lower() == 'off':
+        # Owner asked (2026-11-20) for no daily messages: compute and record silently. Turn on with repo variable
+        # TELEGRAM_NOTIFY=on. The marker keeps the workflow's "done" and call-storage logic unchanged.
+        print('TELEGRAM_OK_SILENT (TELEGRAM_NOTIFY=off, not sent)')
+        return True
     token, chat = os.environ.get('TELEGRAM_BOT_TOKEN'), os.environ.get('TELEGRAM_CHAT_ID')
     if not token or not chat:
         print('NO_TELEGRAM_CREDENTIALS; message not sent')
