@@ -58,7 +58,7 @@ jobs:
           python range_alert/daily_range.py ${{ inputs.force && '--force' || '' }} | tee out.txt
           grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY' out.txt && echo ok > .range-alert-sent || true
       - name: Store the sent call (data branch)
-        if: steps.sent.outputs.cache-hit != 'true' && hashFiles('out.txt') != ''
+        if: ${{ !inputs.force && steps.sent.outputs.cache-hit != 'true' && hashFiles('out.txt') != '' }}   # forced resends are never scored
         shell: bash
         run: |
           grep -q TELEGRAM_OK out.txt || exit 0
