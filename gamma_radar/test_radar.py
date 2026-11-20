@@ -35,6 +35,8 @@ class RadarTests(unittest.TestCase):
         self.assertIsNotNone(r['flip'])
         self.assertTrue(7200 < r['flip'] < 7400)
         self.assertEqual((r['call_wall'], r['put_wall']), (7400.0, 7200.0))
+        self.assertEqual([x['k'] for x in r['levels']], [7400.0, 7200.0])
+        self.assertGreater(r['levels'][0]['gex_bn'], 0); self.assertLess(r['levels'][1]['gex_bn'], 0)
 
     def test_expired_and_zero_oi_ignored(self):
         r = G.analyse(chain(7300, [('C', 7300, 0)]), now=NOW)
@@ -43,6 +45,8 @@ class RadarTests(unittest.TestCase):
     def test_morning_line(self):
         line = D.gamma_line({'regime': 'negative', 'flip': 7482.9, 'call_wall': 7700.0, 'put_wall': 7000.0})
         self.assertIn('سالب', line); self.assertIn('الانقلاب 7,483', line); self.assertIn('دعم 7,000', line)
+        line2 = D.gamma_line({'regime': 'negative', 'levels': [{'k': 7250.0, 'gex_bn': 1.2}, {'k': 7100.0, 'gex_bn': -3.4}]})
+        self.assertIn('7,250+، 7,100−', line2)
 
 
 class EveningGammaTests(unittest.TestCase):

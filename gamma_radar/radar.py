@@ -73,6 +73,11 @@ def analyse(chain, now=None):
             by_k.setdefault(o['k'], [0.0, 0.0])[0 if o['cp'] == 'C' else 1] += dollar(o['gamma'], o['oi'])
     calls = [(k, v[0]) for k, v in by_k.items() if k >= spot]
     puts = [(k, v[1]) for k, v in by_k.items() if k <= spot]
+    # Level ladder (as on GEX level charts): strongest net-gamma strikes within 30 days and +/-5% of spot.
+    netk = sorted(((k, v[0]-v[1]) for k, v in by_k.items() if abs(k/spot-1) <= 0.05), key=lambda x: -abs(x[1]))
+    above = sorted([x for x in netk if x[0] > spot][:6], key=lambda x: x[0])[:3]
+    below = sorted([x for x in netk if x[0] < spot][:6], key=lambda x: -x[0])[:3]
+    ladder = [{'k': k, 'gex_bn': round(v/1e9, 2)} for k, v in sorted(above+below, key=lambda x: -x[0])]
     g_all = net(3650)
     return {'cboe_timestamp': chain.get('timestamp'), 'spot': round(spot, 2), 'prev_close': d.get('prev_day_close'),
             'last_trade_time': d.get('last_trade_time'), 'n_options': len(opts),
@@ -80,7 +85,7 @@ def analyse(chain, now=None):
             'flip': round(flip, 1) if flip else None,
             'regime': 'negative' if (flip and spot < flip) or (not flip and g_all < 0) else 'positive',
             'call_wall': max(calls, key=lambda x: x[1])[0] if calls else None,
-            'put_wall': max(puts, key=lambda x: x[1])[0] if puts else None,
+            'put_wall': max(puts, key=lambda x: x[1])[0] if puts else None, 'levels': ladder,
             'convention': 'dealers long calls / short puts (assumed)', 'classification': 'DELAYED_RESEARCH_ONLY'}
 
 
