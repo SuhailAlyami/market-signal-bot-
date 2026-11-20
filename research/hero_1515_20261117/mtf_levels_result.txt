@@ -1,0 +1,7 @@
+15m          touches  7008  bounce 49.6%
+1h           touches  1564  bounce 49.7%
+daily        touches   227  bounce 47.6%
+confluence   touches  1362  bounce 49.5%
+15m_shift    touches  3022  bounce 49.7%
+1h_shift     touches  1182  bounce 50.0%
+daily_shift  touches   230  bounce 53.0%
