@@ -1,0 +1,5 @@
+5m   open: touches 24181 bounce 49.5%   | shifted (random) 18217 bounce 50.6%
+15m  open: touches  8082 bounce 49.2%   | shifted (random)  6191 bounce 50.3%
+1h   open: touches  2075 bounce 48.8%   | shifted (random)  1658 bounce 50.0%
+4h   open: touches   685 bounce 49.3%   | shifted (random)   583 bounce 48.5%
+day  open: touches   371 bounce 47.7%   | shifted (random)   346 bounce 47.1%
