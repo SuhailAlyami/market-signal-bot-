@@ -9,12 +9,17 @@ import statistics as st
 from datetime import date
 
 K_EXPLODE = 0.75
-FEATURES = ['gap', 'abs_gap', 'vix', 'vix_chg', 'vix_rv', 'prev_range', 'prev_body', 'range5', 'range20', 'prev_up', 'weekday']
+BASE_FEATURES = ['gap', 'abs_gap', 'vix', 'vix_chg', 'vix_rv', 'prev_range', 'prev_body', 'range5', 'range20', 'prev_up', 'weekday']
+# VIX term structure at the prior close: VIX9D/VIX (short-dated stress) and VIX/VIX3M (inversion). Added 2026-11-21 after a
+# walk-forward test (2020-2026): AUC 0.609 -> 0.637, bootstrap 95% CI of the gain [+0.013, +0.046]; top decile 33% -> 37%.
+TERM_FEATURES = ['vix9d_ratio', 'vix_term']
+FEATURES = BASE_FEATURES + TERM_FEATURES
 
 
-def features(day, rows, vix, anchor=None):
+def features(day, rows, vix, anchor=None, term=None):
     """rows: ordered list of (iso_day, open, high, low, close) of completed sessions before `day` (>= 22 rows);
-    vix: {iso_day: close}. anchor = today's open (training) or implied open from futures (live)."""
+    vix: {iso_day: close}. anchor = today's open (training) or implied open from futures (live).
+    term = {'vix9d': {iso: close}, 'vix3m': {iso: close}} appends TERM_FEATURES (KeyError if the prior day is missing)."""
     p, pp = rows[-1], rows[-2]
     pc, v = p[4], vix[p[0]]
     m = pc*v/100/math.sqrt(252)
@@ -25,7 +30,13 @@ def features(day, rows, vix, anchor=None):
     f = [g, abs(g), v, 100*(v/vix[pp[0]]-1), v/rv, (p[2]-p[3])/m, abs(p[4]-p[1])/m,
          st.mean(rng(r) for r in rows[-5:]), st.mean(rng(r) for r in rows[-20:]), 1 if pc > pp[4] else 0,
          date.fromisoformat(day).weekday()]
+    if term is not None:
+        f += [term['vix9d'][p[0]]/v, v/term['vix3m'][p[0]]]
     return f, m
+
+
+def uses_term(model):
+    return model['features'] == FEATURES
 
 
 def prob(model, f):
@@ -41,9 +52,10 @@ def tier(model, p):
     return 'normal', 'عادي', model['base_rate']
 
 
-def dataset(spx, vix):
-    """spx: {iso: (o,h,l,c)}, vix: {iso: close}. Yields (day, features, exploded, m)."""
-    days = [d for d in sorted(spx) if d in vix]
+def dataset(spx, vix, term=None):
+    """spx: {iso: (o,h,l,c)}, vix: {iso: close}. Yields (day, features, exploded, m).
+    With term, only days whose prior session has VIX9D and VIX3M closes are used (VIX9D starts 2011)."""
+    days = [d for d in sorted(spx) if d in vix and (term is None or (d in term['vix9d'] and d in term['vix3m']))]
     out = []
     for k in range(25, len(days)):
         d, pc = days[k], spx[days[k-1]][3]
@@ -51,17 +63,17 @@ def dataset(spx, vix):
         if abs(o-pc) < 1e-6:           # Yahoo sometimes stores open = prev close: unusable as the gap proxy
             continue
         rows = [(x, *spx[x]) for x in days[k-25:k]]
-        f, m = features(d, rows, vix, anchor=o)
+        f, m = features(d, rows, vix, anchor=o, term=term)
         out.append((d, f, abs(c-o) >= K_EXPLODE*m, m))
     return out
 
 
-def train(spx, vix, first_test_year=2020):
+def train(spx, vix, term=None, first_test_year=2020):
     """Walk-forward out-of-sample evaluation, then a final model on all data. Returns the model dict."""
     import numpy as np
     from sklearn.linear_model import LogisticRegression
     from sklearn.metrics import roc_auc_score
-    data = dataset(spx, vix)
+    data = dataset(spx, vix, term)
     X = np.array([f for _, f, _, _ in data]); y = np.array([e for _, _, e, _ in data]); yr = np.array([int(d[:4]) for d, *_ in data])
     def fit(Xa, ya):
         mu, sd = Xa.mean(0), Xa.std(0)+1e-12
@@ -78,7 +90,7 @@ def train(spx, vix, first_test_year=2020):
     q90 = float(np.quantile(oos_p, .9))
     rate = lambda mask: round(100*float(oos_y[mask].mean()))
     mu, sd, lr = fit(X, y)
-    return {'features': FEATURES, 'k_explode': K_EXPLODE, 'mean': mu.tolist(), 'std': sd.tolist(),
+    return {'features': FEATURES if term is not None else BASE_FEATURES, 'k_explode': K_EXPLODE, 'mean': mu.tolist(), 'std': sd.tolist(),
             'coef': lr.coef_[0].tolist(), 'intercept': float(lr.intercept_[0]),
             # Only the top decile separated out of sample (80-90th pct was no better than the rest on 2020-2026).
             'tiers': [{'key': 'high', 'label': 'مرتفع', 'min_p': q90, 'rate': rate(oos_p >= q90)}],
@@ -109,7 +121,9 @@ if __name__ == '__main__':
     import sys
     spx = yahoo_daily('^GSPC')
     vix = {d: v[3] for d, v in yahoo_daily('^VIX').items()}
-    model = train(spx, vix)
+    term = {'vix9d': {d: v[3] for d, v in yahoo_daily('^VIX9D').items()},
+            'vix3m': {d: v[3] for d, v in yahoo_daily('^VIX3M').items()}}
+    model = train(spx, vix, term)
     out = sys.argv[1] if len(sys.argv) > 1 else 'range_alert/explosion_model.json'
     open(out, 'w').write(json.dumps(model, indent=1, ensure_ascii=False)+'\n')
     print(json.dumps({k: model[k] for k in ('oos', 'tiers', 'base_rate', 'overall_rate', 'trained_through')}, ensure_ascii=False))

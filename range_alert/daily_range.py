@@ -153,7 +153,12 @@ def explosion_risk(session, anchor):
     spx = X.yahoo_daily('^GSPC', start)
     vix = {d: v[3] for d, v in X.yahoo_daily('^VIX', start).items()}
     rows = [(d, *spx[d]) for d in sorted(spx) if d < session.isoformat() and d in vix]
-    f, m = X.features(session.isoformat(), rows, vix, anchor=anchor)
+    term = None
+    if X.uses_term(model):
+        term = {k: {d: v[3] for d, v in X.yahoo_daily(s, start).items()} for k, s in (('vix9d', '^VIX9D'), ('vix3m', '^VIX3M'))}
+    elif model['features'] != X.BASE_FEATURES:
+        raise ValueError(f"unknown explosion model features {model['features']}")
+    f, m = X.features(session.isoformat(), rows, vix, anchor=anchor, term=term)
     p = X.prob(model, f)
     key, label, rate = X.tier(model, p)
     return {'p': round(p, 4), 'tier': key, 'label': label, 'rate': rate, 'base_rate': model['base_rate'],

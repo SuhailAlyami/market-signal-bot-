@@ -36,9 +36,23 @@ class ExplosionTests(unittest.TestCase):
         self.assertEqual(f2[0], 0.0)
         self.assertEqual(f1[2:], f2[2:])          # only the gap features depend on today
 
+    def test_term_features_use_the_prior_close(self):
+        r = rows(); vix = {d: 20.0 for d, *_ in r}
+        term = {'vix9d': {d: 22.0 for d, *_ in r}, 'vix3m': {d: 25.0 for d, *_ in r}}
+        base, _ = X.features('2026-10-26', r, vix, anchor=r[-1][4])
+        f, _ = X.features('2026-10-26', r, vix, anchor=r[-1][4], term=term)
+        self.assertEqual(f[:len(base)], base)
+        self.assertEqual(len(f), len(X.FEATURES))
+        self.assertAlmostEqual(f[-2], 22/20); self.assertAlmostEqual(f[-1], 20/25)
+        self.assertTrue(X.uses_term(MODEL))
+        del term['vix3m'][r[-1][0]]
+        with self.assertRaises(KeyError):          # a missing prior-day close must fail, not silently use stale data
+            X.features('2026-10-26', r, vix, anchor=r[-1][4], term=term)
+
     def test_prob_and_tier(self):
         r = rows(); vix = {d: 20.0 for d, *_ in r}
-        f, _ = X.features('2026-10-26', r, vix, anchor=r[-1][4])
+        term = {'vix9d': {d: 20.0 for d, *_ in r}, 'vix3m': {d: 22.0 for d, *_ in r}}
+        f, _ = X.features('2026-10-26', r, vix, anchor=r[-1][4], term=term)
         p = X.prob(MODEL, f)
         self.assertTrue(0 < p < 1)
         self.assertEqual(X.tier(MODEL, 0.0)[0], 'normal')
