@@ -1,7 +1,8 @@
 name: gemini-weekly-audit
 # Weekly quality audit by Google's open-source Gemini CLI. Each week covers one focus area from AGENTS.md
-# (data, alerts, research, workflows, tests) and opens one GitHub issue with findings and a single
-# proposed PR. It reports only: no code pushes, no Telegram. Runs on Sunday, when the market is closed.
+# (data, alerts, research, workflows, tests) and sends the findings plus a single proposed PR to Telegram,
+# the project's single notification channel (no GitHub issues or emails). It reports only and pushes no code.
+# Runs on Sunday, when the market is closed.
 on:
   schedule:
     - cron: '41 6 * * 0'   # Sunday 09:41 Riyadh
@@ -14,7 +15,6 @@ on:
 permissions:
   contents: read
   actions: read
-  issues: write
 concurrency:
   group: gemini-audit
   cancel-in-progress: false
@@ -53,12 +53,12 @@ jobs:
             echo "attempt $i failed: $(tail -3 gemini.err)"; sleep 45
           done
           [ -s audit.md ] && echo "ok=1" >> "$GITHUB_OUTPUT" || echo "::warning::Gemini returned nothing"
-      - name: Open audit issue
+      - name: Send to Telegram
         if: steps.gemini.outputs.ok == '1'
         env:
-          GH_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}
           TITLE: ${{ steps.ctx.outputs.title }}
         run: |
-          { echo "> تدقيق آلي من Gemini CLI. هذه اقتراحات تحتاج تحقق قبل التنفيذ، وليست أوامر."; echo; cat audit.md; } > body.md
-          gh issue create --repo "${{ github.repository }}" \
-            --title "🔎 تدقيق أسبوعي $(date -u +%F): $TITLE" --body-file body.md
+          python agents/notify_telegram.py "🔎 تدقيق أسبوعي $(date -u +%F): $TITLE (اقتراحات تحتاج تحقق)" audit.md

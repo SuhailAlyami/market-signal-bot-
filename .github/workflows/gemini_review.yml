@@ -1,8 +1,10 @@
 name: gemini-review
 # Neutral PR review (Goldfish role) by Google's open-source Gemini CLI (Apache-2.0), using the free AI
 # Studio key already used by this repo (secret GEMINI_API_KEY or GOOGLE_API_KEY).
-# Runs once when a PR opens, or when the owner comments "/gemini" on a PR. No pushes, no Telegram.
-# Separation: the Gemini step never sees the GitHub token, and the posting step never sees the Gemini key.
+# Runs once when a PR opens, or when the owner comments "/gemini" on a PR. No pushes.
+# The result goes to Telegram only, the single notification channel (owner, 2026-11-24): no GitHub comments
+# or emails. Separation: the Gemini step never sees the GitHub or Telegram secrets, and the Telegram step
+# never sees the Gemini key.
 on:
   pull_request:
     types: [opened, reopened, ready_for_review]
@@ -10,8 +12,7 @@ on:
     types: [created]
 permissions:
   contents: read
-  pull-requests: write
-  issues: write   # PR comments go through the issues API
+  pull-requests: read
 concurrency:
   group: gemini-review-${{ github.event.pull_request.number || github.event.issue.number }}
   cancel-in-progress: true
@@ -53,11 +54,11 @@ jobs:
             echo "attempt $i failed: $(tail -3 gemini.err)"; sleep 30
           done
           [ -s review.md ] && echo "ok=1" >> "$GITHUB_OUTPUT" || echo "::warning::Gemini returned nothing"
-      - name: Post review comment
+      - name: Send to Telegram
         if: steps.gemini.outputs.ok == '1'
         env:
-          GH_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}
           PR: ${{ github.event.pull_request.number || github.event.issue.number }}
-        run: |
-          { echo "### 🐟 مراجعة Gemini المحايدة (آلية — تحقق قبل الاعتماد)"; echo; cat review.md; } > body.md
-          gh pr comment "$PR" --repo "${{ github.repository }}" --body-file body.md
+        run: python agents/notify_telegram.py "🐟 مراجعة Gemini — PR #$PR (آلية، تحقق قبل الاعتماد)" review.md
