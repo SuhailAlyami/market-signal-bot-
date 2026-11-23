@@ -100,6 +100,40 @@ GAP_BUCKETS = [(-9e9, -0.5, 10), (-0.5, -0.2, 26), (-0.2, -0.05, 40), (-0.05, 0.
 OPEN_LEVELS = [(0.1, 85, 80), (0.25, 63, 60)]
 
 
+# What a trade entered AT THE OPEN earns: P(close > open) per gap bucket, same 1726 test sessions (gapdir_result.txt,
+# "close vs OPEN"). The bucket confidence above is close vs PREVIOUS close, which the gap itself mostly explains
+# and which nobody can buy. Both are shown so the 90% is never mistaken for the tradable odds.
+OPEN_BUCKETS = [(-9e9, -0.5, 41), (-0.5, -0.2, 49), (-0.2, 0.2, 54), (0.2, 0.5, 60), (0.5, 9e9, 61)]
+
+
+def open_odds(g):
+    """(P(close > open) %, P(close < open) %) for a gap of g expected moves."""
+    for lo, hi, p in OPEN_BUCKETS:
+        if lo <= g < hi:
+            return p, 100-p
+
+
+# Conditional trade of the day (research/gap_trade_20261124). If SPX OPENS at least 0.5 m beyond the previous close,
+# trade in the gap direction at the open and exit at the close; otherwise no trade. Threshold chosen on 2010-2019.
+# 2020-2026 test on the index: 274 trades, 59% wins, +8.7 pt/trade after 1 pt cost (95% CI +2.5..+14.9).
+# BUT on SPY (tradable) 2024-2026: 52% wins, -2.2 pt/trade; on SPX entered at 10:30: -4.2. The index edge is mostly
+# the opening-print artifact. Status: UNPROVEN, scored live every evening. 0DTE ATM options lost in the model (-2.4 pt).
+TRADE_K = 0.5
+
+
+def trade_plan(pc, m):
+    return {'k': TRADE_K, 'long_above': pc+TRADE_K*m, 'short_below': pc-TRADE_K*m}
+
+
+def trade_lines(t):
+    return ["🎯 صفقة اليوم المشروطة (اختبار حي، غير مثبتة):",
+            f"• افتتاح ≥ {t['long_above']:,.0f} ← شراء عند الافتتاح، خروج عند الإغلاق",
+            f"• افتتاح ≤ {t['short_below']:,.0f} ← بيع عند الافتتاح، خروج عند الإغلاق",
+            "• بينهما ← لا صفقة",
+            "الدليل: المؤشر 2020–2026 ربح 59% (+8.7 نقطة/صفقة)، لكن SPY الفعلي 2024–2026 خسر −2.2. "
+            "بحجم صغير فقط، وليس بشراء أوبشن 0DTE (خاسر في النموذج)."]
+
+
 STRONG = 74   # bucket confidence from which the direction is a real call (|gap| >= 0.2 m); below it, near a coin toss
 
 
@@ -217,7 +251,9 @@ def build(now=None, force=False):
     if mv:
         c = gap_call(spx, m, mv[0])
         l1, l2 = c['levels']
-        body = [f"الاتجاه: {c['label']} — الثقة {c['conf']}% ({strength(c['conf'])})",
+        up_o, dn_o = open_odds((c['anchor']-spx)/m)
+        body = [f"الاتجاه: {c['label']} — الإغلاق مقارنة بإغلاق أمس {c['conf']}% ({strength(c['conf'])})",
+                f"   مقارنة بسعر الافتتاح (ما يربحه من يدخل عند الافتتاح): صعود {up_o}% | هبوط {dn_o}%",
                 f"القمة: سيصل على الأقل إلى {l1['high']:,.0f} ({l1['p_high']}%)، ومحتمل {l2['high']:,.0f} ({l2['p_high']}%)",
                 f"القاع: سينزل على الأقل إلى {l1['low']:,.0f} ({l1['p_low']}%)، ومحتمل {l2['low']:,.0f} ({l2['p_low']}%)",
                 f"الافتتاح المتوقع: {c['anchor']:,.0f} (العقود الآجلة {100*mv[0]:+.2f}% منذ إغلاق أمس، "
@@ -232,6 +268,8 @@ def build(now=None, force=False):
                 f"القمة: سيصل على الأقل إلى {lv['high']:,.0f} ({HIT_HIGH}%)",
                 f"القاع: سينزل على الأقل إلى {lv['low']:,.0f} ({HIT_LOW}%)",
                 f"أقصى مدى مرجّح: {lv['min_low']:,.0f} – {lv['max_high']:,.0f} ({RANGE_RATE}%)"]
+    c['trade'] = trade_plan(spx, m)
+    body += trade_lines(c['trade'])
     if mv:
         try:
             c['explosion'] = ex = explosion_risk(session, c['anchor'])

@@ -95,6 +95,18 @@ def score_call(c, o, h, l, close):
             'in_range': c['range'][0] <= l and h <= c['range'][1]}
 
 
+def score_trade(c, o, close):
+    """P&L in SPX points of the conditional open-to-close trade, before costs; None when no trade was triggered."""
+    t = c.get('trade')
+    if not t:
+        return None
+    if o >= t['long_above']:
+        return close - o
+    if o <= t['short_below']:
+        return o - close
+    return None
+
+
 def call_lines(calls_dir, spx, target):
     c = load_call(calls_dir, target)
     if not c or target not in spx:
@@ -111,6 +123,10 @@ def call_lines(calls_dir, spx, target):
         lines.append(f"القمة ≥ {x['high']:,.0f} ({x['p_high']}%): {ok(x['hit_high'])} | "
                      f"القاع ≤ {x['low']:,.0f} ({x['p_low']}%): {ok(x['hit_low'])}")
     lines.append(f"داخل المدى {c['range'][0]:,.0f} – {c['range'][1]:,.0f}: {ok(s['in_range'])}")
+    if c.get('trade'):
+        pnl = score_trade(c, o, close)
+        lines.append(f"🎯 الصفقة المشروطة: افتتاح {o:,.0f} — " +
+                     ("لم تتفعّل (بين المستويين)" if pnl is None else f"{'شراء' if o >= c['trade']['long_above'] else 'بيع'} ← {pnl:+,.1f} نقطة {ok(pnl > 1)}"))
     if c.get('explosion'):
         ex = c['explosion']
         lines.append(f"حركة قوية (≥ {ex['threshold_pts']:.0f} نقطة من الافتتاح): {'حدثت' if abs(close-o) >= ex['threshold_pts'] else 'لم تحدث'}"
@@ -133,6 +149,10 @@ def call_lines(calls_dir, spx, target):
         if cd and cd.get('gamma') and cd.get('m'):
             gam.append((cd['gamma']['regime'] == 'negative', abs(spx[d][3]-spx[d][0]) >= K_BOOM*cd['m']))
     ex_line = ""
+    pnls = [p for d in sorted(spx) if d <= target and load_call(calls_dir, d)
+            for p in [score_trade(load_call(calls_dir, d), spx[d][0], spx[d][3])] if p is not None]
+    if pnls:
+        ex_line += f" | الصفقات {sum(p > 1 for p in pnls)}/{len(pnls)} رابحة، المجموع {sum(pnls) - len(pnls):+,.0f} نقطة بعد التكلفة"
     if exr:
         hi = [b for a, b in exr if a]; lo = [b for a, b in exr if not a]
         ex_line = f" | الحركة القوية: أيام الخطر {sum(hi)}/{len(hi)}، الأيام العادية {sum(lo)}/{len(lo)}"
