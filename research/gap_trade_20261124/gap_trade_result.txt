@@ -1,0 +1,35 @@
+rows 4332 train 2359 test 1726
+TRAIN threshold scan (choose here only):
+ t 0.1 {'n': 1104, 'win': 58.0, 'avg': 3.74, 'ci': (2.77, 4.72), 'total': 4133, 'worst': -81.4, 'best': 103.6}
+ t 0.2 {'n': 584, 'win': 56.5, 'avg': 3.57, 'ci': (2.01, 5.12), 'total': 2083, 'worst': -81.4, 'best': 103.6}
+ t 0.3 {'n': 319, 'win': 57.1, 'avg': 3.26, 'ci': (1.08, 5.44), 'total': 1040, 'worst': -81.4, 'best': 91.1}
+ t 0.5 {'n': 114, 'win': 64.0, 'avg': 4.6, 'ci': (0.39, 8.81), 'total': 524, 'worst': -81.4, 'best': 91.1}
+CHOSEN t = 0.5
+TEST {'n': 274, 'win': 59.1, 'avg': 8.7, 'ci': (2.54, 14.86), 'total': 2384, 'worst': -211.8, 'best': 217.1}
+ TEST long (gap up)  {'n': 132, 'win': 61.4, 'avg': 4.2, 'ci': (-4.0, 12.41), 'total': 555, 'worst': -211.8, 'best': 140.0}
+ TEST short (gap dn) {'n': 142, 'win': 57.0, 'avg': 12.88, 'ci': (3.82, 21.94), 'total': 1829, 'worst': -150.5, 'best': 217.1}
+ random-dir avg p5/p50/p95 -6.53 -1.14 4.2
+ always-long same days {'n': 274, 'win': 50.0, 'avg': -5.69, 'ci': (-11.93, 0.55), 'total': -1558, 'worst': -219.1, 'best': 148.5}
+ per year:
+   2020 {'n': 52, 'win': 69.2, 'avg': 25.06, 'ci': (11.05, 39.08), 'total': 1303, 'worst': -80.2, 'best': 149.2}
+   2021 {'n': 9, 'win': 66.7, 'avg': 22.82, 'ci': (4.6, 41.04), 'total': 205, 'worst': -18.2, 'best': 69.0}
+   2022 {'n': 40, 'win': 60.0, 'avg': 12.3, 'ci': (-7.11, 31.71), 'total': 492, 'worst': -150.5, 'best': 127.3}
+   2023 {'n': 36, 'win': 58.3, 'avg': 3.54, 'ci': (-5.91, 12.99), 'total': 127, 'worst': -63.8, 'best': 54.0}
+   2024 {'n': 46, 'win': 67.4, 'avg': 9.74, 'ci': (-0.8, 20.29), 'total': 448, 'worst': -97.8, 'best': 77.7}
+   2025 {'n': 49, 'win': 40.8, 'avg': -8.28, 'ci': (-28.09, 11.54), 'total': -405, 'worst': -211.8, 'best': 217.1}
+   2026 {'n': 42, 'win': 57.1, 'avg': 5.09, 'ci': (-7.31, 17.48), 'total': 214, 'worst': -71.1, 'best': 152.6}
+ adverse excursion (m units) median/p75/p90 0.28 0.66 0.98
+ favorable excursion (m units) median/p75 0.57 0.92
+ avg m points in test 65.9  last day 2026-11-13
+
+-- sensitivity (NOT used for selection): other thresholds on TEST
+  t 0.1 {'n': 1294, 'win': 55.2, 'avg': 4.86, 'ci': (2.45, 7.27), 'total': 6287, 'worst': -492.6, 'best': 324.0}
+  t 0.2 {'n': 913, 'win': 55.9, 'avg': 6.04, 'ci': (3.22, 8.86), 'total': 5515, 'worst': -211.8, 'best': 217.1}
+  t 0.3 {'n': 602, 'win': 59.1, 'avg': 8.69, 'ci': (5.08, 12.31), 'total': 5234, 'worst': -211.8, 'best': 217.1}
+  t 0.7 {'n': 123, 'win': 59.3, 'avg': 10.08, 'ci': (-0.72, 20.88), 'total': 1240, 'worst': -211.8, 'best': 217.1}
+  t 1.0 {'n': 40, 'win': 75.0, 'avg': 35.27, 'ci': (16.4, 54.14), 'total': 1411, 'worst': -88.6, 'best': 217.1}
+
+-- 0DTE ATM option model (rough: premium = 0.4*m, Black-Scholes ATM approx with VIX as IV, no skew; held to close)
+   ATM buy avg -2.41 ci (-6.29, 1.47) win 36.9
+   debit spread ATM/+0.5m (cost 0.20m) avg 0.8 ci (-1.03, 2.63) win 47.8
+   debit spread ATM/+1.0m (cost 0.32m) avg -0.12 ci (-3.14, 2.9) win 40.9

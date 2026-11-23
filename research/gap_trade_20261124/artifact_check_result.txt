@@ -1,0 +1,4 @@
+spx_open  n=141 win= 54.6% avg=  1.89 SPX-pt ci=( -6.80, 10.57) total=    266
+spy_open  n=179 win= 52.0% avg= -2.19 SPX-pt ci=( -9.86,  5.48) total=   -392
+spx_1030  n=141 win= 52.5% avg= -4.24 SPX-pt ci=(-11.82,  3.35) total=   -597
+spy_1030  n=179 win= 53.6% avg= -2.66 SPX-pt ci=( -9.04,  3.72) total=   -476
