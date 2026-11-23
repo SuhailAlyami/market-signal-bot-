@@ -1,0 +1,64 @@
+name: gemini-weekly-audit
+# Weekly quality audit by Google's open-source Gemini CLI. Each week covers one focus area from AGENTS.md
+# (data, alerts, research, workflows, tests) and opens one GitHub issue with findings and a single
+# proposed PR. It reports only: no code pushes, no Telegram. Runs on Sunday, when the market is closed.
+on:
+  schedule:
+    - cron: '41 6 * * 0'   # Sunday 09:41 Riyadh
+  workflow_dispatch:
+    inputs:
+      focus:
+        description: 'Focus 0-4 (0 data, 1 alerts, 2 research, 3 workflows, 4 tests); empty = weekly rotation'
+        type: string
+        default: ''
+permissions:
+  contents: read
+  actions: read
+  issues: write
+concurrency:
+  group: gemini-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 30
+      - name: Collect context
+        id: ctx
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FOCUS: ${{ inputs.focus }}
+        run: |
+          gh run list --repo "${{ github.repository }}" -L 40 \
+            --json name,conclusion,event,createdAt -q '.[] | "\(.createdAt) \(.conclusion) \(.event) \(.name)"' > runs.txt || true
+          title=$(python agents/build_context.py audit runs.txt context.txt ${FOCUS:+--focus "$FOCUS"})
+          echo "title=$title" >> "$GITHUB_OUTPUT"
+          wc -c context.txt
+      - name: Gemini CLI audit
+        id: gemini
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GOOGLE_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::notice::GEMINI_API_KEY / GOOGLE_API_KEY secret is not set, audit skipped"; exit 0
+          fi
+          for i in 1 2; do
+            npx -y @google/gemini-cli@latest ${GEMINI_MODEL:+-m "$GEMINI_MODEL"} -p "$(cat agents/prompts/audit.md)" \
+              < context.txt > audit.md 2> gemini.err && [ -s audit.md ] && break
+            echo "attempt $i failed: $(tail -3 gemini.err)"; sleep 45
+          done
+          [ -s audit.md ] && echo "ok=1" >> "$GITHUB_OUTPUT" || echo "::warning::Gemini returned nothing"
+      - name: Open audit issue
+        if: steps.gemini.outputs.ok == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: ${{ steps.ctx.outputs.title }}
+        run: |
+          { echo "> تدقيق آلي من Gemini CLI. هذه اقتراحات تحتاج تحقق قبل التنفيذ، وليست أوامر."; echo; cat audit.md; } > body.md
+          gh issue create --repo "${{ github.repository }}" \
+            --title "🔎 تدقيق أسبوعي $(date -u +%F): $TITLE" --body-file body.md

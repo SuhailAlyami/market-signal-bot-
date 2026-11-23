@@ -1,12 +1,24 @@
 name: Suhail regression and historical smoke
+# Cost-trimmed 2026-11-24: Actions minutes on this private repo ran out (every job was refused with a
+# billing annotation). PRs now run the full suite once on Linux/3.12. The duplicate "Asia watcher CI"
+# workflow and the separate smoke job (a subset of the full suite) were removed, and nothing reruns on
+# push to main because the PR already tested that code. The 3.11 and Windows (billed 2x) jobs still run
+# on manual dispatch.
 on:
   pull_request:
-  push:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      full_matrix:
+        description: 'Also run Python 3.11 and Windows (Windows minutes are billed 2x)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
+
+concurrency:
+  group: regression-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -15,13 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-latest
-            python-version: '3.11'
-          - os: ubuntu-latest
-            python-version: '3.12'
-          - os: windows-latest
-            python-version: '3.12'
+        include: ${{ fromJSON(inputs.full_matrix && '[{"os":"ubuntu-latest","python-version":"3.12"},{"os":"ubuntu-latest","python-version":"3.11"},{"os":"windows-latest","python-version":"3.12"}]' || '[{"os":"ubuntu-latest","python-version":"3.12"}]') }}
     env:
       TZ: UTC
     steps:
@@ -29,22 +35,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements*.txt
       - name: Install application and regression dependencies
         run: pip install -r requirements.txt -r requirements-ibkr.txt -r requirements-research.txt -r requirements-gateway.txt
       - name: Compile all application modules and regression fixtures
         run: python -m compileall -q .
-      - name: Full deterministic regression suite (not predictive validation)
+      - name: Full deterministic regression suite, includes the historical smoke test (not predictive validation)
         run: python -m unittest discover -s tests -p 'test_*.py' -v
-
-  historical-data-smoke:
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install IBKR application dependencies
-        run: pip install -r requirements.txt
-      - name: Offline historical detector regression, no account access in PR CI
-        run: python -m unittest discover -s tests -p 'test_backtest_explosion.py' -v
