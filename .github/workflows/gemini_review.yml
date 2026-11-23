@@ -1,0 +1,72 @@
+name: gemini-review
+# Neutral PR review (Goldfish role) by Google's open-source Gemini CLI (Apache-2.0), using the free AI
+# Studio key already used by this repo (secret GEMINI_API_KEY or GOOGLE_API_KEY).
+# Runs once when a PR opens, or when the owner comments "/gemini" on a PR. No pushes.
+# The result goes to Telegram only, the single notification channel (owner, 2026-11-24): no GitHub comments
+# or emails. Separation: the Gemini step never sees the GitHub or Telegram secrets, and the Telegram step
+# never sees the Gemini key.
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+  issue_comment:
+    types: [created]
+permissions:
+  issues: write     # notification fallback when Telegram fails
+  contents: read
+  pull-requests: read
+concurrency:
+  group: gemini-review-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: true
+jobs:
+  review:
+    if: >-
+      (github.event_name == 'pull_request' && !github.event.pull_request.draft) ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request &&
+       startsWith(github.event.comment.body, '/gemini') &&
+       github.event.comment.author_association == 'OWNER')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Collect PR diff
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number || github.event.issue.number }}
+        run: |
+          gh pr diff "$PR" --repo "${{ github.repository }}" > diff.txt
+          gh pr view "$PR" --repo "${{ github.repository }}" --json title,body,author,headRefName,files \
+            -q '"title: \(.title)\nauthor: \(.author.login)\nbranch: \(.headRefName)\nfiles: \([.files[].path]|join(", "))\n\n\(.body)"' > meta.txt
+          python agents/build_context.py review diff.txt meta.txt context.txt
+          wc -c context.txt
+      - name: Gemini CLI review
+        id: gemini
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GOOGLE_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::notice::GEMINI_API_KEY / GOOGLE_API_KEY secret is not set, review skipped"; exit 0
+          fi
+          for i in 1 2; do
+            npx -y @google/gemini-cli@latest ${GEMINI_MODEL:+-m "$GEMINI_MODEL"} -p "$(cat agents/prompts/review.md)" \
+              < context.txt > review.md 2> gemini.err && [ -s review.md ] && break
+            echo "attempt $i failed: $(tail -3 gemini.err)"; sleep 30
+          done
+          [ -s review.md ] && echo "ok=1" >> "$GITHUB_OUTPUT" || echo "::warning::Gemini returned nothing"
+      - name: Send to Telegram
+        if: steps.gemini.outputs.ok == '1'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Fallback chain when Telegram fails: GitHub issue, then email if SMTP secrets exist (range_alert/notify_chain.py)
+          GITHUB_TOKEN: ${{ github.token }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}
+          PR: ${{ github.event.pull_request.number || github.event.issue.number }}
+        run: python agents/notify_telegram.py "🐟 مراجعة Gemini — PR #$PR (آلية، تحقق قبل الاعتماد)" review.md

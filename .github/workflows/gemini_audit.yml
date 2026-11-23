@@ -1,0 +1,72 @@
+name: gemini-weekly-audit
+# Weekly quality audit by Google's open-source Gemini CLI. Each week covers one focus area from AGENTS.md
+# (data, alerts, research, workflows, tests) and sends the findings plus a single proposed PR to Telegram,
+# the project's single notification channel (no GitHub issues or emails). It reports only and pushes no code.
+# Runs on Sunday, when the market is closed.
+on:
+  schedule:
+    - cron: '41 6 * * 0'   # Sunday 09:41 Riyadh
+  workflow_dispatch:
+    inputs:
+      focus:
+        description: 'Focus 0-4 (0 data, 1 alerts, 2 research, 3 workflows, 4 tests); empty = weekly rotation'
+        type: string
+        default: ''
+permissions:
+  issues: write     # notification fallback when Telegram fails
+  contents: read
+  actions: read
+concurrency:
+  group: gemini-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 30
+      - name: Collect context
+        id: ctx
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FOCUS: ${{ inputs.focus }}
+        run: |
+          gh run list --repo "${{ github.repository }}" -L 40 \
+            --json name,conclusion,event,createdAt -q '.[] | "\(.createdAt) \(.conclusion) \(.event) \(.name)"' > runs.txt || true
+          title=$(python agents/build_context.py audit runs.txt context.txt ${FOCUS:+--focus "$FOCUS"})
+          echo "title=$title" >> "$GITHUB_OUTPUT"
+          wc -c context.txt
+      - name: Gemini CLI audit
+        id: gemini
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GOOGLE_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::notice::GEMINI_API_KEY / GOOGLE_API_KEY secret is not set, audit skipped"; exit 0
+          fi
+          for i in 1 2; do
+            npx -y @google/gemini-cli@latest ${GEMINI_MODEL:+-m "$GEMINI_MODEL"} -p "$(cat agents/prompts/audit.md)" \
+              < context.txt > audit.md 2> gemini.err && [ -s audit.md ] && break
+            echo "attempt $i failed: $(tail -3 gemini.err)"; sleep 45
+          done
+          [ -s audit.md ] && echo "ok=1" >> "$GITHUB_OUTPUT" || echo "::warning::Gemini returned nothing"
+      - name: Send to Telegram
+        if: steps.gemini.outputs.ok == '1'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Fallback chain when Telegram fails: GitHub issue, then email if SMTP secrets exist (range_alert/notify_chain.py)
+          GITHUB_TOKEN: ${{ github.token }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}
+          TITLE: ${{ steps.ctx.outputs.title }}
+        run: |
+          python agents/notify_telegram.py "🔎 تدقيق أسبوعي $(date -u +%F): $TITLE (اقتراحات تحتاج تحقق)" audit.md

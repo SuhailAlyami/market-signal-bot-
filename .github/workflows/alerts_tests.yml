@@ -1,10 +1,12 @@
 name: alerts-tests
 on:
   pull_request:
-    paths: ['range_alert/**', 'gamma_radar/**', 'shadow_tradingagents/**', '.github/workflows/alerts_tests.yml']
-  push:
-    branches: [main]
-    paths: ['range_alert/**', 'shadow_tradingagents/**']
+    paths: ['range_alert/**', 'gamma_radar/**', 'shadow_tradingagents/**', 'agents/**', '.github/workflows/alerts_tests.yml']
+  workflow_dispatch:
+# PR runs already test the merged code; no second run on push to main (saves Actions minutes).
+concurrency:
+  group: alerts-tests-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -14,4 +16,4 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -q exchange_calendars==4.13.2
-      - run: python -m unittest range_alert/test_calendar.py range_alert/test_scoring.py range_alert/test_explosion.py gamma_radar/test_radar.py shadow_tradingagents/test_run_shadow.py -v
+      - run: python -m unittest range_alert/test_calendar.py range_alert/test_scoring.py range_alert/test_explosion.py range_alert/test_notify_chain.py gamma_radar/test_radar.py shadow_tradingagents/test_run_shadow.py agents/test_build_context.py agents/test_notify_telegram.py -v

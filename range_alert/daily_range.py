@@ -262,11 +262,25 @@ def build(now=None, force=False):
 
 
 def send(text, tries=4, sleep=time.sleep):
+    """Deliver through the first channel that works: Telegram, then a GitHub issue, then email (notify_chain)."""
     if os.environ.get('TELEGRAM_NOTIFY', 'on').lower() == 'off':
         # Owner asked (2026-11-20) for no daily messages: compute and record silently. Turn on with repo variable
         # TELEGRAM_NOTIFY=on. The marker keeps the workflow's "done" and call-storage logic unchanged.
         print('TELEGRAM_OK_SILENT (TELEGRAM_NOTIFY=off, not sent)')
         return True
+    if _telegram(text, tries, sleep):
+        return True
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from notify_chain import fallback
+    channel = fallback(text)
+    if channel:
+        # Same marker family as Telegram, so the workflows mark the day as delivered and do not resend.
+        print(f'TELEGRAM_OK_FALLBACK (delivered via {channel})')
+        return True
+    return False
+
+
+def _telegram(text, tries, sleep):
     token, chat = os.environ.get('TELEGRAM_BOT_TOKEN'), os.environ.get('TELEGRAM_CHAT_ID')
     if not token or not chat:
         print('NO_TELEGRAM_CREDENTIALS; message not sent')
@@ -288,7 +302,7 @@ def send(text, tries=4, sleep=time.sleep):
         print(f'TELEGRAM_RETRY {i+1}/{tries} {err}', file=sys.stderr, flush=True)
         if i < tries-1:
             sleep((10, 30, 60)[min(i, 2)])
-    print('TELEGRAM_UNAVAILABLE')   # not marked as sent: a later run retries
+    print('TELEGRAM_UNAVAILABLE')   # fallback channels are tried next; if all fail a later run retries
     return False
 
 

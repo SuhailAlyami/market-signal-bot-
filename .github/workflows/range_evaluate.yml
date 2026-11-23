@@ -14,6 +14,7 @@ on:
         type: boolean
         default: false
 permissions:
+  issues: write     # notification fallback when Telegram fails
   contents: read
 concurrency:
   group: range-evaluate
@@ -46,6 +47,13 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Fallback chain when Telegram fails: GitHub issue, then email if SMTP secrets exist (range_alert/notify_chain.py)
+          GITHUB_TOKEN: ${{ github.token }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
           TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}   # owner wants messages (2026-11-20); repo variable 'off' silences
           CALLS_DIR: calls-data/calls
         shell: bash

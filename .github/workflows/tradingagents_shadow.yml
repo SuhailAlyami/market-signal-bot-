@@ -15,6 +15,7 @@ on:
         type: boolean
         default: false
 permissions:
+  issues: write     # notification fallback when Telegram fails
   contents: write
 concurrency:
   group: tradingagents-shadow
@@ -88,12 +89,26 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Fallback chain when Telegram fails: GitHub issue, then email if SMTP secrets exist (range_alert/notify_chain.py)
+          GITHUB_TOKEN: ${{ github.token }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
         run: python shadow_tradingagents/notify.py data-repo/records
       - name: Telegram failure notice
         if: failure()
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Fallback chain when Telegram fails: GitHub issue, then email if SMTP secrets exist (range_alert/notify_chain.py)
+          GITHUB_TOKEN: ${{ github.token }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           python -c "import os,sys; sys.path.insert(0,'range_alert'); from daily_range import send; send('⚠️ تشغيل TradingAgents (ظل SPY) فشل اليوم — لا قرار مسجل.\n' + os.environ['RUN_URL'])"
