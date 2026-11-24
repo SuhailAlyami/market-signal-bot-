@@ -26,3 +26,9 @@ Limits: only 3 years of hourly data, one regime split, and Yahoo index bars.
 # First-hour direction → rest of day (SPY) — verdict: NEGATIVE (the sign flips between regimes)
 Rule selected on 2024 (fade a first hour ≥ 0.3 m: 55% wins, +4.6 pt). On 2025–2026: 44% wins, −4.3 pt (CI −13.4..+4.8).
 Following the first hour did better in 2025–2026 (best: +5.4 pt, CI −0.6..+11.5) but lost in 2024. No stable direction edge.
+
+# Close-to-close reversal rules — verdict: preselected rule NEGATIVE; one post-hoc candidate goes to live testing
+Enter at the close, exit at the next close (closes are tradable via MOC). Selection on 2000–2019, test on 2020–2026.
+- Preselected rule `down_1.5m` (best excess on train): test 66 trades, 47% wins, −4.4 pt. **Failed.**
+- Flaw found afterwards: the selection metric was in raw SPX points, which are not comparable across eras. It should have been in m units. The selection is not re-run, because that would be choosing after seeing the test.
+- Post hoc only: `three_down` (buy after the 3rd straight lower close) on test: 155 trades, 59% wins, +18.4 pt (CI +8.0..+28.7). It was 2nd on train. Because it was found after seeing the test, it is **not** a result. It is tracked forward by `promotion.reversal_record`, scored on SPY closes from 2026-11-16, and the morning message shows it as a conditional, labelled test on days when the last two closes fell.

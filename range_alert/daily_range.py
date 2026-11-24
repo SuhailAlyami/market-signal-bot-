@@ -125,6 +125,18 @@ def trade_plan(pc, m):
     return {'k': TRADE_K, 'long_above': pc+TRADE_K*m, 'short_below': pc-TRADE_K*m}
 
 
+def reversal_line(rows, gate=None):
+    """Conditional close-time line when the last two SPX closes fell: a third lower close is the reversal setup
+    (promotion.reversal_record). Hidden automatically once the live record marks it FAILED."""
+    if len(rows) < 3 or not (rows[-1][1] < rows[-2][1] < rows[-3][1]):
+        return []
+    status = (gate or {}).get('reversal', {}).get('status', 'TESTING')
+    if status == 'FAILED':
+        return []
+    head = '🔁 إشارة ارتداد' + (' (مثبتة حيًا)' if status == 'PROVEN' else ' (تجريبية، تُقاس حيًا)')
+    return [f"{head}: إن أغلق اليوم تحت {rows[-1][1]:,.0f} (ثالث هبوط متتالٍ) ← شراء عند الإغلاق والخروج عند إغلاق الغد."]
+
+
 def trade_lines(t, gate=None):
     """Lines for the conditional trade. gate = promotion.evaluate(...) result; its status is decided automatically."""
     status = (gate or {}).get('trade', {}).get('status', 'TESTING')
@@ -301,6 +313,7 @@ def build(now=None, force=False):
         except Exception as e:  # noqa: BLE001  (risk line is optional)
             print('EXPLOSION_RISK_FAILED', e, file=sys.stderr)
     body += trade_lines(c['trade'], gate)
+    body += reversal_line(spx_rows, gate)
     if gate:
         body.append(P.record_line(gate))
     gp = os.environ.get('GAMMA_JSON')

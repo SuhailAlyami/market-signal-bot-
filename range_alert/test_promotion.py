@@ -68,6 +68,21 @@ class GateTests(unittest.TestCase):
         lo, hi = P.wilson(30, 40)
         self.assertTrue(0.5 < lo < 0.75 < hi < 0.9)
 
+    def test_reversal_after_three_lower_closes(self):
+        days = ['2026-11-16', '2026-11-17', '2026-11-18', '2026-11-19', '2026-11-20']
+        closes = [100, 99, 98, 97, 99]                   # 3 lower closes up to 11-19, then up
+        spx = {d: (c, c, c, c*70) for d, c in zip(days, closes)}
+        spy = {d: (c, c, c, c*7) for d, c in zip(days, closes)}
+        r = P.reversal_record(spx, spy, start='2026-11-16')
+        self.assertEqual((r['n'], r['wins'], r['status']), (1, 1, 'TESTING'))
+        self.assertEqual(r['total'], 10*(99*7-97*7)-1)
+
+    def test_reversal_line_only_after_two_down_closes_and_hidden_when_failed(self):
+        down = [(None, 102.0), (None, 101.0), (None, 100.0)]
+        self.assertIn('ارتداد', D.reversal_line(down)[0])
+        self.assertEqual(D.reversal_line([(None, 100.0), (None, 101.0), (None, 100.0)]), [])
+        self.assertEqual(D.reversal_line(down, {'reversal': {'status': 'FAILED'}}), [])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -90,10 +90,30 @@ def level_record(rows, k_high, k_low):
     return res
 
 
+def reversal_record(spx, spy, start=LIVE_START):
+    """After the 3rd straight lower SPX close, buy at that close and exit at the next close (SPY prices, x10, after
+    cost). Found post hoc in research/boom_20261124/close_reversal.py (it was NOT the preselected rule), so it can
+    only be judged on live sessions."""
+    days = sorted(d for d in spx if d in spy)
+    pnl = []
+    for i in range(3, len(days)-1):
+        d = days[i]
+        if d < start:
+            continue
+        if all(spx[days[i-k]][3] < spx[days[i-k-1]][3] for k in range(3)):
+            pnl.append(10*(spy[days[i+1]][3]-spy[d][3])-COST_PT)
+    n, w = len(pnl), sum(x > 0 for x in pnl)
+    lo, hi = mean_ci(pnl)
+    status = ('PROVEN' if n >= MIN_TRADES and lo > 0 and wilson(w, n)[0] > 0.5 else
+              'FAILED' if n >= MIN_TRADES and hi < 0 else 'TESTING')
+    return {'status': status, 'n': n, 'wins': w, 'total': round(sum(pnl)) if pnl else 0}
+
+
 def evaluate(spx, vix, spy, k_high, k_low):
     rows = live_rows(spx, vix, spy)
     return {'since': LIVE_START, 'sessions': len(rows), 'trade': trade_record(rows),
-            'direction': direction_record(rows), 'levels': level_record(rows, k_high, k_low)}
+            'direction': direction_record(rows), 'levels': level_record(rows, k_high, k_low),
+            'reversal': reversal_record(spx, spy)}
 
 
 def fetch(k_high, k_low):
@@ -106,6 +126,9 @@ def fetch(k_high, k_low):
 def record_line(g):
     t, d, lv = g['trade'], g['direction'], g['levels']
     tr = (f"الصفقة {t['wins']}/{t['n']} رابحة، {t['total']:+,} نقطة" if t['n'] else "الصفقة لم تتفعّل بعد")
+    rv = g.get('reversal')
+    if rv and rv['n']:
+        tr += f" | الارتداد {rv['wins']}/{rv['n']}، {rv['total']:+,} نقطة"
     lvl = ' | '.join(f"{name} {lv[k]['hits']}/{lv[k]['n']} (المعلن {lv[k]['claim']}%){'' if lv[k]['ok'] else ' ⚠️'}"
                      for k, name in (('high', 'القمة'), ('low', 'القاع'), ('range', 'المدى')))
     return (f"📒 السجل الحي منذ {g['since']} ({g['sessions']} جلسة، أسعار SPY): {tr} | "
