@@ -80,6 +80,41 @@ def build(now=None):
     return message(session, lv, bars[-1][0] + (bars[-1][0] - bars[-2][0]))
 
 
+def score(fh, high, low, close):
+    """Score a stored first-hour forecast against the session's final high/low/close."""
+    return {'up70': high <= fh['up'][0], 'up90': high <= fh['up'][1], 'dn70': low >= fh['dn'][0], 'dn90': low >= fh['dn'][1],
+            'big': abs(close - fh['last']) >= fh['big_pts'], 'tier': fh['big_tier']}
+
+
+def record_lines(fh_dir, spx, target):
+    """Evening lines: today's first-hour forecast scored, plus the cumulative live record vs the promised rates."""
+    import glob
+    from promotion import wilson
+    if not fh_dir or not os.path.isdir(fh_dir):
+        return []
+    load = lambda d: json.loads(open(os.path.join(fh_dir, f'{d}.json')).read())
+    days = sorted(os.path.basename(f)[:-5] for f in glob.glob(os.path.join(fh_dir, '*.json')))
+    hist = [score(load(d), spx[d][1], spx[d][2], spx[d][3]) for d in days if d in spx and d <= target]
+    if not hist:
+        return []
+    ok = lambda b: '✅' if b else '❌'
+    out = []
+    if target in days and target in spx:
+        t = score(load(target), spx[target][1], spx[target][2], spx[target][3])
+        out.append(f"⏱️ تنبؤ الساعة الأولى: القمة المرجّحة {ok(t['up70'])} الأقصى {ok(t['up90'])} | "
+                   f"القاع المرجّح {ok(t['dn70'])} الأقصى {ok(t['dn90'])} | حركة كبيرة بعدها: {'حدثت' if t['big'] else 'لم تحدث'}")
+    n = len(hist)
+    parts = []
+    for key, claim, name in (('up70', COV_UP[0], 'القمة المرجّحة'), ('up90', COV_UP[1], 'القمة القصوى'),
+                             ('dn70', COV_DN[0], 'القاع المرجّح'), ('dn90', COV_DN[1], 'القاع الأقصى')):
+        k = sum(h[key] for h in hist)
+        lo, hi = wilson(k, n)
+        flag = '' if n < 20 or lo*100 <= claim <= hi*100 else ' ⚠️'
+        parts.append(f"{name} {k}/{n} ({claim}%){flag}")
+    out.append(f"📒 سجل الساعة الأولى ({n} جلسة): " + ' | '.join(parts))
+    return out
+
+
 if __name__ == '__main__':
     try:
         msg = build()

@@ -8,7 +8,7 @@ on:
     - cron: '40 15 * * 1-5'   # 10:40 NY in winter (EST)
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write   # only to store the sent forecast on branch data/daily-calls (scored in the evening)
   issues: write     # notification fallback when Telegram fails
 concurrency:
   group: first-hour
@@ -49,6 +49,19 @@ jobs:
         run: |
           python range_alert/first_hour.py | tee out.txt
           grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY|LATE_NOT_SENT' out.txt && echo ok > .first-hour-sent || true
+      - name: Store the sent forecast (data branch)
+        if: steps.sent.outputs.cache-hit != 'true' && hashFiles('out.txt') != ''
+        shell: bash
+        run: |
+          grep -q TELEGRAM_OK out.txt || exit 0
+          line=$(grep '^FIRST_HOUR_JSON ' out.txt | head -1 | cut -d' ' -f2-); [ -n "$line" ] || exit 0
+          session=$(python -c "import json,sys; print(json.loads(sys.argv[1])['session'])" "$line")
+          url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+          git clone -q --depth 1 --branch data/daily-calls "$url" calls-repo || { mkdir calls-repo && cd calls-repo && git init -q -b data/daily-calls && git remote add origin "$url" && cd ..; }
+          mkdir -p calls-repo/firsthour && echo "$line" > "calls-repo/firsthour/$session.json"
+          cd calls-repo && git config user.name "first-hour" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && (git diff --cached --quiet || git commit -q -m "first-hour $session")
+          for i in 1 2 3; do git push -q origin HEAD:refs/heads/data/daily-calls && break; git pull -q --rebase origin data/daily-calls || true; sleep 5; done
       - if: steps.sent.outputs.cache-hit != 'true' && hashFiles('.first-hour-sent') != ''
         uses: actions/cache/save@v4
         with:

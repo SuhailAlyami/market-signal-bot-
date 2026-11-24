@@ -200,6 +200,14 @@ def build(now=None, force=False):
             lines += shadow_lines(os.environ['SHADOW_RECORDS'], daily('SPY'), target)
         except Exception as ex:  # noqa: BLE001  (scoring must never block the range evaluation)
             print('SHADOW_SCORING_FAILED', ex, file=sys.stderr)
+    try:   # first-hour forecast (first_hour.py), stored by the first-hour workflow next to the morning calls
+        import first_hour as FH
+        cd = os.environ.get('CALLS_DIR')
+        fh = FH.record_lines(os.path.join(os.path.dirname(cd), 'firsthour'), spx, target) if cd else []
+        if fh:
+            lines += [""] + fh
+    except Exception as ex:  # noqa: BLE001
+        print('FIRST_HOUR_SCORING_FAILED', ex, file=sys.stderr)
     try:   # automatic proof gate: live record and current status of every candidate (promotion.py)
         import promotion as P
         from daily_range import K_HIGH, K_LOW

@@ -52,6 +52,23 @@ class FirstHourTests(unittest.TestCase):
             with self.assertRaises(DataUnavailable):
                 F.first_hour_bars(at(9, 30).astimezone(NY).date())
 
+    def test_score_and_live_record(self):
+        import json, tempfile
+        fh = F.levels(7010, 6990, 7000, 100)
+        s = F.score(fh, 7030, 6960, 7060)
+        self.assertEqual((s['up70'], s['up90'], s['dn70'], s['dn90'], s['big']), (True, True, False, True, True))
+        with tempfile.TemporaryDirectory() as d:
+            spx = {}
+            for i in range(25):
+                day = f'2026-12-{i+1:02d}'
+                open(f'{d}/{day}.json', 'w').write(json.dumps({'session': day, **fh}))
+                spx[day] = (7000, 7100, 6980, 7000)        # high beyond the 90% level every day
+            lines = F.record_lines(d, spx, '2026-12-25')
+        self.assertIn('❌', lines[0])
+        self.assertIn('0/25', lines[1])
+        self.assertIn('⚠️', lines[1])                       # promised 75%, live 0/25: flagged automatically
+        self.assertEqual(F.record_lines(None, {}, '2026-12-25'), [])
+
 
 if __name__ == '__main__':
     unittest.main()
