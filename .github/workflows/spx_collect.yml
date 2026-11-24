@@ -101,6 +101,9 @@ jobs:
         run: |
           python research/spx_collection/collect_yahoo_spx.py --out data-repo --breadth --breadth-range "$BREADTH_RANGE" | tee breadth.out
           { echo '### Breadth 5m collection'; echo '```json'; cat breadth.out; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Store raw 1m bars for SPY, ES=F, NQ=F (future minute-level direction research)
+        continue-on-error: true
+        run: python research/spx_collection/collect_yahoo_spx.py --out data-repo --minute | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Persist to the data branch (fast-forward only, no force)
         shell: bash
         working-directory: data-repo

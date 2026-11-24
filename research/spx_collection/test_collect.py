@@ -95,6 +95,24 @@ class CollectorTests(unittest.TestCase):
             c.parse(json.dumps({'chart': {'error': {'code': 'x'}, 'result': None}}).encode())
 
 
+class MinuteRawTests(unittest.TestCase):
+    def test_one_payload_per_symbol_per_day_never_overwritten(self):
+        import json as _j, tempfile
+        from pathlib import Path as _P
+        def body(ts):
+            return _j.dumps({'chart': {'result': [{'timestamp': ts, 'indicators': {'quote': [{}]}}]}}).encode()
+        t = 1795000000  # 2026-11-18 New York
+        with tempfile.TemporaryDirectory() as d:
+            out = _P(d)
+            a = c.store_minute_raw('ES=F', body([t, t + 60]), out)
+            b = c.store_minute_raw('ES=F', body([t, t + 120]), out)
+            self.assertTrue(a['stored'])
+            self.assertFalse(b['stored'])
+            files = list((out/'minute1'/'ES_F').glob('*.json.gz'))
+            self.assertEqual(len(files), 1)
+            self.assertIsNone(c.store_minute_raw('SPY', body([]), out))
+
+
 if __name__ == '__main__':
     unittest.main()
 

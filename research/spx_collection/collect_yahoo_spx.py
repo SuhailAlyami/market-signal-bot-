@@ -301,6 +301,38 @@ def collect_breadth(host, rng, pause=1.0):
     return fetched
 
 
+MINUTE_SYMBOLS = ['SPY', 'ES=F', 'NQ=F']   # tradable ETF + futures with pre-market (Yahoo keeps 1m bars ~30 days)
+
+
+def store_minute_raw(symbol, body, outdir):
+    """Keep one raw 7-day 1m payload per symbol per New York date of its last bar: minute1/<SYM>/<date>.json.gz.
+    The first payload of a day is kept (it is never overwritten); the 7-day window overlaps, so no session is lost."""
+    r = json.loads(body)['chart']['result'][0]
+    ts = r.get('timestamp') or []
+    if not ts:
+        return None
+    last = datetime.fromtimestamp(ts[-1], timezone.utc).astimezone(NY).date().isoformat()
+    d = outdir/'minute1'/symbol.replace('=', '_').replace('^', '')
+    d.mkdir(parents=True, exist_ok=True)
+    path = d/f'{last}.json.gz'
+    if path.exists():
+        return {'symbol': symbol, 'last_bar_day': last, 'stored': False, 'bars': len(ts)}
+    path.write_bytes(gzip.compress(body, mtime=0))
+    return {'symbol': symbol, 'last_bar_day': last, 'stored': True, 'bars': len(ts)}
+
+
+def collect_minute(host, outdir, pause=1.0):
+    out = []
+    for symbol in MINUTE_SYMBOLS:
+        try:
+            body, _ = fetch(host, '1m', '7d', symbol=symbol)
+            out.append(store_minute_raw(symbol, body, outdir) or {'symbol': symbol, 'error': 'empty payload'})
+        except Exception as e:  # noqa: BLE001  (one symbol failing must not lose the others)
+            out.append({'symbol': symbol, 'error': repr(e)})
+        time.sleep(pause)
+    return out
+
+
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('--out', type=Path, default=HERE/'data', help='data directory (sessions.json, snapshots.jsonl, raw/)')
@@ -309,7 +341,12 @@ if __name__ == '__main__':
     p.add_argument('--breadth', action='store_true', help='collect 5m bars for SPX and the ten breadth stocks')
     p.add_argument('--breadth-range', default='5d', choices=('5d', '1mo', '60d'))
     p.add_argument('--verify-breadth', action='store_true', help='audit breadth5m/bars5m.json only; no network')
+    p.add_argument('--minute', action='store_true', help='store raw 1m payloads for SPY, ES=F and NQ=F (minute1/)')
     a = p.parse_args()
+    if a.minute:
+        res = collect_minute(a.host, a.out)
+        print(json.dumps(res, indent=1))
+        sys.exit(2 if any('error' in r for r in res) else 0)
     if a.verify_breadth:
         report = verify_breadth(json.loads((a.out/'breadth5m'/'bars5m.json').read_text()))
         print(json.dumps(report, indent=1))
