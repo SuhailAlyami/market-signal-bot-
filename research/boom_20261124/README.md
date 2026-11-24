@@ -22,3 +22,7 @@ SPX hourly Dec 2023 – Nov 2026. Parameters fitted before 2025-01-01 (257 sessi
 - Extension levels (train quantiles, in m) and their test coverage: up q70 0.289 → **75%**, q90 0.594 → **95%**; down q70 0.294 → **74%**, q90 0.736 → **92%**.
 - Big rest-of-day move (|close − 10:30| ≥ 0.5 m) by first-hour-range tercile (cuts 0.339 / 0.472 m): test **14% / 21% / 29%** (train 17 / 25 / 37).
 Limits: only 3 years of hourly data, one regime split, and Yahoo index bars.
+
+# First-hour direction → rest of day (SPY) — verdict: NEGATIVE (the sign flips between regimes)
+Rule selected on 2024 (fade a first hour ≥ 0.3 m: 55% wins, +4.6 pt). On 2025–2026: 44% wins, −4.3 pt (CI −13.4..+4.8).
+Following the first hour did better in 2025–2026 (best: +5.4 pt, CI −0.6..+11.5) but lost in 2024. No stable direction edge.
