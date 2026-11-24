@@ -1,0 +1,11 @@
+//@version=5
+indicator("Suhail rare RESEARCH_ONLY — four lower lows", overlay=true)
+// RESEARCH_ONLY. Not a live signal.
+// Four consecutive lower daily lows, then a long bias the next session.
+// Test window 2022-2026 only: 69 trades, win rate 62% (51–73%),
+// expectancy +12.3 points (2.0 to 22.0) after 0.5 point per side.
+// 2018-2021 did not clear zero. Across 51 rules the reality check is p=0.84.
+lower = low < low[1]
+four = lower and lower[1] and lower[2] and lower[3]
+plotshape(four and not four[1], "Research long", shape.triangleup, location.belowbar, color.new(color.teal, 0), size=size.small)
+alertcondition(four and not four[1], "Four lower lows RESEARCH_ONLY", "Four lower lows. Research only — family-wise check failed.")

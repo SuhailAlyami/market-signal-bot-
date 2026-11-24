@@ -1,0 +1,318 @@
+{
+  "preregistered": "liq_4w_up_long",
+  "markets": [
+    "QQQ",
+    "IWM",
+    "GDAXI",
+    "N225"
+  ],
+  "definition": "Same four-week liquidity upturn. Friday 09:30, exit 20 sessions later. Pass needs the S&P bar, the pooled QQQ/IWM/DAX/Nikkei bar, and the existing reality check.",
+  "not_retested": "Turn-of-month, expiration weeks, VIX9D/VIX/VIX3M, XLU/XLK, XLY/XLP.",
+  "test_end": "2026-11-16",
+  "spx_2x": {
+    "trades": 24,
+    "win_rate": 0.8333,
+    "win_rate_ci": [
+      0.6415,
+      0.9332
+    ],
+    "expectancy": 101.0198,
+    "expectancy_ci": [
+      21.2517,
+      168.3946
+    ],
+    "profit_factor": 3.3426,
+    "avg_win": 172.9711,
+    "avg_loss": -258.7365,
+    "years_positive": 0.8,
+    "years": [
+      {
+        "year": 2022,
+        "trades": 4,
+        "total": 937.21,
+        "win_rate": 1.0
+      },
+      {
+        "year": 2023,
+        "trades": 5,
+        "total": 801.62,
+        "win_rate": 1.0
+      },
+      {
+        "year": 2024,
+        "trades": 8,
+        "total": 889.36,
+        "win_rate": 0.875
+      },
+      {
+        "year": 2025,
+        "trades": 4,
+        "total": 146.8,
+        "win_rate": 0.75
+      },
+      {
+        "year": 2026,
+        "trades": 3,
+        "total": -350.51,
+        "win_rate": 0.3333
+      }
+    ]
+  },
+  "spx_bar": true,
+  "by_market_2x": {
+    "QQQ": {
+      "trades": 26,
+      "win_rate": 0.8462,
+      "win_rate_ci": [
+        0.6647,
+        0.9385
+      ],
+      "expectancy": 0.0332,
+      "expectancy_ci": [
+        0.016,
+        0.0463
+      ],
+      "profit_factor": 6.3537,
+      "avg_win": 0.0465,
+      "avg_loss": -0.0403,
+      "years_positive": 0.8,
+      "years": [
+        {
+          "year": 2022,
+          "trades": 4,
+          "total": 0.28,
+          "win_rate": 1.0
+        },
+        {
+          "year": 2023,
+          "trades": 5,
+          "total": 0.3,
+          "win_rate": 1.0
+        },
+        {
+          "year": 2024,
+          "trades": 8,
+          "total": 0.26,
+          "win_rate": 1.0
+        },
+        {
+          "year": 2025,
+          "trades": 5,
+          "total": 0.07,
+          "win_rate": 0.8
+        },
+        {
+          "year": 2026,
+          "trades": 4,
+          "total": -0.05,
+          "win_rate": 0.25
+        }
+      ]
+    },
+    "IWM": {
+      "trades": 26,
+      "win_rate": 0.6538,
+      "win_rate_ci": [
+        0.4622,
+        0.8059
+      ],
+      "expectancy": 0.02,
+      "expectancy_ci": [
+        -0.0003,
+        0.0362
+      ],
+      "profit_factor": 2.6905,
+      "avg_win": 0.0486,
+      "avg_loss": -0.0341,
+      "years_positive": 0.8,
+      "years": [
+        {
+          "year": 2022,
+          "trades": 4,
+          "total": 0.28,
+          "win_rate": 1.0
+        },
+        {
+          "year": 2023,
+          "trades": 5,
+          "total": 0.17,
+          "win_rate": 0.8
+        },
+        {
+          "year": 2024,
+          "trades": 8,
+          "total": 0.07,
+          "win_rate": 0.5
+        },
+        {
+          "year": 2025,
+          "trades": 5,
+          "total": 0.08,
+          "win_rate": 0.8
+        },
+        {
+          "year": 2026,
+          "trades": 4,
+          "total": -0.07,
+          "win_rate": 0.25
+        }
+      ]
+    },
+    "GDAXI": {
+      "trades": 26,
+      "win_rate": 0.6154,
+      "win_rate_ci": [
+        0.4253,
+        0.7757
+      ],
+      "expectancy": 0.0164,
+      "expectancy_ci": [
+        -0.0012,
+        0.0324
+      ],
+      "profit_factor": 2.78,
+      "avg_win": 0.0416,
+      "avg_loss": -0.024,
+      "years_positive": 0.8,
+      "years": [
+        {
+          "year": 2022,
+          "trades": 4,
+          "total": 0.22,
+          "win_rate": 0.75
+        },
+        {
+          "year": 2023,
+          "trades": 5,
+          "total": 0.14,
+          "win_rate": 0.6
+        },
+        {
+          "year": 2024,
+          "trades": 8,
+          "total": 0.12,
+          "win_rate": 0.75
+        },
+        {
+          "year": 2025,
+          "trades": 5,
+          "total": 0.07,
+          "win_rate": 0.6
+        },
+        {
+          "year": 2026,
+          "trades": 4,
+          "total": -0.13,
+          "win_rate": 0.25
+        }
+      ]
+    },
+    "N225": {
+      "trades": 26,
+      "win_rate": 0.7692,
+      "win_rate_ci": [
+        0.5795,
+        0.8897
+      ],
+      "expectancy": 0.0191,
+      "expectancy_ci": [
+        -0.0018,
+        0.039
+      ],
+      "profit_factor": 2.6558,
+      "avg_win": 0.0398,
+      "avg_loss": -0.05,
+      "years_positive": 0.8,
+      "years": [
+        {
+          "year": 2022,
+          "trades": 4,
+          "total": 0.15,
+          "win_rate": 1.0
+        },
+        {
+          "year": 2023,
+          "trades": 5,
+          "total": 0.22,
+          "win_rate": 0.8
+        },
+        {
+          "year": 2024,
+          "trades": 8,
+          "total": 0.1,
+          "win_rate": 0.875
+        },
+        {
+          "year": 2025,
+          "trades": 5,
+          "total": 0.05,
+          "win_rate": 0.6
+        },
+        {
+          "year": 2026,
+          "trades": 4,
+          "total": -0.03,
+          "win_rate": 0.5
+        }
+      ]
+    }
+  },
+  "pooled_2x": {
+    "trades": 104,
+    "win_rate": 0.7212,
+    "win_rate_ci": [
+      0.6283,
+      0.7983
+    ],
+    "expectancy": 0.0222,
+    "expectancy_ci": [
+      0.0055,
+      0.0336
+    ],
+    "profit_factor": 3.2868,
+    "avg_win": 0.0442,
+    "avg_loss": -0.0348,
+    "years_positive": 0.8,
+    "years": [
+      {
+        "year": 2022,
+        "trades": 16,
+        "total": 0.93,
+        "win_rate": 0.9375
+      },
+      {
+        "year": 2023,
+        "trades": 20,
+        "total": 0.83,
+        "win_rate": 0.8
+      },
+      {
+        "year": 2024,
+        "trades": 32,
+        "total": 0.55,
+        "win_rate": 0.7812
+      },
+      {
+        "year": 2025,
+        "trades": 20,
+        "total": 0.28,
+        "win_rate": 0.7
+      },
+      {
+        "year": 2026,
+        "trades": 16,
+        "total": -0.29,
+        "win_rate": 0.3125
+      }
+    ]
+  },
+  "pooled_bar": true,
+  "family_wise": {
+    "reality_p": 0.254,
+    "dsr": 0.0024,
+    "survives": false
+  },
+  "matrix_rules": 222,
+  "any_meets_success_bar": false,
+  "live_default": "legacy"
+}

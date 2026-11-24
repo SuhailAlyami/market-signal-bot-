@@ -1,0 +1,356 @@
+{
+  "preregistered": [
+    "earnings_peak_week",
+    "nfp_week_long"
+  ],
+  "calendar_limit": "No company earnings dates. The earnings window is the week containing the 15th of January, April, July and October. NFP is the first Friday.",
+  "matrix_rules": 170,
+  "run13_timing_cells_not_recomputed": 39,
+  "family_total_with_run13": 209,
+  "rows": [
+    {
+      "name": "earnings_peak_week",
+      "entry": "09:30 ET",
+      "exit": "15:55 ET, five sessions later",
+      "test": {
+        "trades": 20,
+        "trades_per_month": 0.345,
+        "win_rate": 0.6,
+        "win_rate_ci": [
+          0.3866,
+          0.7812
+        ],
+        "avg_win": 83.5795,
+        "avg_loss": -130.2971,
+        "expectancy": -1.9711,
+        "expectancy_ci": [
+          -56.4708,
+          54.5203
+        ],
+        "profit_factor": 0.9622,
+        "max_drawdown": 368.419,
+        "years_positive": 0.4,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 4,
+            "total": -96.29,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 4,
+            "total": 300.41,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2024,
+            "trades": 4,
+            "total": -213.45,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 4,
+            "total": 0.13,
+            "win_rate": 0.75
+          },
+          {
+            "year": 2026,
+            "trades": 4,
+            "total": -30.22,
+            "win_rate": 0.25
+          }
+        ]
+      },
+      "test_2x": {
+        "trades": 20,
+        "win_rate": 0.6,
+        "win_rate_ci": [
+          0.3866,
+          0.7812
+        ],
+        "expectancy": -2.9711,
+        "expectancy_ci": [
+          -57.4708,
+          53.5203
+        ],
+        "profit_factor": 0.9434,
+        "avg_win": 82.5795,
+        "avg_loss": -131.2971,
+        "years_positive": 0.2,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 4,
+            "total": -100.29,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 4,
+            "total": 296.41,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2024,
+            "trades": 4,
+            "total": -217.45,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2025,
+            "trades": 4,
+            "total": -3.87,
+            "win_rate": 0.75
+          },
+          {
+            "year": 2026,
+            "trades": 4,
+            "total": -34.22,
+            "win_rate": 0.25
+          }
+        ]
+      },
+      "replication_usatech_2x": {
+        "trades": 20,
+        "win_rate": 0.55,
+        "win_rate_ci": [
+          0.3421,
+          0.7418
+        ],
+        "expectancy": -98.0714,
+        "expectancy_ci": [
+          -432.0876,
+          198.092
+        ],
+        "profit_factor": 0.707,
+        "avg_win": 430.1913,
+        "avg_loss": -743.726,
+        "years_positive": 0.4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 4,
+            "total": -358.25,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 4,
+            "total": 1245.44,
+            "win_rate": 1.0
+          },
+          {
+            "year": 2024,
+            "trades": 4,
+            "total": -1414.85,
+            "win_rate": 0.25
+          },
+          {
+            "year": 2025,
+            "trades": 4,
+            "total": 85.38,
+            "win_rate": 0.75
+          },
+          {
+            "year": 2026,
+            "trades": 4,
+            "total": -1519.14,
+            "win_rate": 0.25
+          }
+        ]
+      },
+      "spx_bar": false,
+      "replication_bar": false,
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      },
+      "meets_success_bar": false
+    },
+    {
+      "name": "nfp_week_long",
+      "entry": "09:30 ET",
+      "exit": "15:55 ET that Friday",
+      "test": {
+        "trades": 24,
+        "trades_per_month": 0.407,
+        "win_rate": 0.5417,
+        "win_rate_ci": [
+          0.3507,
+          0.7211
+        ],
+        "avg_win": 61.5227,
+        "avg_loss": -120.0322,
+        "expectancy": -21.69,
+        "expectancy_ci": [
+          -66.53,
+          25.8685
+        ],
+        "profit_factor": 0.6057,
+        "max_drawdown": 502.364,
+        "years_positive": 0.0,
+        "years_active": 5,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 4,
+            "total": -57.91,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 4,
+            "total": -42.86,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2024,
+            "trades": 5,
+            "total": -101.56,
+            "win_rate": 0.6
+          },
+          {
+            "year": 2025,
+            "trades": 6,
+            "total": -83.63,
+            "win_rate": 0.6667
+          },
+          {
+            "year": 2026,
+            "trades": 5,
+            "total": -234.6,
+            "win_rate": 0.4
+          }
+        ]
+      },
+      "test_2x": {
+        "trades": 24,
+        "win_rate": 0.5417,
+        "win_rate_ci": [
+          0.3507,
+          0.7211
+        ],
+        "expectancy": -22.69,
+        "expectancy_ci": [
+          -67.53,
+          24.8685
+        ],
+        "profit_factor": 0.591,
+        "avg_win": 60.5227,
+        "avg_loss": -121.0322,
+        "years_positive": 0.0,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 4,
+            "total": -61.91,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2023,
+            "trades": 4,
+            "total": -46.86,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2024,
+            "trades": 5,
+            "total": -106.56,
+            "win_rate": 0.6
+          },
+          {
+            "year": 2025,
+            "trades": 6,
+            "total": -89.63,
+            "win_rate": 0.6667
+          },
+          {
+            "year": 2026,
+            "trades": 5,
+            "total": -239.6,
+            "win_rate": 0.4
+          }
+        ]
+      },
+      "replication_usatech_2x": {
+        "trades": 24,
+        "win_rate": 0.5,
+        "win_rate_ci": [
+          0.3143,
+          0.6857
+        ],
+        "expectancy": -103.3043,
+        "expectancy_ci": [
+          -399.4507,
+          201.6081
+        ],
+        "profit_factor": 0.6778,
+        "avg_win": 434.58,
+        "avg_loss": -641.1886,
+        "years_positive": 0.4,
+        "years": [
+          {
+            "year": 2022,
+            "trades": 4,
+            "total": -619.16,
+            "win_rate": 0.25
+          },
+          {
+            "year": 2023,
+            "trades": 4,
+            "total": 77.56,
+            "win_rate": 0.5
+          },
+          {
+            "year": 2024,
+            "trades": 5,
+            "total": 273.86,
+            "win_rate": 0.6
+          },
+          {
+            "year": 2025,
+            "trades": 6,
+            "total": -298.83,
+            "win_rate": 0.6667
+          },
+          {
+            "year": 2026,
+            "trades": 5,
+            "total": -1912.73,
+            "win_rate": 0.4
+          }
+        ]
+      },
+      "spx_bar": false,
+      "replication_bar": false,
+      "family_wise": {
+        "reality_p": 1.0,
+        "dsr": 0.0,
+        "survives": false
+      },
+      "meets_success_bar": false
+    }
+  ],
+  "any_meets_success_bar": false,
+  "passed": [],
+  "best_mean_rule": "prior::credit_hyg_lqd_holds",
+  "reality_check_best": {
+    "p_value": 0.676,
+    "hurdle_95": 2.0196,
+    "candidate_daily_mean": 1.1383,
+    "survives": false,
+    "draws": 500
+  },
+  "deflated_sharpe_best": {
+    "sharpe_daily": 0.0572,
+    "sr_star": 0.1409,
+    "dsr": 0.0,
+    "survives": false
+  },
+  "live_default": "legacy",
+  "blocked_remaining": "FRED liquidity and HY spread timed out. AAII returned 403. Cboe put/call CSVs end 2019-10-04."
+}

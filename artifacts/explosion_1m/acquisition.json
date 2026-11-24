@@ -1,0 +1,191 @@
+{
+  "ibkr": "unreachable: ibapi is not installed and 127.0.0.1 ports 4001, 4002, 7496, 7497 refused",
+  "unavailable": [
+    "$TICK",
+    "$ADD",
+    "0DTE option flow",
+    "gamma"
+  ],
+  "chunks": [
+    {
+      "symbol": "SPY",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:37.797876+00:00",
+      "received_at": "2026-11-10T20:56:38.027919+00:00",
+      "rows": 5499,
+      "first": "2026-11-02T20:57:00+00:00",
+      "last": "2026-11-10T20:56:36+00:00",
+      "last_bar_age_seconds": 2.028
+    },
+    {
+      "symbol": "SPY",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:38.389053+00:00",
+      "received_at": "2026-11-10T20:56:38.602074+00:00",
+      "rows": 5119,
+      "first": "2026-10-26T08:00:00+00:00",
+      "last": "2026-11-02T20:55:00+00:00",
+      "last_bar_age_seconds": 691298.602
+    },
+    {
+      "symbol": "SPY",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:38.965901+00:00",
+      "received_at": "2026-11-10T20:56:39.143931+00:00",
+      "rows": 4498,
+      "first": "2026-10-19T08:00:00+00:00",
+      "last": "2026-10-23T23:59:00+00:00",
+      "last_bar_age_seconds": 1544259.144
+    },
+    {
+      "symbol": "SPY",
+      "period1": 1791579397,
+      "error": "HTTPError",
+      "detail": "HTTP Error 422: Unprocessable Entity"
+    },
+    {
+      "symbol": "^GSPC",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:39.760802+00:00",
+      "received_at": "2026-11-10T20:56:39.870652+00:00",
+      "rows": 2340,
+      "first": "2026-11-02T20:57:00+00:00",
+      "last": "2026-11-10T20:56:39+00:00",
+      "last_bar_age_seconds": 0.871
+    },
+    {
+      "symbol": "^GSPC",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:40.224738+00:00",
+      "received_at": "2026-11-10T20:56:40.335470+00:00",
+      "rows": 2336,
+      "first": "2026-10-26T13:30:00+00:00",
+      "last": "2026-11-02T20:55:00+00:00",
+      "last_bar_age_seconds": 691300.335
+    },
+    {
+      "symbol": "^GSPC",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:40.689395+00:00",
+      "received_at": "2026-11-10T20:56:40.804248+00:00",
+      "rows": 1950,
+      "first": "2026-10-19T13:30:00+00:00",
+      "last": "2026-10-23T19:59:00+00:00",
+      "last_bar_age_seconds": 1558660.804
+    },
+    {
+      "symbol": "^GSPC",
+      "period1": 1791579399,
+      "error": "HTTPError",
+      "detail": "HTTP Error 422: Unprocessable Entity"
+    },
+    {
+      "symbol": "^VIX",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:41.285169+00:00",
+      "received_at": "2026-11-10T20:56:41.446905+00:00",
+      "rows": 4635,
+      "first": "2026-11-02T20:57:00+00:00",
+      "last": "2026-11-10T20:41:31+00:00",
+      "last_bar_age_seconds": 910.447
+    },
+    {
+      "symbol": "^VIX",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:41.804360+00:00",
+      "received_at": "2026-11-10T20:56:41.979303+00:00",
+      "rows": 4631,
+      "first": "2026-10-26T07:15:00+00:00",
+      "last": "2026-11-02T20:55:00+00:00",
+      "last_bar_age_seconds": 691301.979
+    },
+    {
+      "symbol": "^VIX",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:42.336932+00:00",
+      "received_at": "2026-11-10T20:56:42.497730+00:00",
+      "rows": 3873,
+      "first": "2026-10-19T07:15:00+00:00",
+      "last": "2026-10-23T20:14:00+00:00",
+      "last_bar_age_seconds": 1557762.498
+    },
+    {
+      "symbol": "^VIX",
+      "period1": 1791579401,
+      "error": "HTTPError",
+      "detail": "HTTP Error 422: Unprocessable Entity"
+    },
+    {
+      "symbol": "^VIX1D",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:43.082134+00:00",
+      "received_at": "2026-11-10T20:56:43.201778+00:00",
+      "rows": 2319,
+      "first": "2026-11-02T20:57:00+00:00",
+      "last": "2026-11-10T20:41:31+00:00",
+      "last_bar_age_seconds": 912.202
+    },
+    {
+      "symbol": "^VIX1D",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:43.557205+00:00",
+      "received_at": "2026-11-10T20:56:43.682658+00:00",
+      "rows": 2330,
+      "first": "2026-10-26T13:31:00+00:00",
+      "last": "2026-11-02T20:55:00+00:00",
+      "last_bar_age_seconds": 691303.683
+    },
+    {
+      "symbol": "^VIX1D",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:44.037513+00:00",
+      "received_at": "2026-11-10T20:56:44.136232+00:00",
+      "rows": 1945,
+      "first": "2026-10-19T13:31:00+00:00",
+      "last": "2026-10-23T19:59:00+00:00",
+      "last_bar_age_seconds": 1558664.136
+    },
+    {
+      "symbol": "^VIX1D",
+      "period1": 1791579403,
+      "error": "HTTPError",
+      "detail": "HTTP Error 422: Unprocessable Entity"
+    },
+    {
+      "symbol": "^NYA",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:44.636714+00:00",
+      "received_at": "2026-11-10T20:56:44.753521+00:00",
+      "rows": 2325,
+      "first": "2026-11-02T20:57:00+00:00",
+      "last": "2026-11-10T20:41:30+00:00",
+      "last_bar_age_seconds": 914.754
+    },
+    {
+      "symbol": "^NYA",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:45.108238+00:00",
+      "received_at": "2026-11-10T20:56:45.235160+00:00",
+      "rows": 2336,
+      "first": "2026-10-26T13:30:00+00:00",
+      "last": "2026-11-02T20:55:00+00:00",
+      "last_bar_age_seconds": 691305.235
+    },
+    {
+      "symbol": "^NYA",
+      "status": 200,
+      "requested_at": "2026-11-10T20:56:45.591699+00:00",
+      "received_at": "2026-11-10T20:56:45.686316+00:00",
+      "rows": 1950,
+      "first": "2026-10-19T13:30:00+00:00",
+      "last": "2026-10-23T19:59:00+00:00",
+      "last_bar_age_seconds": 1558665.686
+    },
+    {
+      "symbol": "^NYA",
+      "period1": 1791579404,
+      "error": "HTTPError",
+      "detail": "HTTP Error 422: Unprocessable Entity"
+    }
+  ]
+}

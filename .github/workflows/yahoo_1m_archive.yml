@@ -1,0 +1,43 @@
+name: yahoo-1m-archive
+# Free Yahoo 1-minute archive only. No alerts, orders, or paid data.
+# 01:15 UTC Tue-Sat is 20:15 America/New_York in winter and 21:15 in summer,
+# after the 20:00 extended-hours close. 21:30 UTC would still be inside
+# post-market and the first write would freeze an incomplete day.
+# GitHub schedules are best effort and may be late; a late run still archives
+# finished dates and does not rewrite them.
+on:
+  schedule:
+    - cron: '15 1 * * 2-6'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yahoo-1m-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Archive new Yahoo days
+        run: python archive_1m.py --source yahoo --out data/archive
+      - name: Commit only new days
+        run: |
+          git config user.name "yahoo-1m-archive"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/archive
+          if git diff --cached --quiet; then
+            echo "No new days."
+          else
+            git commit -m "Archive Yahoo 1m days $(date -u +%Y-%m-%d) [run ${GITHUB_RUN_ID}]"
+            git push
+          fi

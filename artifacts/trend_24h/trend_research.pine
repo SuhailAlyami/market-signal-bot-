@@ -1,0 +1,56 @@
+//@version=5
+indicator("Suhail trend RESEARCH_ONLY", overlay=true, max_labels_count=50)
+
+// RESEARCH_ONLY. Not a live alert. The study verdict is NOT READY.
+// 50 predeclared rules on Dukascopy USA500, 2025-01-01 to 2026-11-10 UTC.
+// None was positive on both train and validation, so nothing was promoted.
+//
+// Validation leader: ml_0.15. Train expectancy -0.55 points. Test +2.55 points
+// with a 95% day-block interval of -2.66 to +9.51, 42 trades, win rate 38%,
+// profit factor 1.37, max drawdown 83 points. That interval includes losses.
+// It is a fitted model and is intentionally not coded on the chart.
+//
+// This script is the best simple price rule by validation expectancy:
+// 5-minute Keltner break (EMA 20 +/- 2 ATR) only when the USDJPY 30-minute
+// return agrees by at least 0.03%. Train -1.27 points. Validation +1.78.
+// Test +1.50 with interval -3.07 to +7.17, 61 trades, win rate 31%,
+// profit factor 1.24, drawdown 122 points. Do not trade it.
+// Chart costs are not deducted. The study charged 0.5 index point per side.
+// The same 5-minute decision is requested on a 1-minute or a 5-minute chart.
+// All sessions. Exit used in the study: 1.5 ATR initial stop, 3 ATR trail, 6 hours.
+
+jpySymbol = input.string("USDJPY", "USDJPY symbol")
+trailMult = input.float(3.0, "Trail ATR")
+initMult = input.float(1.5, "Initial stop ATR")
+
+[kHigh, kLow, kClose, kAtr, kEma] = request.security(
+     syminfo.tickerid, "5",
+     [high, low, close, ta.atr(14), ta.ema(close, 20)],
+     barmerge.gaps_off, barmerge.lookahead_off)
+jpyRet = request.security(jpySymbol, "1", close / close[30] - 1, barmerge.gaps_off, barmerge.lookahead_off)
+upper = kEma + 2.0 * kAtr
+lower = kEma - 2.0 * kAtr
+longCond = ta.crossover(kClose, upper) and jpyRet >= 0.0003
+shortCond = ta.crossunder(kClose, lower) and jpyRet <= -0.0003
+
+var float extreme = na
+var float stop = na
+var int dir = 0
+if longCond
+    dir := 1
+    extreme := kHigh
+    stop := kClose - initMult * kAtr
+if shortCond
+    dir := -1
+    extreme := kLow
+    stop := kClose + initMult * kAtr
+if dir == 1
+    extreme := math.max(nz(extreme, kHigh), kHigh)
+    stop := math.max(nz(stop), extreme - trailMult * kAtr)
+if dir == -1
+    extreme := math.min(nz(extreme, kLow), kLow)
+    stop := math.min(nz(stop), extreme + trailMult * kAtr)
+
+plot(stop, "ATR stop", color=dir == 1 ? color.teal : color.orange)
+alertcondition(longCond, "Trend long RESEARCH_ONLY", "Trend long RESEARCH_ONLY")
+alertcondition(shortCond, "Trend short RESEARCH_ONLY", "Trend short RESEARCH_ONLY")

@@ -1,0 +1,11 @@
+//@version=5
+indicator("Suhail rare RESEARCH_ONLY — ATR stretch", overlay=true)
+// RESEARCH_ONLY. Not a promoted signal.
+// Long bias when the daily close is more than 2.5 ATR(14) below the 20-day average.
+// 222 trades, win-rate interval starts at 49%, below the 50% bar. Expectancy
+// +7.7 points (2.8 to 14.0) before the multiple-testing haircut. Do not trade it.
+atr = ta.atr(14)
+sma = ta.sma(close, 20)
+stretched = close < sma - 2.5 * atr
+plotshape(stretched and not stretched[1], "Research long", shape.triangleup, location.belowbar, color.new(color.teal, 0), size=size.small)
+alertcondition(stretched and not stretched[1], "ATR stretch RESEARCH_ONLY", "Daily close is 2.5 ATR under the 20-day average. Research only.")

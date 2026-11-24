@@ -1,0 +1,644 @@
+{
+  "days": [
+    {
+      "day": "2026-10-19",
+      "rows": 885,
+      "sha256": "7b483183f473923a79304fb5bc3eaa2907da402d3ad744485eac0ae69702e0a0",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-20",
+      "rows": 910,
+      "sha256": "20e6a3d6fc04a48ecbf752fa95b13f4d7daa670d7ebc028b3a7e2ee273296685",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-21",
+      "rows": 892,
+      "sha256": "898a02f22674c2b6d168c602dea5030d4998e5d79499c7539754d32a5b529a2f",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-22",
+      "rows": 925,
+      "sha256": "8267a1872660afcd2bd2ff6a4254ca8b470f8db7a46a8eb2b4e50a6f34022806",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-23",
+      "rows": 886,
+      "sha256": "a04bc9336be20b65fdbc103e7bdfe09b1442b9a9b006958becec23994971fec0",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-26",
+      "rows": 880,
+      "sha256": "fdf617e233b76872e14674045d33155a8426aaf50447a478022e409d34ff55db",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-27",
+      "rows": 883,
+      "sha256": "199f890aa88f1a6ab0669a29ade060e4e45dde1c002db0822110b541a5ee7309",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-28",
+      "rows": 881,
+      "sha256": "f6eb42590d2dc219344904aa800b51c3f800fd10d3aa34cb0adf50265a32abf7",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-29",
+      "rows": 918,
+      "sha256": "a049d9d88613acb35fd11f847d7bd95b79804b28442a0c82892ee30b063e7dff",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-30",
+      "rows": 927,
+      "sha256": "a155ea2430f72708efa64f5d77acb061867d232d5679947812f9d342ef264c10",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-11-02",
+      "rows": 854,
+      "sha256": "5f426888f9ca9026da81c5525ea169a69214a6e51b3724ab159239822fcb8d21",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-11-03",
+      "rows": 916,
+      "sha256": "5cf641a4646ac5f1d899cb2fc9cc07a092fa880522ea38181fd3128f9be49a51",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-11-04",
+      "rows": 929,
+      "sha256": "5a1197e9efbef885d7f76a75733764e951817e02bf3885f50880f85de666f6ba",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-11-05",
+      "rows": 928,
+      "sha256": "6e7911280c908583265bea387f08702407966d70e583036e33490fe3bf3016b9",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-11-06",
+      "rows": 908,
+      "sha256": "010edecaec6f7138ebbe63089cd3270c77ec0236c7daae9703cc04c51ca6b4ea",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-11-09",
+      "rows": 913,
+      "sha256": "7c4c3ac0c400a3ee4425928aeec806af983a4ae84d3afeca430a64d673c55472",
+      "source": "yahoo",
+      "folder": "SPY",
+      "symbol": "SPY"
+    },
+    {
+      "day": "2026-10-19",
+      "rows": 390,
+      "sha256": "61c5e0b2c62f2b8f24607020f517de8816d36abe15d3ef1f62c82384fdd059b5",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-20",
+      "rows": 390,
+      "sha256": "afe3cb272b4f9b58b541b14ed49c04febcb29f202dd669bde068d43d25ab5639",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-21",
+      "rows": 390,
+      "sha256": "773f3b3b99765d71b5fc553defc23840fc400c3712667c1055d6efa146bf6821",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-22",
+      "rows": 390,
+      "sha256": "99d2626af073a92f8c97eda2d8662cda1aa743d2cb40f079a135a6ef81c73643",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-23",
+      "rows": 390,
+      "sha256": "952c897984e6197a6faea2c0207a44e1e453d40801eaa360b7c830d28a05bd84",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-26",
+      "rows": 390,
+      "sha256": "4d834bb2d152ef5cabd79f0f4bb5c49a3bba2cd5e864b3354d01e0d802e897d0",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-27",
+      "rows": 390,
+      "sha256": "e91ec2477567c5ec5a541e8e9a1fbd3c3c926337a8b6d7baeef78aa4c464bbae",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-28",
+      "rows": 390,
+      "sha256": "b2026b33ca73a3657cc1ec35cb1a408c5d63aae9b873533e2be980d64d32124e",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-29",
+      "rows": 390,
+      "sha256": "145f5f4543c650006ef32c45b3c48dea4c3261d15c2eacd65153ad5406756b1f",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-30",
+      "rows": 390,
+      "sha256": "5c3db74303855175a4086ce7793cee532d102b32d5c35cf8752c467906229df5",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-11-02",
+      "rows": 390,
+      "sha256": "8b5b160f51198d01e957bc102554c95c2e0cb52413fce4cd45855b0138a6b5ab",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-11-03",
+      "rows": 390,
+      "sha256": "bc26798ebfb1c27c9c6ccc5183e201b3ffabb3d0e0b12faf97c9a66c181b8230",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-11-04",
+      "rows": 390,
+      "sha256": "383247304f737807b52f1b282e5eac53d093d10edc45d87f895ce597bdc4787d",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-11-05",
+      "rows": 390,
+      "sha256": "25d5eff1c85e7f86674d1a247a95934608b5885da17b696e4dca0fd1b37d29e3",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-11-06",
+      "rows": 390,
+      "sha256": "ede8a462a9db20d74cdacb2ac35b874b36ceb8af3f1715110fd5cdd9f49629cc",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-11-09",
+      "rows": 390,
+      "sha256": "9ba8447d889e4242f1138326cc810fd56df87227ee06337a0ea2a4f8edbe3b84",
+      "source": "yahoo",
+      "folder": "GSPC",
+      "symbol": "^GSPC"
+    },
+    {
+      "day": "2026-10-19",
+      "rows": 896,
+      "sha256": "9cc2a28d8780fb752af238b537394af058d1470c5e20dc1655b2c786e0aba9e2",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-20",
+      "rows": 934,
+      "sha256": "75d033ee05137728a7603a4561456c3e48016c13c42cb40eab291cb36c578fe6",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-21",
+      "rows": 939,
+      "sha256": "ea23d98bb06a28a3ac777bf3dca02c0e65e643dfdcf61691a8f3c465fe858c88",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-22",
+      "rows": 943,
+      "sha256": "5396b609f8d53fff601c032d7880c7dba78df75c092b3f29107421dcecf582ee",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-23",
+      "rows": 897,
+      "sha256": "fcbd29c47ac548aa26f70d066bb06eb9dbfcb96bd1ddc29c6d4c9c6ff22c5c8b",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-26",
+      "rows": 903,
+      "sha256": "e0b0a5445439e6d1d2bf215d11cb057cebb6ae3e28c5ef1662006e566a9c9fec",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-27",
+      "rows": 898,
+      "sha256": "330b2c9aca90be278064aa5184bbd8e3733f52bcd1bd58511251053a2e0daf03",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-28",
+      "rows": 931,
+      "sha256": "ee4d2f38bfc2f55f0d36d995c2db569fae3354f3cb2d87aa69fb68e21f6981d6",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-29",
+      "rows": 945,
+      "sha256": "7f8c0478ef07a5b03d81ca7552ac7d06459f87419a4046ad386a5a4c7d236dbd",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-30",
+      "rows": 933,
+      "sha256": "61414796493f5ebbc408aa641f89a3247f4c02130e5c7d5a8ccdaf52398fcaca",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-11-02",
+      "rows": 845,
+      "sha256": "32d876b3173597d5fd951a7f67eb5fff3dca460f10e3119ed6fccd9d785e99fa",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-11-03",
+      "rows": 950,
+      "sha256": "d828c60d999cd72df214974b7891ab2d55db3d7f96729dac841b5b55919863fd",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-11-04",
+      "rows": 942,
+      "sha256": "4407522e853d00ae02761d88cfb95266aca6323581fa5c7d96d19b4848d0faf0",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-11-05",
+      "rows": 954,
+      "sha256": "f1da8e260de58c1367b4017ed96a969fd9a629f3a6ed67d277306d7decf9f320",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-11-06",
+      "rows": 927,
+      "sha256": "f8d9e05f51c76c6b6ea570a078efafcea203776405ff54ef82a446d39905319c",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-11-09",
+      "rows": 940,
+      "sha256": "a33cd7e196e1b217997b0e436e3bc29bda46cc4f21fd4529c5dd7db81690b29b",
+      "source": "yahoo",
+      "folder": "QQQ",
+      "symbol": "QQQ"
+    },
+    {
+      "day": "2026-10-19",
+      "rows": 775,
+      "sha256": "b28b01926134c401c384d6d9124543d98660997ee00ed2ed9bd32ded5a71b89c",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-20",
+      "rows": 775,
+      "sha256": "4f5eb9f557c1026e84d30b55a5b62a6f9e229cea4474926bb76134782bb426b1",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-21",
+      "rows": 773,
+      "sha256": "35d85fb44ac7a758a23a313b8a71f361fe869b7463b882449d5af6e66bb2c724",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-22",
+      "rows": 775,
+      "sha256": "f1d16735c5d3ed9cc671244fcc9fb3673289cd8101d5b6983835d94fb27057e4",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-23",
+      "rows": 775,
+      "sha256": "9a82bc3486b708d880118e2641ba631c760d4c48fb2665b659fecc4241ba3fd5",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-26",
+      "rows": 775,
+      "sha256": "440667e0484ffd5e0d6c8dcc13a80f4a76a23ceb07eb12333f77c50f127dc23b",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-27",
+      "rows": 775,
+      "sha256": "06ffd79b8a2bff27abb897efc94a3f7bdd8defa9f705a7406f9461812b357f89",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-28",
+      "rows": 775,
+      "sha256": "bbde1ba3d8458b740c53c6106a52a97396b6a5a6c42f080c6462fd67f8be9ccb",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-29",
+      "rows": 775,
+      "sha256": "b4539cbc0b78e65acad6befcec0059033401c8f044b8af93f7a2b4b13d12381a",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-30",
+      "rows": 775,
+      "sha256": "78857324dfb2eb33a658b19e60cedb53aab67df6b084dbd583c4fa17d6f5b5e3",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-11-02",
+      "rows": 775,
+      "sha256": "46f0426e6653ac71dba5ab4032c93382a7d021277cc881b7a8e330e3ca6164cb",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-11-03",
+      "rows": 775,
+      "sha256": "c2be49d811c42c70e3d778054c10cdfcc55afadceb5ad1fc8ed5458ef597cf9a",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-11-04",
+      "rows": 775,
+      "sha256": "811a1f1f90f4f58db5fd1c3a7e73e97fe9eab649d97bb7a9af50345f1d4d7db9",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-11-05",
+      "rows": 775,
+      "sha256": "6c20d758d6ee52f2957a39d154e1a72666868c013849791acdfd1872c12af6ca",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-11-06",
+      "rows": 775,
+      "sha256": "d507716428f13a6e553d693d4111f0e94c2d8723743ea18c0f827bedb7b57256",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-11-09",
+      "rows": 775,
+      "sha256": "816460ff75f1282821a2beacdfc0054af9ba47e073aedf14a466ee3fb9e44e7d",
+      "source": "yahoo",
+      "folder": "VIX",
+      "symbol": "^VIX"
+    },
+    {
+      "day": "2026-10-19",
+      "rows": 389,
+      "sha256": "bcc55d8e7e14d5cc110ccc603525122da1cbb125438e6342720a415c2d224ce9",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-20",
+      "rows": 389,
+      "sha256": "ad39450aafce5d67b8afeea6689478ac85e78c716c7e40c477f72ea805bb34e9",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-21",
+      "rows": 389,
+      "sha256": "0bd5ceae0d22b279d5d1d5c8044dbba9e6027ba5dc6643cc23c12d56e1afb629",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-22",
+      "rows": 389,
+      "sha256": "bfe8465b019b354b5f11dffe9b5b7be84456f4355f9b7fa926c13ab3863fe204",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-23",
+      "rows": 389,
+      "sha256": "d93ec0a0a7bc196f90ad92f75b45b2cc4fe86e6d2270c96749fa09b429a8d3b4",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-26",
+      "rows": 389,
+      "sha256": "19ab9eaf6b2a72a122c70ac8a372eae34af9364d554c18283c539ea3c3ff9020",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-27",
+      "rows": 389,
+      "sha256": "5b2ddfe40c2a59ec2a81877817b8e70d61da7413825ec18e19a4cf18314a8d1a",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-28",
+      "rows": 389,
+      "sha256": "0e77f9d0469eabe81da3141808932889e36c9bf2603e3bf5b06bf2d9bf442c35",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-29",
+      "rows": 389,
+      "sha256": "73f7aaf85dbf954f3547f6052ff60d33c344bf82c5fb12f1b9803022aac65590",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-10-30",
+      "rows": 389,
+      "sha256": "7b30f5d3682301e6977a8d5e7dd97714c1eb206fc4e2f1967fae48bb0cd474fd",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-11-02",
+      "rows": 389,
+      "sha256": "80e465ea8f4f56c892101bf5261f44a7c7f6a5893980e1d9663b65e0a72e5d95",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-11-03",
+      "rows": 389,
+      "sha256": "e9fe15a628e305cbe97703939398ce42c1845be0abdfb06a31dd4163296e1c07",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-11-04",
+      "rows": 389,
+      "sha256": "12a1ededd985125d89e4cf442c2108fdc2190be2c6979dfd96323e9d35bde4bd",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-11-05",
+      "rows": 389,
+      "sha256": "9e7b68943d966871baf7f9f10fef2d7059ab0eef23cbe65a58a909cf9d9bee32",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-11-06",
+      "rows": 389,
+      "sha256": "fad26fe96632660c37891af0056d1b4b4f618111853bc6533bc374b22bec5424",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    },
+    {
+      "day": "2026-11-09",
+      "rows": 389,
+      "sha256": "f539ca0463da8bf3a98fdfc83650bf2570afc9ece332cd555139e664bfaf85ca",
+      "source": "yahoo",
+      "folder": "VIX1D",
+      "symbol": "^VIX1D"
+    }
+  ]
+}
