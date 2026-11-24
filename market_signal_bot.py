@@ -1201,6 +1201,12 @@ class EvolutionaryTradingBot:
                 start_globex_worker(TELEGRAM_TOKEN, CHAT_ID)
             except Exception as exc:
                 logger.warning("Globex Render watcher unavailable: %s", type(exc).__name__)
+        # Live breakout detector (render_breakout.py): Telegram only, at most 3 alerts a day.
+        try:
+            from render_breakout import start as start_breakout
+            start_breakout(TELEGRAM_TOKEN, CHAT_ID)
+        except Exception as exc:
+            logger.warning("Breakout alerts unavailable: %s", type(exc).__name__)
         # تشغيل Flask
         flask_thread = threading.Thread(target=run_flask, daemon=True)
         flask_thread.start()
