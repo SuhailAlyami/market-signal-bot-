@@ -3,9 +3,9 @@ main = "src/index.js"
 compatibility_date = "2026-11-01"
 
 # One trigger (the free plan allows 5 per account). The code picks the job from the New York time:
-# 08:40 morning call, 10:40 first-hour update, 20 min after the close evening result.
+# 08:40 morning call, 10:40 first-hour update, every 5 min the breakout detector, 20 min after the close the evening result.
 [triggers]
-crons = ["*/10 * * * *"]
+crons = ["*/5 * * * *"]
 
 # Secrets (set once in the dashboard: Settings → Variables and Secrets):
 #   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, RUN_KEY (optional, enables /run?job=...&key=...)

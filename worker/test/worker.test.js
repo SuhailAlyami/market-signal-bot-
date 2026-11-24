@@ -45,17 +45,17 @@ test('calendar: holidays, early close, DST-safe New York instants', () => {
   assert.equal(W.nyInstant('2026-03-09', 570).toISOString(), '2026-03-09T13:30:00.000Z');   // day after DST start
 });
 
-test('dueJob fires each job once per day at its New York time', () => {
+test('dueJobs: each daily job once at its New York time, breakout on every in-session tick', () => {
   const at = (iso, m) => W.nyInstant(iso, m);
-  assert.equal(W.dueJob(at('2026-11-24', 520)), 'morning');
-  assert.equal(W.dueJob(at('2026-11-24', 529)), 'morning');
-  assert.equal(W.dueJob(at('2026-11-24', 530)), null);
-  assert.equal(W.dueJob(at('2026-11-24', 640)), 'firsthour');
-  assert.equal(W.dueJob(at('2026-11-24', 980)), 'evening');
-  assert.equal(W.dueJob(at('2026-11-27', 800)), 'evening');          // early close 13:00 -> 13:20
-  assert.equal(W.dueJob(at('2026-11-26', 520)), null);              // Thanksgiving
-  let n = 0; for (let m = 0; m < 1440; m += 10) if (W.dueJob(at('2026-11-24', m))) n++;
-  assert.equal(n, 3);
+  assert.deepEqual(W.dueJobs(at('2026-11-24', 520)), ['morning']);
+  assert.deepEqual(W.dueJobs(at('2026-11-24', 525)), []);
+  assert.deepEqual(W.dueJobs(at('2026-11-24', 640)), ['firsthour', 'breakout']);
+  assert.deepEqual(W.dueJobs(at('2026-11-24', 700)), ['breakout']);
+  assert.deepEqual(W.dueJobs(at('2026-11-24', 980)), ['evening']);
+  assert.deepEqual(W.dueJobs(at('2026-11-27', 800)), ['evening']);          // early close 13:00 -> 13:20
+  assert.deepEqual(W.dueJobs(at('2026-11-26', 520)), []);                   // Thanksgiving
+  const count = {}; for (let m = 0; m < 1440; m += 5) for (const j of W.dueJobs(at('2026-11-24', m))) count[j] = (count[j] || 0) + 1;
+  assert.deepEqual([count.morning, count.firsthour, count.evening], [1, 1, 1]);
 });
 
 test('direction buckets and tradable odds match the Python tables', () => {
@@ -126,4 +126,36 @@ test('telegram sends with retries and fails loudly when secrets are missing', as
   await W.telegram({ TELEGRAM_BOT_TOKEN: 't', TELEGRAM_CHAT_ID: 'c' }, 'hi', async (u, o) => { calls.push(JSON.parse(o.body)); return { ok: true }; });
   assert.deepEqual(calls, [{ chat_id: 'c', text: 'hi', disable_web_page_preview: true }]);
   await assert.rejects(W.telegram({}, 'x'), /secrets missing/);
+});
+
+// ----- breakout detector -----
+function spyDay(iso, breakAt = 40, vol = 3) {
+  // 78 five-minute bars: quiet range 700±0.2, a volume-surge break up at bar `breakAt`, then a run to the target
+  const B = [];
+  for (let k = 0; k < 78; k++) {
+    const t = new Date(W.nyInstant(iso, 570).getTime() + k * 3e5);
+    let o = 700, h = 700.2, l = 699.8, c = 700, v = 1000;
+    if (k === breakAt) { h = 700.5; c = 700.45; v = 1000 * vol; }
+    if (k > breakAt) { o = c = 700.6 + 0.1 * (k - breakAt); h = c + 0.2; l = c - 0.05; }
+    B.push({ t, o, h, l, c, v });
+  }
+  return B;
+}
+test('breakout: volume-surge break enters, hits the 1.5R target; a weak-volume break is ignored', () => {
+  const tr = W.breakoutTrades(spyDay('2026-11-24'));
+  assert.equal(tr.length, 1);
+  assert.equal(tr[0].d, 1);
+  assert.equal(tr[0].R, 1.5);
+  assert.equal(W.breakoutTrades(spyDay('2026-11-24', 40, 1.2)).length, 0);
+});
+test('breakout alert is sent exactly once: only on the tick after the entry bar completes', async () => {
+  const B = spyDay('2026-11-24');
+  const body = { chart: { result: [{ timestamp: B.map(b => b.t.getTime() / 1000), indicators: { quote: [{ open: B.map(b => b.o), high: B.map(b => b.h), low: B.map(b => b.l), close: B.map(b => b.c), volume: B.map(b => b.v) }] } }] } };
+  const f = async () => ({ ok: true, json: async () => body });
+  const entryEnd = W.nyInstant('2026-11-24', 570 + 40 * 5 + 5);
+  let sent = 0;
+  for (let m = -10; m <= 30; m += 5) if (await W.breakoutAlert(new Date(entryEnd.getTime() + m * 6e4 + 6e4), f)) sent++;
+  assert.equal(sent, 1);
+  const msg = await W.breakoutAlert(new Date(entryEnd.getTime() + 6e4 * 4), f);
+  assert.ok(msg.includes('شراء') && msg.includes('وقف') && msg.includes('هدف'));
 });

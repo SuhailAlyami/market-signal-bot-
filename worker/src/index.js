@@ -6,7 +6,8 @@
 //
 // Secrets: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID. Optional secret RUN_KEY enables manual runs:
 //   https://<worker>/run?job=morning|firsthour|evening&key=<RUN_KEY>[&send=0]
-// Schedule: one cron "*/10 * * * *". Each job fires on the 10-minute tick of its New York time.
+// Schedule: one cron "*/5 * * * *". Each job fires on the 5-minute tick of its New York time; the breakout detector runs
+// on every in-session tick and sends a signal once, on the tick after its entry bar completes.
 
 // ---------- research constants (see the Python sources) ----------
 const K_HIGH = 0.174, HIT_HIGH = 72, K_LOW = 0.11, HIT_LOW = 69, UP_RATE = 54, RANGE_RATE = 69;
@@ -164,6 +165,75 @@ export function recordLine(g) {
   return `📒 السجل الحي منذ ${LIVE_START} (${g.sessions} جلسة، أسعار SPY): ${tr} | الاتجاه من الافتتاح ${d.hits}/${d.n} | ${lvl}`;
 }
 
+
+// ---------- breakout detector: 30-min box break with a volume surge (research/filters_20261124/squeeze.py) ----------
+// SPY 5m: box = high/low of the 6 bars ending at bar i (10:00-15:00 NY). Entry: stop order 1 tick beyond the box on the
+// first break within 6 bars whose volume >= 1.5 x the prior 20-bar average; stop = other side of the box; target = 1.5 x
+// risk; exit after 12 bars or at the close. Research (60 sessions, Aug-Nov 2026): train +0.07 R, test +0.10 R (54% wins,
+// CI includes 0); without the volume surge −0.09 / −0.07 R. Unproven: scored live every evening.
+export const BO = { N: 6, K: 6, H: 12, T: 1.5, VOL: 1.5, TICK: 0.01 };
+const atr20 = (B, i) => { let s = 0; for (let j = i - 19; j <= i; j++) s += Math.max(B[j].h - B[j].l, Math.abs(B[j].h - B[j - 1].c), Math.abs(B[j].l - B[j - 1].c)); return s / 20; };
+export function breakoutTrades(B) {
+  // B: one session of completed 5m bars {t, o, h, l, c, v} in time order. Same loop as squeeze.py events(vol_conf=True).
+  const out = [], { N, K, H, T, VOL, TICK } = BO;
+  let i = 21;   // the research needs 21 bars of the same session before the box (signals from ~11:15 NY)
+  while (i < B.length - 1) {
+    const m = ny(B[i].t).mins;
+    if (m < 600 || m > 900) { i++; continue; }
+    const box = B.slice(i - N + 1, i + 1), hi = Math.max(...box.map(b => b.h)), lo = Math.min(...box.map(b => b.l));
+    if (!(atr20(B, i) > 0)) { i++; continue; }
+    let done = false;
+    for (let j = i + 1; j < Math.min(i + 1 + K, B.length); j++) {
+      const up = B[j].h > hi, dn = B[j].l < lo;
+      if (up && dn) break;
+      if (!up && !dn) continue;
+      const avgV = B.slice(j - 20, j).reduce((a, b) => a + b.v, 0) / 20;
+      if (!avgV || B[j].v < VOL * avgV) break;
+      const d = up ? 1 : -1, e = up ? hi + TICK : lo - TICK, risk = up ? e - lo + TICK : hi + TICK - e;
+      const stop = e - d * risk, tgt = e + d * T * risk;
+      let R = null, k = j, exitT = B[j].t;
+      if (d > 0 ? B[j].l <= stop : B[j].h >= stop) R = -1; else if (d > 0 ? B[j].h >= tgt : B[j].l <= tgt) R = T;
+      while (R === null) {
+        k++;
+        if (k >= B.length || k > j + H) { R = d * (B[k - 1].c - e) / risk; exitT = B[k - 1].t; break; }
+        const hs = d > 0 ? B[k].l <= stop : B[k].h >= stop, ht = d > 0 ? B[k].h >= tgt : B[k].l <= tgt;
+        if (hs) R = -1; else if (ht) R = T;
+        exitT = B[k].t;
+      }
+      out.push({ entryT: B[j].t, d, e, stop, tgt, risk, R, volX: B[j].v / avgV, exitT, open: k >= B.length });
+      i = k; done = true; break;
+    }
+    if (!done) i++;
+  }
+  return out;
+}
+export async function spySession(now, fetcher, range = '1d') {
+  const r = await chart('SPY', `interval=5m&range=${range}`, fetcher), q = r.indicators.quote[0];
+  return r.timestamp.map((ts, i) => ({ t: new Date(ts * 1000), o: q.open[i], h: q.high[i], l: q.low[i], c: q.close[i], v: q.volume[i] || 0 }))
+    .filter(b => b.c != null && b.t.getTime() + 5 * 6e4 <= now.getTime() && ny(b.t).mins >= 570 && ny(b.t).mins < closeMins(ny(b.t).iso));
+}
+const BYDAY = B => B.reduce((m, b) => { (m[ny(b.t).iso] ||= []).push(b); return m; }, {});
+export async function breakoutAlert(now, fetcher = fetch) {
+  const t = ny(now);
+  if (!isSession(t.iso)) return null;
+  const B = BYDAY(await spySession(now, fetcher))[t.iso] || [];
+  // alert only for an entry on the bar that completed in the last 5 minutes: each signal is sent exactly once
+  const fresh = breakoutTrades(B).filter(x => { const end = x.entryT.getTime() + 5 * 6e4; return end > now.getTime() - 6 * 6e4 && end <= now.getTime() - 6e4; });
+  if (!fresh.length) return null;
+  const x = fresh[0], spx = v => (v * 10).toFixed(0);
+  return [`🎯 كسر صندوق مع حجم — ${x.d > 0 ? 'شراء 📈' : 'بيع 📉'} (كاشف تحت الاختبار)`,
+    `SPY: دخول ${x.e.toFixed(2)} | وقف ${x.stop.toFixed(2)} | هدف ${x.tgt.toFixed(2)} (1.5 × المخاطرة)`,
+    `≈ SPX: دخول ${spx(x.e)} | وقف ${spx(x.stop)} | هدف ${spx(x.tgt)}`,
+    `الحجم ${x.volX.toFixed(1)}× المتوسط | شمعة ${riyadh(x.entryT)}–${riyadh(new Date(x.entryT.getTime() + 3e5))} الرياض | خروج بعد ساعة كحد أقصى`,
+    'البحث: +0.10R على بيانات جديدة (54% ربح)، غير مثبت إحصائيًا بعد. حجم صغير، ويُقيَّم كل مساء.'].join('\n');
+}
+export function breakoutRecord(B) {
+  const days = BYDAY(B), all = [];
+  for (const d of Object.keys(days).sort()) if (d >= LIVE_START) for (const x of breakoutTrades(days[d])) if (!x.open) all.push(x);
+  const n = all.length, w = all.filter(x => x.R > 0).length, sum = all.reduce((a, x) => a + x.R, 0);
+  return { n, w, sum };
+}
+
 // ---------- jobs ----------
 async function context(now, fetcher, session) {
   const start = addDays(session, -90);
@@ -285,6 +355,11 @@ export async function evening(now, fetcher = fetch) {
     const pnl = 10 * (spy[session][3] - spy[days[i - 1]][3]) - COST_PT;
     lines.push(`🔁 إشارة الارتداد (شراء إغلاق أمس): ${pnl >= 0 ? '+' : ''}${pnl.toFixed(1)} نقطة ${ok(pnl > 0)}`);
   }
+  try {
+    const B5 = await spySession(now, fetcher, '60d'), today = breakoutTrades(BYDAY(B5)[session] || []), rec = breakoutRecord(B5);
+    lines.push(today.length ? `📦 كسر الصندوق اليوم: ${today.map(x => `${x.d > 0 ? 'شراء' : 'بيع'} ${riyadh(x.entryT)} ← ${x.R >= 0 ? '+' : ''}${x.R.toFixed(2)}R`).join(' | ')}` : '📦 كسر الصندوق اليوم: لا إشارات');
+    if (rec.n) lines.push(`📦 سجل كاشف الكسر منذ ${LIVE_START}: ${rec.w}/${rec.n} رابحة، مجموع ${rec.sum >= 0 ? '+' : ''}${rec.sum.toFixed(1)}R`);
+  } catch (e) { console.log('breakout scoring failed', e.message); }
   try { lines.push('', recordLine(gate(spx, vixd, spy))); } catch (e) { console.log('gate failed', e.message); }
   lines.push('المصدر Yahoo يومي (متأخر).');
   return lines.join('\n');
@@ -317,16 +392,17 @@ export async function telegram(env, text, fetcher = fetch) {
 }
 
 // ---------- scheduling: one 10-minute cron, each job on its New York time ----------
-export function dueJob(now) {
-  const t = ny(now);
-  if (!isSession(t.iso)) return null;
-  const at = target => t.mins >= target && t.mins < target + 10;
-  if (at(8 * 60 + 40)) return 'morning';            // 08:40 NY: after the 08:30 data releases, 50 min before the open
-  if (at(10 * 60 + 40)) return 'firsthour';         // 10:40 NY: first hour complete (+ data delay)
-  if (at(closeMins(t.iso) + 20)) return 'evening';  // 20 min after the close (13:00 on early-close days)
-  return null;
+export function dueJobs(now) {
+  const t = ny(now), jobs = [];
+  if (!isSession(t.iso)) return jobs;
+  const at = target => t.mins >= target && t.mins < target + 5;
+  if (at(8 * 60 + 40)) jobs.push('morning');            // 08:40 NY: after the 08:30 data releases, 50 min before the open
+  if (at(10 * 60 + 40)) jobs.push('firsthour');         // 10:40 NY: first hour complete (+ data delay)
+  if (t.mins >= 600 && t.mins <= closeMins(t.iso) + 5) jobs.push('breakout');   // every in-session tick
+  if (at(closeMins(t.iso) + 20)) jobs.push('evening');  // 20 min after the close (13:00 on early-close days)
+  return jobs;
 }
-const JOBS = { morning, firsthour: firstHour, evening };
+const JOBS = { morning, firsthour: firstHour, evening, breakout: breakoutAlert };
 
 async function runJob(job, env, now, send = true) {
   try {
@@ -341,9 +417,9 @@ async function runJob(job, env, now, send = true) {
 
 export default {
   async scheduled(event, env, ctx) {
-    const now = new Date(event.scheduledTime), job = dueJob(now);
+    const now = new Date(event.scheduledTime);
     if (CAL_LAST < ny(now).iso) console.log('NYSE calendar table needs the next year');
-    if (job) ctx.waitUntil(runJob(job, env, now));
+    for (const job of dueJobs(now)) ctx.waitUntil(runJob(job, env, now));
   },
   async fetch(req, env) {
     const u = new URL(req.url);

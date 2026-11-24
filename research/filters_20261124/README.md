@@ -13,3 +13,10 @@ that touches both counts as a loss. Baseline = the same rule on every bar, both 
 \* The single cell above its baseline does not reproduce on tradable SPY (17.6%, −0.09 R), and it is 1 of about 20 comparisons.
 Average R is about 0 everywhere: the filters do not separate good entries from random ones.
 Not tested: the owner's TradingView "All Sessions v2.2.1" (its code is not in the repo). `tradingview/*.pine` port the pre-level rule tested here.
+
+# Compression → breakout with an OCO bracket — volume surge is the only filter with the same sign in train and test
+SPY 5m, train sessions 1–40 (2026-08-21..10-16), test 41–60 (10-19..11-13). Box = 6 bars; stop = other side of the box; target = 1.5 R.
+- Compression (small box vs ATR) did **not** help: q=0.15/0.30 were worse than no filter on train.
+- Selected on train: no compression cut, breakout bar volume ≥ 1.5× its 20-bar average. Train +0.066 R (n=69); **test +0.100 R, 54% wins (n=39, CI −0.17..+0.37)**.
+- Same bracket without the volume surge: train −0.094 R, test −0.065 R. The difference holds in both halves; pooled with volume +0.078 R (n=108, CI −0.09..+0.25).
+- Not proven: the sample is limited by Yahoo's 60-day 5m history. Deployed as a labelled live detector in `worker/` and scored every evening from 2026-11-16 (JS port matches the Python trades 107/108; the one difference is the dataset's first day).
