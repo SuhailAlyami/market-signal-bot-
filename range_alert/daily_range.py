@@ -261,8 +261,14 @@ def build(now=None, force=False):
         c = gap_call(spx, m, mv[0])
         l1, l2 = c['levels']
         up_o, dn_o = open_odds((c['anchor']-spx)/m)
-        body = [f"الاتجاه: {c['label']} — الإغلاق مقارنة بإغلاق أمس {c['conf']}% ({strength(c['conf'])})",
-                f"   مقارنة بسعر الافتتاح (ما يربحه من يدخل عند الافتتاح): صعود {up_o}% | هبوط {dn_o}%",
+        if c['direction'] == 'flat':
+            dir_line = f"الاتجاه: {c['label']} — من الافتتاح: صعود {up_o}% | هبوط {dn_o}%"
+        else:
+            tradable = up_o if c['direction'] == 'up' else dn_o
+            below = 'فوق' if c['direction'] == 'up' else 'تحت'
+            dir_line = (f"الاتجاه: {c['label']} — {tradable}% من سعر الافتتاح"
+                        f" (و{c['conf']}% أن يغلق {below} إغلاق أمس، وهذا تصنعه الفجوة غالبًا)")
+        body = [dir_line,
                 f"القمة: سيصل على الأقل إلى {l1['high']:,.0f} ({l1['p_high']}%)، ومحتمل {l2['high']:,.0f} ({l2['p_high']}%)",
                 f"القاع: سينزل على الأقل إلى {l1['low']:,.0f} ({l1['p_low']}%)، ومحتمل {l2['low']:,.0f} ({l2['p_low']}%)",
                 f"الافتتاح المتوقع: {c['anchor']:,.0f} (العقود الآجلة {100*mv[0]:+.2f}% منذ إغلاق أمس، "
@@ -286,9 +292,6 @@ def build(now=None, force=False):
         c['gate'] = {'trade': gate['trade']['status'], 'direction': gate['direction']['status']}
     except Exception as e:  # noqa: BLE001
         print('GATE_FAILED', e, file=sys.stderr)
-    body += trade_lines(c['trade'], gate)
-    if gate:
-        body.append(P.record_line(gate))
     if mv:
         try:
             c['explosion'] = ex = explosion_risk(session, c['anchor'])
@@ -297,6 +300,9 @@ def build(now=None, force=False):
                             f"تحدث في {ex['rate']}% من مثل هذه الأيام مقابل {ex['base_rate']}% عادة")
         except Exception as e:  # noqa: BLE001  (risk line is optional)
             print('EXPLOSION_RISK_FAILED', e, file=sys.stderr)
+    body += trade_lines(c['trade'], gate)
+    if gate:
+        body.append(P.record_line(gate))
     gp = os.environ.get('GAMMA_JSON')
     if gp and os.path.isfile(gp):
         try:
