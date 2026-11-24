@@ -1,12 +1,10 @@
 name: range-alert
-# Daily pre-open SPX range alert to Telegram. Several slots because GitHub schedules can run hours late;
+# Daily pre-open SPX range alert to Telegram. Two slots (4 until 2026-11-24; cut to save Actions minutes) because GitHub schedules can run hours late;
 # the cache key makes only the first successful run of each New York day send.
 on:
   schedule:
     - cron: '13 10 * * 1-5'   # 13:13 Riyadh
     - cron: '13 11 * * 1-5'   # 14:13 Riyadh
-    - cron: '13 12 * * 1-5'   # 15:13 Riyadh
-    - cron: '13 13 * * 1-5'   # 16:13 Riyadh
   workflow_dispatch:
     inputs:
       force:

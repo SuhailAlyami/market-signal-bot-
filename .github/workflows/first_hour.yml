@@ -1,0 +1,56 @@
+name: first-hour
+# SPX update after the first hour (10:30 New York): projected day high/low and rest-of-day big-move risk
+# (range_alert/first_hour.py, out-of-sample validated). Two slots cover EST and EDT; the script only sends between
+# 10:32 and 12:30 New York and the cache key sends once per day.
+on:
+  schedule:
+    - cron: '40 14 * * 1-5'   # 10:40 NY in summer (EDT)
+    - cron: '40 15 * * 1-5'   # 10:40 NY in winter (EST)
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write     # notification fallback when Telegram fails
+concurrency:
+  group: first-hour
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: day
+        run: echo "ny=$(TZ=America/New_York date +%F)" >> "$GITHUB_OUTPUT"
+      - id: sent
+        uses: actions/cache/restore@v4
+        with:
+          path: .first-hour-sent
+          key: first-hour-${{ steps.day.outputs.ny }}
+      - uses: actions/setup-python@v5
+        if: steps.sent.outputs.cache-hit != 'true'
+        with:
+          python-version: '3.12'
+      - if: steps.sent.outputs.cache-hit != 'true'
+        run: pip install exchange_calendars==4.13.2
+      - if: steps.sent.outputs.cache-hit != 'true'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Fallback chain when Telegram fails: GitHub issue, then email if SMTP secrets exist (range_alert/notify_chain.py)
+          GITHUB_TOKEN: ${{ github.token }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}
+        run: |
+          python range_alert/first_hour.py | tee out.txt
+          grep -q -E 'TELEGRAM_OK|NO_SESSION_TODAY|LATE_NOT_SENT' out.txt && echo ok > .first-hour-sent || true
+      - if: steps.sent.outputs.cache-hit != 'true' && hashFiles('.first-hour-sent') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: .first-hour-sent
+          key: first-hour-${{ steps.day.outputs.ny }}

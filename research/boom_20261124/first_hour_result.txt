@@ -1,0 +1,9 @@
+sessions train 257 test 461
+TRAIN P(day high > 1st-hour high) 67%  P(day low < 1st-hour low) 64%  P(both) 31%
+TEST P(day high > 1st-hour high) 64%  P(day low < 1st-hour low) 57%  P(both) 24%
+ext_up: train q70 = 0.29 m -> TEST coverage 75% (target 70%)
+ext_up: train q90 = 0.59 m -> TEST coverage 95% (target 90%)
+ext_dn: train q70 = 0.29 m -> TEST coverage 74% (target 70%)
+ext_dn: train q90 = 0.74 m -> TEST coverage 92% (target 90%)
+TRAIN big rest-of-day move rate: overall 26% | small 1st hour 17% | mid 25% | wide 1st hour 37%  n per tercile ~ 85
+TEST big rest-of-day move rate: overall 22% | small 1st hour 14% | mid 21% | wide 1st hour 29%  n per tercile ~ 153

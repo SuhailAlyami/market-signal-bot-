@@ -15,3 +15,10 @@ Selection on 2015–2019 by top-decile explosion rate (walk-forward); one final 
 - Current model top-10% by test year: 2020 42%, 2021 0%, 2022 44%, 2023 20%, 2024 9%, 2025 41%, 2026 12%, against base rates of 18/16/35/27/19/17/14%. It flags volatile **regimes**, and in calm years its flags are at or below the base rate.
 
 FOMC dates: `fomc_dates.py` (federalreserve.gov, fetched 2026-11-24).
+
+# After the first hour (10:30 NY) — verdict: VALIDATED, deployed as `range_alert/first_hour.py`
+SPX hourly Dec 2023 – Nov 2026. Parameters fitted before 2025-01-01 (257 sessions). Test on 2025-01..2026-11-13 (461 sessions).
+- Day high > first-hour high: train 67%, **test 64%**. Day low < first-hour low: 64% / **57%**. Both sides break: 31% / 24%.
+- Extension levels (train quantiles, in m) and their test coverage: up q70 0.289 → **75%**, q90 0.594 → **95%**; down q70 0.294 → **74%**, q90 0.736 → **92%**.
+- Big rest-of-day move (|close − 10:30| ≥ 0.5 m) by first-hour-range tercile (cuts 0.339 / 0.472 m): test **14% / 21% / 29%** (train 17 / 25 / 37).
+Limits: only 3 years of hourly data, one regime split, and Yahoo index bars.

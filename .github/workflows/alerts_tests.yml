@@ -16,4 +16,4 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -q exchange_calendars==4.13.2
-      - run: python -m unittest range_alert/test_calendar.py range_alert/test_scoring.py range_alert/test_explosion.py range_alert/test_notify_chain.py range_alert/test_trade.py range_alert/test_promotion.py gamma_radar/test_radar.py shadow_tradingagents/test_run_shadow.py agents/test_build_context.py agents/test_notify_telegram.py -v
+      - run: python -m unittest range_alert/test_calendar.py range_alert/test_scoring.py range_alert/test_explosion.py range_alert/test_notify_chain.py range_alert/test_trade.py range_alert/test_promotion.py range_alert/test_first_hour.py gamma_radar/test_radar.py shadow_tradingagents/test_run_shadow.py agents/test_build_context.py agents/test_notify_telegram.py -v
