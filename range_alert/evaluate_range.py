@@ -200,6 +200,14 @@ def build(now=None, force=False):
             lines += shadow_lines(os.environ['SHADOW_RECORDS'], daily('SPY'), target)
         except Exception as ex:  # noqa: BLE001  (scoring must never block the range evaluation)
             print('SHADOW_SCORING_FAILED', ex, file=sys.stderr)
+    try:   # automatic proof gate: live record and current status of every candidate (promotion.py)
+        import promotion as P
+        from daily_range import K_HIGH, K_LOW
+        g = P.fetch(K_HIGH, K_LOW)
+        st_ar = {'PROVEN': 'مثبتة ✅ تُرسل كتوصية', 'TESTING': 'تحت الاختبار', 'FAILED': 'فشلت ❌ أُوقفت تلقائيًا'}
+        lines += ["", P.record_line(g), f"حالة صفقة الفجوة: {st_ar[g['trade']['status']]}"]
+    except Exception as ex:  # noqa: BLE001  (the gate must never block the evaluation)
+        print('GATE_FAILED', ex, file=sys.stderr)
     lines.append("المصدر: Yahoo يومي (متأخر).")
     return "\n".join(lines)
 

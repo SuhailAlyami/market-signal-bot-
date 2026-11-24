@@ -125,11 +125,20 @@ def trade_plan(pc, m):
     return {'k': TRADE_K, 'long_above': pc+TRADE_K*m, 'short_below': pc-TRADE_K*m}
 
 
-def trade_lines(t):
-    return ["🎯 صفقة اليوم المشروطة (اختبار حي، غير مثبتة):",
-            f"• افتتاح ≥ {t['long_above']:,.0f} ← شراء عند الافتتاح، خروج عند الإغلاق",
-            f"• افتتاح ≤ {t['short_below']:,.0f} ← بيع عند الافتتاح، خروج عند الإغلاق",
-            "• بينهما ← لا صفقة",
+def trade_lines(t, gate=None):
+    """Lines for the conditional trade. gate = promotion.evaluate(...) result; its status is decided automatically."""
+    status = (gate or {}).get('trade', {}).get('status', 'TESTING')
+    rec = (gate or {}).get('trade', {})
+    if status == 'FAILED':
+        return [f"🎯 صفقة الفجوة أُوقفت تلقائيًا: خسرت في السجل الحي ({rec['wins']}/{rec['n']} رابحة، "
+                f"{rec['total']:+,} نقطة على SPY)."]
+    levels = [f"• افتتاح ≥ {t['long_above']:,.0f} ← شراء عند الافتتاح، خروج عند الإغلاق",
+              f"• افتتاح ≤ {t['short_below']:,.0f} ← بيع عند الافتتاح، خروج عند الإغلاق",
+              "• بينهما ← لا صفقة"]
+    if status == 'PROVEN':
+        return [f"🎯 التوصية (مثبتة في السجل الحي: {rec['wins']}/{rec['n']} رابحة، متوسط {rec['avg']:+} نقطة):",
+                *levels, "التنفيذ على المؤشر نفسه (SPY/MES/ES)، لا بشراء أوبشن 0DTE."]
+    return ["🎯 صفقة اليوم المشروطة (اختبار حي، غير مثبتة):", *levels,
             "الدليل: المؤشر 2020–2026 ربح 59% (+8.7 نقطة/صفقة)، لكن SPY الفعلي 2024–2026 خسر −2.2. "
             "بحجم صغير فقط، وليس بشراء أوبشن 0DTE (خاسر في النموذج)."]
 
@@ -269,7 +278,17 @@ def build(now=None, force=False):
                 f"القاع: سينزل على الأقل إلى {lv['low']:,.0f} ({HIT_LOW}%)",
                 f"أقصى مدى مرجّح: {lv['min_low']:,.0f} – {lv['max_high']:,.0f} ({RANGE_RATE}%)"]
     c['trade'] = trade_plan(spx, m)
-    body += trade_lines(c['trade'])
+    gate = None
+    try:   # automatic proof gate on live sessions (promotion.py); the message works without it
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import promotion as P
+        gate = P.fetch(K_HIGH, K_LOW)
+        c['gate'] = {'trade': gate['trade']['status'], 'direction': gate['direction']['status']}
+    except Exception as e:  # noqa: BLE001
+        print('GATE_FAILED', e, file=sys.stderr)
+    body += trade_lines(c['trade'], gate)
+    if gate:
+        body.append(P.record_line(gate))
     if mv:
         try:
             c['explosion'] = ex = explosion_risk(session, c['anchor'])
