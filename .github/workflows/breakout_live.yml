@@ -1,0 +1,34 @@
+name: breakout-live
+# Live detector during the SPX session: SPY 5m 30-min box breakout confirmed by a volume surge (render_breakout.py).
+# One job per day loops every 60 s from ~10:55 NY until the last possible entry and sends each signal once to
+# Telegram, at most 3 a day. Two slots cover EST/EDT; the slot that starts outside 10:45-12:30 NY exits at once.
+on:
+  schedule:
+    - cron: '55 14 * * 1-5'   # 10:55 NY in summer (EDT)
+    - cron: '55 15 * * 1-5'   # 10:55 NY in winter (EST)
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: breakout-live
+  cancel-in-progress: false
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install exchange_calendars==4.13.2
+      - env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}
+          GITHUB_TOKEN: ${{ github.token }}
+          BREAKOUT_MAX_PER_DAY: '3'
+        run: python -u render_breakout.py

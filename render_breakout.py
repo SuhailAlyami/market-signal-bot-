@@ -198,3 +198,38 @@ def start(token=None, chat_id=None):
     th.start()
     LOG.info('breakout alerts ON (max %d a day)', MAX_PER_DAY)
     return th
+
+
+def run_session(send=None, now_fn=lambda: datetime.now(timezone.utc), sleep=time.sleep, fetch=fetch_spy_5m):
+    """One live session loop (GitHub Actions job): checks every 60 s from start until the last possible entry
+    (15:35 NY, or 5 min after an early close). Exits at once on holidays or when started too early/late."""
+    if send is None:
+        import sys
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'range_alert'))
+        from daily_range import send as tg_send   # Telegram with retries (same channel as the daily messages)
+        send = tg_send
+    x = now_fn().astimezone(NY)
+    d = x.date()
+    end = min(15*60+40, close_mins(d)+5)
+    if not is_session(d):
+        print('NO_SESSION_TODAY'); return 0
+    if not (10*60+45 <= x.hour*60+x.minute <= 12*60+30):
+        print('OUTSIDE_START_WINDOW', x.strftime('%H:%M')); return 0
+    state, n = State(os.path.join(os.getenv('HUNTER_STATE_DIR', '.hunter-state'), 'breakout_sent.json')), 0
+    print('BREAKOUT_LIVE_START', x.isoformat())
+    while True:
+        now = now_fn()
+        m = now.astimezone(NY)
+        if m.hour*60+m.minute > end:
+            break
+        try:
+            n += check(now, state, send, fetch)
+        except Exception as e:  # noqa: BLE001  (data problems are logged only, never sent)
+            print('CHECK_FAILED', e)
+        sleep(60)
+    print('BREAKOUT_LIVE_END sent', n)
+    return n
+
+
+if __name__ == '__main__':
+    run_session()
