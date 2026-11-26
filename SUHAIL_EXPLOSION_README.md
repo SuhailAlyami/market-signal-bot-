@@ -14,6 +14,6 @@ Uses **completed** 5-minute OHLCV candles: 30-bar prior range breakout, relative
 ## Constraints and follow-up
 - Alert deduplication is fail-closed: private GitHub Issues store the last signal key for each symbol. The workflow requires `issues: write` and the workflow-provided `GITHUB_TOKEN`. Concurrency control serializes regular scanner runs. This suppresses duplicate alert messages for the same candle in normal operation, but issue API failures disable alerts, and a failure after reserving can lose an alert. It is not exactly-once delivery.
 - This requires market-data-source validation and historical out-of-sample testing before any trading use.
-- Existing `auto_auditor.py` can overwrite source code using unchecked LLM outputs. Do not run it against production; its duplicate workflow files are incorrectly nested and do not constitute dependable automated testing.
+- `auto_auditor.py` (overwrote source with unchecked LLM output) and its misplaced workflow files were removed on 2026-11-27.
 - No secrets are read or exposed by this change; existing workflows are untouched.
 - Run tests: `python -m unittest discover -s tests -v` (requires pandas and the dependencies from the workflow).

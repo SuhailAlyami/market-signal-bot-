@@ -22,7 +22,7 @@ Telegram acceptance, and predictive quality are separate observations.
 | `research_early_signals.py` | Legacy exploratory 1m ES/NQ pre-level, impulse, breakout comparison | On demand / manual research workflow | Directional hit rate; overlapping windows; explicitly not out-of-sample evidence |
 | `hunter_research.py` | Event-based chronological train/validation/test research | Offline, archived input and deterministic fixtures | Selection on train/validation; untouched holdout, baselines, event metrics and limitations |
 | `acquire_hunter_data.py` | Bounded normal Yahoo 1m history requests and completed-bar-age observations | On demand, up to four recent 7-day chunks per symbol; no retry/fallback prices | Archived UTC OHLCV snapshots, request durations, errors and SHA-256 manifests; no publication-latency claim |
-| `auto_auditor.py` | Sends Python source to external Groq model and overwrites files with unchecked returned text | `.github/auto_audit.yml` is outside `.github/workflows`, so is not a recognized Actions workflow | Do not run as a production code-modification or validation mechanism |
+| ~~`auto_auditor.py`~~ | Removed 2026-11-27: overwrote source files with unchecked Groq output | Its misplaced workflow files were removed too | — |
 
 The runtime/research additions are described by their implementation and report;
 legacy entry points remain in the repository to preserve previous experiments.
@@ -100,7 +100,7 @@ or resolved trade outcome; see [the measured report](ISSUE16_REPORT.md).
   preparation notice; no detection evidence. Do not trigger during verification.
 - `notification_delivery_test.yml`: manual or workflow-change-triggered GitHub
   notification issue, not a market event. Do not trigger during verification.
-- `.github/auto_audit.yml`: misplaced, inactive as a workflow; do not move/activate
+- `.github/auto_audit.yml`: removed 2026-11-27 with `auto_auditor.py`
   its unchecked source overwrite routine.
 
 ## Observed health, separately from predictive quality
