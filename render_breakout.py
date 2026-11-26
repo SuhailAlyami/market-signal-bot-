@@ -1,10 +1,11 @@
 """Live breakout detector inside the Render process (market_signal_bot.py), sent over the existing Telegram bot.
 
-Rule (research/filters_20261124/squeeze.py, the only filter with a positive edge in both train and test):
+Rule (research/filters_20261124/squeeze.py; volume cut raised to 2.0x on 2026-11-27, research/breakout_vol_20261127):
 SPY 5m, box = high/low of the 6 bars ending at bar i (i >= 21 bars into the session, 10:00-15:00 NY). Entry = stop
-order 1 tick beyond the box on the first break within 6 bars whose volume >= 1.5 x the prior 20-bar average;
+order 1 tick beyond the box on the first break within 6 bars whose volume >= 2.0 x the prior 20-bar average;
 stop = other side of the box; target = 1.5 x risk; exit after 12 bars or at the close.
-Research: train +0.07 R, test +0.10 R (54% wins, n=39, CI includes 0). Not proven; at most MAX_PER_DAY alerts a day.
+Research (2.0x): SPY train +0.12 R, test +0.23 R (n=22); 10 untouched stocks +0.08 R (n=465) and +0.23 R on sessions
+after 11-13 (n=49). Every CI still includes 0 or nearly: not proven; at most MAX_PER_DAY alerts a day.
 Stdlib only (no new dependency on Render). Data and Telegram failures are logged, never sent as messages.
 """
 import json
@@ -19,7 +20,7 @@ from zoneinfo import ZoneInfo
 
 LOG = logging.getLogger('render_breakout')
 NY, RIYADH = ZoneInfo('America/New_York'), ZoneInfo('Asia/Riyadh')
-N, K, H, T, VOL, TICK = 6, 6, 12, 1.5, 1.5, 0.01
+N, K, H, T, VOL, TICK = 6, 6, 12, 1.5, 2.0, 0.01
 MAX_PER_DAY = int(os.getenv('BREAKOUT_MAX_PER_DAY', '3'))
 # NYSE (nyse.com, checked 2026-11-24); extend yearly.
 HOLIDAYS = {'2026-01-01', '2026-01-19', '2026-02-16', '2026-04-03', '2026-05-25', '2026-06-19', '2026-07-03', '2026-09-07',

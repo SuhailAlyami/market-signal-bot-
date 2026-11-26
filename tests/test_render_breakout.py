@@ -28,6 +28,7 @@ class BreakoutTests(unittest.TestCase):
         tr = R.trades(day_bars())
         self.assertEqual((len(tr), tr[0]['d'], tr[0]['R']), (1, 1, 1.5))
         self.assertEqual(R.trades(day_bars(vol=1.2)), [])
+        self.assertEqual(R.trades(day_bars(vol=1.8)), [])   # below the 2.0x cut (raised 2026-11-27)
 
     def test_sent_once_capped_per_day_and_no_old_signals_after_restart(self):
         B = day_bars()
