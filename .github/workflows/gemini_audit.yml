@@ -54,8 +54,23 @@ jobs:
             echo "attempt $i failed: $(tail -3 gemini.err)"; sleep 45
           done
           [ -s audit.md ] && echo "ok=1" >> "$GITHUB_OUTPUT" || echo "::warning::Gemini returned nothing"
+      - name: Free-model fallback (Gemini -> Groq -> OpenRouter free)
+        id: chain
+        # Runs only when Gemini CLI returned nothing (limit hit, outage, or no Gemini key).
+        if: steps.gemini.outputs.ok != '1'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GOOGLE_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          if python agents/llm_chain.py agents/prompts/audit.md < context.txt > audit.md 2> chain.err; then
+            echo "ok=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::all free providers failed: $(tail -5 chain.err | tr '\n' ' ')"
+          fi
+          tail -1 chain.err
       - name: Send to Telegram
-        if: steps.gemini.outputs.ok == '1'
+        if: steps.gemini.outputs.ok == '1' || steps.chain.outputs.ok == '1'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
