@@ -147,6 +147,7 @@ test('breakout: volume-surge break enters, hits the 1.5R target; a weak-volume b
   assert.equal(tr[0].d, 1);
   assert.equal(tr[0].R, 1.5);
   assert.equal(W.breakoutTrades(spyDay('2026-11-24', 40, 1.2)).length, 0);
+  assert.equal(W.breakoutTrades(spyDay('2026-11-24', 40, 1.8)).length, 0);   // below the 2.0x cut
 });
 test('breakout alert is sent exactly once: only on the tick after the entry bar completes', async () => {
   const B = spyDay('2026-11-24');

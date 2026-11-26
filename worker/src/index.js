@@ -168,10 +168,10 @@ export function recordLine(g) {
 
 // ---------- breakout detector: 30-min box break with a volume surge (research/filters_20261124/squeeze.py) ----------
 // SPY 5m: box = high/low of the 6 bars ending at bar i (10:00-15:00 NY). Entry: stop order 1 tick beyond the box on the
-// first break within 6 bars whose volume >= 1.5 x the prior 20-bar average; stop = other side of the box; target = 1.5 x
-// risk; exit after 12 bars or at the close. Research (60 sessions, Aug-Nov 2026): train +0.07 R, test +0.10 R (54% wins,
-// CI includes 0); without the volume surge −0.09 / −0.07 R. Unproven: scored live every evening.
-export const BO = { N: 6, K: 6, H: 12, T: 1.5, VOL: 1.5, TICK: 0.01 };
+// first break within 6 bars whose volume >= 2.0 x the prior 20-bar average; stop = other side of the box; target = 1.5 x
+// risk; exit after 12 bars or at the close. Research at 2.0x: SPY train +0.12 R, test +0.23 R (n=22); 10 untouched stocks
+// +0.08 R (n=465), +0.23 R after 11-13 (n=49); without the volume surge about −0.05 to −0.09 R. Unproven: scored live every evening.
+export const BO = { N: 6, K: 6, H: 12, T: 1.5, VOL: 2.0, TICK: 0.01 };   // 2.0x since 2026-11-27 (research/breakout_vol_20261127)
 const atr20 = (B, i) => { let s = 0; for (let j = i - 19; j <= i; j++) s += Math.max(B[j].h - B[j].l, Math.abs(B[j].h - B[j - 1].c), Math.abs(B[j].l - B[j - 1].c)); return s / 20; };
 export function breakoutTrades(B) {
   // B: one session of completed 5m bars {t, o, h, l, c, v} in time order. Same loop as squeeze.py events(vol_conf=True).
