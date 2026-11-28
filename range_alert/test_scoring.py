@@ -44,6 +44,17 @@ class DailyCallTests(unittest.TestCase):
         self.assertFalse(e['up']); self.assertFalse(e['hit_high']); self.assertTrue(e['hit_low']); self.assertFalse(e['in1'])
 
 
+    def test_no_stored_call_sends_nothing(self):
+        from datetime import datetime, timezone
+        from unittest import mock
+        spx = {'2026-11-25': (7060, 7199, 6970, 7183), '2026-11-27': (7262, 7304, 7211, 7297)}
+        vix = {d: (0, 0, 0, 20.0) for d in spx}
+        with tempfile.TemporaryDirectory() as t, mock.patch.dict('os.environ', {'CALLS_DIR': t}), \
+                mock.patch.object(E, 'daily', side_effect=lambda s: spx if s == '^GSPC' else vix), \
+                mock.patch.object(E, 'send', side_effect=AssertionError('must not send')):
+            self.assertEqual(E.build(now=datetime(2026, 11, 27, 22, 0, tzinfo=timezone.utc)), 'NO_STORED_CALL')
+
+
 class GapCallTests(unittest.TestCase):
     def test_direction_buckets(self):
         self.assertEqual(D.gap_direction(-0.6)[0:3:2], ('down', 90))

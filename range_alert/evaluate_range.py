@@ -181,6 +181,10 @@ def build(now=None, force=False):
     live = [evaluate(spx, vix, d) for d in done if d >= LIVE_START and d in spx]
     n = len(live)
     stored = call_lines(os.environ.get('CALLS_DIR'), spx, target)
+    if not stored and not force:
+        # Owner (2026-11-28): without that morning's stored call the old template only counted up days against
+        # 'always up', which read like a failed forecast and was useless after the close. Send nothing.
+        return 'NO_STORED_CALL'
     ok = lambda b: '✅' if b else '❌'
     lines = stored or [
         f"📈 نتيجة SPX — {target}",
@@ -241,6 +245,9 @@ if __name__ == '__main__':
         sys.exit(0)
     if msg is None:
         print('SESSION_NOT_CLOSED_OR_NO_SESSION')
+        sys.exit(0)
+    if msg == 'NO_STORED_CALL':
+        print('NO_STORED_CALL_NOT_SENT')
         sys.exit(0)
     print(msg)
     if '--dry-run' not in sys.argv:
