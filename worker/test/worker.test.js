@@ -58,6 +58,11 @@ test('dueJobs: each daily job once at its New York time, breakout on every in-se
   assert.deepEqual([count.morning, count.firsthour, count.evening], [1, 1, 1]);
 });
 
+test('evening is computed but never sent by the schedule', () => {
+  assert.ok(W.SILENT_JOBS.has('evening'));
+  assert.ok(!W.SILENT_JOBS.has('morning') && !W.SILENT_JOBS.has('breakout'));
+});
+
 test('direction buckets and tradable odds match the Python tables', () => {
   assert.deepEqual(W.gapDirection(-0.6), ['down', 'هابط 📉', 90]);
   assert.deepEqual(W.gapDirection(0.0)[0], 'flat');

@@ -403,11 +403,15 @@ export function dueJobs(now) {
   return jobs;
 }
 const JOBS = { morning, firsthour: firstHour, evening, breakout: breakoutAlert };
+// Owner 2026-11-28: no evening message (saves free messages). It is still computed and logged; its live record feeds
+// the morning call. Manual /run?job=evening still works.
+export const SILENT_JOBS = new Set(['evening']);
 
 async function runJob(job, env, now, send = true) {
   try {
     const msg = await JOBS[job](now);
     if (msg && send) await telegram(env, msg);
+    else if (msg) console.log(`${job} (not sent):\n${msg}`);
     return msg || 'NO_SESSION';
   } catch (e) {
     console.log(`${job} failed: ${e.message}`);   // data failures are logged only: no error messages to Telegram
@@ -419,7 +423,7 @@ export default {
   async scheduled(event, env, ctx) {
     const now = new Date(event.scheduledTime);
     if (CAL_LAST < ny(now).iso) console.log('NYSE calendar table needs the next year');
-    for (const job of dueJobs(now)) ctx.waitUntil(runJob(job, env, now));
+    for (const job of dueJobs(now)) ctx.waitUntil(runJob(job, env, now, !SILENT_JOBS.has(job)));
   },
   async fetch(req, env) {
     const u = new URL(req.url);
