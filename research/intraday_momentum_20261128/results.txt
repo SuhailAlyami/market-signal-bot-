@@ -1,0 +1,15 @@
+T1 10:00 sign -> last 30m      2025: n=246 win  49% avg  -0.40 pts CI [ -2.20, +1.40] total     -99
+T1 10:00 sign -> last 30m      2026: n=216 win  44% avg  -0.97 pts CI [ -2.53, +0.58] total    -210
+   always long last 30m        2025: n=246 win  47% avg  -0.37 pts CI [ -2.17, +1.43] total     -91
+   always long last 30m        2026: n=216 win  46% avg  -0.55 pts CI [ -2.11, +1.00] total    -120
+T2 10:00 sign -> to close      2025: n=246 win  45% avg  -2.20 pts CI [ -8.76, +4.35] total    -542
+T2 10:00 sign -> to close      2026: n=216 win  55% avg  +2.46 pts CI [ -2.96, +7.87] total    +531
+   always long 10:00->close    2025: n=246 win  52% avg  +0.63 pts CI [ -5.93, +7.19] total    +154
+   always long 10:00->close    2026: n=216 win  52% avg  -1.17 pts CI [ -6.60, +4.26] total    -252
+T3 T2 on high-risk days        2025: n= 43 win  44% avg  +3.34 pts CI [-24.97,+31.66] total    +144
+T3 T2 on high-risk days        2026: n= 12 win  67% avg +19.07 pts CI [ -0.23,+38.37] total    +229
+T4 1st-hour sign -> close      2025: n=246 win  54% avg  +1.49 pts CI [ -4.79, +7.76] total    +366
+T4 1st-hour sign -> close      2026: n=216 win  51% avg  -1.15 pts CI [ -6.14, +3.84] total    -248
+T4 on high-risk days           2025: n= 43 win  58% avg  +1.93 pts CI [-25.78,+29.63] total     +83
+T4 on high-risk days           2026: n= 12 win  42% avg -11.34 pts CI [-32.93,+10.25] total    -136
+high-risk days in sample 55 of 462
