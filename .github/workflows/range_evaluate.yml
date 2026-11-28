@@ -52,7 +52,7 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
-          TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}   # owner wants messages (2026-11-20); repo variable 'off' silences
+          TELEGRAM_NOTIFY: 'off'   # owner 2026-11-28: no evening message; result kept in the run log only
           CALLS_DIR: calls-data/calls
         shell: bash
         run: |
