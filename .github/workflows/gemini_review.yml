@@ -84,4 +84,5 @@ jobs:
           NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
           TELEGRAM_NOTIFY: ${{ vars.TELEGRAM_NOTIFY || 'on' }}
           PR: ${{ github.event.pull_request.number || github.event.issue.number }}
-        run: python agents/notify_telegram.py "🐟 مراجعة Gemini — PR #$PR (آلية، تحقق قبل الاعتماد)" review.md
+        run: |   # block scalar: in a plain YAML scalar " #" starts a comment and cut the command
+          python agents/notify_telegram.py "🐟 مراجعة Gemini — PR #$PR (آلية، تحقق قبل الاعتماد)" review.md
