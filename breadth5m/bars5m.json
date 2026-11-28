@@ -610,6 +610,7 @@
    "first_seen_sha256": "5a8107d52c9f2fe25c5b3242d9810f2ecf9d6923f3128f83c423e4408e4158ef",
    "later_differing_reads": [
     "89e0fa07eb3dd056091445e4ee74fed063dcad04a2f5bc98c4901246273d70d2",
+    "89e0fa07eb3dd056091445e4ee74fed063dcad04a2f5bc98c4901246273d70d2",
     "89e0fa07eb3dd056091445e4ee74fed063dcad04a2f5bc98c4901246273d70d2"
    ],
    "step": 5,
@@ -621,6 +622,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "7abe417dbbf8de58a762bacb08ea16dd2ca05a62113636dba1e8e5abd40e369c",
    "later_differing_reads": [
+    "beb1d691350f64a0d8ef65fe867c91f80ba6701c05a003fa007511846551aa9c",
     "beb1d691350f64a0d8ef65fe867c91f80ba6701c05a003fa007511846551aa9c",
     "beb1d691350f64a0d8ef65fe867c91f80ba6701c05a003fa007511846551aa9c"
    ],
@@ -634,6 +636,7 @@
    "first_seen_sha256": "6fcc0d52981489a7e21767e4a1ce0aaa900b758f0b3a87de9d05bd54bb302d4b",
    "later_differing_reads": [
     "70edd2038fbbe993dcba406c56c417085c96dd0719deba26b696b740c30e6b45",
+    "70edd2038fbbe993dcba406c56c417085c96dd0719deba26b696b740c30e6b45",
     "70edd2038fbbe993dcba406c56c417085c96dd0719deba26b696b740c30e6b45"
    ],
    "step": 5,
@@ -645,6 +648,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "16e3d014609ac26dad2fafa23799193f85ac8ad49ca027b88b11a699f73d3d69",
    "later_differing_reads": [
+    "8b0b94c83d86debcb613d6ccb5fd9981892e349a543d97e41cd5c1a6028463fc",
     "8b0b94c83d86debcb613d6ccb5fd9981892e349a543d97e41cd5c1a6028463fc"
    ],
    "step": 5,
@@ -1270,6 +1274,7 @@
    "first_seen_sha256": "96cc34028e202d62bdec48e301d6f771606887cdbcab654befee4c3c4650369a",
    "later_differing_reads": [
     "fb3cc3faebf2cfb933610b137956b38565d96ef0b60c91f0440188db6c09fc6a",
+    "fb3cc3faebf2cfb933610b137956b38565d96ef0b60c91f0440188db6c09fc6a",
     "fb3cc3faebf2cfb933610b137956b38565d96ef0b60c91f0440188db6c09fc6a"
    ],
    "step": 5,
@@ -1281,6 +1286,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "991901e73ba7391221058911d4b688b523053c87cf99b84665e78980ebfc72a0",
    "later_differing_reads": [
+    "ffc904da5702ec6bbf978a0832ba3c7b59e992eb2c46202e098f7c4ca57de987",
     "ffc904da5702ec6bbf978a0832ba3c7b59e992eb2c46202e098f7c4ca57de987",
     "ffc904da5702ec6bbf978a0832ba3c7b59e992eb2c46202e098f7c4ca57de987"
    ],
@@ -1294,6 +1300,7 @@
    "first_seen_sha256": "45badecdcbb3e06593ba965ae0e1383f077cb4ce7d07384cdb1a6010c4f68580",
    "later_differing_reads": [
     "099d3ce8fbe59fa40241a4acae961a27e6b03f2341d73ed74892b35d6d7e5a96",
+    "099d3ce8fbe59fa40241a4acae961a27e6b03f2341d73ed74892b35d6d7e5a96",
     "099d3ce8fbe59fa40241a4acae961a27e6b03f2341d73ed74892b35d6d7e5a96"
    ],
    "step": 5,
@@ -1305,6 +1312,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "f6935a5c55dd7eba64eb578d02620523be0de477c974be95eaaa82912bf0b3dc",
    "later_differing_reads": [
+    "f7dc49a46f939844b1975e69040fc3e3f6c0f0ae72f1bd1f9a26c4cda01ac150",
     "f7dc49a46f939844b1975e69040fc3e3f6c0f0ae72f1bd1f9a26c4cda01ac150"
    ],
    "step": 5,
@@ -1930,6 +1938,7 @@
    "first_seen_sha256": "2bff850a08f073772dd71666b2cb71a30161a71a1198368f5620cf6af4c45e5e",
    "later_differing_reads": [
     "74b61027d1301d27bb359a0491e6ce95f37687872197ada7e3ba4c7b820452b6",
+    "74b61027d1301d27bb359a0491e6ce95f37687872197ada7e3ba4c7b820452b6",
     "74b61027d1301d27bb359a0491e6ce95f37687872197ada7e3ba4c7b820452b6"
    ],
    "step": 5,
@@ -1941,6 +1950,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "d93af7cd6e24abfe20ccfea0f7cfee0fd97fe347dfb9b6a186eaf14217f7a556",
    "later_differing_reads": [
+    "9e4a7ac41606afba8da310ec6fb21527c1ccba08b51bb0232300ae71d1ad751f",
     "9e4a7ac41606afba8da310ec6fb21527c1ccba08b51bb0232300ae71d1ad751f",
     "9e4a7ac41606afba8da310ec6fb21527c1ccba08b51bb0232300ae71d1ad751f"
    ],
@@ -1954,6 +1964,7 @@
    "first_seen_sha256": "9d663b0001deb6fbaf20806d0e42c65e42edfcbe6d76e47271119502680d5f67",
    "later_differing_reads": [
     "4f18a522cbb9c52924e4c2f6f3df909ddb426f43eddee52513a8a8f395e1e921",
+    "4f18a522cbb9c52924e4c2f6f3df909ddb426f43eddee52513a8a8f395e1e921",
     "4f18a522cbb9c52924e4c2f6f3df909ddb426f43eddee52513a8a8f395e1e921"
    ],
    "step": 5,
@@ -1965,6 +1976,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "1fb8237a9ad5e2d3e443511839241c4cb1f12bf3d03a86775b37d213b50b7b9a",
    "later_differing_reads": [
+    "88f8af7aaea56f23013ee560e654175099d7a10dbc27ea28ca993e48e7695c5d",
     "88f8af7aaea56f23013ee560e654175099d7a10dbc27ea28ca993e48e7695c5d"
    ],
    "step": 5,
@@ -2590,6 +2602,7 @@
    "first_seen_sha256": "7710b468699145b2bb5ec65170d2d7ce38b1afaf25d7f5b44de2f4a413d63bba",
    "later_differing_reads": [
     "e26628d1a85d137cadbba8ac2f059c9f83ddb5455d3e39a9ddde3eaf719e6713",
+    "e26628d1a85d137cadbba8ac2f059c9f83ddb5455d3e39a9ddde3eaf719e6713",
     "e26628d1a85d137cadbba8ac2f059c9f83ddb5455d3e39a9ddde3eaf719e6713"
    ],
    "step": 5,
@@ -2601,6 +2614,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "d576acee7e9707cf513768cfe752adef515ee1e6a38e874f6ace8dd0e92895cf",
    "later_differing_reads": [
+    "ba3c67cceac2494e2c1bb92cb888b6cf82570bf04fa50f918913e0ce2cd2c893",
     "ba3c67cceac2494e2c1bb92cb888b6cf82570bf04fa50f918913e0ce2cd2c893",
     "ba3c67cceac2494e2c1bb92cb888b6cf82570bf04fa50f918913e0ce2cd2c893"
    ],
@@ -2614,6 +2628,7 @@
    "first_seen_sha256": "367f579e06e30d730e30b55712141ed7a4cd7027e925bfe1247cca6ca192f093",
    "later_differing_reads": [
     "b993c358ee35a57aa090ec68534436c339af61a79ec63b9ddfb5f8966bcf5300",
+    "b993c358ee35a57aa090ec68534436c339af61a79ec63b9ddfb5f8966bcf5300",
     "b993c358ee35a57aa090ec68534436c339af61a79ec63b9ddfb5f8966bcf5300"
    ],
    "step": 5,
@@ -2625,6 +2640,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "c92dada8684121ad874044ab63c19d608f4f8d8306a4f9f69443c1475151ef1e",
    "later_differing_reads": [
+    "58c1761cb1c2e4110fe095277e646a27fe4ac0edc421d2ce0ecd23fcd193c20d",
     "58c1761cb1c2e4110fe095277e646a27fe4ac0edc421d2ce0ecd23fcd193c20d"
    ],
    "step": 5,
@@ -3242,6 +3258,7 @@
    "first_seen_sha256": "0f0a39de1e00590b9433e96e016bf5f2a1a6d89cdffa8de3a3ca704b32fd5f74",
    "later_differing_reads": [
     "98e626710c08cabfe69705054df69e2f960885bc253da79b57204c916fd23d55",
+    "98e626710c08cabfe69705054df69e2f960885bc253da79b57204c916fd23d55",
     "98e626710c08cabfe69705054df69e2f960885bc253da79b57204c916fd23d55"
    ],
    "step": 5,
@@ -3253,6 +3270,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "c3dc3607b08ef98fd3cfae9e28991845e2997a4bc9e410e5e32ef3de552ff526",
    "later_differing_reads": [
+    "47dbcaf89d638a2b43a47c1610916bfed8f69fb89b2942947697320818b1fc06",
     "47dbcaf89d638a2b43a47c1610916bfed8f69fb89b2942947697320818b1fc06",
     "47dbcaf89d638a2b43a47c1610916bfed8f69fb89b2942947697320818b1fc06"
    ],
@@ -3266,6 +3284,7 @@
    "first_seen_sha256": "ec3ff5514f174ec8f37b1554abcf7e5aa942c14c3392c5fc2d019ad290eae52e",
    "later_differing_reads": [
     "c014fb2929ccadad8f003010d3df6f70e2fee5c119392868edcbcd1a8a7a2679",
+    "c014fb2929ccadad8f003010d3df6f70e2fee5c119392868edcbcd1a8a7a2679",
     "c014fb2929ccadad8f003010d3df6f70e2fee5c119392868edcbcd1a8a7a2679"
    ],
    "step": 5,
@@ -3277,6 +3296,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "72d93e6900abaf7e8051f7f7ed6d5abc747c1f805c2ddd2de520b161c2da8752",
    "later_differing_reads": [
+    "764d87faca880ac9462b29dace0f6f795c29ebb2a7561b6d19bc42420ccba3f4",
     "764d87faca880ac9462b29dace0f6f795c29ebb2a7561b6d19bc42420ccba3f4"
    ],
    "step": 5,
@@ -3902,6 +3922,7 @@
    "first_seen_sha256": "beac9a0c122176932412eebacdf49a23277a37c3db101745339174ddc7b736a4",
    "later_differing_reads": [
     "2718dfa20cd4e1cb750b0de3a93021e97c77ce46d4e44e0956fd48d86274d128",
+    "2718dfa20cd4e1cb750b0de3a93021e97c77ce46d4e44e0956fd48d86274d128",
     "2718dfa20cd4e1cb750b0de3a93021e97c77ce46d4e44e0956fd48d86274d128"
    ],
    "step": 5,
@@ -3913,6 +3934,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "6fa1b3bba209cffb89274a451e6dab52c2b4f1ba615d1f7296b510d6e8918194",
    "later_differing_reads": [
+    "b59fbf953787dec0ba356e127074e32e3551a2b9400d2f500d181e722b07a609",
     "b59fbf953787dec0ba356e127074e32e3551a2b9400d2f500d181e722b07a609",
     "b59fbf953787dec0ba356e127074e32e3551a2b9400d2f500d181e722b07a609"
    ],
@@ -3926,6 +3948,7 @@
    "first_seen_sha256": "90996ead8e2b4e1be6f45d98ff9f51b01c08ee0b3db4358abb52660c775de6d4",
    "later_differing_reads": [
     "6da907dfd498f3e44790ac6998eb3a4eac84db359bd1f48c483f3e2d6649a4d7",
+    "6da907dfd498f3e44790ac6998eb3a4eac84db359bd1f48c483f3e2d6649a4d7",
     "6da907dfd498f3e44790ac6998eb3a4eac84db359bd1f48c483f3e2d6649a4d7"
    ],
    "step": 5,
@@ -3937,6 +3960,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "351b43b3501115d3320b9e57f5f00213ef1a5e498c51285749a43d278a7735d3",
    "later_differing_reads": [
+    "11ddf915fcb955e3d8f0f826e308fea705153db79724df305d3c4aaf340f1533",
     "11ddf915fcb955e3d8f0f826e308fea705153db79724df305d3c4aaf340f1533"
    ],
    "step": 5,
@@ -4554,6 +4578,7 @@
    "first_seen_sha256": "c64e41da439605c0d288d3f5d7e99ddd4b9af50c3caba168d3dbb294c1ee2e87",
    "later_differing_reads": [
     "bdf0b78498111a24d907614f8bd0f6f8c7c42edfa68516a51a7deb98fe65c910",
+    "bdf0b78498111a24d907614f8bd0f6f8c7c42edfa68516a51a7deb98fe65c910",
     "bdf0b78498111a24d907614f8bd0f6f8c7c42edfa68516a51a7deb98fe65c910"
    ],
    "step": 5,
@@ -4565,6 +4590,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "d0d6df9dca6b0e4eb3c4ddcae1a6b6bcc11ab93481b9395eb118575cd09088ab",
    "later_differing_reads": [
+    "17e155d32c104fe6239a4abd03906f85eb5d0d6d96f3aeff82bfdb26123aa118",
     "17e155d32c104fe6239a4abd03906f85eb5d0d6d96f3aeff82bfdb26123aa118",
     "17e155d32c104fe6239a4abd03906f85eb5d0d6d96f3aeff82bfdb26123aa118"
    ],
@@ -4578,6 +4604,7 @@
    "first_seen_sha256": "9a2fcc17518be32acaf6c56d7496826f36b20fa404db4bd40839266232d0f300",
    "later_differing_reads": [
     "ece74c362aa98c89906c03108be5c5cf5754ca62fa06b1f78adba0d79e6d652c",
+    "ece74c362aa98c89906c03108be5c5cf5754ca62fa06b1f78adba0d79e6d652c",
     "ece74c362aa98c89906c03108be5c5cf5754ca62fa06b1f78adba0d79e6d652c"
    ],
    "step": 5,
@@ -4589,6 +4616,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "b42501449c1fcea8e0f80db9417e29c3325e301b00e17f808319b3faf0dd173a",
    "later_differing_reads": [
+    "12f57a4b4d78dcba36f23b91afd765284ec87bba865ffdd59ba3a1541df78716",
     "12f57a4b4d78dcba36f23b91afd765284ec87bba865ffdd59ba3a1541df78716"
    ],
    "step": 5,
@@ -5214,6 +5242,7 @@
    "first_seen_sha256": "822d57f3412cf7a39b177035bb8291509d9c8c76e9838d405dd7c222731145aa",
    "later_differing_reads": [
     "3806778ab714d3b781818ae641f83fb46c47faa8f651a2799db9a37caf80a605",
+    "3806778ab714d3b781818ae641f83fb46c47faa8f651a2799db9a37caf80a605",
     "3806778ab714d3b781818ae641f83fb46c47faa8f651a2799db9a37caf80a605"
    ],
    "step": 5,
@@ -5225,6 +5254,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "1f45f26d4c0a41b032f764e7a31ea515b53e00e43166165e164a07ee0e3e1c30",
    "later_differing_reads": [
+    "2998596e0e052594ebfbcfb0747d03cd03c5efe2503a43b22ff9155a03e05c8c",
     "2998596e0e052594ebfbcfb0747d03cd03c5efe2503a43b22ff9155a03e05c8c",
     "2998596e0e052594ebfbcfb0747d03cd03c5efe2503a43b22ff9155a03e05c8c"
    ],
@@ -5238,6 +5268,7 @@
    "first_seen_sha256": "604aff634e98eeacc82b4cb63f3cc51a1214c3197e8ef2aea61a4ce18df6f61e",
    "later_differing_reads": [
     "1e2061e18ff4c3ba2937fc887664adba8d4e437f9c9b791d55b2a535ba9284d2",
+    "1e2061e18ff4c3ba2937fc887664adba8d4e437f9c9b791d55b2a535ba9284d2",
     "1e2061e18ff4c3ba2937fc887664adba8d4e437f9c9b791d55b2a535ba9284d2"
    ],
    "step": 5,
@@ -5249,6 +5280,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "8de09b23abcb95c39875153606a3eeef14088d476746e8b3f0de3ff1c51c873f",
    "later_differing_reads": [
+    "3a96d99fdc02e8739ac96cf155c0277eac99e1baa5bae387ca4b580457965523",
     "3a96d99fdc02e8739ac96cf155c0277eac99e1baa5bae387ca4b580457965523"
    ],
    "step": 5,
@@ -5874,6 +5906,7 @@
    "first_seen_sha256": "72184348c2c63efcd73ea51ab335164136d0720b26addf7f3f8ef8d9a904269c",
    "later_differing_reads": [
     "e081b913efa25ad849a152690a642c2b07f0cf88a7e86c25bb7ac84a3236e614",
+    "e081b913efa25ad849a152690a642c2b07f0cf88a7e86c25bb7ac84a3236e614",
     "e081b913efa25ad849a152690a642c2b07f0cf88a7e86c25bb7ac84a3236e614"
    ],
    "step": 5,
@@ -5885,6 +5918,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "445718ebb0b88283cdee6139c114d4a885f71323812c3e7fbeec648479cedeab",
    "later_differing_reads": [
+    "73fb2b7cada960d15cb978c32830145761debdb764d655ae2cd7f2a14944498e",
     "73fb2b7cada960d15cb978c32830145761debdb764d655ae2cd7f2a14944498e",
     "73fb2b7cada960d15cb978c32830145761debdb764d655ae2cd7f2a14944498e"
    ],
@@ -5898,6 +5932,7 @@
    "first_seen_sha256": "5308f79e1d9ffd0146d5f26b4bc1e41d8f117e3f2f6bd8635af1696b9cb36750",
    "later_differing_reads": [
     "66f5d669f79ffb7e855ab794854c42dcb1c7e1a5f0419bdabbc3d8daf411047f",
+    "66f5d669f79ffb7e855ab794854c42dcb1c7e1a5f0419bdabbc3d8daf411047f",
     "66f5d669f79ffb7e855ab794854c42dcb1c7e1a5f0419bdabbc3d8daf411047f"
    ],
    "step": 5,
@@ -5909,6 +5944,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "d5356ed6a1ae27a8201b0d823ddb2acfc21f2a203cc7f1445cf6cca5d5392c9d",
    "later_differing_reads": [
+    "7edeb191ed678434d3ba53b1588be9f997b25771b699349f061efa6ef52a90eb",
     "7edeb191ed678434d3ba53b1588be9f997b25771b699349f061efa6ef52a90eb"
    ],
    "step": 5,
@@ -6534,6 +6570,7 @@
    "first_seen_sha256": "597b2fb79681ca67c135afbeba3dbbf27bb992441b5152006cad83f4e6bde027",
    "later_differing_reads": [
     "a616ac071bff3c970f12d901009bacf00707470afb6ff0192f3c6091c81cb958",
+    "a616ac071bff3c970f12d901009bacf00707470afb6ff0192f3c6091c81cb958",
     "a616ac071bff3c970f12d901009bacf00707470afb6ff0192f3c6091c81cb958"
    ],
    "step": 5,
@@ -6545,6 +6582,7 @@
    "day": "2026-11-23",
    "first_seen_sha256": "f43666fbd4f9d1ed1eefc7167342e4a854feaa7a9c70823c571335ac3b0f0fd8",
    "later_differing_reads": [
+    "0ee2db05e423984ef850c60bed8db0828eebb61091f1ddf063c59249a3f8b564",
     "0ee2db05e423984ef850c60bed8db0828eebb61091f1ddf063c59249a3f8b564",
     "0ee2db05e423984ef850c60bed8db0828eebb61091f1ddf063c59249a3f8b564"
    ],
@@ -6558,6 +6596,7 @@
    "first_seen_sha256": "2d3e83a301707d9b25df5cefd0603143fc8a7642dcbeecbffc43d77d2dab19d7",
    "later_differing_reads": [
     "5a269e54ff16ba149fc83b6dd7bbe8b1d40b34311f0b5cc6021aa97ef65fba23",
+    "5a269e54ff16ba149fc83b6dd7bbe8b1d40b34311f0b5cc6021aa97ef65fba23",
     "5a269e54ff16ba149fc83b6dd7bbe8b1d40b34311f0b5cc6021aa97ef65fba23"
    ],
    "step": 5,
@@ -6569,6 +6608,7 @@
    "day": "2026-11-25",
    "first_seen_sha256": "449744116a84080ff6cbfbe28f78e180606165d2a7c893a831856cae052159d3",
    "later_differing_reads": [
+    "abb61bda10899e1617f6e72504f26beb097e12ee0f87b1f7be3752017ce302f9",
     "abb61bda10899e1617f6e72504f26beb097e12ee0f87b1f7be3752017ce302f9"
    ],
    "step": 5,
