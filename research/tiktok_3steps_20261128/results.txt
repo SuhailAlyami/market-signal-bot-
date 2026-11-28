@@ -1,0 +1,14 @@
+days 463 median risk pts 5.983999999999469
+rule   2025: n=178 win  26%  avg -0.37R  95%CI [-0.55, -0.20]  total -66.7R
+rule   2026: n=145 win  23%  avg -0.47R  95%CI [-0.66, -0.28]  total -68.7R
+rule   all: n=323 win  24%  avg -0.42R  95%CI [-0.55, -0.29]  total -135.4R
+flip   2025: n=152 win  29%  avg -0.26R  95%CI [-0.47, -0.06]  total -40.2R
+flip   2026: n=129 win  34%  avg -0.10R  95%CI [-0.34, +0.13]  total -13.1R
+flip   all: n=281 win  31%  avg -0.19R  95%CI [-0.34, -0.03]  total -53.3R
+random 2025: n=172 win  33%  avg -0.20R  95%CI [-0.39, +0.00]  total -33.7R
+random 2026: n=158 win  37%  avg -0.05R  95%CI [-0.26, +0.17]  total -7.4R
+random all: n=330 win  35%  avg -0.12R  95%CI [-0.27, +0.02]  total -41.1R
+--- target = 1H candle extreme
+rule   2025: n=178 win  21%  avg -0.50R  95%CI [-0.72, -0.29]  total -89.4R
+rule   2026: n=145 win  17%  avg -0.63R  95%CI [-0.81, -0.45]  total -91.6R
+rule   all: n=323 win  20%  avg -0.56R  95%CI [-0.70, -0.42]  total -181.1R
